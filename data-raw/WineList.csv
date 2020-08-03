@@ -1,0 +1,1087 @@
+Continent,Country,Region,Sub-Region,Latitude,Longitude,Decimal Lat,Decimal Long
+Africa,Algiera,Algiers,,36°45′14″N,3°3′32″E,36.75388889,3.058888889
+Africa,Algiera,Béjaïa,,36°45′N,5°04′E,36.75,5.066666667
+Africa,Algiera,Chlef Province,Dahra,35.425165°N,0.315127°W,35.425165,-0.315127
+Africa,Algiera,Mascara,,35°24′N,0°8′E,35.4,0.1333333333
+Africa,Algiera,Médéa,,36°16′N,2°45′E,36.26666667,2.75
+Africa,Algiera,Tlemcen,,34°52′58″N,01°19′00″W,34.88277778,-1.316666667
+Africa,Algiera,Zaccar,,34.43083°N,3.32722°E,34.43083,3.32722
+Africa,Cape Verde,Chã das Caldeiras,,14.971°N,24.367°W,14.971,-24.367
+Africa,Morocco,Atlas Mountains,,31°03′43″N,07°54′58″W,31.06194444,-7.916111111
+Africa,Morocco,Benslimane,,33.617°N,7.117°W,33.617,-7.117
+Africa,Morocco,Meknès,,33°53′42″N,5°33′17″W,33.895,-5.554722222
+Africa,South Africa,Breede River Valley,,33.750°S,19.500°E,-33.75,19.5
+Africa,South Africa,Constantia,,34°01′53″S,18°25′06″E,-34.03138889,18.41833333
+Africa,South Africa,Durbanville,,33.83250°S,18.64750°E,-33.8325,18.6475
+Africa,South Africa,Elgin,,-34.15,19.033,-34.15,19.033
+Americas,South Africa,Elim,,34°35′30″S,19°45′30″E,-34.59166667,19.75833333
+Americas,South Africa,Franschhoek,,33°55′S,19°08′E,-33.91666667,19.13333333
+Americas,South Africa,Little Karoo,,32.350°S,22.567°E,-32.35,22.567
+Americas,South Africa,Orange River Valley,,-28.6333308,16.4499982,-28.6333308,16.4499982
+Americas,South Africa,Paarl,,33°43′27″S,18°57′21″E,-33.72416667,18.95583333
+Americas,South Africa,Robertson,,33°48′S,19°53′E,-33.8,19.88333333
+Americas,South Africa,Stellenbosch,,33°56′12″S,18°51′41″E,-33.93666667,18.86138889
+Americas,South Africa,Swartland,,33.367°S,18.783°E,-33.367,18.783
+Americas,South Africa,Tulbagh,,33°17′6″S,19°8′16″E,-33.285,19.13777778
+Americas,Tunisia,Arianah,,36.862499,10.195556,36.862499,10.195556
+Americas,Tunisia,Nabul,,36°27′15″N,10°44′5″E,36.45416667,10.73472222
+Americas,Tunisia,Sousse,,35°50′N,10°38′E,35.83333333,10.63333333
+Americas,Argentina,Buenos Aires Province,Médanos,38°49′S,62°40′W,-38.81666667,-62.66666667
+Americas,Argentina,Catamarca Province,,28.467°S,65.783°W,-28.467,-65.783
+Americas,Argentina,La Rioja Province,,29°26′S,66°51′W,-29.43333333,-66.85
+Americas,Argentina,Mendoza Province,,32.89028°S,68.84722°W,-32.89028,-68.84722
+Americas,Argentina,Neuquén Province,,38.95167°S,68.07444°W,-38.95167,-68.07444
+Americas,Argentina,Río Negro Province,,40°48′S,63°00′W,-40.8,-63
+Americas,Argentina,Salta Province,,24.783°S,65.417°W,-24.783,-65.417
+Americas,Argentina,San Juan Province,,30.87°S,68.98°W,-30.87,-68.98
+Americas,Bolivia,Tarija Department,,21°35′S,63°50′W,-21.58333333,-63.83333333
+Americas,Brazil,Bahia,Curaçá,08°59′31″S,39°54′28″W,-8.991944444,-39.90777778
+Americas,Brazil,Bahia,Irecê,11.30389°S,42.85583°W,-11.30389,-42.85583
+Americas,Brazil,Bahia,Juazeiro,09°25′50″S,40°30′10″W,-9.430555556,-40.50277778
+Americas,Brazil,Mato Grosso,Nova Mutum,13°50′16″S,56°05′02″W,-13.83777778,-56.08388889
+Americas,Brazil,Minas Gerais,Andradas,22.06778°S,46.56889°W,-22.06778,-46.56889
+Americas,Brazil,Minas Gerais,Caldas,21°55′26″S,46°23′09″W,-21.92388889,-46.38583333
+Americas,Brazil,Minas Gerais,Pirapora,17°20′52″S,44°56′37″W,-17.34777778,-44.94361111
+Americas,Brazil,Minas Gerais,Santa Rita de Caldas,22.02889°S,46.33694°W,-22.02889,-46.33694
+Americas,Brazil,Paraná,Bandeirantes,23°06′36″S,50°22′04″W,-23.11,-50.36777778
+Americas,Brazil,Paraná,Marialva,23.467°S,51.700°W,-23.467,-51.7
+Americas,Brazil,Paraná,Maringá,23°24′S,51°55′W,-23.4,-51.91666667
+Americas,Brazil,Paraná,Rosário do Ivaí,24.2778°S,51.275°W,-24.2778,-51.275
+Americas,Brazil,Pernambuco,Casa Nova,9°09′43″S,40°58′15″W,-9.161944444,-40.97083333
+Americas,Brazil,Pernambuco,Petrolina,09°23′34″S,40°30′28″W,-9.392777778,-40.50777778
+Americas,Brazil,Pernambuco,Santa Maria da Boa Vista,8.80889°S,39.82500°W,-8.80889,-39.825
+Americas,Brazil,Rio Grande do Sul,Bento Gonçalves,29°10′15″S,51°31′08″W,-29.17083333,-51.51888889
+Americas,Brazil,Rio Grande do Sul,Caxias do Sul,29°10′00″S,51°11′00″W,-29.16666667,-51.18333333
+Americas,Brazil,Rio Grande do Sul,Cotiporã,29°01′S,51°42′W,-29.01666667,-51.7
+Americas,Brazil,Rio Grande do Sul,Garibaldi,29°17′20″S,51°33′51″W,-29.28888889,-51.56416667
+Americas,Brazil,Santa Catarina,Pinheiro Preto,27.050°S,51.200°W,-27.05,-51.2
+Americas,Brazil,Santa Catarina,São Joaquim,28°17′38″S,49°55′55″W,-28.29388889,-49.93194444
+Americas,Brazil,Santa Catarina,Tangará,27°06′18″S,51°14′49″W,-27.105,-51.24694444
+Americas,Brazil,São Paulo,Jundiaí,23°11′11″S,46°53′02″W,-23.18638889,-46.88388889
+Americas,Brazil,São Paulo,São Roque,23°31′45″S,47°08′07″W,-23.52916667,-47.13527778
+Americas,Canada,British Columbia,Fraser Valley,49.10833°N,122.29167°W,49.10833,-122.29167
+Americas,Canada,British Columbia,Gulf Islands,48.950°N,123.533°W,48.95,-123.533
+Americas,Canada,British Columbia,Okanagan Valley,49.74778°N,119.71722°W,49.74778,-119.71722
+Americas,Canada,British Columbia,Similkameen Valley,49.21667°N,119.96667°W,49.21667,-119.96667
+Americas,Canada,British Columbia,Vancouver Island,49°30′N,125°30′W,49.5,-125.5
+Americas,Canada,Nova Scotia,Annapolis Valley,45.000°N,64.917°W,45,-64.917
+Americas,Canada,Ontario,Lake Erie North Shore and Pelee Island,41.7667°N,82.6409°W,41.7667,-82.6409
+Americas,Canada,Ontario,Niagara Peninsula,43.00°N,79.50°W,43,-79.5
+Americas,Canada,Ontario,Prince Edward County,44°00′N,77°15′W,44,-77.25
+Americas,Canada,Ontario,Toronto,43°44′30″N,79°22′24″W,43.74166667,-79.37333333
+Americas,Canada,Quebec,Eastern Townships,45.4814°N,71.6678°W,45.4814,71.6678
+Americas,Chile,Aconcagua,Aconcagua Valley,32°42′S,70°45′W,-32.7,-70.75
+Americas,Chile,Aconcagua,Casablanca Valley,33°19′S,71°25′W,-33.31666667,-71.41666667
+Americas,Chile,Atacama,Copiapó Valley,27°21′59″S,70°19′59″W,-27.36638889,-70.33305556
+Americas,Chile,Atacama,Huasco Valley,28.43389°S,71.20306°W,-28.43389,-71.20306
+Americas,Chile,Central Valley,Cachapoal Valley,34.27472°S,71.43472°W,-34.27472,-71.43472
+Americas,Chile,Central Valley,Maipo Valley,33°45′S,70°46′W,-33.75,-70.76666667
+Americas,Chile,Central Valley,Mataquito Valley,34.9722°S,72.1858°W,-34.9722,-72.1858
+Americas,Chile,Central Valley,Maule Valley,35.525505°S,71.687175°W,-35.525505,-71.687175
+Americas,Chile,Coquimbo,Choapa Valley,31.62778°S,71.55833°W,-31.62778,-71.55833
+Americas,Chile,Coquimbo,Elqui Valley,29°53′40″S,71°16′30″W,-29.89444444,-71.275
+Americas,Chile,Coquimbo,Limarí,30.7294°S,71.6958°W,-30.7294,-71.6958
+Americas,Chile,Pica,,20°29′21″S,69°19′46″W,-20.48916667,-69.32944444
+Americas,Chile,Southern Chile,Bío-Bío Valley,36.8194°S,73.1644°W,-36.8194,-73.1644
+Americas,Chile,Southern Chile,Itata Valley,36°37′00″S,71°57′00″W,-36.61666667,-71.95
+Americas,Chile,Southern Chile,Malleco Valley,38°15′S,72°15′W,-38.25,-72.25
+Americas,Mexico,Aguascalientes,Aguascalientes Valley,22°1′N,102°21′W,22.01666667,-102.35
+Americas,Mexico,Baja California,Valle de Guadalupe,32°05′52″N,116°34′01″W,32.09777778,-116.5669444
+Americas,Mexico,Baja California,Valle de Calafia,32.096658,-116.569937,32.096658,-116.569937
+Americas,Mexico,Baja California,Valle de Mexicali,31°45′N,115°15′W,31.75,-115.25
+Americas,Mexico,Baja California,Valle de San Vicente,31.333192,-116.166724,31.333192,-116.166724
+Americas,Mexico,Baja California,Valle de Santo Tomás,31.785671,-116.573503,31.785671,-116.573503
+Americas,Mexico,Baja California,Zona Tecate,32.565294,-116.655193,32.565294,-116.655193
+Americas,Mexico,Coahuila / Durango,Valle de Parras,25.457371,-102.179288,25.457371,-102.179288
+Americas,Mexico,Guanajuato,San Miguel de Allende,21.053818,-100.798948,21.053818,-100.798948
+Americas,Mexico,Hidalgo,,20°29′N,98°52′W,20.48333333,-98.86666667
+Americas,Mexico,Nuevo León,Valle de Las Maravillas,25.68517,-100.195923,25.68517,-100.195923
+Americas,Mexico,Querétaro,Valle de Tequisquiapan,22.158205,-100.993387,22.158205,-100.993387
+Americas,Mexico,Sonora,Caborca,30°43′N,112°09′W,30.71666667,-112.15
+Americas,Mexico,Sonora,Hermosillo,29°05′56″N,110°57′15″W,29.09888889,-110.9541667
+Americas,Mexico,Zacatecas,Valle de las Arcinas,22.756529,-102.590929,22.756529,-102.590929
+Americas,Peru,Arequipa region valleys,,16°23′S,71°32′W,-16.38333333,-71.53333333
+Americas,Peru,Huaral District and Cañete Province – both in Lima Region,,12.043333°S,77.028333°W,-12.043333,-77.028333
+Americas,Peru,Ica Region – including Chincha,,14.07°S,75.73°W,-14.07,-75.73
+Americas,United States,Arizona,Sonoita ,,,31.678345,-110.652811
+Americas,United States,Arizona,Willcox,,,32.303584,-109.791066
+Americas,United States,Arkansas,Altus,35°27′17″N,93°46′19″W,35.45472222,-93.77194444
+Americas,United States,California,adelaida district,,,35.6481297,-120.82812
+Americas,United States,California,alexander valley,,,38.7228912,-122.88744
+Americas,United States,California,alta mesa,,,38.3475023,-121.28662
+Americas,United States,California,anderson valley,,,39.0750157,-123.46515
+Americas,United States,California,antelope valley of the california high desert,,,34.7118372,-118.15279
+Americas,United States,California,arroyo grande valley,,,35.1481436,-120.49254
+Americas,United States,California,arroyo seco,,,36.320344,-121.28898
+Americas,United States,California,atlas peak,,,38.4242054,-122.26135
+Americas,United States,California,ballard canyon,,,34.6441794,-120.15155
+Americas,United States,California,ben lomond mountain,,,37.0809438,-122.15633
+Americas,United States,California,benmore valley,,,39.0100415,-123.02063
+Americas,United States,California,bennett valley,,,38.3900797,-122.62954
+Americas,United States,California,big valley district lake county,,,38.9999063,-122.8607
+Americas,United States,California,borden ranch,,,38.3188973,-121.10653
+Americas,United States,California,california shenandoah valley,,,38.529253,-120.80586
+Americas,United States,California,calistoga,,,38.5890787,-122.57548
+Americas,United States,California,capay valley,,,38.7972301,-122.21648
+Americas,United States,California,carmel valley,,,36.4219418,-121.68916
+Americas,United States,California,central coast,,,36.2682257,-121.21696
+Americas,United States,California,chalk hill,,,38.5685526,-122.75842
+Americas,United States,California,chalone,,,36.4748982,-121.25095
+Americas,United States,California,chiles valley,,,38.5453235,-122.34642
+Americas,United States,California,cienega valley,,,36.7172937,-121.35881
+Americas,United States,California,clarksburg,,,38.3637977,-121.55324
+Americas,United States,California,clear lake,,,39.0154056,-122.78585
+Americas,United States,California,clements hills,,,38.1439825,-121.06004
+Americas,United States,California,cole ranch,,,39.0612574,-123.22443
+Americas,United States,California,coombsville,,,38.3073513,-122.24024
+Americas,United States,California,cosumnes river,,,38.3249418,-121.39786
+Americas,United States,California,covelo,,,39.7935143,-123.23169
+Americas,United States,California,creston district,,,35.5032445,-120.47015
+Americas,United States,California,cucamonga valley,,,34.0740427,-117.51006
+Americas,United States,California,diablo grande,,,37.3574444,-121.2665
+Americas,United States,California,diamond mountain district,,,38.5594207,-122.57777
+Americas,United States,California,dos rios,,,39.7279765,-123.3532
+Americas,United States,California,dry creek valley,,,38.6593176,-122.99362
+Americas,United States,California,dunnigan hills,,,38.800298,-121.96104
+Americas,United States,California,eagle peak mendocino county,,,39.2943472,-123.31817
+Americas,United States,California,edna valley,,,35.22527,-120.61865
+Americas,United States,California,el dorado,,,38.738468,-120.74373
+Americas,United States,California,el pomar district,,,35.5623108,-120.61199
+Americas,United States,California,fair play,,,38.597249,-120.67246
+Americas,United States,California,fiddletown,,,38.4930096,-120.74473
+Americas,United States,California,fort ross seaview,,,38.5823228,-123.23125
+Americas,United States,California,fountaingrove district,,,38.5102958,-122.63395
+Americas,United States,California,green valley of russian river,,,38.4334976,-122.89553
+Americas,United States,California,guenoc valley,,,38.7424965,-122.51302
+Americas,United States,California,hames valley,,,35.8837334,-120.88324
+Americas,United States,California,happy canyon of santa barbara,,,34.6597913,-120.00144
+Americas,United States,California,high valley,,,39.0432,-122.67445
+Americas,United States,California,howell mountain,,,38.5863561,-122.45983
+Americas,United States,California,inwood valley,,,40.5175407,-121.96836
+Americas,United States,California,jahant,,,38.2202033,-121.27185
+Americas,United States,California,kelsey bench lake county,,,38.9487155,-122.85926
+Americas,United States,California,knights valley,,,38.6565901,-122.69197
+Americas,United States,California,lamorinda,,,37.8705406,-122.13608
+Americas,United States,California,leona valley,,,34.6146341,-118.29698
+Americas,United States,California,lime kiln valley,,,36.6934878,-121.33795
+Americas,United States,California,livermore valley,,,37.7008519,-121.8387
+Americas,United States,California,lodi,,,38.2329501,-121.19512
+Americas,United States,California,los carneros,,,38.2451295,-122.40284
+Americas,United States,California,los olivos district,,,34.6248221,-120.08705
+Americas,United States,California,madera,,,36.9582651,-120.17716
+Americas,United States,California,malibu coast,,,34.1030954,-118.82237
+Americas,United States,California,malibu newton canyon,,,34.0814149,-118.80022
+Americas,United States,California,manton valley,,,40.4327359,-121.83042
+Americas,United States,California,mcdowell valley,,,38.9691614,-123.04732
+Americas,United States,California,mendocino,,,39.0844214,-123.22238
+Americas,United States,California,mendocino ridge,,,38.9518907,-123.53982
+Americas,United States,California,merritt island,,,38.3706622,-121.54234
+Americas,United States,California,mokelumne river,,,38.1311948,-121.28246
+Americas,United States,California,monterey,,,36.4306757,-121.39028
+Americas,United States,California,moon mountain district sonoma county,,,38.3581608,-122.46698
+Americas,United States,California,mt  harlan,,,36.6962382,-121.4123
+Americas,United States,California,mt veeder,,,38.3573611,-122.40996
+Americas,United States,California,napa valley,,,38.4598831,-122.34666
+Americas,United States,California,north coast,,,38.7915894,-122.96233
+Americas,United States,California,north yuba,,,39.3625505,-121.24284
+Americas,United States,California,northern sonoma,,,38.583547,-122.8843
+Americas,United States,California,oak knoll district of napa valley,,,38.3472694,-122.32311
+Americas,United States,California,oakville,,,38.4372655,-122.38447
+Americas,United States,California,pacheco pass,,,36.9685244,-121.37386
+Americas,United States,California,paicines,,,36.6938731,-121.25925
+Americas,United States,California,paso robles,,,35.6167299,-120.53909
+Americas,United States,California,paso robles estrella district,,,35.7040049,-120.56534
+Americas,United States,California,paso robles geneseo district,,,35.6279349,-120.58205
+Americas,United States,California,paso robles highlands district,,,35.5094304,-120.30961
+Americas,United States,California,paso robles willow creek district,,,35.5859892,-120.76163
+Americas,United States,California,petaluma gap,,,38.2475805,-122.72743
+Americas,United States,California,pine mountain cloverdale peak,,,38.8555333,-122.97207
+Americas,United States,California,potter valley,,,39.301958,-123.09551
+Americas,United States,California,ramona valley,,,33.0225845,-116.84434
+Americas,United States,California,red hills lake county,,,38.9176522,-122.71834
+Americas,United States,California,redwood valley,,,39.3006747,-123.19655
+Americas,United States,California,river junction,,,37.6761014,-121.24113
+Americas,United States,California,rockpile,,,38.7604361,-123.15738
+Americas,United States,California,russian river valley,,,38.4787004,-122.83435
+Americas,United States,California,rutherford,,,38.4681635,-122.41929
+Americas,United States,California,saddle rock  malibu,,,34.0979192,-118.8296
+Americas,United States,California,salado creek,,,37.4383951,-121.14603
+Americas,United States,California,san antonio valley,,,35.9388628,-121.09155
+Americas,United States,California,san benito,,,36.7249828,-121.30038
+Americas,United States,California,san bernabe,,,36.1362691,-121.1049
+Americas,United States,California,san francisco bay,,,37.4895549,-122.0412
+Americas,United States,California,san juan creek,,,35.6222872,-120.36967
+Americas,United States,California,san lucas,,,36.0717475,-120.97505
+Americas,United States,California,san miguel district,,,35.7463726,-120.69323
+Americas,United States,California,san pasqual valley,,,33.0793984,-117.0166
+Americas,United States,California,san ysidro district,,,37.0056305,-121.49364
+Americas,United States,California,santa clara valley,,,37.2309258,-121.80879
+Americas,United States,California,santa cruz mountains,,,37.1822604,-122.08883
+Americas,United States,California,santa lucia highlands,,,36.4131273,-121.41969
+Americas,United States,California,santa margarita ranch,,,35.3798462,-120.58707
+Americas,United States,California,santa maria valley,,,34.8986007,-120.28622
+Americas,United States,California,santa ynez valley,,,34.6401427,-120.15475
+Americas,United States,California,seiad valley,,,41.8418085,-123.18787
+Americas,United States,California,sierra foothills,,,38.3405627,-120.65216
+Americas,United States,California,sierra pelona valley,,,34.5127497,-118.30849
+Americas,United States,California,sloughhouse,,,38.4562289,-121.14371
+Americas,United States,California,solano county green valley,,,38.2627689,-122.16844
+Americas,United States,California,sonoma coast,,,38.4268109,-122.89377
+Americas,United States,California,sonoma mountain,,,38.3573906,-122.56184
+Americas,United States,California,sonoma valley,,,38.3195544,-122.49987
+Americas,United States,California,south coast,,,33.2277845,-117.21121
+Americas,United States,California,spring mountain district,,,38.5130708,-122.5233
+Americas,United States,California,squaw valley miramonte,,,36.7212002,-119.15107
+Americas,United States,California,st  helena,,,38.5141031,-122.46743
+Americas,United States,California,sta  rita hills,,,34.6343789,-120.32263
+Americas,United States,California,stags leap district,,,38.4034693,-122.32668
+Americas,United States,California,suisun valley,,,38.2679258,-122.09488
+Americas,United States,California,temecula valley,,,33.5152739,-117.18613
+Americas,United States,California,templeton gap district,,,35.5528724,-120.70771
+Americas,United States,California,tracy hills,,,37.6380719,-121.36988
+Americas,United States,California,trinity lakes,,,40.8718376,-122.75107
+Americas,United States,California,wild horse valley,,,38.2927781,-122.19522
+Americas,United States,California,willow creek,,,40.9287521,-123.61764
+Americas,United States,California,york mountain,,,35.55182,-120.8252
+Americas,United States,California,yorkville highlands,,,38.9039485,-123.20731
+Americas,United States,California,yountville,,,38.3966434,-122.36711
+Americas,United States,Colorado,Grand Valley,39°11′N,108°43′W,39.18333333,-108.7166667
+Americas,United States,Colorado,West Elks,,,38.814947,-107.779611
+Americas,United States,Connecticut,Western Connecticut Highlands,,,41.822405,-73.059142
+Americas,United States,Florida,,,,"28.635889,",-81.490569
+Americas,United States,Georgia,Dahlonega Plateau,,,34.609996,-83.878876
+Americas,United States,Idaho,Eagle Foothills,,,43.522416,-116.461545
+Americas,United States,Illinois,Shawnee Hills,,,37.41767,-88.879583
+Americas,United States,Iowa,Loess Hills District,,,41.298342,-95.763142
+Americas,United States,Iowa,Upper Mississippi River Valley,,,43.263109,-91.568128
+Americas,United States,Indiana,Indiana Uplands,,,38.211347,-86.010029
+Americas,United States,Indiana,Ohio River Valley,,,38.797777,-85.360559
+Americas,United States,Kentucky,Ohio River Valley,,,38.83013,-84.617273
+Americas,United States,Louisiana,,,,30.832217,-90.875755
+Americas,United States,Maine,,,,44.273125,-69.078638
+Americas,United States,Maryland,Catoctin,,,39.426627,-77.663776
+Americas,United States,Maryland,Linganore,,,39.476612,-77.17493
+Americas,United States,Massachusetts,Martha's Vineyard,,,41.386288,-70.65467
+Americas,United States,Michigan,Lake Michigan Shore,42.2°N,86.1°W,42.2,-86.1
+Americas,United States,Michigan,Leelanau Peninsula,45.05°N,85.655°W,45.05,-85.655
+Americas,United States,Michigan,Old Mission Peninsula,44.87806°N,85.53139°W,44.87806,-85.53139
+Americas,United States,Minnesota,Alexandria Lakes,45.967°N,95.383°W,45.967,-95.383
+Americas,United States,Minnesota,Upper Mississippi Valley,47.253°N,95.212°W,47.253,-95.212
+Americas,United States,Missouri,Augusta,38°34′20″N,90°52′55″W,38.57222222,-90.88194444
+Americas,United States,Missouri,Hermann,38°41′57″N,91°26′21″W,38.69916667,-91.43916667
+Americas,United States,Missouri,Ozark Highlands,36.568447,-93.099533,36.568447,-93.099533
+Americas,United States,Missouri,Ozark Mountains,36.568447,-93.099533,36.568447,-93.099533
+Americas,United States,Missouri,Ste. Genevieve,37°58′37″N,90°2′55″W,37.97694444,-90.04861111
+Americas,United States,New Jersey,Outer Coastal Plain,,,39.738013,-74.885968
+Americas,United States,New Jersey,Warren Hills,40°N,74.5°W,40.862943,-75.015977
+Americas,United States,New Mexico,Albuquerque,35°06′39″N,106°36′36″W,35.11083333,-106.61
+Americas,United States,New Mexico,Deming,32°15′40″N,107°45′21″W,32.26111111,-107.7558333
+Americas,United States,New Mexico,La Union,31.950709,-106.661755,31.950709,-106.661755
+Americas,United States,New Mexico,Las Cruces,32°18′52″N,106°46′44″W,32.31444444,-106.7788889
+Americas,United States,New Mexico,Santa Fe,35°40′2″N,105°57′52″W,35.66722222,-105.9644444
+Americas,United States,New Mexico,Taos,36.393979°N,105.576705°W,36.393979,-105.576705
+Americas,United States,New York,Eastern Long Island,40°48′N,73°18′W,40.8,-73.3
+Americas,United States,New York,Finger Lakes,42.667°N,76.833°W,42.667,-76.833
+Americas,United States,New York,Hudson River Valley,42.3222951,-76.2545353,42.3222951,-76.2545353
+Americas,United States,New York,Lake Erie Region,42.171009,-80.069237,42.171009,-80.069237
+Americas,United States,New York,Niagara Escarpment,43.32°N,78.79°W,43.32,-78.79
+Americas,United States,North Carolina,Crest of the Blue Ridge Henderson County,,,35.343972,-82.39792
+Americas,United States,North Carolina,Haw River Valley,,,36.1519,-79.272697
+Americas,United States,North Carolina,Yadkin Valley/Swan Creek,,,36.172071,-80.478398
+Americas,United States,Ohio,Grand River Valley,41.7603208°N,81.2806588°W,41.7603208,-81.2806588
+Americas,United States,Ohio,Isle St. George,41.71484°N,82.819345°W,41.71484,-82.819345
+Americas,United States,Ohio,Kanawha River Valley,38.583°N,81.833°W,38.583,-81.833
+Americas,United States,Ohio,Loramie Creek,40.18894°N,84.24217°W,40.18894,-84.24217
+Americas,United States,Ohio,Ohio River Valley,41.87278°N,77.87500°W,41.87278,-77.875
+Americas,United States,Oklahoma,,35.5°N,98°W,35.5,-98
+Americas,United States,Oregon,Applegate Valley,42.32°N,123.29°W,42.32,-123.29
+Americas,United States,Oregon,Columbia Valley (Oregon and Washington),47°7′16″N,119°17′18″W,47.12111111,-119.2883333
+Americas,United States,Oregon,Hood River County,45.51750°N,121.64944°W,45.5175,-121.64944
+Americas,United States,Oregon,Rogue Valley,42.440124°N,122.926154°W,42.440124,-122.926154
+Americas,United States,Oregon,Umpqua Valley,43.26806°N,123.44611°W,43.26806,-123.44611
+Americas,United States,Oregon,Willamette Valley,44°54′N,123°06′W,44.9,-123.1
+Americas,United States,Oregon,Walla Walla Valley  (Oregon and Washington),46°N,118°W,46,-118
+Americas,United States,Pennsylvania,Central Delaware Valley,40.449°N,74.896°W,40.449,-74.896
+Americas,United States,Pennsylvania,Cumberland Valley,39°56′N,77°43′W,39.93333333,-77.71666667
+Americas,United States,Pennsylvania,Erie County,42.10°N,80.10°W,42.1,-80.1
+Americas,United States,Pennsylvania,Lancaster County,40.04°N,76.25°W,40.04,-76.25
+Americas,United States,Pennsylvania,Lehigh County,40.61°N,75.59°W,40.61,-75.59
+Americas,United States,Tennessee,Appalachian High Country,,,35.78753,-84.346099
+Americas,United States,Tennessee,Mississippi Delta,,,35.305357,-89.731169
+Americas,United States,Texas,Bell Mountain,30.424799,-98.728804,30.424799,-98.728804
+Americas,United States,Texas,Davis Mountains,30°38′N,104°10′W,30.63333333,-104.1666667
+Americas,United States,Texas,Escondido Valley,33.125369,-117.075341,33.125369,-117.075341
+Americas,United States,Texas,Fredericksburg,30°16′27″N,98°52′19″W,30.27416667,-98.87194444
+Americas,United States,Texas,High Plains,33°N,102°W,33,-102
+Americas,United States,Texas,Texas Hill Country,30°10′27″N,99°03′55″W,30.17416667,-99.06527778
+Americas,United States,Virginia,Monticello,38°00′37.01″N,78°27′08.28″W,38.01028056,-78.4523
+Americas,United States,Virginia,North Fork of Roanoke,37.3767°N,80.331°W,37.3767,-80.331
+Americas,United States,Virginia,Northern Neck George Washington Birthplace,38.184915,-76.925025,38.184915,-76.925025
+Americas,United States,Virginia,Rocky Knob,36.798°N 80.375°W,80.375°W,36.798,-80.375
+Americas,United States,Virginia,Shenandoah Valley,38.483°N,78.850°W,38.483,-78.85
+Americas,United States,Virginia,Virginia's Eastern Shore,37.49°N,75.898°W,37.49,-75.898
+Americas,United States,Washington,Columbia Gorge,45.70472°N,121.79167°W,45.70472,-121.79167
+Americas,United States,Washington,Columbia Valley,51.033°N,116.617°W,51.033,-116.617
+Americas,United States,Washington,Horse Heaven Hills,46°08′N,119°52.05′W,46.13333333,-119.8680556
+Americas,United States,Washington,Naches Heights,46°37′41″N,120°37′20″W,46.62805556,-120.6222222
+Americas,United States,Washington,Rattlesnake Hills,46°27′N,119°50′W,46.45,-119.8333333
+Americas,United States,Washington,Red Mountain,46°16′34″N,119°27′14″W,46.27611111,-119.4538889
+Americas,United States,Washington,Wahluke Slope,46.750°N,119.500°W,46.75,-119.5
+Americas,United States,Washington,Walla Walla Valley,45.89833°N,118.30778°W,45.89833,-118.30778
+Americas,United States,Washington,Yakima Valley,46°15′10″N,119°13′51″W,46.25277778,-119.2308333
+Americas,United States,Washington,Puget Sound,47°36′N,122°24′W,47.6,-122.4
+Americas,United States,West Virginia,Kanawha River Valley,,,37.740703,-81.252803
+Americas,United States,Wisconsin,Lake Wisconsin,,,43.286597,-89.706022
+Americas,United States,Wisconsin,Wisconsin Ledge,44.717655,-87.595224,44.717655,-87.595224
+Americas,Venezuela,Carora,,10°34′09″N,70°15′42″W,10.56916667,-70.26166667
+Europe,Albania,Berat,,40.700°N,19.950°E,40.7,19.95
+Europe,Albania,Korça,,40.617°N,20.767°E,40.617,20.767
+Europe,Albania,Leskovik,,40°9′N,20°36′E,40.15,20.6
+Europe,Albania,Lezhë,,41.785051,19.645113,41.785051,19.645113
+Europe,Albania,Përmet,,40.234639,20.354715,40.234639,20.354715
+Europe,Albania,Shkoder,,42.067°N,19.500°E,42.067,19.5
+Europe,Albania,Tirana County,,41.250°N,19.750°E,41.25,19.75
+Europe,Armenia,Ararat Valley,,40.04°N,44.33°E,40.04,44.33
+Europe,Armenia,Areni,,39°43′15″N,45°11′02″E,39.72083333,45.18388889
+Europe,Armenia,Ijevan,,40°52′45″N,45°08′50″E,40.87916667,45.14722222
+Europe,Austria,Burgenland,,47.500°N,16.417°E,47.5,16.417
+Europe,Austria,Northeastern and eastern Lower Austria,Kamptal,48.585019,15.412425,48.585019,15.412425
+Europe,Austria,Northeastern and eastern Lower Austria,Kremstal,48°25′N,15°37′E,48.41666667,15.61666667
+Europe,Austria,Northeastern and eastern Lower Austria,Wachau,48°21′52″N,15°26′3″E,48.36444444,15.43416667
+Europe,Austria,Northeastern and eastern Lower Austria,Wagram,48°18′N,16°34′E,48.3,16.56666667
+Europe,Austria,Northeastern and eastern Lower Austria,Weinviertel,48.477906°N,16.513932°E,48.477906,16.513932
+Europe,Austria,Southern Styria,,47.250°N,15.167°E,47.25,15.167
+Europe,Austria,Vienna and surrounding area,,48°12′N,16°22′E,48.2,16.36666667
+Europe,Azerbaijan,Baku,,40°23′43″N,49°52′56″E,40.39527778,49.88222222
+Europe,Azerbaijan,Ganja,,40°40′58″N,46°21′38″E,40.68277778,46.36055556
+Europe,Azerbaijan,Madrasa village of Shamakhi Rayon,,40°36′53″N,48°33′51″E,40.61472222,48.56416667
+Europe,Azerbaijan,Tovuz and Shamkir,,40°59′32″N,45°37′44″E,40.99222222,45.62888889
+Europe,Belgium,Côtes de Sambre et Meuse,,,,50.317608,4.195161
+Europe,Belgium,Hagelandse wijn,,50.948014,4.755332,50.948014,4.755332
+Europe,Belgium,Haspengouw,,50.75°N,5.3°E,50.75,5.3
+Europe,Belgium,Heuvelland,,50°46′N,02°49′E,50.76666667,2.816666667
+Europe,Bosnia and Herzegovina,Čapljina,,43°06′42.58″N,17°42′19.74″E,43.11182778,17.70548333
+Europe,Bosnia and Herzegovina,Čitluk,,43.2°N,17.7°E,43.2,17.7
+Europe,Bosnia and Herzegovina,Ljubuški,,43°11′53″N,17°32′48″E,43.19805556,17.54666667
+Europe,Bosnia and Herzegovina,Međugorje,,43°12′N,17°41′E,43.2,17.68333333
+Europe,Bosnia and Herzegovina,Mostar,,43.333°N,17.800°E,43.333,17.8
+Europe,Bosnia and Herzegovina,Stolac,,43.08250°N,17.95583°E,43.0825,17.95583
+Europe,Bosnia and Herzegovina,Trebinje,,42°42′43″N,18°20′46″E,42.71194444,18.34611111
+Europe,Bulgaria,Black Sea region,,41.000°N,36.000°E,41,36
+Europe,Bulgaria,Danubian Plain,,43°15′N,25°20′E,43.25,25.33333333
+Europe,Bulgaria,Rose Valley,,42°37′N,25°24′E,42.61666667,25.4
+Europe,Bulgaria,Thrace,,42°N,26°E,42,26
+Europe,Bulgaria,Valley of the Struma River,,40°47′9″N,23°50′56″E,40.78583333,23.84888889
+Europe,Croatia,Continental Croatia: Central Croatia and Slavonia,Moslavina,45.56976728°N,16.72867894°E,45.56976728,16.72867894
+Europe,Croatia,Continental Croatia: Central Croatia and Slavonia,Plešivica,45.726698,15.650813,45.726698,15.650813
+Europe,Croatia,Continental Croatia: Central Croatia and Slavonia,Podunavlje,45.63058,18.812985,45.63058,18.812985
+Europe,Croatia,Continental Croatia: Central Croatia and Slavonia,Pokuplje,45.4821410400°N,15.8118852100°E,45.48214104,15.81188521
+Europe,Croatia,Continental Croatia: Central Croatia and Slavonia,Prigorje – Bilogora,45.882728°N,17.121592°E,45.882728,17.121592
+Europe,Croatia,Continental Croatia: Central Croatia and Slavonia,Slavonia,45.400°N,17.317°E,45.4,17.317
+Europe,Croatia,Continental Croatia: Central Croatia and Slavonia,Zagorje – Međimurje,46.466°N,16.414°E,46.466,16.414
+Europe,Croatia,Littoral Croatia: Northern Croatian Littoral and Dalmatia,Croatian Coast (Hrvatsko primorje),44.931°N,14.919°E,44.931,14.919
+Europe,Croatia,Littoral Croatia: Northern Croatian Littoral and Dalmatia,Dalmatian Interior (Dalmatinska zagora),43°42′42″N,16°17′02″E,43.71166667,16.28388889
+Europe,Croatia,Littoral Croatia: Northern Croatian Littoral and Dalmatia,Central and South Dalmatia (Srednja i Južna Dalmacija),42.873609,17.469589,42.873609,17.469589
+Europe,Croatia,Littoral Croatia: Northern Croatian Littoral and Dalmatia,Northern Dalmatia (Sjeverna Dalmacija),42.994724,17.174003,42.994724,17.174003
+Europe,Croatia,Littoral Croatia: Northern Croatian Littoral and Dalmatia,Istria (Istra),45°15′40″N,13°54′16″E,45.26111111,13.90444444
+Europe,Cyprus,Commandaria,,34.81696,32.909328,34.81696,32.909328
+Europe,Cyprus,Laona – Akamas,,35.04°N,32.32°E,35.04,32.32
+Europe,Cyprus,Vouni Panagias – Ambelitis,,34.920948,32.625669,34.920948,32.625669
+Europe,Cyprus,Krasochoria Lemesou,,34.690471,33.0271,34.690471,33.0271
+Europe,Cyprus,Pitsilia,,"34°55'00.0""N","33°05'00.0""E",34.91666667,33.08333333
+Europe,Cyprus,Diarizos Valley,,34.772535,32.650558,34.772535,32.650558
+Europe,Czech Republic,Moravia,Mikulov – Mikulovska wine,48°48′20.01″N,16°38′00″E,48.80555833,16.63333333
+Europe,Czech Republic,Moravia,Slovácko,48.9653806°N,17.3504556°E,48.9653806,17.3504556
+Europe,Czech Republic,Moravia,Velké Pavlovice,48°54′17″N,16°48′58″E,48.90472222,16.81611111
+Europe,Czech Republic,Moravia,Znojmo,48°51′20″N,16°2′56″E,48.85555556,16.04888889
+Europe,Czech Republic,Bohemia,Litoměřice,50°32′3″N,14°7′58″E,50.53416667,14.13277778
+Europe,Czech Republic,Bohemia,Mělník,50°21′7″N,14°28′30″E,50.35194444,14.475
+Europe,Czech Republic,Prague,Gazebo at Gröbe’s Villa,50.069114,14.445173,50.069114,14.445173
+Europe,Czech Republic,Prague,St. Clare’s,50.117413,14.414066,50.117413,14.414066
+Europe,Czech Republic,Prague,St. Wenceslas’ Vineyard at Prague castle,50.092387,14.407315,50.092387,14.407315
+Europe,Czech Republic,Prague,Salabka,50.123407,14.413038,50.123407,14.413038
+Europe,France,Alsace – Alsace wine,,48°30′N,7°30′E,48.5,7.5
+Europe,France,Bordeaux – Bordeaux wine,Barsac,44°31′58″N,0°20′29″W,44.53277778,-0.3413888889
+Europe,France,Bordeaux – Bordeaux wine,Entre-Deux-Mers,44.845362,-0.53279,44.845362,-0.53279
+Europe,France,Bordeaux – Bordeaux wine,Fronsac,44°55′30″N,0°16′19″W,44.925,-0.2719444444
+Europe,France,Bordeaux – Bordeaux wine,Graves,44.820305,0.599558,44.883364,-0.30293
+Europe,France,Bordeaux – Bordeaux wine,Haut-Médoc,44.84961,-0.570709,44.979395,-0.617439
+Europe,France,Bordeaux – Bordeaux wine,Margaux,45°02′31″N,0°40′32″W,45.04194444,-0.6755555556
+Europe,France,Bordeaux – Bordeaux wine,Médoc,45.000°N,1.000°W,45,-1
+Europe,France,Bordeaux – Bordeaux wine,Pauillac,45°12′00″N,0°44′56″W,45.2,-0.7488888889
+Europe,France,Bordeaux – Bordeaux wine,Pessac-Léognan,44.721813,-0.612707,44.721813,-0.612707
+Europe,France,Bordeaux – Bordeaux wine,Pomerol,44°55′58″N,0°11′57″W,44.93277778,-0.1991666667
+Europe,France,Bordeaux – Bordeaux wine,Saint-Émilion,44.898422,-0.165865,44.898422,-0.165865
+Europe,France,Bordeaux – Bordeaux wine,Saint-Estèphe,45.250021,-0.769941,45.250021,-0.769941
+Europe,France,Bordeaux – Bordeaux wine,Saint-Julien,45.154546,-0.74298,45.154546,-0.74298
+Europe,France,Bordeaux – Bordeaux wine,Sauternes – Sauternes,44.820305,0.599558,44.5447,-0.3287
+Europe,France,Burgundy (Bourgogne) – Burgundy wine,Beaujolais,46.15°N,4.65°E,46.15,4.65
+Europe,France,Burgundy (Bourgogne) – Burgundy wine,Bugey,45.917°N,5.617°E,45.917,5.617
+Europe,France,Burgundy (Bourgogne) – Burgundy wine,Chablis,47°48′56″N,3°47′51″E,47.81555556,3.7975
+Europe,France,Burgundy (Bourgogne) – Burgundy wine,Côte Chalonnaise,46.81°N,4.70°E,46.81,4.7
+Europe,France,Burgundy (Bourgogne) – Burgundy wine,Côte d'Or,47°25′N,04°50′E,47.41666667,4.833333333
+Europe,France,Burgundy (Bourgogne) – Burgundy wine,Côte de Beaune,46.99000°N,4.78000°E,46.99,4.78
+Europe,France,Burgundy (Bourgogne) – Burgundy wine,Aloxe-Corton,47°03′59″N,4°51′37″E,47.06638889,4.860277778
+Europe,France,Burgundy (Bourgogne) – Burgundy wine,Auxey-Duresses,46°59′15″N,4°44′56″E,46.9875,4.748888889
+Europe,France,Burgundy (Bourgogne) – Burgundy wine,Beaune,47°01′30″N,4°50′23″E,47.025,4.839722222
+Europe,France,Burgundy (Bourgogne) – Burgundy wine,Chassagne-Montrachet,46°56′16″N,4°43′45″E,46.93777778,4.729166667
+Europe,France,Burgundy (Bourgogne) – Burgundy wine,Meursault,46°58′44″N,4°46′16″E,46.97888889,4.771111111
+Europe,France,Burgundy (Bourgogne) – Burgundy wine,Santenay,46°54′49″N,4°41′53″E,46.91361111,4.698055556
+Europe,France,Burgundy (Bourgogne) – Burgundy wine,Côte de Nuits,47.18°N,4.96°E,47.18,4.96
+Europe,France,Burgundy (Bourgogne) – Burgundy wine,Chambolle-Musigny,47°11′11″N,4°57′12″E,47.18638889,4.953333333
+Europe,France,Burgundy (Bourgogne) – Burgundy wine,Gevrey-Chambertin,47°13′38″N,4°58′05″E,47.22722222,4.968055556
+Europe,France,Burgundy (Bourgogne) – Burgundy wine,Nuits-Saint-Georges,47°08′18″N,4°57′04″E,47.13833333,4.951111111
+Europe,France,Burgundy (Bourgogne) – Burgundy wine,Vosne-Romanée,47°09′37″N,4°57′16″E,47.16027778,4.954444444
+Europe,France,Burgundy (Bourgogne) – Burgundy wine,Mâconnais,46.34°N,4.74°E,46.34,4.74
+Europe,France,Burgundy (Bourgogne) – Burgundy wine,Pouilly-Fuissé,46.289111,4.740064,46.289111,4.740064
+Europe,France,Champagne – Champagne,,49°N,4°E,49,4
+Europe,France,Jura – Jura wine,,46°40′31″N,5°33′16″E,46.67527778,5.554444444
+Europe,France,Languedoc-Roussillon,Banyuls,42.48306°N,3.12806°E,42.48306,3.12806
+Europe,France,Languedoc-Roussillon,Blanquette de Limoux,43°03′28″N,2°13′09″E,43.05777778,2.219166667
+Europe,France,Languedoc-Roussillon,Cabardès,43.397698,2.273708,43.397698,2.273708
+Europe,France,Languedoc-Roussillon,Collioure,42°31′36″N,3°04′53″E,42.52666667,3.081388889
+Europe,France,Languedoc-Roussillon,Corbières,42.840893,2.751082,45.091014,4.894386
+Europe,France,Languedoc-Roussillon,Côtes du Roussillon,42°51′55″N,2°53′44″E,42.86527778,2.895555556
+Europe,France,Languedoc-Roussillon,Fitou,42°53′40″N,2°58′46″E,42.89444444,2.979444444
+Europe,France,Languedoc-Roussillon,Maury,42°48′44″N,2°35′41″E,42.81222222,2.594722222
+Europe,France,Languedoc-Roussillon,Minervois,43.327272,2.518893,43.327272,2.518893
+Europe,France,Languedoc-Roussillon,Rivesaltes,42.7697°N,2.8747°E,42.7697,2.8747
+Europe,France,Loire Valley – Loire Valley (wine region),Anjou – Saumur,45.34913,4.884785,45.34913,4.884785
+Europe,France,Loire Valley – Loire Valley (wine region),Cognac,45°42′N,0°20′W,45.7,-0.3333333333
+Europe,France,Loire Valley – Loire Valley (wine region),Muscadet,47.257866,-1.298473,47.1485,-1.3991
+Europe,France,Loire Valley – Loire Valley (wine region),Pouilly-Fumé,47.12436,3.546698,47.12436,3.546698
+Europe,France,Loire Valley – Loire Valley (wine region),Sancerre,47°19′55″N,2°50′24″E,47.33194444,2.84
+Europe,France,Loire Valley – Loire Valley (wine region),Touraine,47.400°N,0.683°E,47.4,0.683
+Europe,France,Lorraine,,49.000°N,6.000°E,49,6
+Europe,France,Madiran,,43°32′58″N,0°03′28″W,43.54944444,-0.05777777778
+Europe,France,Provence,,43.50°N,5.50°E,43.5,5.5
+Europe,France,Rhône – Rhône wine,Beaumes-de-Venise,44°07′25″N,5°01′52″E,44.12361111,5.031111111
+Europe,France,Rhône – Rhône wine,Château-Grillet,45.450107,4.751732,45.450107,4.751732
+Europe,France,Rhône – Rhône wine,Châteauneuf-du-Pape,44.0569°N,4.8319°E,44.0569,4.8319
+Europe,France,Rhône – Rhône wine,Condrieu,45°27′50″N,4°46′06″E,45.46388889,4.768333333
+Europe,France,Rhône – Rhône wine,Cornas,44°57′40″N,4°51′00″E,44.96111111,4.85
+Europe,France,Rhône – Rhône wine,Côte du Rhône-Villages,44.126851,4.904873,45.078246,4.839414
+Europe,France,Rhône – Rhône wine,Côte-Rôtie,45.528634,4.814411,45.500731,4.806158
+Europe,France,Rhône – Rhône wine,Côtes du Rhône,44.636915,4.736058,44.9183,4.8125
+Europe,France,Rhône – Rhône wine,Crozes-Hermitage,45°05′27″N,4°50′48″E,45.09083333,4.846666667
+Europe,France,Rhône – Rhône wine,Gigondas,44°09′53″N,5°00′19″E,44.16472222,5.005277778
+Europe,France,Rhône – Rhône wine,Hermitage,45.091837,4.843951,45.091837,4.843951
+Europe,France,Rhône – Rhône wine,St. Joseph,45.555258,4.619873,45.555258,4.619873
+Europe,France,Rhône – Rhône wine,Saint-Péray,44°56′58″N,4°50′45″E,44.94944444,4.845833333
+Europe,France,Rhône – Rhône wine,Vacqueyras,44°08′17″N,4°58′59″E,44.13805556,4.983055556
+Europe,France,Savoie,,45°35′N,6°20′E,45.58333333,6.333333333
+Europe,Georgia,Abkhazia,,43.000°N,40.983°E,43,40.983
+Europe,Georgia,Kakheti,,41°45′N,45°43′E,41.75,45.71666667
+Europe,Georgia,Kartli,,41.26667°N,44.50278°E,41.26667,44.50278
+Europe,Georgia,Imereti,,42.167°N,42.983°E,42.167,42.983
+Europe,Georgia,Racha-Lechkhumi and Kvemo Svaneti,,42.633°N,43.133°E,42.633,43.133
+Europe,Germany,Ahr,,,,50.43806,7.27694
+Europe,Germany,Baden,,,,48.750304,8.258033
+Europe,Germany,Franconia (Franken),,,,49.805992,9.92556
+Europe,Germany,Hessische Bergstraße,,,,49.717,8.617
+Europe,Germany,Mittelrhein,,,,50.161273,7.698375
+Europe,Germany,Mosel,,,,49.929244,7.04136
+Europe,Germany,Nahe,,,,49.85,7.866667
+Europe,Germany,Palatinate (Pfalz),,,,49.426232,8.183756
+Europe,Germany,Rheingau,,,,50.039728,8.3169
+Europe,Germany,Rheinhessen,,,,49.886855,8.316094
+Europe,Germany,Saale-Unstrut,,,,51.204066,11.766133
+Europe,Germany,Saxony (Sachsen),,,,51.0976,13.628
+Europe,Germany,Württemberg,,,,48.860024,9.239004
+Europe,Greece,Aegean islands,Crete,35.2100°N,24.9100°E,35.21,24.91
+Europe,Greece,Aegean islands,Limnos,39°55′N,25°15′E,39.91666667,25.25
+Europe,Greece,Aegean islands,Paros,37°5′N,25°9′E,37.08333333,25.15
+Europe,Greece,Aegean islands,Rhodes,36°10′N,27°56′E,36.16666667,27.93333333
+Europe,Greece,Aegean islands,Samos,37°45′N,26°50′E,37.75,26.83333333
+Europe,Greece,Aegean islands,Santorini,36°25′N,25°26′E,36.41666667,25.43333333
+Europe,Greece,Central Greece,Attica,38.08333°N,23.50000°E,38.08333,23.5
+Europe,Greece,Central Greece,Epirus,39°36′N,20°48′E,39.6,20.8
+Europe,Greece,Central Greece,Zitsa,39°45′N,20°39′E,39.75,20.65
+Europe,Greece,Central Greece,Thessaly,39°36′N,22°12′E,39.6,22.2
+Europe,Greece,Central Greece,Nea Anchialos,39°16′N,22°49′E,39.26666667,22.81666667
+Europe,Greece,Central Greece,Rapsani,39.900°N,22.550°E,39.9,22.55
+Europe,Greece,Ionian Islands,Kefalonia,38.250°N,20.500°E,38.25,20.5
+Europe,Greece,Macedonia,Amyntaion,40°41′N,21°41′E,40.68333333,21.68333333
+Europe,Greece,Macedonia,Goumenissa,40°56′N,22°27′E,40.93333333,22.45
+Europe,Greece,Macedonia,Naousa,40°38′N,22°4′E,40.63333333,22.06666667
+Europe,Greece,Peloponnesus,Mantineia,37°37′3.51″N,22°23′34.33″E,37.61764167,22.39286944
+Europe,Greece,Peloponnesus,Nemea,37°48′32″N,22°42′37″E,37.80888889,22.71027778
+Europe,Greece,Peloponnesus,Patras,38°15′N,21°44′E,38.25,21.73333333
+Europe,Hungary,Balaton,Badacsony,46°48′12.64″N,17°29′45.01″E,46.80351111,17.49583611
+Europe,Hungary,Balaton,Balaton-felvidék,46.916226,17.750601,46.916226,17.750601
+Europe,Hungary,Balaton,Balatonboglár,46°46′N,17°40′E,46.76666667,17.66666667
+Europe,Hungary,Balaton,Balatonfüred-Csopak,46.971971,17.919719,46.971971,17.919719
+Europe,Hungary,Balaton,Nagy-Somló,47°8′51.93″N,17°22′16.27″E,47.14775833,17.37118611
+Europe,Hungary,Balaton,Zala,46.700029,17.213541,46.700029,17.213541
+Europe,Hungary,Duna,Csongrád,46°42′41″N,20°08′25″E,46.71138889,20.14027778
+Europe,Hungary,Duna,Hajós-Baja,46.384092,19.130742,46.384092,19.130742
+Europe,Hungary,Duna,Kunság,,,46.863433,19.573363
+Europe,Hungary,Eger,Bükk,48.082238,20.499784,48.082238,20.499784
+Europe,Hungary,Eger,Eger,47°53′56″N,20°22′29″E,47.89888889,20.37472222
+Europe,Hungary,Eger,Etyek-Buda,47.439742,18.740261,47.439742,18.740261
+Europe,Hungary,Eger,Mátra,47.883131,19.9503,47.883131,19.9503
+Europe,Hungary,Eger,Mór,47.377367,18.18903,47.377367,18.18903
+Europe,Hungary,Eger,Neszmély,47°43′58″N,18°20′42″E,47.73277778,18.345
+Europe,Hungary,Eger,Pannonhalma,47°32′48″N,17°45′00″E,47.54666667,17.75
+Europe,Hungary,Pannon,Pécs,46.083297,18.234111,46.083297,18.234111
+Europe,Hungary,Pannon,Szekszárd,46°21′21″N,18°42′14″E,46.35583333,18.70388889
+Europe,Hungary,Pannon,Tolna,46.41609,18.772477,46.41609,18.772477
+Europe,Hungary,Pannon,Villány,45°52′10″N,18°27′20″E,45.86944444,18.45555556
+Europe,Hungary,Sopron,,47°41′06″N,16°34′59″E,47.685,16.58305556
+Europe,Hungary,Tokaj,,48°07′N,21°25′E,48.11666667,21.41666667
+Europe,Ireland,Cork,,51°58′N,8°35′W,51.96666667,-8.583333333
+Europe,Italy,Apulia,Bianco di Locorotondo e Martina Franca,40.793633,17.369642,40.793633,17.369642
+Europe,Italy,Apulia,Primitivo di Manduria,40.392881,17.629234,40.392881,17.629234
+Europe,Italy,Calabria,Bivongi,38.483°N,16.450°E,38.483,16.45
+Europe,Italy,Calabria,Cirò,39.394011,16.753775,39.380766,17.067477
+Europe,Italy,Calabria,Gaglioppo,38.922054,16.324369,38.922054,16.324369
+Europe,Italy,Calabria,Greco di Bianco,38.133065,15.920147,38.088977,16.149675
+Europe,Italy,Calabria,Lamezia,38.967°N,16.300°E,38.967,16.3
+Europe,Italy,Calabria,Melissa,39.305848,17.023294,39.305848,17.023294
+Europe,Italy,Calabria,Sant'Anna di Isola Capo Rizzuto,39.004292,17.072269,39.004292,17.072269
+Europe,Italy,Calabria,Savuto,39.033°N,16.100°E,39.033,16.1
+Europe,Italy,Calabria,Scavigna,44.223224,11.836876,44.223224,11.836876
+Europe,Italy,Calabria,Terre di Cosenza,43.688727,11.824356,39.30654,16.24266
+Europe,Italy,Emilia-Romagna,Colli Cesenate,44.107509,12.248623,44.107509,12.248623
+Europe,Italy,Emilia-Romagna,Sangiovese Superiore di Romagna,44.102471,11.87595,44.102471,11.87595
+Europe,Italy,Liguria,Cinque Terre,44°7′10″N,9°43′00″E,44.11944444,9.716666667
+Europe,Italy,Lombardy,Franciacorta,45.6200°N,10.0200°E,45.62,10.02
+Europe,Italy,Lombardy,Oltrepo Pavese,44°59′33″N,9°0′33″E,44.9925,9.009166667
+Europe,Italy,Marche,Castelli di Jesi,43.523749,13.242311,43.523749,13.242311
+Europe,Italy,Marche,Conero,43.549736,13.599344,43.549736,13.599344
+Europe,Italy,Marche,Piceno,42°51′17″N,13°34′31″E,42.85472222,13.57527778
+Europe,Italy,Piedmont,Acqui,44°41′N,08°28′E,44.68333333,8.466666667
+Europe,Italy,Piedmont,Alba,44°42′N,08°02′E,44.7,8.033333333
+Europe,Italy,Piedmont,Asti,44°54′00″N,8°12′25″E,44.9,8.206944444
+Europe,Italy,Piedmont,Barolo,44.610955,7.94252,44.610955,7.94252
+Europe,Italy,Piedmont,Gattinara,45°37′0″N,8°22′0″E,45.61666667,8.366666667
+Europe,Italy,Piedmont,Gavi,44°41′N,8°48′E,44.68333333,8.8
+Europe,Italy,Piedmont,Ghemme,45°36′N,8°25′E,45.6,8.416666667
+Europe,Italy,Piedmont,Langhe,44.61°N,7.97°E,44.61,7.97
+Europe,Italy,Piedmont,Monferrato,45.05083°N,8.38972°E,45.05083,8.38972
+Europe,Italy,Piedmont,Nizza,44.769899,8.355742,44.769899,8.355742
+Europe,Italy,Piedmont,Ovada,44°38′10″N,8°38′30″E,44.63611111,8.641666667
+Europe,Italy,Sardinia,Cagliari,39°13′40″N,09°06′40″E,39.22777778,9.111111111
+Europe,Italy,Sardinia,Cannonau,40.258497,9.555967,40.258497,9.555967
+Europe,Italy,Sardinia,Monti,40°48′N,9°20′E,40.8,9.333333333
+Europe,Italy,Sardinia,Nuragus,39.783°N,9.033°E,39.783,9.033
+Europe,Italy,Sardinia,Ogliastra,39.8833°N,9.5500°E,39.8833,9.55
+Europe,Italy,Sicily,Etna,37.751205,14.993874,37.751205,14.993874
+Europe,Italy,Sicily,Noto,36.883°N,15.083°E,36.883,15.083
+Europe,Italy,Sicily,Pantelleria,36°50′N,11°57′E,36.83333333,11.95
+Europe,Italy,Trentino-Alto Adige,South Tyrol,46.698445,11.412118,46.698445,11.412118
+Europe,Italy,Trentino-Alto Adige,Trentino,46°26′44″N,11°10′23″E,46.44555556,11.17305556
+Europe,Italy,Tuscany,Bolgheri,43°14′02.0″N,10°37′02.0″E,43.23388889,10.61722222
+Europe,Italy,Tuscany,Chianti,43.526183,11.009807,43.526183,11.009807
+Europe,Italy,Tuscany,Colli Etruria Centrale,43.560913,11.041351,43.560913,11.041351
+Europe,Italy,Tuscany,Colline Lucchesi,43.902317,10.408215,43.902317,10.408215
+Europe,Italy,Tuscany,Elba,42°46′58″N,10°17′11″E,42.78277778,10.28638889
+Europe,Italy,Tuscany,Montalcino,43.050°N,11.483°E,43.05,11.483
+Europe,Italy,Tuscany,Montescudaio,43.333°N,10.633°E,43.333,10.633
+Europe,Italy,Tuscany,Parrina,42.484331,11.251083,42.484331,11.251083
+Europe,Italy,Tuscany,Pitigliano,42°38′N,11°40′E,42.63333333,11.66666667
+Europe,Italy,Tuscany,San Gimignano,43°28′05″N,11°02′31″E,43.46805556,11.04194444
+Europe,Italy,Tuscany,Scansano,42.68972°N,11.33472°E,42.68972,11.33472
+Europe,Italy,Tuscany,Val di Chiana,43.250°N,11.817°E,43.25,11.817
+Europe,Italy,Tuscany,Val di Cornia,43.072477,10.710245,43.072477,10.710245
+Europe,Italy,Tuscany,Valdinievole,43.913866,10.785235,43.913866,10.785235
+Europe,Italy,Tuscany,Valle di Arbia,43.227778,11.417249,43.227778,11.417249
+Europe,Italy,Umbria,Montefalco,42°53′N,12°39′E,42.88333333,12.65
+Europe,Italy,Umbria,Orvieto,42°43′06″N,12°06′37″E,42.71833333,12.11027778
+Europe,Italy,Umbria,Torgiano,43°2′N,12°26′E,43.03333333,12.43333333
+Europe,Italy,Veneto,Arcole,45°21′N,11°17′E,45.35,11.28333333
+Europe,Italy,Veneto,Bagnoli,45°11′N,11°53′E,45.18333333,11.88333333
+Europe,Italy,Veneto,Bardolino,45°32′N,10°43′E,45.53333333,10.71666667
+Europe,Italy,Veneto,Bianco di Custoza,45.374408,10.795732,45.374408,10.795732
+Europe,Italy,Veneto,Breganze,45°42′N,11°34′E,45.7,11.56666667
+Europe,Italy,Veneto,Colli Berici,45.433603,11.516109,45.433603,11.516109
+Europe,Italy,Veneto,Colli di Conegliano,45°53′12.32″N,12°17′50.6″E,45.88675556,12.29738889
+Europe,Italy,Veneto,Colli Euganei,45.317°N,11.667°E,45.317,11.667
+Europe,Italy,Veneto,Gambellara,45.467°N,11.333°E,45.467,11.333
+Europe,Italy,Veneto,Garda,45°34′N,10°43′E,45.56666667,10.71666667
+Europe,Italy,Veneto,Lessini Durello,45.479686,11.290522,45.479686,11.290522
+Europe,Italy,Veneto,Lison Pramaggiore,45.812869,12.736642,45.812869,12.736642
+Europe,Italy,Veneto,Lugana,45.452754,10.627672,45.452754,10.627672
+Europe,Italy,Veneto,Montgello e Colli Asolani,45.791177,12.092398,45.791177,12.092398
+Europe,Italy,Veneto,Piave,45°50′34″N,12°6′18″E,45.84277778,12.105
+Europe,Italy,Veneto,Prosecco di Conegliano – Valdobbiadene,45.898745,11.9958,45.898745,11.9958
+Europe,Italy,Veneto,Soave,45.420823,11.246142,45.420823,11.246142
+Europe,Italy,Veneto,Valdadige,45.669339,10.928409,45.669339,10.928409
+Europe,Italy,Veneto,Valpolicella,45.5167°N,10.8833°E,45.5167,10.8833
+Europe,Latvia,Sabile,,57°03′N,22°35′E,57.05,22.58333333
+Europe,Lithuania,Anykščių vynas – Anykščiai,,55°32′N,25°6′E,55.53333333,25.1
+Europe,Lithuania,Mėmelio vynas - Priekulė,,55°33′20″N,21°19′10″E,55.55555556,21.31944444
+Europe,Luxembourg,Moselle Valley,,50.4°N,7.6°E,50.4,7.6
+Europe,Moldova,Bardar,,46°54′N,28°40′E,46.9,28.66666667
+Europe,Moldova,Codri,,47.1000°N,28.3000°E,47.1,28.3
+Europe,Moldova,Cricova,,47.133°N,28.850°E,47.133,28.85
+Europe,Moldova,Hînceşti,,46°49′N,28°35′E,46.81666667,28.58333333
+Europe,Moldova,Purcari,,46°32′20″N,29°51′24″E,46.53888889,29.85666667
+Europe,Montenegro,Crmnica,,42.098549,19.093775,42.098549,19.093775
+Europe,Montenegro,Plantaže,,42.401555,19.264564,42.401555,19.264564
+Europe,Netherlands,Groesbeek,,51°47′N,5°56′E,51.78333333,5.933333333
+Europe,North Macedonia,Povardarie,,41.02927,21.326502,41.02927,21.326502
+Europe,North Macedonia,Tikveš,,41.435771,22.002186,41.435771,22.002186
+Europe,Poland,Dolny Śląsk,,51°05′N,16°24′E,51.08333333,16.4
+Europe,Poland,Kazimierz Dolny,,51°19′N,21°57′E,51.31666667,21.95
+Europe,Poland,Małopolska,,49.789875,20.219001,49.789875,20.219001
+Europe,Poland,Podkarpacie,,49°57′24″N,22°10′22″E,49.95666667,22.17277778
+Europe,Poland,Warka,,51°47′N,21°12′E,51.78333333,21.2
+Europe,Poland,Zielona Góra,,51°56′N,15°30′E,51.93333333,15.5
+Europe,Portugal,Alentejo,,38.55753,7.727599,38.198519,-7.798677
+Europe,Portugal,Bairrada,,39.86943,8.240537,39.86943,8.240537
+Europe,Portugal,Bucelas,,38°54′04″N,9°07′08″W,38.90111111,-9.118888889
+Europe,Portugal,Carcavelos,,38.6833°N,9.3333°W,38.6833,-9.3333
+Europe,Portugal,Colares,,38.803°N,9.450°W,38.803,-9.45
+Europe,Portugal,Dão,,40°39′19″N,7°54′51″W,40.65527778,-7.914166667
+Europe,Portugal,Lagoa,,37°8′N,8°27′W,37.13333333,-8.45
+Europe,Portugal,Lagos,,37°6′10″N,8°40′22″W,37.10277778,-8.672777778
+Europe,Portugal,Madeira,,32°45′N,17°00′W,32.75,-17
+Europe,Portugal,Portimão,,37°8′13″N,8°32′18″W,37.13694444,-8.538333333
+Europe,Portugal,Porto e Douro,,41°8′36″N,8°40′10″W,41.14333333,-8.669444444
+Europe,Portugal,Setúbal,,38°31′27.5″N,8°53′33.4″W,38.52430556,-8.892611111
+Europe,Portugal,Tavira,,37°07′N,7°39′W,37.11666667,-7.65
+Europe,Portugal,Vinhos Verdes,,41.326861,8.317153,41.326861,8.317153
+Europe,Romania,Arad,,46°10′N,21°19′E,46.16666667,21.31666667
+Europe,Romania,Jamu Mare,,45°15′N,21°25′E,45.25,21.41666667
+Europe,Romania,Măderat,,46°19′21″N,21°41′13″E,46.3225,21.68694444
+Europe,Romania,Miniş,,46°09′N,21°35′E,46.15,21.58333333
+Europe,Romania,Moldova Nouă,,44°43′4″N,21°39′50″E,44.71777778,21.66388889
+Europe,Romania,Recaş,,45°48′05″N,21°30′48″E,45.80138889,21.51333333
+Europe,Romania,Silagiu,,45°39′0″N,21°36′0″E,45.65,21.6
+Europe,Romania,Teremia,,45°56′N,20°31′E,45.93333333,20.51666667
+Europe,Romania,Tirol,,45.331949,21.595881,45.331949,21.595881
+Europe,Romania,Diosig,,47°18′N,22°00′E,47.3,22
+Europe,Romania,Săcuieni,,47.3525°N,22.0914°E,47.3525,22.0914
+Europe,Romania,Sâniob,,47°16′00″N,22°08′00″E,47.26666667,22.13333333
+Europe,Romania,Sanislău,,47°38′N,22°20′E,47.63333333,22.33333333
+Europe,Romania,Valea lui Mihai,,47°31′12″N,22°7′48″E,47.52,22.13
+Europe,Romania,Adamclisi,,44.07917°N,27.95417°E,44.07917,27.95417
+Europe,Romania,Aliman,,44.25000°N,27.66667°E,44.25,27.66667
+Europe,Romania,Babadag,,44°53′53″N,28°44′31″E,44.89805556,28.74194444
+Europe,Romania,Băneasa,,44°29′32.82″N,26°4′44.84″E,44.49245,26.07912222
+Europe,Romania,Cernavodă,,44°20′17″N,28°02′01″E,44.33805556,28.03361111
+Europe,Romania,Chirnogeni,,43°54′0″N,28°14′0″E,43.9,28.23333333
+Europe,Romania,Dăeni,,44°50′N,28°07′E,44.83333333,28.11666667
+Europe,Romania,Hârşova,,44°41′0″N,27°57′7″E,44.68333333,27.95194444
+Europe,Romania,Istria,,45.26111°N,13.90444°E,45.26111,13.90444
+Europe,Romania,Măcin,,45°14′44″N,28°7′23″E,45.24555556,28.12305556
+Europe,Romania,Medgidia,,44°15′01″N,28°15′41″E,44.25027778,28.26138889
+Europe,Romania,Murfatlar,,44°10′25″N,28°24′30″E,44.17361111,28.40833333
+Europe,Romania,Oltina,,44°15′0″N,27°34′0″E,44.25,27.56666667
+Europe,Romania,Ostrov,,44°5′0″N,27°21′0″E,44.08333333,27.35
+Europe,Romania,Ostrov,,44°56′N,28°09′E,44.93333333,28.15
+Europe,Romania,Poarta Albă,,44°13′0″N,28°24′0″E,44.21666667,28.4
+Europe,Romania,Sarica-Niculiţel,,45.19075,28.52752,45.19075,28.52752
+Europe,Romania,Siminoc,,,,44.169393,28.3515
+Europe,Romania,Tulcea,,45°11′24″N,28°48′0″E,45.19,28.8
+Europe,Romania,Valea Dacilor,,44°15′01″N,28°15′41″E,44.25027778,28.26138889
+Europe,Romania,Valea Nucarilor,,45°02′N,28°56′E,45.03333333,28.93333333
+Europe,Romania,Valu lui Traian,,44°9′54″N,28°27′18″E,44.165,28.455
+Europe,Romania,Bereşti,,46°6′N,27°53′E,46.1,27.88333333
+Europe,Romania,Bohotin,,46°57′N,27°56′E,46.95,27.93333333
+Europe,Romania,Coteşti,,45°39′N,27°03′E,45.65,27.05
+Europe,Romania,Colinele Tutovei,,46.221052,27.627693,46.221052,27.627693
+Europe,Romania,Comarna,,47°03′N,27°47′E,47.05,27.78333333
+Europe,Romania,Copou,,47°10′43″N,27°34′02″E,47.17861111,27.56722222
+Europe,Romania,Corod,,45°54′N,27°37′E,45.9,27.61666667
+Europe,Romania,Cotnari,,47°20′25″N,26°56′27″E,47.34027778,26.94083333
+Europe,Romania,Covurlui,,45.61268,28.055364,45.61268,28.055364
+Europe,Romania,Cucuteni,,47°16′N,26°56′E,47.26666667,26.93333333
+Europe,Romania,Dealu Morii,,46°19′N,27°14′E,46.31666667,27.23333333
+Europe,Romania,Dealul Bujorului,,45.81602,27.949067,45.81602,27.949067
+Europe,Romania,Hârlău,,47°25′40″N,26°54′41″E,47.42777778,26.91138889
+Europe,Romania,Hlipicani,,47.593701,27.151123,47.593701,27.151123
+Europe,Romania,Huşi,,46°40′27″N,28°3′35″E,46.67416667,28.05972222
+Europe,Romania,Iaşi,,47°09′25″N,27°35′25″E,47.15694444,27.59027778
+Europe,Romania,Iveşti,,45.6698°N,27.5435°E,45.6698,27.5435
+Europe,Romania,Jariştea,,45°47′N,27°04′E,45.78333333,27.06666667
+Europe,Romania,Nămoloasa,,45°32′N,27°33′E,45.53333333,27.55
+Europe,Romania,Nicoreşti,,45°55′45″N,27°18′42″E,45.92916667,27.31166667
+Europe,Romania,Odobeşti,,45°46′N,27°4′E,45.76666667,27.06666667
+Europe,Romania,Panciu,,45.91000°N,27.09000°E,45.91,27.09
+Europe,Romania,Păuneşti,,46°02′N,27°07′E,46.03333333,27.11666667
+Europe,Romania,Probota,,47°24′N,27°30′E,47.4,27.5
+Europe,Romania,Tănăsoaia,,46°07′N,27°24′E,46.11666667,27.4
+Europe,Romania,Târgu Frumos,,47°12′35″N,27°00′47″E,47.20972222,27.01305556
+Europe,Romania,Tecuci,,45.84667°N,27.42778°E,45.84667,27.42778
+Europe,Romania,Ţifeşti,,45°51′N,27°06′E,45.85,27.1
+Europe,Romania,Tomeşti,,47.1333°N,27.7°E,47.1333,27.7
+Europe,Romania,Vaslui,,46°38′18″N,27°43′45″E,46.63833333,27.72916667
+Europe,Romania,Zeletin,,45°18′N,26°15′E,45.3,26.25
+Europe,Romania,Seciu,,45°1′48″N,26°1′48″E,45.03,26.03
+Europe,Romania,Breaza,,45°11′14″N,25°39′44″E,45.18722222,25.66222222
+Europe,Romania,Cricov,,45°05′N,26°16′E,45.08333333,26.26666667
+Europe,Romania,Dealu Mare,,47.922537,26.413622,47.922537,26.413622
+Europe,Romania,Dealurile Buzăului,,45.231644,26.775605,45.231644,26.775605
+Europe,Romania,Pietroasa,,45°06′N,26°34′E,45.1,26.56666667
+Europe,Romania,Râmnicu Sărat,,45°22′48″N,27°3′36″E,45.38,27.06
+Europe,Romania,Sercaia,,45°50′N,25°08′E,45.83333333,25.13333333
+Europe,Romania,Ştefăneşti,,44°44′N,24°39′E,44.73333333,24.65
+Europe,Romania,Tohani,,45°03′N,26°28′E,45.05,26.46666667
+Europe,Romania,Topoloveni,,44°48′25″N,25°5′2″E,44.80694444,25.08388889
+Europe,Romania,Urlaţi – Ceptura,,44.990134,26.234548,44.990134,26.234548
+Europe,Romania,Valea Călugărească,,44°57′N,26°13′E,44.95,26.21666667
+Europe,Romania,Valea Mare,,44°53′N,25°05′E,44.88333333,25.08333333
+Europe,Romania,Zărneşti,,45°34′N,25°20′E,45.56666667,25.33333333
+Europe,Romania,Zoreşti,,45°13′N,26°43′E,45.21666667,26.71666667
+Europe,Romania,Banu Mărăcine,,44.289965,23.85929,44.289965,23.85929
+Europe,Romania,Calafat,,43°59′09″N,22°57′27″E,43.98583333,22.9575
+Europe,Romania,Cetate,,44°6′N,23°13′E,44.1,23.21666667
+Europe,Romania,Corcova,,44°42′N,23°03′E,44.7,23.05
+Europe,Romania,Dăbuleni,,43°48′04″N,24°05′31″E,43.80111111,24.09194444
+Europe,Romania,Dealul Viilor,,44.830303,24.702908,44.830303,24.702908
+Europe,Romania,Dealurile Craiovei,,44.325337,23.794306,44.325337,23.794306
+Europe,Romania,Drăgăşani,,44°39′40″N,24°15′38″E,44.66111111,24.26055556
+Europe,Romania,Golul Drincei,,44.890178,24.766016,44.304618,22.995586
+Europe,Romania,Greaca,,44.10917°N,26.33667°E,44.10917,26.33667
+Europe,Romania,Iancu Jianu,,44.494816,24.032539,44.494816,24.032539
+Europe,Romania,Izvoarele,,44.2667°N,24.5333°E,44.2667,24.5333
+Europe,Romania,Oreviţa,,44.458621,22.898762,44.458621,22.898762
+Europe,Romania,Plaiurile Drâncei,,44.370957,22.900346,44.370957,22.900346
+Europe,Romania,Pleniţa,,44°13′N,23°11′E,44.21666667,23.18333333
+Europe,Romania,Podgoria Dacilor,,45.429416,27.024448,45.429416,27.024448
+Europe,Romania,Podgoria Severinului,,45.42056,27.027964,45.42056,27.027964
+Europe,Romania,Poiana Mare,,43°56′N,23°5′E,43.93333333,23.08333333
+Europe,Romania,Potelu,,43.8°N,24.1833°E,43.8,24.1833
+Europe,Romania,Sadova-Corabia,,47.562085,25.480513,46.245902,26.15797
+Europe,Romania,Sâmbureşti,,44°48′N,24°25′E,44.8,24.41666667
+Europe,Romania,Segarcea,,44.10000°N,23.07333°E,44.1,23.07333
+Europe,Romania,Tâmbureşti,,44°04′N,23°56′E,44.06666667,23.93333333
+Europe,Romania,Vânju Mare,,44°25′55″N,22°52′37″E,44.43194444,22.87694444
+Europe,Romania,Zimnicea,,43°39′8″N,25°22′5″E,43.65222222,25.36805556
+Europe,Romania,Aiud,,46°18′44″N,23°43′45″E,46.31222222,23.72916667
+Europe,Romania,Alba Iulia,,46°4′1″N,23°34′12″E,46.06694444,23.57
+Europe,Romania,Bistriţa,,47°8′0″N,24°30′0″E,47.13333333,24.5
+Europe,Romania,Blaj,,46°10′31″N,23°54′52″E,46.17527778,23.91444444
+Europe,Romania,Ighiu,,46°08′40″N,23°30′56″E,46.14444444,23.51555556
+Europe,Romania,Jidvei,,46°13′N,24°06′E,46.21666667,24.1
+Europe,Romania,Lechinta,,47°01′10″N,24°20′01″E,47.01944444,24.33361111
+Europe,Romania,Mediaş,,46°9′50″N,24°21′3″E,46.16388889,24.35083333
+Europe,Romania,Şamşud,,47°21′N,22°57′E,47.35,22.95
+Europe,Romania,Sebeş-Apold,,45.889661,23.846364,46.19948,24.062884
+Europe,Romania,Şimleul Silvaniei,,47°13′50″N,22°48′00″E,47.23055556,22.8
+Europe,Romania,Târnave,,46.328165,24.289763,46.328165,24.289763
+Europe,Romania,Târnăveni,,46°19′47″N,24°16′12″E,46.32972222,24.27
+Europe,Romania,Teaca,,46°55′N,24°31′E,46.91666667,24.51666667
+Europe,Romania,Triteni,,46°35′9.96″N,23°59′47.4″E,46.5861,23.9965
+Europe,Romania,Valea Nirajului,,46.549881,24.833376,46.549881,24.833376
+Europe,Russia,Caucasus,,42.26111°N,44.12111°E,42.26111,44.12111
+Europe,Russia,Krasnodar,,45°02′N,38°58′E,45.03333333,38.96666667
+Europe,Russia,Stavropol,,45°03′N,41°59′E,45.05,41.98333333
+Europe,Serbia,Banat region,,45.7000°N,20.9000°E,45.7,20.9
+Europe,Serbia,Kosovo region (disputed territory between Serbia and Kosovo),,42.548203,20.852139,42.548203,20.852139
+Europe,Serbia,Nišava – South Morava region,,43°41′57″N,21°24′18″E,43.69916667,21.405
+Europe,Serbia,Pocerina region,,44°36′11″N,19°29′39″E,44.60305556,19.49416667
+Europe,Serbia,Srem region,,45.170°N,19.288°E,45.17,19.288
+Europe,Serbia,Subotica – Horgoš region,,46°09′12″N,19°58′13″E,46.15333333,19.97027778
+Europe,Serbia,Šumadija – Great Morava region,,44°42′42″N,21°02′05″E,44.71166667,21.03472222
+Europe,Serbia,Timok region,,44.000°N,22.167°E,44,22.167
+Europe,Serbia,West Morava region,,43°41′57″N,21°24′18″E,43.69916667,21.405
+Europe,Slovakia,Malokarpatská (Small Carpathians),,48.282077,17.232612,48.282077,17.232612
+Europe,Slovakia,Južnoslovenská (Southern Slovakia),,47.882887,18.088347,47.86195,18.24838
+Europe,Slovakia,Nitrianska (region of Nitra),,48.073893,18.324698,48.073893,18.324698
+Europe,Slovakia,Stredoslovenská (Central Slovakia),,48.254115,19.603999,48.254115,19.603999
+Europe,Slovakia,Tokaj (Tokaj region of Slovakia),,48.401095,21.678617,48.401095,21.678617
+Europe,Slovakia,Východoslovenská (Eastern Slovakia),,48.781884,21.810809,48.781884,21.810809
+Europe,Slovenia,Podravje,,46.5681556°N,15.6006278°E,46.5681556,15.6006278
+Europe,Slovenia,Posavje,,45.95000°N,15.48333°E,45.95,15.48333
+Europe,Slovenia,Primorska,,45.9893278°N,13.8098139°E,45.9893278,13.8098139
+Europe,Spain,Andalusia,Condado de Huelva,37.280371,-6.544144,37.280371,-6.544144
+Europe,Spain,Andalusia,Jerez-Xeres-Sherry,36.68069,-6.129529,36.68069,-6.129529
+Europe,Spain,Andalusia,Málaga and Sierras de Málaga,36.720521,-4.448114,36.720521,-4.448114
+Europe,Spain,Andalusia,Manzanilla de Sanlúcar de Barrameda,36°46′N,6°21′W,36.76666667,-6.35
+Europe,Spain,Andalusia,Montilla-Moriles,37.51927,-4.645814,37.51927,-4.645814
+Europe,Spain,Aragon,Calatayud,41°21′0″N,1°38′0″W,41.35,-1.633333333
+Europe,Spain,Aragon,Campo de Borja,41.817°N,1.533°W,41.817,-1.533
+Europe,Spain,Aragon,Campo de Cariñena,41°22′N,1°18′W,41.36666667,-1.3
+Europe,Spain,Aragon,Cava,41.648397,-0.883963,41.648397,-0.883963
+Europe,Spain,Aragon,Somontano,42.136544,0.12068,42.136544,0.12068
+Europe,Spain,Balearic Islands,Binissalem-Mallorca,39.6844°N,2.8468°E,39.6844,2.8468
+Europe,Spain,Balearic Islands,Plà i Llevant,39.600978,3.195466,39.600978,3.195466
+Europe,Spain,Basque Country,Alavan Txakoli,43.12881,-2.983296,43.12881,-2.983296
+Europe,Spain,Basque Country,Biscayan Txakoli,43.25324,-2.727283,43.25324,-2.727283
+Europe,Spain,Basque Country,Getaria Txakoli,43.297459,-2.209377,43.297459,-2.209377
+Europe,Spain,Basque Country,Rioja (Alavesa),42.545169,-2.540002,42.545169,-2.540002
+Europe,Spain,Canary Islands,Abona,28.156932,-16.561158,28.156932,-16.561158
+Europe,Spain,Canary Islands,El Hierro,27°45′N,18°00′W,27.75,-18
+Europe,Spain,Canary Islands,Gran Canaria,27°58′N,15°36′W,27.96666667,-15.6
+Europe,Spain,Canary Islands,La Gomera,28°07′N,17°13′W,28.11666667,-17.21666667
+Europe,Spain,Canary Islands,La Palma,28.667°N,17.867°W,28.667,-17.867
+Europe,Spain,Canary Islands,Lanzarote,29°02′06″N,13°37′59″W,29.035,-13.63305556
+Europe,Spain,Canary Islands,Tacoronte-Acentejo,28.476556,-16.334632,28.476556,-16.334632
+Europe,Spain,Canary Islands,Valle de Güímar,28.319939,-16.413595,28.319939,-16.413595
+Europe,Spain,Canary Islands,Valle de la Orotava,28.312665,-16.574393,28.312665,-16.574393
+Europe,Spain,Canary Islands,Ycoden-Daute-Isora,28.292739,-16.736688,28.292739,-16.736688
+Europe,Spain,Castile and León,Arlanza,42.050805,-3.755322,42.050805,-3.755322
+Europe,Spain,Castile and León,Arribes del Duero,41°19′25″N,6°23′00″W,41.32361111,-6.383333333
+Europe,Spain,Castile and León,Bierzo,42.667°N,6.750°W,42.667,-6.75
+Europe,Spain,Castile and León,Cigales,41.758292,-4.698175,41.758292,-4.698175
+Europe,Spain,Castile and León,Espumosos de Castilla y León,41.842974,-4.650908,41.842974,-4.650908
+Europe,Spain,Castile and León,Ribera del Duero,41.706864,-3.736431,41.706864,-3.736431
+Europe,Spain,Castile and León,Rueda,41°24′51″N,4°57′26″W,41.41416667,-4.957222222
+Europe,Spain,Castile and León,Tierra del Vino de Zamora,41.386343,-5.688547,41.386343,-5.688547
+Europe,Spain,Castile and León,Toro,41.52498,-5.391779,41.52498,-5.391779
+Europe,Spain,Castile and León,Valles de Benavente,42.004708,-5.869174,42.004708,-5.869174
+Europe,Spain,Castile and León,Tierra de León,42.293251,-5.516618,42.293251,-5.516618
+Europe,Spain,Castile and León,Valtiendas,41.483°N,3.917°W,41.483,-3.917
+Europe,Spain,Castile and León,Vino de la Tierra Castilla y León,42.293243,-5.516599,42.293243,-5.516599
+Europe,Spain,Castile–La Mancha,Almansa,38.850°N,1.083°W,38.85,-1.083
+Europe,Spain,Castile–La Mancha,Dominio de Valdepusa,39.720116,-4.305926,39.720116,-4.305926
+Europe,Spain,Castile–La Mancha,Guijoso,38.876762,-2.699159,38.876762,-2.699159
+Europe,Spain,Castile–La Mancha,Jumilla,38.47917°N,1.32500°W,38.47917,-1.325
+Europe,Spain,Castile–La Mancha,La Mancha,39.40111°N,3.01500°W,39.40111,-3.015
+Europe,Spain,Castile–La Mancha,Manchuela,39.217°N,1.350°W,39.217,-1.35
+Europe,Spain,Castile–La Mancha,Méntrida,40.239397,-4.193641,40.239397,-4.193641
+Europe,Spain,Castile–La Mancha,Mondéjar,40°19′26″N,3°06′30″W,40.32388889,-3.108333333
+Europe,Spain,Castile–La Mancha,Ribera del Júcar,39.243803,-1.602884,39.243803,-1.602884
+Europe,Spain,Castile–La Mancha,Valdepeñas,38°46′N,3°24′W,38.76666667,-3.4
+Europe,Spain,Catalonia,,41.817°N,1.467°E,41.817,1.467
+Europe,Spain,Alella,Alella,41°29′42″N,2°17′46″E,41.495,2.296111111
+Europe,Spain,Catalunya,Catalunya,41.817°N,1.467°E,41.817,1.467
+Europe,Spain,Conca de Barberà,Conca de Barberà,41°22′N,1°09′E,41.36666667,1.15
+Europe,Spain,Costers del Segre,Costers del Segre,41.59918,0.581066,41.59918,0.581066
+Europe,Spain,Empordà,Empordà,42.08194°N,3.07194°E,42.08194,3.07194
+Europe,Spain,Montsant,Montsant,41°8′49″N,0°49′17″E,41.14694444,0.8213888889
+Europe,Spain,Penedès,Penedès,41.2932833°N,1.7495722°E,41.2932833,1.7495722
+Europe,Spain,Pla de Bages,Pla de Bages,41.72056°N,1.83972°E,41.72056,1.83972
+Europe,Spain,Priorat,Priorat,41.133°N,0.817°E,41.133,0.817
+Europe,Spain,Tarragona,Tarragona,41°06′56.51″N,1°14′58.54″E,41.11569722,1.249594444
+Europe,Spain,Terra Alta,Terra Alta,41°3′N,0°26′E,41.05,0.8213888889
+Europe,Spain,Extremadura,Ribera del Guadiana,38.681579,-6.401448,38.681579,-6.401448
+Europe,Spain,Galicia,Monterrey,25°40′N,100°18′W,25.66666667,-100.3
+Europe,Spain,Galicia,Rías Baixas,42°13′53″N,8°42′45″W,42.23138889,-8.7125
+Europe,Spain,Galicia,Ribeira Sacra,42.443793,-7.729066,42.443793,-7.729066
+Europe,Spain,Galicia,Ribeiro,42.333538,-7.861924,42.333538,-7.861924
+Europe,Spain,Galicia,Valdeorras,42.38889°N,7.04722°W,42.38889,-7.04722
+Europe,Spain,La Rioja,Rioja,42.461153,-2.458633,42.461153,-2.458633
+Europe,Spain,Community of Madrid,Vinos de Madrid,40.391436,-3.70732,40.391436,-3.70732
+Europe,Spain,Región de Murcia,Bullas,38.05000°N,1.67000°W,38.05,-1.67
+Europe,Spain,Región de Murcia,Jumilla,38°28′45″N,1°19′30″W,38.47916667,-1.325
+Europe,Spain,Región de Murcia,Yecla,38.617°N,1.117°W,38.617,-1.117
+Europe,Spain,Navarre,Navarra,42°49′N,1°39′W,42.81666667,-1.65
+Europe,Spain,Valencian Community,Alicante,38°20′43″N,0°28′59″W,38.34527778,-0.4830555556
+Europe,Spain,Valencian Community,Utiel-Requena,39.5061583°N,1.181028°W,39.5061583,-1.181028
+Europe,Spain,Valencian Community,Valencia,39°28′00″N,0°22′30″W,39.46666667,-0.375
+Europe,Sweden,Gutevin – Gotland,,57.370206,18.698474,57.370206,18.698474
+Europe,Switzerland,Aargau,,47°5′N,8°0′E,47.08333333,8
+Europe,Switzerland,Bern,Shores of Lake Biel,47°5′N,7°10′E,47.08333333,7.166666667
+Europe,Switzerland,Bern,Shores of Lake Thun (Spiez / Oberhofen),46°41′N,7°43′E,46.68333333,7.716666667
+Europe,Switzerland,Freiburg,,47°59′N,7°51′E,47.98333333,7.85
+Europe,Switzerland,Geneva,,46°12′N,6°09′E,46.2,6.15
+Europe,Switzerland,Grisons,,46°45′N,9°30′E,46.75,9.5
+Europe,Switzerland,Neuchâtel,,47°0′N,6°56′E,47,6.933333333
+Europe,Switzerland,St. Gallen,,47°25′27″N,9°22′15″E,47.42416667,9.370833333
+Europe,Switzerland,Schaffhausen,,47°42′N,8°38′E,47.7,8.633333333
+Europe,Switzerland,Thurgau,,47°35′N,9°4′E,47.58333333,9.066666667
+Europe,Switzerland,Ticino,,46°19′N,8°49′E,46.31666667,8.816666667
+Europe,Switzerland,Valais,,46°4′N,7°36′E,46.06666667,7.6
+Europe,Switzerland,Vaud,La Côte,46.428735,6.276829,46.428735,6.276829
+Europe,Switzerland,Vaud,Lavaux,46°29′31″N,06°44′46″E,46.49194444,6.746111111
+Europe,Switzerland,Zürich,,47°22′N,8°33′E,47.36666667,8.55
+Europe,Turkey,Altıntaş – Marmara region and Bozcaada,,39.060149,30.108443,39.060149,30.108443
+Europe,Turkey,Beylerce – Bilecik area,,39.403207,30.02981,39.403207,30.02981
+Europe,Turkey,Bornova Misketi – İzmir area,,38.470988,27.21772,38.470988,27.21772
+Europe,Turkey,Emir – Nevşehir (Cappadocia) area,,38.802426,34.687905,38.802426,34.687905
+Europe,Turkey,Hasandede – Ankara and central Anatolia,,37.978809,29.745314,37.978809,29.745314
+Europe,Turkey,Narince – Tokat area,,40.355345,36.596056,40.355345,36.596056
+Europe,Turkey,Rumi,,37.872154,32.50468,37.872154,32.50468
+Europe,Turkey,Sultaniye – Aegean region,,36.879474,28.584823,36.879474,28.584823
+Europe,Turkey,Yapıncak – Thracian region,,41.448979,27.292571,41.448979,27.292571
+Europe,Turkey,Adakarası – Marmara region and Avşa Island,,40.556498,27.53519,40.556498,27.53519
+Europe,Turkey,Boğazkere – Elazığ and Diyarbakır areas,,38.662596,39.217425,38.662596,39.217425
+Europe,Turkey,Çalkarası – Çal,,38.082912,29.397325,38.082912,29.397325
+Europe,Turkey,Dimrit – central Anatolia and eastern Aegean region,,38.633099,34.9048,38.633099,34.9048
+Europe,Turkey,Horozkarası,,36.810228,31.670154,36.810228,31.670154
+Europe,Turkey,Kalecik Karası – Ankara area,,40.106483,33.411349,40.106483,33.411349
+Europe,Turkey,Karalahna – Tekirdağ region,,41.020743,27.496509,41.020743,27.496509
+Europe,Turkey,Karasakız – Çanakkale region,,40.07782,26.583342,40.07782,26.583342
+Europe,Turkey,Öküzgözü – Elazığ area,,41.522946,32.50834,41.522946,32.50834
+Europe,Turkey,Papazkarası – Kırklareli area,,41.696721,27.477455,41.696721,27.477455
+Europe,Ukraine,Autonomous Republic of Crimea and Sevastopol – 6 macrozones with 12 microzones (69 wine grapes),,45.3°N,34.4°E,45.3,34.4
+Europe,Ukraine,Kherson Oblast – 2 macrozones with 10 microzones (28 wine grapes),,46°30′N,34°00′E,46.5,34
+Europe,Ukraine,Mykolaiv Oblast – 2 macrozones with 7 microzones (31 wine grapes),,47.43°N,31.80°E,47.43,31.8
+Europe,Ukraine,Odessa Oblast – 3 macrozones with 16 microzones (42 wine grapes),,47°00′N,30°00′E,47,30
+Europe,Ukraine,Zakarpattia Oblast – 1 macrozone with 12 microzones (24 wine grapes),,48.41°N,23.29°E,48.41,23.29
+Europe,Ukraine,Zaporizhia Oblast – 1 macrozone with 1 microzone (5 wine grapes),,47°50′N,35°10′E,47.83333333,35.16666667
+Asia,Myanmar,Shan State,,21°30′N,98°0′E,21.5,98
+Asia,China,Chang'an,,34.267°N,108.900°E,34.267,108.9
+Asia,China,Gaochang,,42°51′10″N,89°31′45″E,42.85277778,89.52916667
+Asia,China,Luoyang,,34°40′11″N,112°26′32″E,34.66972222,112.4422222
+Asia,China,Qiuci,,41.71556°N,82.93222°E,41.71556,82.93222
+Asia,China,Yantai-Penglai,,37°32′28″N,121°23′38″E,37.54111111,121.3938889
+Asia,China,Dalian,,38°55′15″N,121°38′21″E,38.92083333,121.6391667
+Asia,China,Tonghua,,41°43′41″N,125°56′24″E,41.72805556,125.94
+Asia,China,"Yantai, Shandong",,36°24′N,118°24′E,36.4,118.4
+Asia,China,Yibin,,28°45′07″N,104°38′35″E,28.75194444,104.6430556
+Asia,China,Zhangjiakou,,40°46′08″N,114°53′10″E,40.76888889,114.8861111
+Asia,India,Bangalore,,12.983°N,77.583°E,12.983,77.583
+Asia,India,Bijapur,,16.83°N,75.71°E,16.83,75.71
+Asia,India,Narayangaon,,19°07′00″N,73°55′00″E,19.11666667,73.91666667
+Asia,India,Nashik,,20.00°N,73.78°E,20,73.78
+Asia,India,Pune,,18°31′13″N,73°51′24″E,18.52027778,73.85666667
+Asia,India,Sangli,,16.853°N,74.583°E,16.853,74.583
+Asia,Indonesia,Bali,,8°20′06″S,115°05′17″E,-8.335,115.0880556
+Asia,Iran,Malayer,,34°17′49″N,48°49′25″E,34.29694444,48.82361111
+Asia,Iran,Shiraz,,29°37′N,52°32′E,29.61666667,52.53333333
+Asia,Iran,Takestan,,36°04′11″N,49°41′45″E,36.06972222,49.69583333
+Asia,Iran,Urmia,,37°33′19″N,45°04′21″E,37.55527778,45.0725
+Asia,Iran,Qazvin,,36.267°N,50.000°E,36.267,50
+Asia,Iran,Quchan,,37°06′22″N,58°30′34″E,37.10611111,58.50944444
+Asia,Israel,Bet Shemesh,,31°44′44.47″N,34°59′11.93″E,31.74568611,34.98664722
+Asia,Israel,Galilee,,32.76°N,35.53°E,32.76,35.53
+Asia,Israel,Golan Heights,,32°58′54″N,35°44′58″E,32.98166667,35.74944444
+Asia,Israel,Jerusalem,,31°47′N,35°13′E,31.78333333,35.21666667
+Asia,Israel,Judean Hills,,31°40′N,35°10′E,31.66666667,35.16666667
+Asia,Israel,Latrun,,31°50′08″N,34°58′49″E,31.83555556,34.98027778
+Asia,Israel,Mount Carmel,,32°44′N,35°03′E,32.73333333,35.05
+Asia,Israel,Rishon LeZion (wine production since 1886),,31°57′N,34°48′E,31.95,34.8
+Asia,Japan,Yamanashi,,35°37′N,138°37′E,35.61666667,138.6166667
+Asia,Japan,Hokkaido,,43°N,142°E,43,142
+Asia,Japan,Nagano,,36°15′N,138°6′E,36.25,138.1
+Asia,Republic of Korea,Anseong,,37.011796,127.263344,37.011796,127.263344
+Asia,Republic of Korea,Gimcheon,,36°08′N,128°06′E,36.13333333,128.1
+Asia,Republic of Korea,Gyeongsan,,35°49′N,128°44′E,35.81666667,128.7333333
+Asia,Republic of Korea,Yeongcheon,,35°58′24″N,128°56′19″E,35.97333333,128.9386111
+Asia,Republic of Korea,Yeongdong,,36°10′30″N,127°46′35″E,36.175,127.7763889
+Asia,Lebanon,Bekaa Valley,Anjar,33°43′33″N,35°55′47″E,33.72583333,35.92972222
+Asia,Lebanon,Bekaa Valley,Chtoura,33°49′N,35°51′E,33.81666667,35.85
+Asia,Lebanon,Bekaa Valley,Rashaya,33°30′05″N,35°50′40″E,33.50138889,35.84444444
+Asia,Lebanon,Bekaa Valley,Zahlé,33°50′N,35°55′E,33.83333333,35.91666667
+Asia,Lebanon,Mount Lebanon,Aley,33°48′N,35°36′E,33.8,35.6
+Asia,Lebanon,Mount Lebanon,Baabda,33°50′0″N,35°32′0″E,33.83333333,35.53333333
+Asia,Lebanon,Mount Lebanon,Beit Mery,33°51′56″N,35°35′43″E,33.86555556,35.59527778
+Asia,Lebanon,Mount Lebanon,Bhamdoun,33°48′35″N,35°39′19″E,33.80972222,35.65527778
+Asia,Lebanon,Mount Lebanon,Brummana,33°51′57″N,35°35′42″E,33.86583333,35.595
+Asia,Lebanon,Mount Lebanon,Byblos,34°07′25″N,35°39′04″E,34.12361111,35.65111111
+Asia,Lebanon,Mount Lebanon,Chouf,33°41′44″N,35°34′45″E,33.69555556,35.57916667
+Asia,Lebanon,Mount Lebanon,Keserwan District,33.96972°N,35.61556°E,33.96972,35.61556
+Asia,Lebanon,North Governorate,Chekka,34°20′N,35°44′E,34.33333333,35.73333333
+Asia,Lebanon,North Governorate,Ehden,34°17′31″N,35°57′16.4″E,34.29194444,35.95455556
+Asia,Lebanon,North Governorate,Koura,34.2992°N,35.814°E,34.2992,35.814
+Asia,Lebanon,North Governorate,Qadisha Valley,34°15′N,35°57′E,34.25,35.95
+Asia,Lebanon,North Governorate,Tripoli,32°53′14″N,13°11′29″E,32.88722222,13.19138889
+Asia,Lebanon,North Governorate,Zgharta,34°24′N,35°54′E,34.4,35.9
+Asia,Lebanon,South Governorate,Jezzine,33°32′N,35°35′E,33.53333333,35.58333333
+Asia,Lebanon,South Governorate,Marjayoun,33°21′30″N,35°35′20″E,33.35833333,35.58888889
+Asia,Lebanon,South Governorate,Rmaich,33°4′45″N,35°22′8″E,33.07916667,35.36888889
+Asia,Palestinian territories,Beit Jala,,31°42′54″N,35°11′14″E,31.715,35.18722222
+Asia,Palestinian territories,Hebron,,31°32′00″N,35°05′42″E,31.53333333,35.095
+Asia,Syria,Bloudan,,33.733°N,36.133°E,33.733,36.133
+Asia,Syria,Homs District,,34°43′51″N,36°42′34″E,34.73083333,36.70944444
+Asia,Syria,Jabal el Druze,,32.667°N,36.733°E,32.667,36.733
+Asia,Syria,Latakia,,35°31′N,35°47′E,35.51666667,35.78333333
+Asia,Syria,Sednaya,,33°41′45″N,36°22′39″E,33.69583333,36.3775
+Asia,Syria,Syrian Golan,,32°58′54″N,35°44′58″E,32.98166667,35.74944444
+Asia,Syria,Tartous,,34°53′N,35°53′E,34.88333333,35.88333333
+Asia,Vietnam,Da Lat,,11°56′30″N,108°26′18″E,11.94166667,108.4383333
+Oceania,Australia,Big Rivers,Murray Darling,34°11′20″S,142°09′30″E,-34.18888889,142.1583333
+Oceania,Australia,Big Rivers,Perricoota,-35.9034,144.572952,-35.9034,144.572952
+Oceania,Australia,Big Rivers,Riverina,35°S,146°E,-35,146
+Oceania,Australia,Big Rivers,Swan Hill,35°20′0″S,143°33′0″E,-35.33333333,143.55
+Oceania,Australia,Central Ranges,Cowra,33°50′13″S,148°40′32″E,-33.83694444,148.6755556
+Oceania,Australia,Central Ranges,Mudgee,32°36′S,149°35′E,-32.6,149.5833333
+Oceania,Australia,Central Ranges,Orange,33.4°S,149.1°E,-33.4,149.1
+Oceania,Australia,Hunter Valley,Hunter,32°42′S,151°16′E,-32.7,151.2666667
+Oceania,Australia,Hunter Valley,Broke Fordwich,32.700°S,151.267°E,-32.7,151.267
+Oceania,Australia,Hunter Valley,Pokolbin,-32.772843,151.276986,-32.772843,151.276986
+Oceania,Australia,Hunter Valley,Upper Hunter Valley,-31.990369,150.712143,-31.990369,150.712143
+Oceania,Australia,Northern Rivers,Hastings River,31.43167°S,152.36778°E,-31.43167,152.36778
+Oceania,Australia,Northern Slopes,New England Australia,-30.709195,151.300794,-30.709195,151.300794
+Oceania,Australia,South Coast,Shoalhaven Coast,34°48′36″S,150°38′13″E,-34.81,150.6369444
+Oceania,Australia,South Coast,Southern Highlands,34°28′S,150°25′E,-34.46666667,150.4166667
+Oceania,Australia,Southern New South Wales,Canberra District (includes the northern part of the Australian Capital Territory),35°0′S,149°20′E,-35,149.3333333
+Oceania,Australia,Southern New South Wales,Gundagai,35°03′57″S,148°06′28″E,-35.06583333,148.1077778
+Oceania,Australia,Southern New South Wales,Hilltops,34°19′S,148°20′E,-34.31666667,148.3333333
+Oceania,Australia,Southern New South Wales,Tumbarumba,35°47′0″S,148°01′0″E,-35.78333333,148.0166667
+Oceania,Australia,Granite Belt,,28.65556°S,151.93250°E,-28.65556,151.9325
+Oceania,Australia,South Burnett,,26.540944°S,151.83944°E,-26.540944,151.83944
+Oceania,Australia,Barossa,Barossa Valley,34°32′S,138°57′E,-34.53333333,138.95
+Oceania,Australia,Barossa,Eden Valley,-34.655462,139.100858,-34.655462,139.100858
+Oceania,Australia,Barossa,High Eden,34°40′02″S,139°01′17″E,-34.66722222,139.0213889
+Oceania,Australia,Far North,Southern Flinders Ranges,33°01′24″S,138°18′33″E,-33.02333333,138.3091667
+Oceania,Australia,Fleurieu,Currency Creek,-35.437495,138.758673,-35.437495,138.758673
+Oceania,Australia,Fleurieu,Kangaroo Island,35.833°S,137.250°E,-35.833,137.25
+Oceania,Australia,Fleurieu,Langhorne Creek,35.29596°S,139.0359°E,-35.29596,139.0359
+Oceania,Australia,Fleurieu,McLaren Vale,35.219437°S,138.543615°E,-35.219437,138.543615
+Oceania,Australia,Fleurieu,Southern Fleurieu,35.57542°S,138.37825°E,-35.57542,138.37825
+Oceania,Australia,Limestone Coast,Coonawarra,37°17′24″S,140°50′17″E,-37.29,140.8380556
+Oceania,Australia,Limestone Coast,Mount Benson,37°02′S,139°48′E,-37.03333333,139.8
+Oceania,Australia,Limestone Coast,Mount Gambier,37°49′46″S,140°46′58″E,-37.82944444,140.7827778
+Oceania,Australia,Limestone Coast,Padthaway,36.6023°S,140.49196°E,-36.6023,140.49196
+Oceania,Australia,Limestone Coast,Robe,37.275668°S,139.9164479°E,-37.275668,139.9164479
+Oceania,Australia,Limestone Coast,Wrattonbully,37.0°S,140.8°E,-37,140.8
+Oceania,Australia,Lower Murray,Riverland,34.250°S,140.467°E,-34.25,140.467
+Oceania,Australia,Mount Lofty Ranges,Adelaide Hills,34.911185°S,138.70735°E,-34.911185,138.70735
+Oceania,Australia,Mount Lofty Ranges,Lenswood,34.91822°S,138.83261°E,-34.91822,138.83261
+Oceania,Australia,Mount Lofty Ranges,Piccadilly Valley,34.97494°S,138.72829°E,-34.97494,138.72829
+Oceania,Australia,Mount Lofty Ranges,Adelaide Plains,34°56′21.69″S,138°35′51.25″E,-34.93935833,138.5975694
+Oceania,Australia,Mount Lofty Ranges,Clare Valley,33°50′1″S,138°36′36″E,-33.83361111,138.61
+Oceania,Australia,The Peninsulas,,-34.666066,137.669778,-34.666066,137.669778
+Oceania,Australia,Coal River,,-42.749356,147.452999,-42.749356,147.452999
+Oceania,Australia,Derwent Valley,,-42.799066,146.486799,-42.799066,146.486799
+Oceania,Australia,East Coast,,-42.561794,147.860892,-42.561794,147.860892
+Oceania,Australia,North West,,,,-41.231503,146.367829
+Oceania,Australia,Pipers River,,41.30556°S,147.28167°E,-41.30556,147.28167
+Oceania,Australia,Southern,,-43.183925,147.070636,-43.183925,147.070636
+Oceania,Australia,Tamar Valley,,-41.325171,147.14143,-41.325171,147.14143
+Oceania,Australia,Central Victoria,Bendigo,36°45′0″S,144°16′0″E,-36.75,144.2666667
+Oceania,Australia,Central Victoria,Goulburn Valley,36.38306°S,145.39889°E,-36.38306,145.39889
+Oceania,Australia,Central Victoria,Nagambie Lakes,36°47′0″S,145°8′30″E,-36.78333333,145.1416667
+Oceania,Australia,Central Victoria,Heathcote,36°54′58″S,144°41′46.5″E,-36.91611111,144.69625
+Oceania,Australia,Central Victoria,Strathbogie Ranges,36°50′49″S,145°23′13″E,-36.84694444,145.3869444
+Oceania,Australia,Central Victoria,Upper Goulburn,-37.083189,145.182955,-37.083189,145.182955
+Oceania,Australia,Gippsland,,37°51′S,147°35′E,-37.85,147.5833333
+Oceania,Australia,North East Victoria,Alpine Valleys,-36.356953,146.325477,-36.356953,146.325477
+Oceania,Australia,North East Victoria,Beechworth,36°21′34″S,146°41′13″E,-36.35944444,146.6869444
+Oceania,Australia,North East Victoria,Glenrowan,-36.44628,146.229438,-36.44628,146.229438
+Oceania,Australia,North East Victoria,King Valley,36.69472°S,146.40167°E,-36.69472,146.40167
+Oceania,Australia,North East Victoria,Rutherglen,36°03′0″S,146°28′0″E,-36.05,146.4666667
+Oceania,Australia,North West Victoria,Murray Darling,34°11′20″S,142°09′30″E,-34.18888889,142.1583333
+Oceania,Australia,North West Victoria,Swan Hill,35.25°S,143.5°E,-35.25,143.5
+Oceania,Australia,Port Phillip,Geelong,38°09′0″S,144°21′0″E,-38.15,144.35
+Oceania,Australia,Port Phillip,Macedon Ranges,37°21′00″S,144°37′00″E,-37.35,144.6166667
+Oceania,Australia,Port Phillip,Mornington Peninsula,38.351°S,145.064°E,-38.351,145.064
+Oceania,Australia,Port Phillip,Sunbury,37°34′52″S,144°42′50″E,-37.58111111,144.7138889
+Oceania,Australia,Port Phillip,Yarra Valley,37.767°S,145.617°E,-37.767,145.617
+Oceania,Australia,Western Victoria,Grampians,-37.341036,142.302106,-37.341036,142.302106
+Oceania,Australia,Western Victoria,Henty,-37.658512,141.526819,-37.658512,141.526819
+Oceania,Australia,Western Victoria,Pyrenees,37°6′59.49″S,143°18′48.82″E,-37.116525,143.3135611
+Oceania,Australia,Greater Perth,Peel,32°31′47″S,115°43′30″E,-32.52972222,115.725
+Oceania,Australia,Greater Perth,Perth Hills,-31.91894,115.963878,-31.91894,115.963878
+Oceania,Australia,Greater Perth,Swan Valley,31°50′S,116°00′E,-31.83333333,116
+Oceania,Australia,South Western Australia,Blackwood Valley,35°S,138.5°E,-35,138.5
+Oceania,Australia,South Western Australia,Geographe,33°35′S,115°15′E,-33.58333333,115.25
+Oceania,Australia,South Western Australia,Great Southern,35°S,117°E,-35,117
+Oceania,Australia,South Western Australia,Albany,-35.02612,117.883506,-35.02612,117.883506
+Oceania,Australia,South Western Australia,Denmark,-34.966172,117.354248,-34.966172,117.354248
+Oceania,Australia,South Western Australia,Frankland River,-34.360097,117.012497,-34.360097,117.012497
+Oceania,Australia,South Western Australia,Mount Barker,-34.630135,117.664656,-34.630135,117.664656
+Oceania,Australia,South Western Australia,Porongurup,34°40′00″S,117°52′00″E,-34.66666667,117.8666667
+Oceania,Australia,South Western Australia,Manjimup,34°14′28″S,116°8′47″E,-34.24111111,116.1463889
+Oceania,Australia,South Western Australia,Margaret River,33.9453556°S,115.0741083°E,-33.9453556,115.0741083
+Oceania,Australia,South Western Australia,Pemberton,34.445°S,116.034°E,-34.445,116.034
+Oceania,New Zealand,Auckland,Henderson,36.8811°S,174.6312°E,-36.8811,174.6312
+Oceania,New Zealand,Auckland,Kumeu,36°46′S,174°34′E,-36.76666667,174.5666667
+Oceania,New Zealand,Auckland,Matakana,36°21′6″S,174°43′0″E,-36.35166667,174.7166667
+Oceania,New Zealand,Auckland,Waiheke Island,36.800°S,175.100°E,-36.8,175.1
+Oceania,New Zealand,Canterbury,North Canterbury,43°36′S,172°00′E,-43.6,172
+Oceania,New Zealand,Canterbury,Waipara,43.067°S,172.750°E,-43.067,172.75
+Oceania,New Zealand,Central Otago,Bendigo,36°45′0″S,144°16′0″E,-36.75,144.2666667
+Oceania,New Zealand,Central Otago,Cromwell,45.04°S,169.20°E,-45.04,169.2
+Oceania,New Zealand,Central Otago,Gibbston Valley,45.02569°S,168.95674°E,-45.02569,168.95674
+Oceania,New Zealand,Central Otago,Wanaka,44°42′S,169°09′E,-44.7,169.15
+Oceania,New Zealand,Hawke's Bay,Central Hawke's Bay,40.039°S,176.578°E,-40.039,176.578
+Oceania,New Zealand,Hawke's Bay,Gimblett Gravells,-39.607598,176.739632,-39.607598,176.739632
+Oceania,New Zealand,Gisborne,,38°39′S,178°00′E,-38.65,178
+Oceania,New Zealand,Marlborough,Blenheim,41.514°S,173.960°E,-41.514,173.96
+Oceania,New Zealand,Marlborough,Cloudy Bay,41.450°S,174.167°E,-41.45,174.167
+Oceania,New Zealand,Marlborough,Renwick,41°30′S,173°50′E,-41.5,173.8333333
+Oceania,New Zealand,Marlborough,Seddon,41°40′12″S,174°4′25″E,-41.67,174.0736111
+Oceania,New Zealand,Nelson,,41°16′15″S,173°17′2″E,-41.27083333,173.2838889
+Oceania,New Zealand,Northland Region,,35.58°S,173.97°E,-35.58,173.97
+Oceania,New Zealand,Waikato,Te Awamutu,38°01′S,175°19′E,-38.01666667,175.3166667
+Oceania,New Zealand,Waikato,Te Kauwhata,37.400°S,175.150°E,-37.4,175.15
+Oceania,New Zealand,Wairarapa,Martinborough,41°13′8″S,175°27′33″E,-41.21888889,175.4591667
+Oceania,New Zealand,Wairarapa,Gladstone,41°05′S,175°39′E,-41.08333333,175.65
+Oceania,New Zealand,Waitaki Valley,,44.350°S,170.200°E,-44.35,170.2

@@ -1,0 +1,534 @@
+---
+title: "vignette-010-tidy-data"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{vignette-010-tidy-data}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup, warning=FALSE, message=FALSE}
+library(slfRisk)
+library(tidyverse)
+library(here)
+```
+
+###Data to ship with the package
+####Correlation Figure
+
+All of the following data sources will be read in as raw data from `slfRisk/data/` (originally cleaned a bit initially from raw data version in `slfRisk/data-raw/`) and then cleaned up individually. Depending on the situation, the resultant "cleaned/tidied" data may be saved to `slfRisk/data/` as a new `.rda` file.
+
+#####Maxent extractions (states and countries), we are going to summarize the mean of the models as a grand mean
+  
+```{r bring in maxent extraction summary data}
+data("states_extracts")
+
+summary_states_extracts <- states_extracts %>%
+  group_by(geopol_unit) %>%
+  summarize(grand_mean_max = mean(obs_max), grand_se_max = sd(obs_max) / sqrt(n_distinct(model)))
+
+data("countries_extracts")
+  
+summary_countries_extracts <- countries_extracts %>%
+  group_by(geopol_unit) %>%
+  summarize(grand_mean_max = mean(obs_max), grand_se_max = sd(obs_max) / sqrt(n_distinct(model)))
+
+```
+  
+#####trade data (states and countries, both present and future)
+######states value
+```{r load in states trade data and clean value, message=FALSE, warning=FALSE}
+#load states value
+data("states_trade_summary_slf")
+data("states_trade_summary_slf_future")
+
+#code snippet to attach infection status and add state abbreviations
+#state id's for adding to extracts
+stateid <- c("AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "DC", "WV", "WI", "WY")
+stateid <- tibble(stateid, states_trade_summary_slf$destination)
+colnames(stateid) <- c("ID", "geopol_unit")
+
+#PRESENT
+
+#add in the infection status of each state while adding the abbreviations
+ states_trade_summary_slf <-  left_join(states_trade_summary_slf, stateid, by = c("destination" = "geopol_unit")) %>%
+    mutate(status = ifelse(ID %in% c("DE", "MD", "NJ","PA", "VA"), "established", "not established")) %>%
+    select(destination, ID, status, everything())
+  
+  #tidying of data
+  states_trade_summary_slf <- states_trade_summary_slf %>%
+    gather(-destination:-status, key = "infected_state", value = "trade") %>%
+    as.data.frame(.)
+  
+  #total infected states trade, average/SE
+  summary_states_trade_value <- states_trade_summary_slf %>%
+    group_by(destination) %>%
+    filter(str_detect(infected_state, "pa_") | str_detect(infected_state, "de_") | str_detect(infected_state, "va_") | str_detect(infected_state, "nj_") | str_detect(infected_state, "md_")) %>%   #filter to be just trade with infected states present
+    filter(str_detect(infected_state, "201") & !str_detect(infected_state, "all")) %>%  #remove the all state trade from consideration
+    mutate(tempcol = str_split(infected_state, "_")) %>%  #make a temporary col
+    rowwise() %>%   #group by row
+    mutate(source = unlist(tempcol)[1], year = unlist(tempcol)[2]) %>%  #split out the info about states and years of trade
+    select(-tempcol) %>% #rm the temp col
+    group_by(destination, year, status) %>% #group based now on the destination, year, and infection status
+    #filter out the intrastate trade for infected states to avoid extra low averages by creating a hybrid string (DestinationState+abbreviated_infected state)
+    mutate(clear_intra = paste0(destination, source)) %>%
+    filter(!clear_intra %in% c("Delawarede", "Marylandmd", "New Jerseynj", "Pennsylvaniapa", "Virginiava")) %>%
+    #remove workaround infected intrastate column
+    dplyr::select(-clear_intra) %>%
+    summarize(avg_infected_trade = sum(trade)) %>%  #add up the trade with infected states for each destination state and year
+    group_by(destination, status) %>%
+    mutate(se = (sd(avg_infected_trade, na.rm = T) / sqrt(length(year)))) %>%   #obtain the standard error (SE) of infected trade across years (this repeats across all of the entries across years and thus becomes its own value)
+    summarise(avg_infected_trade = mean(avg_infected_trade, na.rm = T), se = mean(se))  #summarize the mean and SE across years!
+  
+#FUTURE
+    states_trade_summary_slf_future <-  left_join(states_trade_summary_slf_future, stateid, by = c("destination" = "geopol_unit")) %>%
+    mutate(status = ifelse(ID %in% c("DE", "MD", "NC", "NJ", "NY", "OH", "PA", "VA", "WV"), "established", "not established")) %>%
+    dplyr::select(destination, ID, status, everything())
+  
+  #tidying of data
+  states_trade_summary_slf_future <- states_trade_summary_slf_future %>%
+    gather(-destination:-status, key = "infected_state", value = "trade") %>%
+    as.data.frame(.)
+  
+  #total infected states trade, average/SE
+  summary_states_trade_value_future <- states_trade_summary_slf_future %>%
+    group_by(destination) %>%
+    filter(str_detect(infected_state, "pa_") | str_detect(infected_state, "de_") | str_detect(infected_state, "va_") | str_detect(infected_state, "nj_") | str_detect(infected_state, "md_") | str_detect(infected_state, "nc_")  | str_detect(infected_state, "ny_")  | str_detect(infected_state, "oh_")  | str_detect(infected_state, "wv_")) %>%
+    filter(str_detect(infected_state, "201") & !str_detect(infected_state, "all")) %>%
+    mutate(tempcol = str_split(infected_state, "_")) %>%
+    rowwise() %>%
+    mutate(source = unlist(tempcol)[1], year = unlist(tempcol)[2]) %>%
+    select(-tempcol) %>%
+    group_by(destination, year, status) %>%
+    #filter out the intrastate trade for infected states to avoid extra low averages
+    mutate(clear_intra = paste0(destination, source)) %>%
+    filter(!clear_intra %in% c("Delawarede", "Marylandmd", "New Jerseynj", "Pennsylvaniapa", "Virginiava", "North Carolinanc", "New Yorkny", "Ohiooh", "West Virginiawv")) %>%
+    #remove workaround infected intrastate column
+    dplyr::select(-clear_intra) %>%
+    summarize(avg_infected_trade = sum(trade)) %>%
+    group_by(destination, status) %>%
+    mutate(se = (sd(avg_infected_trade, na.rm = T) / sqrt(length(year)))) %>%
+    summarise(avg_infected_trade = mean(avg_infected_trade, na.rm = T), se = mean(se))
+```
+    
+######states mass (this also converts mass from kg to metric tons)
+```{r clean states mass, message=FALSE, warning=FALSE}
+#load states mass
+data("states_trade_mass_summary_slf")
+data("states_trade_mass_summary_slf_future")
+
+#PRESENT
+  #add in the infection status of each state while adding the abbreviations
+   states_trade_mass_summary_slf <- left_join(states_trade_mass_summary_slf, stateid, by = c("destination" = "geopol_unit")) %>%
+    mutate(status = ifelse(ID %in% c("DE", "MD", "NJ","PA", "VA"), "established", "not established")) %>%
+    select(destination, ID, status, everything())
+
+     #tidying of data and dividing by 1000 to convert from kg to metric tons
+  states_trade_mass_summary_slf <- states_trade_mass_summary_slf %>%
+    gather(-destination:-status, key = "infected_state", value = "mass") %>%
+    mutate(mass = mass / 1000) %>%
+    as.data.frame(.)
+  
+  #mass
+  summary_states_trade_mass <- states_trade_mass_summary_slf %>%
+    group_by(destination) %>%
+    filter(str_detect(infected_state, "pa_") | str_detect(infected_state, "de_") | str_detect(infected_state, "va_") | str_detect(infected_state, "nj_") | str_detect(infected_state, "md_")) %>%
+    filter(str_detect(infected_state, "201") & !str_detect(infected_state, "all")) %>%
+    mutate(tempcol = str_split(infected_state, "_")) %>%
+    rowwise() %>%
+    mutate(source = unlist(tempcol)[1], year = unlist(tempcol)[2]) %>%
+    select(-tempcol) %>%
+    group_by(destination, year, status) %>%
+    #filter out the intrastate trade for infected states to avoid extra low averages
+    mutate(clear_intra = paste0(destination, source)) %>%
+    filter(!clear_intra %in% c("Delawarede", "Marylandmd", "New Jerseynj", "Pennsylvaniapa", "Virginiava")) %>%
+    #remove workaround infected intrastate column
+    dplyr::select(-clear_intra) %>%
+    summarize(avg_infected_mass = sum(mass)) %>%
+    group_by(destination, status) %>%
+    mutate(se = (sd(avg_infected_mass, na.rm = T) / sqrt(length(year)))) %>%
+    summarise(avg_infected_mass = mean(avg_infected_mass, na.rm = T), se = mean(se))
+
+#FUTURE
+   #add col to identify infected states
+  states_trade_mass_summary_slf_future <-  left_join(states_trade_mass_summary_slf_future, stateid, by = c("destination" = "geopol_unit")) %>%
+    mutate(status = ifelse(ID %in% c("DE", "MD", "NC", "NJ", "NY", "OH", "PA", "VA", "WV"), "established", "not established")) %>%
+    dplyr::select(destination, ID, status, everything())
+  
+  #tidying of data and dividing by 1000 to convert from kg to metric tons
+  states_trade_mass_summary_slf_future <- states_trade_mass_summary_slf_future %>%
+    gather(-destination:-status, key = "infected_state", value = "mass") %>%
+    mutate(mass = mass / 1000) %>%
+    as.data.frame(.)
+  
+  #mass
+  summary_states_trade_mass_future <- states_trade_mass_summary_slf_future %>%
+    group_by(destination) %>%
+    filter(str_detect(infected_state, "pa_") | str_detect(infected_state, "de_") | str_detect(infected_state, "va_") | str_detect(infected_state, "nj_") | str_detect(infected_state, "md_") | str_detect(infected_state, "nc_")  | str_detect(infected_state, "ny_")  | str_detect(infected_state, "oh_")  | str_detect(infected_state, "wv_")) %>%
+    filter(str_detect(infected_state, "201") & !str_detect(infected_state, "all")) %>%
+    mutate(tempcol = str_split(infected_state, "_")) %>%
+    rowwise() %>%
+    mutate(source = unlist(tempcol)[1], year = unlist(tempcol)[2]) %>%
+    select(-tempcol) %>%
+    group_by(destination, year, status) %>%
+    #filter out the intrastate trade for infected states to avoid extra low averages
+    mutate(clear_intra = paste0(destination, source)) %>%
+    filter(!clear_intra %in% c("Delawarede", "Marylandmd", "New Jerseynj", "Pennsylvaniapa", "Virginiava", "North Carolinanc", "New Yorkny", "Ohiooh", "West Virginiawv")) %>%
+    #remove workaround infected intrastate column
+    dplyr::select(-clear_intra) %>%
+    summarize(avg_infected_mass = sum(mass)) %>%
+    group_by(destination, status) %>%
+    mutate(se = (sd(avg_infected_mass, na.rm = T) / sqrt(length(year)))) %>%
+    summarise(avg_infected_mass = mean(avg_infected_mass, na.rm = T), se = mean(se))
+
+```
+    
+######countries value
+```{r load in countries trade data and clean value, message=FALSE, warning=FALSE}
+#load countries values
+data("countries_trade_summary_slf")
+data("countries_trade_summary_slf_future")
+
+#PRESENT
+
+#tidying of data and log transforming values
+countries_trade_summary_slf <- countries_trade_summary_slf %>%
+  gather(-destination, key = "infected_state", value = "trade") %>%
+  as.data.frame(.)
+
+  #value
+  summary_countries_trade_value <- countries_trade_summary_slf %>%
+    group_by(destination) %>%
+    filter(str_detect(infected_state, "pa_") | str_detect(infected_state, "de_") | str_detect(infected_state, "va_") | str_detect(infected_state, "nj_") | str_detect(infected_state, "md_")) %>%
+    filter(str_detect(infected_state, "201") & !str_detect(infected_state, "all")) %>%
+    mutate(tempcol = str_split(infected_state, "_")) %>%
+    rowwise() %>%
+    mutate(source = unlist(tempcol)[1], year = unlist(tempcol)[2]) %>%
+    select(-tempcol) %>%
+    group_by(destination, year) %>%
+    summarize(avg_infected_trade = sum(trade)) %>%
+    group_by(destination) %>%
+    mutate(se = (sd(avg_infected_trade, na.rm = T) / sqrt(length(year)))) %>%
+    summarise(avg_infected_trade = mean(avg_infected_trade, na.rm = T), se = mean(se))
+
+#FUTURE
+  
+#tidying of data and log transforming values
+countries_trade_summary_slf_future <- countries_trade_summary_slf_future %>%
+  gather(-destination, key = "infected_state", value = "trade") %>%
+  as.data.frame(.)
+
+  #value
+  summary_countries_trade_value_future <- countries_trade_summary_slf_future %>%
+    group_by(destination) %>%
+    filter(str_detect(infected_state, "pa_") | str_detect(infected_state, "de_") | str_detect(infected_state, "va_") | str_detect(infected_state, "nj_") | str_detect(infected_state, "md_") | str_detect(infected_state, "nc_")  | str_detect(infected_state, "ny_")  | str_detect(infected_state, "oh_")  | str_detect(infected_state, "wv_")) %>%
+    filter(str_detect(infected_state, "201") & !str_detect(infected_state, "all")) %>%
+    mutate(tempcol = str_split(infected_state, "_")) %>%
+    rowwise() %>%
+    mutate(source = unlist(tempcol)[1], year = unlist(tempcol)[2]) %>%
+    select(-tempcol) %>%
+    group_by(destination, year) %>%
+    summarize(avg_infected_trade = sum(trade)) %>%
+    group_by(destination) %>%
+    mutate(se = (sd(avg_infected_trade, na.rm = T) / sqrt(length(year)))) %>%
+    summarise(avg_infected_trade = mean(avg_infected_trade, na.rm = T), se = mean(se))
+  
+```
+
+######countries mass (this also converts from kg to metric tons)
+```{r load and clean countries mass, message=FALSE, warning=FALSE}
+#load countries mass
+data("countries_trade_mass_summary_slf")
+data("countries_trade_mass_summary_slf_future")
+
+#PRESENT
+
+#tidying of data and converting from kg to metric tons 
+countries_trade_mass_summary_slf <- countries_trade_mass_summary_slf %>%
+  gather(-destination, key = "infected_state", value = "mass") %>%
+  mutate(mass = mass / 1000) %>%
+  as.data.frame(.)
+
+  #mass
+  summary_countries_trade_mass <- countries_trade_mass_summary_slf %>%
+    group_by(destination) %>%
+    filter(str_detect(infected_state, "pa_") | str_detect(infected_state, "de_") | str_detect(infected_state, "va_") | str_detect(infected_state, "nj_") | str_detect(infected_state, "md_")) %>%
+    filter(str_detect(infected_state, "201") & !str_detect(infected_state, "all")) %>%
+    mutate(tempcol = str_split(infected_state, "_")) %>%
+    rowwise() %>%
+    mutate(source = unlist(tempcol)[1], year = unlist(tempcol)[2]) %>%
+    select(-tempcol) %>%
+    group_by(destination, year) %>%
+    summarize(avg_infected_mass = sum(mass)) %>%
+    group_by(destination) %>%
+    mutate(se = (sd(avg_infected_mass, na.rm = T) / sqrt(length(year)))) %>%
+    summarise(avg_infected_mass = mean(avg_infected_mass, na.rm = T), se = mean(se))
+  
+#FUTURE
+  
+#tidying of data and converting from kg to metric tons 
+countries_trade_mass_summary_slf_future <- countries_trade_mass_summary_slf_future %>%
+  gather(-destination, key = "infected_state", value = "mass") %>%
+  mutate(mass = mass / 1000) %>%
+  as.data.frame(.)
+
+  #mass
+  summary_countries_trade_mass_future <- countries_trade_mass_summary_slf_future %>%
+    group_by(destination) %>%
+    filter(str_detect(infected_state, "pa_") | str_detect(infected_state, "de_") | str_detect(infected_state, "va_") | str_detect(infected_state, "nj_") | str_detect(infected_state, "md_") | str_detect(infected_state, "nc_")  | str_detect(infected_state, "ny_")  | str_detect(infected_state, "oh_")  | str_detect(infected_state, "wv_")) %>%
+    filter(str_detect(infected_state, "201") & !str_detect(infected_state, "all")) %>%
+    mutate(tempcol = str_split(infected_state, "_")) %>%
+    rowwise() %>%
+    mutate(source = unlist(tempcol)[1], year = unlist(tempcol)[2]) %>%
+    select(-tempcol) %>%
+    group_by(destination, year) %>%
+    summarize(avg_infected_mass = sum(mass)) %>%
+    group_by(destination) %>%
+    mutate(se = (sd(avg_infected_mass, na.rm = T) / sqrt(length(year)))) %>%
+    summarise(avg_infected_mass = mean(avg_infected_mass, na.rm = T), se = mean(se))
+  
+```
+  
+Now to bind the trade data together and $log_{10}$ transform the trade mass and value! For countries, we strip the **Western Sahara** data first, as it is not informative (zeros).
+
+```{r bind trade data together}
+#STATES
+summary_states_trade <- left_join(summary_states_trade_value, summary_states_trade_mass, by = c("destination", "status"), suffix = c("_trade", "_mass")) %>%
+    mutate(log10_avg_infected_trade = log10(avg_infected_trade+1), log10_avg_infected_mass = log10(avg_infected_mass+1))
+
+summary_states_trade_future <- left_join(summary_states_trade_value_future, summary_states_trade_mass_future, by = c("destination", "status"), suffix = c("_trade", "_mass")) %>%
+    mutate(log10_avg_infected_trade = log10(avg_infected_trade+1), log10_avg_infected_mass = log10(avg_infected_mass+1))
+
+#COUNTRIES
+
+summary_countries_trade <- left_join(summary_countries_trade_value, summary_countries_trade_mass, by = c("destination"), suffix = c("_trade", "_mass")) %>%
+    filter(destination != "Western Sahara") %>%
+  mutate(log10_avg_infected_trade = log10(avg_infected_trade+1), log10_avg_infected_mass = log10(avg_infected_mass+1))
+
+summary_countries_trade_future <- left_join(summary_countries_trade_value_future, summary_countries_trade_mass_future, by = c("destination"), suffix = c("_trade", "_mass"))  %>%
+    filter(destination != "Western Sahara") %>%
+  mutate(log10_avg_infected_trade = log10(avg_infected_trade+1), log10_avg_infected_mass = log10(avg_infected_mass+1))
+
+```
+  
+#####grape yield (metric tons/ha) and production (metric tons)
+**NOTE:** The Philippines has such low grape production that the  $log_{10}$ transformation renders it negative but by adding one prior to transformation, it becomes positive. It will likely be removed from analyses downstream.
+```{r read in and summarize both grape yield and production}
+data("states_grapes")
+
+#summarize and log transform
+summary_states_grapes <- states_grapes %>%
+  pivot_wider(names_from = Item, values_from = Value, id_cols = c(geopol_unit, Year)) %>%
+  group_by(geopol_unit) %>%
+  summarize(avg_yield = mean(grape_yield, na.rm = TRUE), 
+            se_yield = sd(grape_yield) / sqrt(n_distinct(Year)),
+            avg_prod = mean(grape_production, na.rm = T), se_prod = sd(grape_production) / sqrt(n_distinct(Year))
+            ) %>%
+  drop_na(.) %>%
+  mutate(log10_avg_yield = log10(avg_yield+1), log10_avg_prod = log10(avg_prod+1))
+
+data("countries_grapes")
+
+#first rm Western Sahara, then summarize and log transform, while adding in the step of changing NA's to zeros
+summary_countries_grapes <- countries_grapes %>%
+  filter(geopol_unit != "Western Sahara") %>%
+  pivot_wider(names_from = Item, values_from = Value, id_cols = c(geopol_unit, Year)) %>%
+  
+  group_by(geopol_unit) %>%
+  summarize(avg_yield = mean(grape_yield, na.rm = TRUE), 
+            se_yield = sd(grape_yield) / sqrt(n_distinct(Year)),
+            avg_prod = mean(grape_production, na.rm = T), se_prod = sd(grape_production) / sqrt(n_distinct(Year))
+            ) %>%
+  drop_na(.) %>%
+  mutate(log10_avg_yield = log10(avg_yield+1), log10_avg_prod = log10(avg_prod+1))
+
+```
+  
+#####wine production (metric tons) 
+  
+```{r read in and summarize wine production}
+data("states_wine")
+
+#summarize and log transform
+summary_states_wine <- states_wine %>%
+  group_by(geopol_unit) %>%
+  summarize(avg_wine = mean(Mass, na.rm = T), se_wine = sd(Mass) / sqrt(n_distinct(Year)), log10_avg_wine = log10(mean(Mass, na.rm = T)+1))
+
+data("countries_wine")
+
+#summarize and log transform, then rm anything that started out as NA or zero
+summary_countries_wine <- countries_wine %>%
+  group_by(geopol_unit) %>%
+  summarize(avg_wine = mean(Mass, na.rm = T), se_wine = sd(Mass) / sqrt(n_distinct(Year)), log10_avg_wine = log10(mean(Mass, na.rm = T)+1)) %>%
+  filter(!is.infinite(log10_avg_wine) & !is.nan(log10_avg_wine))
+
+```
+
+Now to piece all of the summarized data together, we will make single objects for states and countries (present and future). Binary identifying information for wine and grapes will be added as well.
+
+######States Present
+```{r make states_summary_present}
+#add the binaries
+states_summary_present <- summary_states_extracts %>%
+  mutate(grapes = ifelse(geopol_unit %in% summary_states_grapes$geopol_unit, yes = "yes", no = "no")) %>%
+  mutate(wine = ifelse(geopol_unit %in% summary_states_wine$geopol_unit, yes = "yes", no = "no")) %>%
+  mutate(grapes = factor(grapes, levels = c("yes", "no")), wine = factor(wine, levels = c("yes", "no"))) 
+
+#now add in the other data
+states_summary_present <- states_summary_present %>%
+  left_join(., summary_states_trade, by = c("geopol_unit" = "destination")) %>%   #trade
+  left_join(., summary_states_wine, by = "geopol_unit") %>%   #wine
+  left_join(., summary_states_grapes, by = "geopol_unit")     #grapes
+
+#deal with NA
+states_summary_present[is.na(states_summary_present)] <- 0
+
+#join the new ID's
+states_summary_present <- left_join(stateid, states_summary_present, by = "geopol_unit")
+#################################
+#tidy the order of cols
+states_summary_present <- states_summary_present %>%
+  select(ID, geopol_unit, status, grand_mean_max, grand_se_max, wine, grapes, avg_wine:log10_avg_prod, everything())
+
+```
+
+######States Future
+```{r make states_summary_future}
+#add the binaries
+states_summary_future <- summary_states_extracts %>%
+  mutate(grapes = ifelse(geopol_unit %in% summary_states_grapes$geopol_unit, yes = "yes", no = "no")) %>%
+  mutate(wine = ifelse(geopol_unit %in% summary_states_wine$geopol_unit, yes = "yes", no = "no")) %>%
+  mutate(grapes = factor(grapes, levels = c("yes", "no")), wine = factor(wine, levels = c("yes", "no"))) 
+
+#now add in the other data
+states_summary_future <- states_summary_future %>%
+  left_join(., summary_states_trade_future, by = c("geopol_unit" = "destination")) %>%   #trade
+  left_join(., summary_states_wine, by = "geopol_unit") %>%   #wine
+  left_join(., summary_states_grapes, by = "geopol_unit")     #grapes
+
+#deal with NA
+states_summary_future[is.na(states_summary_future)] <- 0
+
+#join the new ID's
+states_summary_future <- left_join(stateid, states_summary_future, by = "geopol_unit")
+
+#tidy the order of cols
+states_summary_future <- states_summary_future %>%
+    select(ID, geopol_unit, status, grand_mean_max, grand_se_max, wine, grapes, avg_wine:log10_avg_prod, everything())
+
+```
+
+######Countries Present
+This also includes manually changing the **United States** to a grape producer. 
+```{r make countries_summary_present}
+#add in the binaries
+countries_summary_present <- summary_countries_extracts %>%
+  mutate(grapes = ifelse(geopol_unit %in% summary_countries_grapes$geopol_unit, yes = "yes", no = "no")) %>%
+  mutate(wine = ifelse(geopol_unit %in% summary_countries_wine$geopol_unit, yes = "yes", no = "no"))
+
+#change U.S. from no to yes for grapes
+countries_summary_present$grapes[countries_summary_present$geopol_unit == "United States"] <- "yes"
+
+#The factor fixing step is now here
+countries_summary_present <- countries_summary_present %>%
+  mutate(grapes = factor(grapes, levels = c("yes", "no")), wine = factor(wine, levels = c("yes", "no"))) 
+
+#now drop NAs for the extracts and add in the other data
+countries_summary_present <- countries_summary_present %>%
+  drop_na(.) %>%
+  left_join(., summary_countries_trade, by = c("geopol_unit" = "destination")) %>%   #trade
+  left_join(., summary_countries_wine, by = "geopol_unit") %>%   #wine
+  left_join(., summary_countries_grapes, by = "geopol_unit")     #grapes
+
+#deal with NA
+countries_summary_present[is.na(countries_summary_present)] <- 0
+
+# add ID to make is simpler for labeling points
+countries_summary_present <- countries_summary_present %>%  mutate(ID = geopol_unit)
+
+# add a column for status establishment
+countries_summary_present <- countries_summary_present %>%  mutate(status = "not established")
+countries_summary_present$status[countries_summary_present$geopol_unit %in% c("China", "India", "Taiwan", "Vietnam")] <- "native"
+countries_summary_present$status[countries_summary_present$geopol_unit %in% c("Japan", "South Korea", "United States")] <- "established"
+
+#tidy the order of cols
+countries_summary_present <- countries_summary_present %>%
+    select(ID, geopol_unit, status, grand_mean_max, grand_se_max, wine, grapes, avg_wine:log10_avg_prod, everything())
+
+```
+
+######Countries Future
+This also includes manually changing the **United States** to a grape producer.
+```{r make countries_summary_future}
+#add in the binaries
+countries_summary_future <- summary_countries_extracts %>%
+  mutate(grapes = ifelse(geopol_unit %in% summary_countries_grapes$geopol_unit, yes = "yes", no = "no")) %>%
+  mutate(wine = ifelse(geopol_unit %in% summary_countries_wine$geopol_unit, yes = "yes", no = "no"))
+
+#change U.S. from no to yes for grapes
+countries_summary_future$grapes[countries_summary_future$geopol_unit == "United States"] <- "yes"
+
+#The factor fixing step is now here
+countries_summary_future <- countries_summary_future %>%
+  mutate(grapes = factor(grapes, levels = c("yes", "no")), wine = factor(wine, levels = c("yes", "no"))) 
+
+#now drop NAs for the extracts and add in the other data
+countries_summary_future <- countries_summary_future %>%
+  drop_na(.) %>%
+  left_join(., summary_countries_trade_future, by = c("geopol_unit" = "destination")) %>%   #trade
+  left_join(., summary_countries_wine, by = "geopol_unit") %>%   #wine
+  left_join(., summary_countries_grapes, by = "geopol_unit")     #grapes
+
+#deal with NA
+countries_summary_future[is.na(countries_summary_future)] <- 0
+
+# add ID to make is simpler for labeling points
+countries_summary_future <- countries_summary_future %>%  mutate(ID = geopol_unit)
+
+# add a column for status establishment
+countries_summary_future <- countries_summary_future %>%  mutate(status = "not established")
+countries_summary_future$status[countries_summary_future$geopol_unit %in% c("China", "India", "Taiwan", "Vietnam")] <- "native"
+countries_summary_future$status[countries_summary_future$geopol_unit %in% c("Japan", "South Korea", "United States")] <- "established"
+
+#tidy the order of cols
+countries_summary_future <- countries_summary_future %>%
+    select(ID, geopol_unit, status, grand_mean_max, grand_se_max, wine, grapes, avg_wine:log10_avg_prod, everything())
+
+```
+
+###Write Out Data for Future Use
+
+####Correlation Plots
+```{r save correlation plot  data}
+save(states_summary_present, file = file.path(here(), "data", "states_summary_present.rda"))
+save(states_summary_future, file = file.path(here(), "data", "states_summary_future.rda"))
+save(countries_summary_present, file = file.path(here(), "data", "countries_summary_present.rda"))
+save(countries_summary_future, file = file.path(here(), "data", "countries_summary_future.rda"))
+
+```
+
+
+##NOTES NOTES NOTES
+*TRY TO FIX THESE COUNTRY NAMES*
+"S\x8bo Tom\x8e and Pr\x92ncipe"  
+"Cura\x8dao" 
+"Saint Barth\x8elemy"
+"C\x99te d'Ivoire"
+
+####Map Figure
+  1. wineries list (usa_wineries)
+  2. states_centers_wine
+  3. states_centers
+  4. enm_data_usa_mean <- raster("./data/geotiff_enms//slftoh_usa_downsampled_x4_mean.tif")
+  5. enm_data_mean <- raster("./data/geotiff_enms/slftoh_downsampled_x4_mean.tif")
+  6. trade data
+  7. slf coords? slf_coords <- read_csv("./data/Spotted Lanternfly/MAXENT_INPUT_VARIATE/SLF_FINAL_withPDA_24Sept18_v4_8.csv") %>%
+
