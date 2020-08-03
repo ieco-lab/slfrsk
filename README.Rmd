@@ -13,12 +13,12 @@ knitr::opts_chunk$set(
 )
 ```
 
-# slfRisk
+# slfrsk
 
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of slfRisk is to ...
+Lycorma delicatula paninvasive severity risk assessment. Why slfrsk? spotted lanternfly risk == slfrsk
 
 ## Installation
 
@@ -32,7 +32,7 @@ install.packages("slfRisk")
 
 This is a basic example which shows you how to solve a common problem:
 
-```{r example}
+```{r example, eval=FALSE}
 library(slfRisk)
 ## basic example code
 ```
