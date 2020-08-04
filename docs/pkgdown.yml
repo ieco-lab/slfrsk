@@ -1,9 +1,6 @@
-pandoc: 1.19.2.1
+pandoc: 2.7.3
 pkgdown: 1.5.1
 pkgdown_sha: ~
-articles:
-  vignette-010-tidy-data: vignette-010-tidy-data.html
-  vignette-020-quadrant-plots: vignette-020-quadrant-plots.html
-  vignette-030-risk-maps: vignette-030-risk-maps.html
-last_built: 2020-07-03T19:28Z
+articles: []
+last_built: 2020-08-03T18:23Z
 
