@@ -1,49 +1,44 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-slfrsk
-======
+
+# slfrsk
 
 <!-- badges: start -->
+
 <!-- badges: end -->
-Lycorma delicatula paninvasive severity risk assessment. Why slfrsk? spotted lanternfly risk == slfrsk
 
-Installation
-------------
+## Description
 
-You can install the released version of slfRisk from [CRAN](https://CRAN.R-project.org) with:
+`R package` and [research
+compendium](https://ieco-lab.github.io/slfrsk/index.html) for a *Lycorma
+delicatula* paninvasion risk assessment.
+
+  - *Why slfrsk?* slf == spotted lanternfly == *Lycorma delicatula* +
+    rsk == risk
+  - *Why slf?* Its impact to grape production [is comparable to
+    grapevine
+    phylloxera](https://en.wikipedia.org/wiki/Great_French_Wine_Blight).
+  - *Why grape impact?* SLF impacts \> 100 plant species, but it prefers
+    grape.
+
+## Usage
+
+To understand how this paninvasion risk assessment was made:
+
+1.  Read the [paper](https://www.iecolab.org/publications/)
+2.  Dive deep into this [research
+    compendium](https://ieco-lab.github.io/slfrsk/index.html)
+    <https://ieco-lab.github.io/slfrsk/index.html>
+3.  Install and Build [the package](https://github.com/ieco-lab/slfrsk)
+    <https://github.com/ieco-lab/slfrsk>
+
+<!-- end list -->
 
 ``` r
-install.packages("slfRisk")
+ library(devtools)
+ install_github("ieco-lab/slfrsk")
 ```
 
-Example
--------
+## Citation
 
-This is a basic example which shows you how to solve a common problem:
-
-``` r
-library(slfRisk)
-library(ggplot2)
-## basic example code
-```
-
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
-
-``` r
-summary(cars)
-#>      speed           dist       
-#>  Min.   : 4.0   Min.   :  2.00  
-#>  1st Qu.:12.0   1st Qu.: 26.00  
-#>  Median :15.0   Median : 36.00  
-#>  Mean   :15.4   Mean   : 42.98  
-#>  3rd Qu.:19.0   3rd Qu.: 56.00  
-#>  Max.   :25.0   Max.   :120.00
-```
-
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date.
-
-You can also embed plots, for example:
-
-<img src="man/figures/README-pressure-1.png" width="100%" />
-
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub!
+Huron, Behm, Helmus. **High risk of spotted lanternfly paninvasion**
