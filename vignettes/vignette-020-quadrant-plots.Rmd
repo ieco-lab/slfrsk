@@ -17,7 +17,7 @@ knitr::opts_chunk$set(
 This is the standard version of the correlation plot code!
 
 ```{r setup}
-library(slfRisk)
+library(slfrsk)
 library(tidyverse)
 library(here)
 library(ggrepel)
