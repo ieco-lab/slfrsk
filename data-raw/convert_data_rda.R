@@ -977,8 +977,8 @@ countries_grapes_prod <- read_csv("./data-raw/FAOSTAT_data_countries_grapes_prod
 countries_grapes <- bind_rows(countries_grapes_yield, countries_grapes_prod)
 
 #clean up a naming issue
-grep(pattern = "Côte d'Ivoire", x = countries_grapes$geopol_unit) #need to change
-countries_grapes$geopol_unit <- gsub(pattern = "Côte d'Ivoire", replacement = "Ivory Coast", x = countries_grapes$geopol_unit)
+grep(pattern = "Cï¿½te d'Ivoire", x = countries_grapes$geopol_unit) #need to change
+countries_grapes$geopol_unit <- gsub(pattern = "Cï¿½te d'Ivoire", replacement = "Ivory Coast", x = countries_grapes$geopol_unit)
 
 #############################
   #wine
@@ -1084,7 +1084,7 @@ countries_extracts$geopol_unit[grep(pattern = "Saint Bart", x = countries_extrac
 #############################
 
 #load USA
-suitability_usa <- raster("/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk/maxent_models/slftoh_usa_downsampled_x4_mean.tif")
+suitability_usa <- raster("/Volumes/GoogleDrive/Shared drives/slfrskMapping/data/slfrsk/maxent_models/slftoh_usa_downsampled_x4_mean.tif")
 
 #fortify (dataframe-fy) the global model
 suitability_usa_df <- fortify(suitability_usa, maxpixels = 1e10)
@@ -1100,7 +1100,7 @@ states_centers <- read_csv(file = "./data-raw/us_capitals.csv")
 colnames(states_centers)[1] <- "geopol_unit"
 
 #COUNTRIES
-suitability_countries <- raster("/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk/maxent_models/slftoh_downsampled_x4_mean.tif")
+suitability_countries <- raster("/Volumes/GoogleDrive/Shared drives/slfrskMapping/data/slfrsk/maxent_models/slftoh_downsampled_x4_mean.tif")
 
 #fortify (dataframe-fy) the global model
 suitability_countries_df <- fortify(suitability_countries, maxpixels = 1e10)

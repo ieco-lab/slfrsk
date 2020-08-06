@@ -30,7 +30,7 @@ To Do:
 - V4: Same as V3, but remove the individual points for the states/countries and plot points with SEs on both axes.
 
 ```{r setup, results='hide', message=FALSE}
-library(slfRisk)
+library(slfrsk)
 library(tidyverse)
 library(here)
 library(ggrepel)

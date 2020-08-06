@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup, results='hide', message=FALSE}
-library(slfRisk)
+library(slfrsk)
 library(tidyverse)
 library(rgeos)
 library(scales)

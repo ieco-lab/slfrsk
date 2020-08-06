@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup, warning=FALSE, message=FALSE}
-library(slfRisk)
+library(slfrsk)
 library(tidyverse)
 library(here)
 ```
@@ -24,7 +24,7 @@ library(here)
 ###Data to ship with the package
 ####Correlation Figure
 
-All of the following data sources will be read in as raw data from `slfRisk/data/` (originally cleaned a bit initially from raw data version in `slfRisk/data-raw/`) and then cleaned up individually. Depending on the situation, the resultant "cleaned/tidied" data may be saved to `slfRisk/data/` as a new `.rda` file.
+All of the following data sources will be read in as raw data from `slfrsk/data/` (originally cleaned a bit initially from raw data version in `slfrsk/data-raw/`) and then cleaned up individually. Depending on the situation, the resultant "cleaned/tidied" data may be saved to `slfrsk/data/` as a new `.rda` file.
 
 #####Maxent extractions (states and countries), we are going to summarize the mean of the models as a grand mean
   
