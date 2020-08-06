@@ -2,7 +2,7 @@ Continent,Country,Region,Sub-Region,Latitude,Longitude,Decimal Lat,Decimal Long
 Africa,Algiera,Algiers,,36°45′14″N,3°3′32″E,36.75388889,3.058888889
 Africa,Algiera,Béjaïa,,36°45′N,5°04′E,36.75,5.066666667
 Africa,Algiera,Chlef Province,Dahra,35.425165°N,0.315127°W,35.425165,-0.315127
-Africa,Algiera,Mascara,,35°24′N,0°8′E,35.4,0.1333333333
+Africa,Algiera,Mascara,,35°24′N,0°8′E,35.4,0.133333333
 Africa,Algiera,Médéa,,36°16′N,2°45′E,36.26666667,2.75
 Africa,Algiera,Tlemcen,,34°52′58″N,01°19′00″W,34.88277778,-1.316666667
 Africa,Algiera,Zaccar,,34.43083°N,3.32722°E,34.43083,3.32722
@@ -248,7 +248,7 @@ Americas,United States,California,yountville,,,38.3966434,-122.36711
 Americas,United States,Colorado,Grand Valley,39°11′N,108°43′W,39.18333333,-108.7166667
 Americas,United States,Colorado,West Elks,,,38.814947,-107.779611
 Americas,United States,Connecticut,Western Connecticut Highlands,,,41.822405,-73.059142
-Americas,United States,Florida,,,,"28.635889,",-81.490569
+Americas,United States,Florida,,,,28.635889,-81.490569
 Americas,United States,Georgia,Dahlonega Plateau,,,34.609996,-83.878876
 Americas,United States,Idaho,Eagle Foothills,,,43.522416,-116.461545
 Americas,United States,Illinois,Shawnee Hills,,,37.41767,-88.879583
@@ -401,16 +401,16 @@ Europe,Czech Republic,Prague,St. Clare’s,50.117413,14.414066,50.117413,14.4140
 Europe,Czech Republic,Prague,St. Wenceslas’ Vineyard at Prague castle,50.092387,14.407315,50.092387,14.407315
 Europe,Czech Republic,Prague,Salabka,50.123407,14.413038,50.123407,14.413038
 Europe,France,Alsace – Alsace wine,,48°30′N,7°30′E,48.5,7.5
-Europe,France,Bordeaux – Bordeaux wine,Barsac,44°31′58″N,0°20′29″W,44.53277778,-0.3413888889
+Europe,France,Bordeaux – Bordeaux wine,Barsac,44°31′58″N,0°20′29″W,44.53277778,-0.341388889
 Europe,France,Bordeaux – Bordeaux wine,Entre-Deux-Mers,44.845362,-0.53279,44.845362,-0.53279
-Europe,France,Bordeaux – Bordeaux wine,Fronsac,44°55′30″N,0°16′19″W,44.925,-0.2719444444
+Europe,France,Bordeaux – Bordeaux wine,Fronsac,44°55′30″N,0°16′19″W,44.925,-0.271944444
 Europe,France,Bordeaux – Bordeaux wine,Graves,44.820305,0.599558,44.883364,-0.30293
 Europe,France,Bordeaux – Bordeaux wine,Haut-Médoc,44.84961,-0.570709,44.979395,-0.617439
-Europe,France,Bordeaux – Bordeaux wine,Margaux,45°02′31″N,0°40′32″W,45.04194444,-0.6755555556
+Europe,France,Bordeaux – Bordeaux wine,Margaux,45°02′31″N,0°40′32″W,45.04194444,-0.675555556
 Europe,France,Bordeaux – Bordeaux wine,Médoc,45.000°N,1.000°W,45,-1
-Europe,France,Bordeaux – Bordeaux wine,Pauillac,45°12′00″N,0°44′56″W,45.2,-0.7488888889
+Europe,France,Bordeaux – Bordeaux wine,Pauillac,45°12′00″N,0°44′56″W,45.2,-0.748888889
 Europe,France,Bordeaux – Bordeaux wine,Pessac-Léognan,44.721813,-0.612707,44.721813,-0.612707
-Europe,France,Bordeaux – Bordeaux wine,Pomerol,44°55′58″N,0°11′57″W,44.93277778,-0.1991666667
+Europe,France,Bordeaux – Bordeaux wine,Pomerol,44°55′58″N,0°11′57″W,44.93277778,-0.199166667
 Europe,France,Bordeaux – Bordeaux wine,Saint-Émilion,44.898422,-0.165865,44.898422,-0.165865
 Europe,France,Bordeaux – Bordeaux wine,Saint-Estèphe,45.250021,-0.769941,45.250021,-0.769941
 Europe,France,Bordeaux – Bordeaux wine,Saint-Julien,45.154546,-0.74298,45.154546,-0.74298
@@ -447,13 +447,13 @@ Europe,France,Languedoc-Roussillon,Maury,42°48′44″N,2°35′41″E,42.81222
 Europe,France,Languedoc-Roussillon,Minervois,43.327272,2.518893,43.327272,2.518893
 Europe,France,Languedoc-Roussillon,Rivesaltes,42.7697°N,2.8747°E,42.7697,2.8747
 Europe,France,Loire Valley – Loire Valley (wine region),Anjou – Saumur,45.34913,4.884785,45.34913,4.884785
-Europe,France,Loire Valley – Loire Valley (wine region),Cognac,45°42′N,0°20′W,45.7,-0.3333333333
+Europe,France,Loire Valley – Loire Valley (wine region),Cognac,45°42′N,0°20′W,45.7,-0.333333333
 Europe,France,Loire Valley – Loire Valley (wine region),Muscadet,47.257866,-1.298473,47.1485,-1.3991
 Europe,France,Loire Valley – Loire Valley (wine region),Pouilly-Fumé,47.12436,3.546698,47.12436,3.546698
 Europe,France,Loire Valley – Loire Valley (wine region),Sancerre,47°19′55″N,2°50′24″E,47.33194444,2.84
 Europe,France,Loire Valley – Loire Valley (wine region),Touraine,47.400°N,0.683°E,47.4,0.683
 Europe,France,Lorraine,,49.000°N,6.000°E,49,6
-Europe,France,Madiran,,43°32′58″N,0°03′28″W,43.54944444,-0.05777777778
+Europe,France,Madiran,,43°32′58″N,0°03′28″W,43.54944444,-0.057777778
 Europe,France,Provence,,43.50°N,5.50°E,43.5,5.5
 Europe,France,Rhône – Rhône wine,Beaumes-de-Venise,44°07′25″N,5°01′52″E,44.12361111,5.031111111
 Europe,France,Rhône – Rhône wine,Château-Grillet,45.450107,4.751732,45.450107,4.751732
@@ -842,12 +842,12 @@ Europe,Spain,Catalunya,Catalunya,41.817°N,1.467°E,41.817,1.467
 Europe,Spain,Conca de Barberà,Conca de Barberà,41°22′N,1°09′E,41.36666667,1.15
 Europe,Spain,Costers del Segre,Costers del Segre,41.59918,0.581066,41.59918,0.581066
 Europe,Spain,Empordà,Empordà,42.08194°N,3.07194°E,42.08194,3.07194
-Europe,Spain,Montsant,Montsant,41°8′49″N,0°49′17″E,41.14694444,0.8213888889
+Europe,Spain,Montsant,Montsant,41°8′49″N,0°49′17″E,41.14694444,0.821388889
 Europe,Spain,Penedès,Penedès,41.2932833°N,1.7495722°E,41.2932833,1.7495722
 Europe,Spain,Pla de Bages,Pla de Bages,41.72056°N,1.83972°E,41.72056,1.83972
 Europe,Spain,Priorat,Priorat,41.133°N,0.817°E,41.133,0.817
 Europe,Spain,Tarragona,Tarragona,41°06′56.51″N,1°14′58.54″E,41.11569722,1.249594444
-Europe,Spain,Terra Alta,Terra Alta,41°3′N,0°26′E,41.05,0.8213888889
+Europe,Spain,Terra Alta,Terra Alta,41°3′N,0°26′E,41.05,0.821388889
 Europe,Spain,Extremadura,Ribera del Guadiana,38.681579,-6.401448,38.681579,-6.401448
 Europe,Spain,Galicia,Monterrey,25°40′N,100°18′W,25.66666667,-100.3
 Europe,Spain,Galicia,Rías Baixas,42°13′53″N,8°42′45″W,42.23138889,-8.7125
@@ -860,7 +860,7 @@ Europe,Spain,Región de Murcia,Bullas,38.05000°N,1.67000°W,38.05,-1.67
 Europe,Spain,Región de Murcia,Jumilla,38°28′45″N,1°19′30″W,38.47916667,-1.325
 Europe,Spain,Región de Murcia,Yecla,38.617°N,1.117°W,38.617,-1.117
 Europe,Spain,Navarre,Navarra,42°49′N,1°39′W,42.81666667,-1.65
-Europe,Spain,Valencian Community,Alicante,38°20′43″N,0°28′59″W,38.34527778,-0.4830555556
+Europe,Spain,Valencian Community,Alicante,38°20′43″N,0°28′59″W,38.34527778,-0.483055556
 Europe,Spain,Valencian Community,Utiel-Requena,39.5061583°N,1.181028°W,39.5061583,-1.181028
 Europe,Spain,Valencian Community,Valencia,39°28′00″N,0°22′30″W,39.46666667,-0.375
 Europe,Sweden,Gutevin – Gotland,,57.370206,18.698474,57.370206,18.698474
@@ -912,7 +912,7 @@ Asia,China,Qiuci,,41.71556°N,82.93222°E,41.71556,82.93222
 Asia,China,Yantai-Penglai,,37°32′28″N,121°23′38″E,37.54111111,121.3938889
 Asia,China,Dalian,,38°55′15″N,121°38′21″E,38.92083333,121.6391667
 Asia,China,Tonghua,,41°43′41″N,125°56′24″E,41.72805556,125.94
-Asia,China,"Yantai, Shandong",,36°24′N,118°24′E,36.4,118.4
+Asia,China,Yantai Shandong,,36°24′N,118°24′E,36.4,118.4
 Asia,China,Yibin,,28°45′07″N,104°38′35″E,28.75194444,104.6430556
 Asia,China,Zhangjiakou,,40°46′08″N,114°53′10″E,40.76888889,114.8861111
 Asia,India,Bangalore,,12.983°N,77.583°E,12.983,77.583
