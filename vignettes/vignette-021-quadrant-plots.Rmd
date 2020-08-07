@@ -72,8 +72,9 @@ native <- TRUE
 #Philippines is also removed, as the grape yield data for it was several orders of magnitude smaller than anything else reported and so close to zero that it caused log transformation scaling issues
 rem_usa <- TRUE
 
-# If you want to label both of the countries with established SLF
+# If you want to label both of the countries (or states) with established SLF
 label.JPN.KOR <- TRUE
+label.us.infected <- TRUE
 
 # If you want the legend plotted on the states scatter?
 # plot_state_legend <- TRUE
