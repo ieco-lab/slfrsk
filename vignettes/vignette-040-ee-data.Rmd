@@ -1,0 +1,92 @@
+---
+title: "vignette-040-ee-data"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{vignette-040-ee-data}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup, results='hide', message=FALSE}
+library(slfrsk)
+library(tidyverse)
+library(rgdal)
+```
+
+```{r read data}
+data("states_summary_present")
+data("states_summary_future")
+data("countries_summary_present")
+data("countries_summary_future")
+```
+
+We can pull country and state shapefiles from GADM
+```{r read in the country and state shapefiles, message=FALSE, warning=FALSE}
+  #shapefile of USA: data obtained from GADM: https://gadm.org/download_world.html
+states <- readOGR(dsn = "/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk/geo_shapefiles/gadm36_USA_shp/gadm36_USA_1.shp", verbose = T)
+
+  #shapefile of world by countries
+countries <- readOGR("/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk/geo_shapefiles/gadm36_levels_shp/gadm36_0.shp", verbose = T, p4s = '+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0')
+
+```
+
+Clean the shape data
+```{r clean the shape data}
+#STATES
+#change DC name
+#states@data$NAME_1 <- gsub(pattern = "Washington DC", replacement = "District of Columbia", x = states@data$NAME_1)
+
+#COUNTRIES LAZY MAY WANT TO MAKE GSUB
+countries@data$NAME_0[grep(pattern = "Ivoire", x = countries@data$NAME_0, value = F)] <- "Ivory Coast"
+countries@data$NAME_0[grep(pattern = "ncipe", x = countries@data$NAME_0, value = F)] <- "Sao Tome and Principe"
+countries@data$NAME_0[grep(pattern = "Cura", x = countries@data$NAME_0, value = F)] <- "Curacao"
+countries@data$NAME_0[grep(pattern = "Saint Bart", x = countries@data$NAME_0, value = F)] <- "Saint Barthelemy"
+
+```
+
+Filter the shapefile data to be just the states and countries in the trade data
+```{r filter the states to just those in the trade data}
+#states
+states <- states[states@data$NAME_1 %in% unique(states_summary_present$geopol_unit),]
+#countries
+countries <- countries[countries@data$NAME_0 %in% unique(countries_summary_present$geopol_unit),]
+
+```
+
+Now we can figure out how to join the trade data to the shapefiles (later to add the wine and grape production)
+```{r add in the trade data}
+states@data <- left_join(states@data, states_summary_present, by = c("NAME_1" = "geopol_unit"))
+countries@data <- left_join(countries@data, countries_summary_present, by = c("NAME_0" = "geopol_unit"))
+
+```
+
+```{r write out the shapefiles}
+writeOGR(obj = states, dsn = "/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/",  driver="ESRI Shapefile", layer = "states", verbose = T)
+writeOGR(obj = countries, dsn = "/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/",  driver="ESRI Shapefile", layer = "countries", verbose = T)
+```
+
+```{r maybe test try plotting trade data}
+#states_summary_present[match(x = states@data$NAME_1, table = states_summary_present$geopol_unit),]
+#states@data
+
+#states2 <- broom::tidy(states)
+
+#fortifying to make points
+states_gg <- fortify(states, region = "NAME_1")
+states_gg <- left_join(states_gg, states_summary_present, by = c("id" = "geopol_unit"))
+```
+
+```{r try to test plot, cache=TRUE}
+ggplot(states_gg[!states_gg$id %in% c("Alaska", "Hawaii"),]) +
+  geom_polygon(aes(x = long, y = lat, group = group, fill = log10_avg_infected_mass)) +
+  coord_quickmap()
+```
+
+

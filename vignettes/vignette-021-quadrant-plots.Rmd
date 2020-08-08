@@ -805,16 +805,16 @@ if(present_transport){
       grid.arrange(countries_grob, legend_state, nrow=1, ncol = 2, widths = c(4,2), heights = 1)
     dev.off()
 
-#  lay <- rbind(c(1,1,1,NA,NA,NA),
-#               c(1,1,1,NA,NA,NA),
-#               c(1,1,1,NA,3,3),
-#               c(NA,NA,NA,NA,3,3),
-#               c(2,2,2,NA,3,3),
-#               c(2,2,2,NA,NA,NA),
-#               c(2,2,2,NA,NA,NA)
-#  )
-#  
-#  grid.arrange(states_grob, countries_grob, legend_country, nrow = 7, ncol = 6, layout_matrix = lay, heights = c(1,1,1, 0.22, 1,1,1), widths = c(0.8,0.8,0.8,0.01,0.7,0.7))
+  lay <- rbind(c(1,1,1,NA,NA,NA),
+               c(1,1,1,NA,NA,NA),
+               c(1,1,1,NA,3,3),
+               c(NA,NA,NA,NA,3,3),
+               c(2,2,2,NA,3,3),
+               c(2,2,2,NA,NA,NA),
+               c(2,2,2,NA,NA,NA)
+  )
+  
+  grid.arrange(states_grob, countries_grob, legend_country, nrow = 7, ncol = 6, layout_matrix = lay, heights = c(1,1,1, 0.22, 1,1,1), widths = c(0.8,0.8,0.8,0.01,0.7,0.7))
 ```
 
 
