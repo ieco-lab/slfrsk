@@ -37,7 +37,7 @@ countries <- readOGR("/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slf
 
 ```
 
-Clean the shape data
+Clean the shape data and make future version copies of the shape data
 ```{r clean the shape data}
 #STATES
 #change DC name
@@ -49,27 +49,56 @@ countries@data$NAME_0[grep(pattern = "ncipe", x = countries@data$NAME_0, value =
 countries@data$NAME_0[grep(pattern = "Cura", x = countries@data$NAME_0, value = F)] <- "Curacao"
 countries@data$NAME_0[grep(pattern = "Saint Bart", x = countries@data$NAME_0, value = F)] <- "Saint Barthelemy"
 
+
+#make a future version to hold the future data
+states_future <- states
+countries_future <- countries
+
 ```
 
 Filter the shapefile data to be just the states and countries in the trade data
 ```{r filter the states to just those in the trade data}
 #states
 states <- states[states@data$NAME_1 %in% unique(states_summary_present$geopol_unit),]
+states_future <- states_future[states_future@data$NAME_1 %in% unique(states_summary_future$geopol_unit),]
 #countries
 countries <- countries[countries@data$NAME_0 %in% unique(countries_summary_present$geopol_unit),]
+countries_future <- countries_future[countries_future@data$NAME_0 %in% unique(countries_summary_future$geopol_unit),]
 
 ```
 
 Now we can figure out how to join the trade data to the shapefiles (later to add the wine and grape production)
 ```{r add in the trade data}
+#states
 states@data <- left_join(states@data, states_summary_present, by = c("NAME_1" = "geopol_unit"))
+states_future@data <- left_join(states_future@data, states_summary_future, by = c("NAME_1" = "geopol_unit"))
+
+#countries
 countries@data <- left_join(countries@data, countries_summary_present, by = c("NAME_0" = "geopol_unit"))
+countries_future@data <- left_join(countries_future@data, countries_summary_future, by = c("NAME_0" = "geopol_unit"))
 
 ```
 
-```{r write out the shapefiles}
-writeOGR(obj = states, dsn = "/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/",  driver="ESRI Shapefile", layer = "states", verbose = T)
-writeOGR(obj = countries, dsn = "/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/",  driver="ESRI Shapefile", layer = "countries", verbose = T)
+```{r rename fields}
+#states
+colnames(states@data)[13:31] <- c("gmean_max","gse_max","wine","grapes","avg_wine","se_wine","lavg_wine","avg_yield","se_yield","avg_prod","se_prod","lavg_yield","lavg_prod","avg_itrad","se_trad","avg_imass","se_mass","lavg_itrad","lavg_imass") 
+colnames(states_future@data)[13:31] <- c("gmean_max","gse_max","wine","grapes","avg_wine","se_wine","lavg_wine","avg_yield","se_yield","avg_prod","se_prod","lavg_yield","lavg_prod","avg_itrad","se_trad","avg_imass","se_mass","lavg_itrad","lavg_imass") 
+
+#countries
+colnames(countries@data)[5:23] <- c("gmean_max","gse_max","wine","grapes","avg_wine","se_wine","lavg_wine","avg_yield","se_yield","avg_prod","se_prod","lavg_yield","lavg_prod","avg_itrad","se_trad","avg_imass","se_mass","lavg_itrad","lavg_imass") 
+colnames(countries_future@data)[5:23] <- c("gmean_max","gse_max","wine","grapes","avg_wine","se_wine","lavg_wine","avg_yield","se_yield","avg_prod","se_prod","lavg_yield","lavg_prod","avg_itrad","se_trad","avg_imass","se_mass","lavg_itrad","lavg_imass") 
+
+```
+
+Write out the new shapefiles (may need to rename some cols in the `@data` field)
+```{r write out the shapefiles, warning=FALSE, message=FALSE}
+#states
+writeOGR(obj = states, dsn = "/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk/geo_shapefiles/gadm36_USA_with_data/",  driver="ESRI Shapefile", layer = "states", verbose = F)
+writeOGR(obj = states_future, dsn = "/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk/geo_shapefiles/gadm36_USA_with_data/",  driver="ESRI Shapefile", layer = "states_future", verbose = F)
+
+#countries
+writeOGR(obj = countries, dsn = "/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk/geo_shapefiles/gadm36_levels_with_data/",  driver="ESRI Shapefile", layer = "countries", verbose = F)
+writeOGR(obj = countries_future, dsn = "/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk/geo_shapefiles/gadm36_levels_with_data/",  driver="ESRI Shapefile", layer = "countries_future", verbose = F)
 ```
 
 ```{r maybe test try plotting trade data}
