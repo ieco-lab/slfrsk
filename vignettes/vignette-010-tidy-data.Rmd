@@ -1,6 +1,6 @@
 ---
 title: "vignette-010-tidy-data"
-output: rmarkdown::html_vignette
+output: rmarkdown::html_notebook
 vignette: >
   %\VignetteIndexEntry{vignette-010-tidy-data}
   %\VignetteEngine{knitr::rmarkdown}
@@ -15,18 +15,18 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup, warning=FALSE, message=FALSE}
+```{r setup, warning=FALSE, message=FALSE, include=FALSE}
 library(slfrsk)
 library(tidyverse)
 library(here)
 ```
 
-###Data to ship with the package
-####Correlation Figure
+### Data to ship with the package
+#### Correlation Figure
 
 All of the following data sources will be read in as raw data from `slfrsk/data/` (originally cleaned a bit initially from raw data version in `slfrsk/data-raw/`) and then cleaned up individually. Depending on the situation, the resultant "cleaned/tidied" data may be saved to `slfrsk/data/` as a new `.rda` file.
 
-#####Maxent extractions (states and countries), we are going to summarize the mean of the models as a grand mean
+##### Maxent extractions (states and countries), we are going to summarize the mean of the models as a grand mean
   
 ```{r bring in maxent extraction summary data}
 data("states_extracts")
@@ -43,8 +43,8 @@ summary_countries_extracts <- countries_extracts %>%
 
 ```
   
-#####trade data (states and countries, both present and future)
-######states value
+##### trade data (states and countries, both present and future)
+###### states value
 ```{r load in states trade data and clean value, message=FALSE, warning=FALSE}
 #load states value
 data("states_trade_summary_slf")
@@ -119,7 +119,7 @@ colnames(stateid) <- c("ID", "geopol_unit")
     summarise(avg_infected_trade = mean(avg_infected_trade, na.rm = T), se = mean(se))
 ```
     
-######states mass (this also converts mass from kg to metric tons)
+###### states mass (this also converts mass from kg to metric tons)
 ```{r clean states mass, message=FALSE, warning=FALSE}
 #load states mass
 data("states_trade_mass_summary_slf")
@@ -192,7 +192,7 @@ data("states_trade_mass_summary_slf_future")
 ```
     
 ######countries value
-```{r load in countries trade data and clean value, message=FALSE, warning=FALSE}
+```{r load in countries trade data and clean value, message=FALSE,warning=FALSE}
 #load countries values
 data("countries_trade_summary_slf")
 data("countries_trade_summary_slf_future")
@@ -507,12 +507,13 @@ countries_summary_future <- countries_summary_future %>%
 ###Write Out Data for Future Use
 
 ####Correlation Plots
-```{r save correlation plot  data}
-save(states_summary_present, file = file.path(here(), "data", "states_summary_present.rda"))
-save(states_summary_future, file = file.path(here(), "data", "states_summary_future.rda"))
-save(countries_summary_present, file = file.path(here(), "data", "countries_summary_present.rda"))
-save(countries_summary_future, file = file.path(here(), "data", "countries_summary_future.rda"))
-
+```{r save correlation plot  data, eval=FALSE}
+if(FALSE){
+#save(states_summary_present, file = file.path(here(), "data", "states_summary_present.rda"))
+#save(states_summary_future, file = file.path(here(), "data", "states_summary_future.rda"))
+#save(countries_summary_present, file = file.path(here(), "data", "countries_summary_present.rda"))
+#save(countries_summary_future, file = file.path(here(), "data", "countries_summary_future.rda"))
+}
 ```
 
 
