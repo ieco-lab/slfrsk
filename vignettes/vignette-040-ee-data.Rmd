@@ -18,13 +18,42 @@ knitr::opts_chunk$set(
 library(slfrsk)
 library(tidyverse)
 library(rgdal)
+library(rgeos)  #gSimplify
 ```
 
+Call up the future data for attaching to shapefiles. Round the numeric values to reduce file size?
 ```{r read data}
-data("states_summary_present")
 data("states_summary_future")
-data("countries_summary_present")
 data("countries_summary_future")
+```
+
+We need to transform the data to be the three properties in the correlation figures.
+```{r add the corr plot data}
+
+#states
+states_summary_future <- states_summary_future %>%
+  #transport in 2 mutate steps
+  mutate(transport = log10_avg_infected_mass - min(log10_avg_infected_mass)) %>%
+  mutate(transport = round(x = transport / max(transport), digits = 1)*10) %>%
+  #establishment
+  mutate(establishment = round(x = grand_mean_max, digits = 1)*10) %>%
+  #impact_wine
+  mutate(impact_wine = round(x = log10_avg_wine / max(log10_avg_wine), digits = 1)*10) %>%
+  #impact_grape
+  mutate(impact_grape = round(x = log10_avg_prod / max(log10_avg_prod), digits = 1)*10)
+
+#countries
+countries_summary_future <- countries_summary_future %>%
+  #transport in 2 mutate steps
+  mutate(transport = log10_avg_infected_mass - min(log10_avg_infected_mass)) %>%
+  mutate(transport = round(x = transport / max(transport), digits = 1)*10) %>%
+  #establishment
+  mutate(establishment = round(x = grand_mean_max, digits = 1)*10) %>%
+  #impact_wine
+  mutate(impact_wine = round(x = log10_avg_wine / max(log10_avg_wine), digits = 1)*10) %>%
+  #impact_grape
+  mutate(impact_grape = round(x = log10_avg_prod / max(log10_avg_prod), digits = 1)*10)
+
 ```
 
 We can pull country and state shapefiles from GADM
@@ -37,7 +66,7 @@ countries <- readOGR("/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slf
 
 ```
 
-Clean the shape data and make future version copies of the shape data
+Clean the shape data. Remove the US from the `countries` shapefile
 ```{r clean the shape data}
 #STATES
 #change DC name
@@ -49,58 +78,73 @@ countries@data$NAME_0[grep(pattern = "ncipe", x = countries@data$NAME_0, value =
 countries@data$NAME_0[grep(pattern = "Cura", x = countries@data$NAME_0, value = F)] <- "Curacao"
 countries@data$NAME_0[grep(pattern = "Saint Bart", x = countries@data$NAME_0, value = F)] <- "Saint Barthelemy"
 
-
-#make a future version to hold the future data
-states_future <- states
-countries_future <- countries
+#rm USA
+countries <- countries[countries$NAME_0 != "United States",]
 
 ```
+
+Make the shapefiles smaller.
+```{r make shapefiles smaller}
+states_lo <- SpatialPolygonsDataFrame(Sr = rgeos::gSimplify(spgeom = states, topologyPreserve = TRUE, tol = 0.01), data = states@data)
+countries <- SpatialPolygonsDataFrame(Sr = rgeos::gSimplify(spgeom = countries, topologyPreserve = TRUE, tol = 0.01), data = countries@data)
+countries_lo <- SpatialPolygonsDataFrame(Sr = rgeos::gSimplify(spgeom = countries, topologyPreserve = TRUE, tol = 0.001), data = countries@data)
+
+```
+
 
 Filter the shapefile data to be just the states and countries in the trade data
 ```{r filter the states to just those in the trade data}
 #states
-states <- states[states@data$NAME_1 %in% unique(states_summary_present$geopol_unit),]
-states_future <- states_future[states_future@data$NAME_1 %in% unique(states_summary_future$geopol_unit),]
+states <- states[states@data$NAME_1 %in% unique(states_summary_future$geopol_unit),]
+states_lo <- states_lo[states_lo@data$NAME_1 %in% unique(states_summary_future$geopol_unit),]
 #countries
-countries <- countries[countries@data$NAME_0 %in% unique(countries_summary_present$geopol_unit),]
-countries_future <- countries_future[countries_future@data$NAME_0 %in% unique(countries_summary_future$geopol_unit),]
+countries <- countries[countries@data$NAME_0 %in% unique(countries_summary_future$geopol_unit),]
+countries_lo <- countries_lo[countries_lo@data$NAME_0 %in% unique(countries_summary_future$geopol_unit),]
 
 ```
 
 Now we can figure out how to join the trade data to the shapefiles (later to add the wine and grape production)
 ```{r add in the trade data}
 #states
-states@data <- left_join(states@data, states_summary_present, by = c("NAME_1" = "geopol_unit"))
-states_future@data <- left_join(states_future@data, states_summary_future, by = c("NAME_1" = "geopol_unit"))
-
+states@data <- left_join(states@data, states_summary_future, by = c("NAME_1" = "geopol_unit"))
+states_lo@data <- left_join(states_lo@data, states_summary_future, by = c("NAME_1" = "geopol_unit"))
 #countries
-countries@data <- left_join(countries@data, countries_summary_present, by = c("NAME_0" = "geopol_unit"))
-countries_future@data <- left_join(countries_future@data, countries_summary_future, by = c("NAME_0" = "geopol_unit"))
+countries@data <- left_join(countries@data, countries_summary_future, by = c("NAME_0" = "geopol_unit"))
+countries_lo@data <- left_join(countries_lo@data, countries_summary_future, by = c("NAME_0" = "geopol_unit"))
 
 ```
 
+Rename the fields to accommodate for ESRI shapefile limitations
 ```{r rename fields}
 #states
-colnames(states@data)[13:31] <- c("gmean_max","gse_max","wine","grapes","avg_wine","se_wine","lavg_wine","avg_yield","se_yield","avg_prod","se_prod","lavg_yield","lavg_prod","avg_itrad","se_trad","avg_imass","se_mass","lavg_itrad","lavg_imass") 
-colnames(states_future@data)[13:31] <- c("gmean_max","gse_max","wine","grapes","avg_wine","se_wine","lavg_wine","avg_yield","se_yield","avg_prod","se_prod","lavg_yield","lavg_prod","avg_itrad","se_trad","avg_imass","se_mass","lavg_itrad","lavg_imass") 
-
+colnames(states@data)[13:35] <- c("gmean_max","gse_max","wine","grapes","avg_wine","se_wine","lavg_wine","avg_yield","se_yield","avg_prod","se_prod","lavg_yield","lavg_prod","avg_itrad","se_trad","avg_imass","se_mass","lavg_itrad","lavg_imass", "transport", "establish", "imp_wine", "imp_grape")
+colnames(states_lo@data)[13:35] <- c("gmean_max","gse_max","wine","grapes","avg_wine","se_wine","lavg_wine","avg_yield","se_yield","avg_prod","se_prod","lavg_yield","lavg_prod","avg_itrad","se_trad","avg_imass","se_mass","lavg_itrad","lavg_imass", "transport", "establish", "imp_wine", "imp_grape") 
 #countries
-colnames(countries@data)[5:23] <- c("gmean_max","gse_max","wine","grapes","avg_wine","se_wine","lavg_wine","avg_yield","se_yield","avg_prod","se_prod","lavg_yield","lavg_prod","avg_itrad","se_trad","avg_imass","se_mass","lavg_itrad","lavg_imass") 
-colnames(countries_future@data)[5:23] <- c("gmean_max","gse_max","wine","grapes","avg_wine","se_wine","lavg_wine","avg_yield","se_yield","avg_prod","se_prod","lavg_yield","lavg_prod","avg_itrad","se_trad","avg_imass","se_mass","lavg_itrad","lavg_imass") 
+colnames(countries@data)[5:27] <- c("gmean_max","gse_max","wine","grapes","avg_wine","se_wine","lavg_wine","avg_yield","se_yield","avg_prod","se_prod","lavg_yield","lavg_prod","avg_itrad","se_trad","avg_imass","se_mass","lavg_itrad","lavg_imass", "transport", "establish", "imp_wine", "imp_grape") 
+colnames(countries_lo@data)[5:27] <- c("gmean_max","gse_max","wine","grapes","avg_wine","se_wine","lavg_wine","avg_yield","se_yield","avg_prod","se_prod","lavg_yield","lavg_prod","avg_itrad","se_trad","avg_imass","se_mass","lavg_itrad","lavg_imass", "transport", "establish", "imp_wine", "imp_grape") 
 
 ```
+
+
+Combine states and countries together.
+```{r merge to a single shapefile, eval=FALSE}
+
+
+```
+Save it as a file less than 10-20 MB
 
 Write out the new shapefiles (may need to rename some cols in the `@data` field)
-```{r write out the shapefiles, warning=FALSE, message=FALSE}
+```{r write out the shapefiles, warning=FALSE, message=FALSE, eval=FALSE}
 #states
-writeOGR(obj = states, dsn = "/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk/geo_shapefiles/gadm36_USA_with_data/",  driver="ESRI Shapefile", layer = "states", verbose = F)
-writeOGR(obj = states_future, dsn = "/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk/geo_shapefiles/gadm36_USA_with_data/",  driver="ESRI Shapefile", layer = "states_future", verbose = F)
+writeOGR(obj = states, dsn = "/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk/geo_shapefiles/gadm36_USA_with_data/",  driver="ESRI Shapefile", layer = "states", verbose = F, overwrite_layer = TRUE)
+writeOGR(obj = states_lo, dsn = "/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk/geo_shapefiles/gadm36_USA_with_data/",  driver="ESRI Shapefile", layer = "states_lores", verbose = F, overwrite_layer = TRUE)
 
 #countries
-writeOGR(obj = countries, dsn = "/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk/geo_shapefiles/gadm36_levels_with_data/",  driver="ESRI Shapefile", layer = "countries", verbose = F)
-writeOGR(obj = countries_future, dsn = "/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk/geo_shapefiles/gadm36_levels_with_data/",  driver="ESRI Shapefile", layer = "countries_future", verbose = F)
-```
+writeOGR(obj = countries, dsn = "/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk/geo_shapefiles/gadm36_levels_with_data/",  driver="ESRI Shapefile", layer = "countries", verbose = F, overwrite_layer = TRUE)
+writeOGR(obj = countries_lo, dsn = "/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk/geo_shapefiles/gadm36_levels_with_data/",  driver="ESRI Shapefile", layer = "countries_lores", verbose = F, overwrite_layer = TRUE)
 
+```
+Now we can just check to see that the data work for the shapefile!
 ```{r maybe test try plotting trade data}
 #states_summary_present[match(x = states@data$NAME_1, table = states_summary_present$geopol_unit),]
 #states@data
@@ -108,13 +152,22 @@ writeOGR(obj = countries_future, dsn = "/Volumes/GoogleDrive/Shared drives/slfRi
 #states2 <- broom::tidy(states)
 
 #fortifying to make points
-states_gg <- fortify(states, region = "NAME_1")
-states_gg <- left_join(states_gg, states_summary_present, by = c("id" = "geopol_unit"))
+states_gg <- fortify(states_lo, region = "NAME_1")
+states_gg <- left_join(states_gg, states_summary_future, by = c("id" = "geopol_unit"))
 ```
 
 ```{r try to test plot, cache=TRUE}
 ggplot(states_gg[!states_gg$id %in% c("Alaska", "Hawaii"),]) +
-  geom_polygon(aes(x = long, y = lat, group = group, fill = log10_avg_infected_mass)) +
+  geom_polygon(aes(x = long, y = lat, group = group, fill = transport)) +
+  coord_quickmap()
+ggplot(states_gg[!states_gg$id %in% c("Alaska", "Hawaii"),]) +
+  geom_polygon(aes(x = long, y = lat, group = group, fill = establishment)) +
+  coord_quickmap()
+ggplot(states_gg[!states_gg$id %in% c("Alaska", "Hawaii"),]) +
+  geom_polygon(aes(x = long, y = lat, group = group, fill = impact_wine)) +
+  coord_quickmap()
+ggplot(states_gg[!states_gg$id %in% c("Alaska", "Hawaii"),]) +
+  geom_polygon(aes(x = long, y = lat, group = group, fill = impact_grape)) +
   coord_quickmap()
 ```
 
