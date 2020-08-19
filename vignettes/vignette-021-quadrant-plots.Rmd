@@ -322,6 +322,23 @@ for (i in 1:length(plots_which)) {
       #do welch t.test to assess if transport and establishment have the same relationship with grapes
       state_grape_t.test <- list(transport = t.test(avg_infected_mass_scaled~grapes, data = data_to_plot),
                                  establishment = t.test(grand_mean_max_scaled~grapes, data = data_to_plot))
+      
+      #add infected state labeling if turned on
+      if(label.us.infected){
+        if(present_transport){  #PRESENT
+          data_to_label_us.infected <- data_to_plot %>%
+          filter(geopol_unit %in% c("Delaware", "Maryland", "New Jersey")) %>%
+          arrange(desc(size_to_plot))
+        data_to_label <- bind_rows(data_to_label,data_to_label_us.infected)
+        
+        } else if(present_transport == FALSE){  #FUTURE
+          data_to_label_us.infected <- data_to_plot %>%
+          filter(geopol_unit %in% c("Delaware", "Maryland", "New Jersey", "Ohio", "West Virginia")) %>%
+          arrange(desc(size_to_plot))
+        data_to_label <- bind_rows(data_to_label,data_to_label_us.infected)
+        }
+      } #end of labeling for infected states
+      
     } else {
       #selects the data to modify for plotting: COUNTRIES and selects the timing
       if(present_transport){
@@ -396,6 +413,23 @@ for (i in 1:length(plots_which)) {
         tail(data_to_plot, top_to_plot)  %>% arrange(desc(size_to_plot))
       state_grape_t.test <- list(transport = t.test(avg_infected_mass_scaled~grapes, data = data_to_plot),
                                  establishment = t.test(grand_mean_max_scaled~grapes, data = data_to_plot))
+      
+            #add infected state labeling if turned on
+      if(label.us.infected){
+        if(present_transport){  #PRESENT
+          data_to_label_us.infected <- data_to_plot %>%
+          filter(geopol_unit %in% c("Delaware", "Maryland", "New Jersey")) %>%
+          arrange(desc(size_to_plot))
+        data_to_label <- bind_rows(data_to_label,data_to_label_us.infected)
+        
+        } else if(present_transport == FALSE){  #FUTURE
+          data_to_label_us.infected <- data_to_plot %>%
+          filter(geopol_unit %in% c("Delaware", "Maryland", "New Jersey", "Ohio", "West Virginia")) %>%
+          arrange(desc(size_to_plot))
+        data_to_label <- bind_rows(data_to_label,data_to_label_us.infected)
+        }
+      } #end of labeling for infected states
+
     } else {
       #selects the data to modify for plotting: COUNTRIES and selects the timing
       if(present_transport){
@@ -472,6 +506,10 @@ if(present_transport == FALSE){
     if(statez) { #STATES FUTURE WINE
       nudge.x <- c(-.1,-.1,-.1,-.05,-.1,-0.05,-.1,.06,-.01,.05)
       nudge.y <- c(.2,.10,.10,.10,.07,.15,.15,-.07,-.12,-.12)    #CA, WA, NY, PA, OR, GA, OH, MI, VA, NC
+      if(label.us.infected){
+        nudge.x <- c(nudge.x, nudge_us.infected_future.x)
+        nudge.y <- c(nudge.y, nudge_us.infected_future.y)
+      }
       ytitle <- "Establishment Potential"
     } else {  #COUNTRIES FUTURE WINE
       nudge.x <- c(-.3,-.27,-.05,-.26,.14,.1,.20,-.21,.08,.2)
@@ -487,6 +525,10 @@ if(present_transport == FALSE){
     if(statez) { #STATES FUTURE GRAPES
       nudge.x <- c(-.10,-.05,-.22,-.05, .10,-.05, .10,.025, .05,-.025)   #yield: #CA, PA, WA, MI, NY, MO, OH, OR, GA, NC
       nudge.y <- c(-.10, .10, .10, .10,-.05, .10,-.05,-.07,-.12, .10)   #production: CA, WA, NY, PA, MI, OR, TX, VA, NC, MO
+      if(label.us.infected){
+        nudge.x <- c(nudge.x, nudge_us.infected_future.x)
+        nudge.y <- c(nudge.y, nudge_us.infected_future.y)
+      }
       ytitle <- "Establishment Potential"
     } else {  #COUNTRIES FUTURE GRAPES
       # grape production: CHN, ITA, ESP, FRA, TUR, IND, CHL, ARG, ZAF,   AUS
@@ -499,29 +541,45 @@ if(present_transport == FALSE){
       ytitle <- "Establishment Potential"
     }
   }
-} else { # grapes above wine below NOTE will not work with labeling JPN and KOR
+} else { # grapes above wine below NOTE may not work with labeling JPN and KOR
   if(impact_prod == "wine"){
     if(statez) { #STATES PRESENT WINE
       nudge.x <- c(.09,-.1,-.04,-.05,-.10,-0.12,-.1,.04,-.01,.05)
       nudge.y <- c(-.10,.10,.10,.10,.07,.10,.12,-.07,-.12,-.12)    #CA, WA, NY, PA, OR, GA, OH, MI, VA, NC
+      if(label.us.infected){
+        nudge.x <- c(nudge.x, nudge_us.infected_present.x)
+        nudge.y <- c(nudge.y, nudge_us.infected_present.y)
+      }
       ytitle <- "Establishment Potential"
     } else { #COUNTRIES PRESENT WINE
       #nudge.x <- c(0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00)
       #nudge.y <- c(0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00)
       nudge.x <- c(-.03,-.10,-.02,-.03,.14,-.1,-.23,-.21,.08,.2)
       nudge.y <- c(.13, .09, .155, .09, -.11, .13, .15,.09,-.08,-.15)  #ITA, FRA, ESP, CHN, ARG, CHL, AUS, ZAF, DEU, PRT
+      if(label.JPN.KOR) {
+        nudge.x <- c(nudge.x, nudge_JPNKOR.x) #JPN KOR
+        nudge.y <- c(nudge.y, nudge_JPNKOR.y) #JPN KOR
+      }
       ytitle <- "Establishment Potential"
     }
   } else if(impact_prod == "grapes"){
     if(statez) { #STATES PRESENT GRAPES
       nudge.y <- c(-0.05, 0.095, -0.10, -0.12, -0.05, 0.085, -0.02, 0.12, -0.10, 0.13)  #CA, WA, NY, PA, MI, OR, TX, VA, NC, MO  
       nudge.x <- c( 0.10, 0.00, -0.02,  0.00, -0.05, 0.00,  0.10, 0.00,  0.02, 0.01)
+      if(label.us.infected){
+        nudge.x <- c(nudge.x, nudge_us.infected_present.x)
+        nudge.y <- c(nudge.y, nudge_us.infected_present.y)
+      }
       ytitle <- "Establishment Potential"
     } else { #COUNTRIES PRESENT GRAPES
       #nudge.x <- c(0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00)
       #nudge.y <- c(0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00)
       nudge.x <- c(-.03,-.10,-.02,-.03,.14,-.1,-.23,-.21,.08,.2)
       nudge.y <- c(.13, .09, .155, .09, -.11, .13, .15,.09,-.08,-.15)  #ITA, FRA, ESP, CHN, ARG, CHL, AUS, ZAF, DEU, PRT
+      if(label.JPN.KOR) {
+        nudge.x <- c(nudge.x, nudge_JPNKOR.x) #JPN KOR
+        nudge.y <- c(nudge.y, nudge_JPNKOR.y) #JPN KOR
+      }
       ytitle <- "Establishment Potential"
     }
   }
