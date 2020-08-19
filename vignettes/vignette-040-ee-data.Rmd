@@ -105,7 +105,7 @@ countries_lo <- countries_lo[countries_lo@data$NAME_0 %in% unique(countries_summ
 ```
 
 geometries need cleaning because of scaling?
-```{r make sure geometries are  clean}
+```{r make sure geometries are  clean, warning=FALSE, message=FALSE}
 #check for cleaning needed?
 #clgeo_SummaryReport(clgeo_CollectionReport(states))
 #clgeo_SummaryReport(clgeo_CollectionReport(states_lo))
