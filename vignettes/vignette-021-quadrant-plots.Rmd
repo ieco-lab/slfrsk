@@ -18,7 +18,7 @@ new edited version of the correlation plots
 
 To Do:
 
-- V1 : Stack the two figures, ~~flip the axes~~, include the legend, ~~remove the quadrant labels~~, ~~make it so that the small white points are visible~~.
+- V1 : Stack the two figures, ~~flip the axes~~, ~~include the legend~~, ~~remove the quadrant labels~~, ~~make it so that the small white points are visible~~.
 
   - ~~labeling is wrong on the corrplots for states relative to the infected~~
   - ~~rm observed max suitability in boxplot names~~
@@ -74,7 +74,7 @@ rem_usa <- TRUE
 
 # If you want to label both of the countries (or states) with established SLF
 label.JPN.KOR <- TRUE
-label.us.infected <- TRUE
+label.us.infected <- TRUE   #PRESENT: adding DE, MD, NJ  FUTURE: adding DE, MD, NJ, OH, WV
 
 # If you want the legend plotted on the states scatter?
 # plot_state_legend <- TRUE
@@ -261,6 +261,10 @@ plots_which <- c(TRUE,FALSE) # Do not change this flips between plotting the sta
 top_to_plot <- 10 # How many countries and states to highlight for labels?
 nudge_JPNKOR.y <- c(.1,.1)
 nudge_JPNKOR.x <- c(-.17,0)
+nudge_us.infected_present.x <- c(0,0,0)  #PRESENT: adding DE, MD, NJ  
+nudge_us.infected_present.y <- c(0,0,0)
+nudge_us.infected_future.x <- c(0,0,0,0,0)  #FUTURE: adding DE, MD, NJ, OH, WV
+nudge_us.infected_future.y <- c(0,0,0,0,0)
 #lx <- 0.22
 #ly <- 0.25
 #hy <- 0.77
