@@ -261,8 +261,8 @@ plots_which <- c(TRUE,FALSE) # Do not change this flips between plotting the sta
 top_to_plot <- 10 # How many countries and states to highlight for labels?
 nudge_JPNKOR.y <- c(.1,.1)
 nudge_JPNKOR.x <- c(-.17,0)
-nudge_us.infected_present.x <- c(0,0,0)  #PRESENT: adding DE, MD, NJ  
-nudge_us.infected_present.y <- c(0,0,0)
+nudge_us.infected_present.x <- c(0.00, -0.02,-0.04)  #PRESENT: adding DE, MD, NJ  
+nudge_us.infected_present.y <- c(0.10,-0.10,-0.10)
 nudge_us.infected_future.x <- c(0,0,0,0,0)  #FUTURE: adding DE, MD, NJ, OH, WV
 nudge_us.infected_future.y <- c(0,0,0,0,0)
 #lx <- 0.22
@@ -284,8 +284,8 @@ i <- 1
 
 
 ```{r plot figures, warning=FALSE, message=FALSE, echo=FALSE, fig.height= 7.5, fig.width=7}
-for (i in 1:length(plots_which)) {
-  # for (i in 1) {
+#for (i in 1:length(plots_which)) {
+   for (i in 1) {
   #  for (i in 2) {
   
   #selects states or countries to plot
@@ -564,7 +564,7 @@ if(present_transport == FALSE){
     }
   } else if(impact_prod == "grapes"){
     if(statez) { #STATES PRESENT GRAPES
-      nudge.y <- c(-0.05, 0.095, -0.10, -0.12, -0.05, 0.085, -0.02, 0.12, -0.10, 0.13)  #CA, WA, NY, PA, MI, OR, TX, VA, NC, MO  
+      nudge.y <- c(-0.05, 0.095, -0.10, 0.09, -0.05, 0.085, -0.02, 0.12, -0.10, 0.13)  #CA, WA, NY, PA, MI, OR, TX, VA, NC, MO  
       nudge.x <- c( 0.10, 0.00, -0.02,  0.00, -0.05, 0.00,  0.10, 0.00,  0.02, 0.01)
       if(label.us.infected){
         nudge.x <- c(nudge.x, nudge_us.infected_present.x)
