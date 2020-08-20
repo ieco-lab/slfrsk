@@ -286,8 +286,8 @@ i <- 1
 
 
 ```{r plot figures, warning=FALSE, message=FALSE, echo=FALSE, fig.height= 7.5, fig.width=7}
-for(i in 2){
-#for (i in 1:length(plots_which)) {
+#for(i in 2){
+for (i in 1:length(plots_which)) {
   
   #selects states or countries to plot
   statez = plots_which[i]
