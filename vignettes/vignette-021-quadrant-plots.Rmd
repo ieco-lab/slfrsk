@@ -61,7 +61,7 @@ present_transport <- TRUE
 # Set what type of multiple correlation you want to calculate
 method_cor <- "spearman"
 
-# set whether to look at grape yield or wine production primarily
+# set whether to look at grape yield or wine production primarily NOTE THAT PLOTS ARE NOT CLEAN FOR WINE!!!
 #impact_prod <- "wine"
 impact_prod <- "grapes"
 
