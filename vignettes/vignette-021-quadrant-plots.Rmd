@@ -259,8 +259,10 @@ q_intercepts <- list(transport = 0.5, establishment = 0.5)
 hh = .001 #set margins
 plots_which <- c(TRUE,FALSE) # Do not change this flips between plotting the states or plotting countries
 top_to_plot <- 10 # How many countries and states to highlight for labels?
-nudge_JPNKOR.y <- c(.07,.1)
 nudge_JPNKOR.x <- c(-.05,0)
+nudge_JPNKOR.y <- c(.07,.1)
+nudge_JPNKOR_future.x <- c(.00,0)
+nudge_JPNKOR_future.y <- c(.08,.1)
 nudge_us.infected_present.x <- c(0.00, -0.02,-0.04)  #PRESENT: adding DE, MD, NJ  
 nudge_us.infected_present.y <- c(0.10,-0.10,-0.10)
 nudge_us.infected_future.x <- c( 0.00,-0.10, 0.02,-0.04,0.00)  #FUTURE: adding OH, DE, MD, NJ, WV
@@ -284,8 +286,8 @@ i <- 1
 
 
 ```{r plot figures, warning=FALSE, message=FALSE, echo=FALSE, fig.height= 7.5, fig.width=7}
-#for(i in 2){
-for (i in 1:length(plots_which)) {
+for(i in 2){
+#for (i in 1:length(plots_which)) {
   
   #selects states or countries to plot
   statez = plots_which[i]
@@ -513,8 +515,8 @@ if(present_transport == FALSE){
       nudge.x <- c(-.3,-.27,-.05,-.26,.14,.1,.20,-.21,.08,.2)
       nudge.y <- c(.13, .095, .155, .09, -.11, .13, .15,.06,-.1,-.19)  #ITA, FRA, ESP, CHN, ARG, CHL, AUS, ZAF, DEU, PRT
       if(label.JPN.KOR) {
-        nudge.x <- c(nudge.x, nudge_JPNKOR.x) #JPN KOR
-        nudge.y <- c(nudge.y, nudge_JPNKOR.y) #JPN KOR
+        nudge.x <- c(nudge.x, nudge_JPNKOR_future.x) #JPN KOR
+        nudge.y <- c(nudge.y, nudge_JPNKOR_future.y) #JPN KOR
       }
       ytitle <- "Establishment Potential"
     }
@@ -529,12 +531,12 @@ if(present_transport == FALSE){
       }
       ytitle <- "Establishment Potential"
     } else {  #COUNTRIES FUTURE GRAPES
-      # grape production: CHN, ITA, ESP, FRA, TUR, IND, CHL, ARG, ZAF,   AUS
-      nudge.x <-       c(-.10,-.25,-.02,-.06, .01,-.05,.200, .10, .075, .145)
-      nudge.y <-       c( .05, .11, .12, .09,-.05, .10,.125,-.06,-.1,-.07)
+      # grape production: CHN, ITA, ESP, FRA, TUR, IND, CHL, ARG, ZAF, AUS
+      nudge.x <- c(-0.01,-0.00,-0.00,-0.04, 0.02,0.03,-0.04, 0.05,-0.03, 0.04)
+      nudge.y <- c(-0.10,-0.20,-0.27, 0.06,-0.24,0.07, 0.11,-0.23, 0.16,-0.10)
       if(label.JPN.KOR) {
-        nudge.x <- c(nudge.x, nudge_JPNKOR.x) #JPN KOR
-        nudge.y <- c(nudge.y, nudge_JPNKOR.y) #JPN KOR
+        nudge.x <- c(nudge.x, nudge_JPNKOR_future.x) #JPN KOR
+        nudge.y <- c(nudge.y, nudge_JPNKOR_future.y) #JPN KOR
       }
       ytitle <- "Establishment Potential"
     }
@@ -550,8 +552,6 @@ if(present_transport == FALSE){
       }
       ytitle <- "Establishment Potential"
     } else { #COUNTRIES PRESENT WINE
-      #nudge.x <- c(0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00)
-      #nudge.y <- c(0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00)
       nudge.x <- c(-.03,-.10,-.02,-.03,.14,-.1,-.23,-.21,.08,.2)
       nudge.y <- c(.13, .09, .155, .09, -.11, .13, .15,.09,-.08,-.15)  #ITA, FRA, ESP, CHN, ARG, CHL, AUS, ZAF, DEU, PRT
       if(label.JPN.KOR) {
@@ -570,7 +570,7 @@ if(present_transport == FALSE){
       }
       ytitle <- "Establishment Potential"
     } else { #COUNTRIES PRESENT GRAPES
-      nudge.x <- c(-0.01, 0.02, 0.10,-0.04, 0.06,-0.02,-0.07, 0.05,-0.20, 0.11)   #CHN, ITA, ESP, FRA, TUR, IND, CHL, ARG, ZAF, AUS 
+      nudge.x <- c(-0.01, 0.02, 0.10,-0.04, 0.06,-0.02,-0.07, 0.05,-0.20, 0.11)   #CHN, ITA, ESP, FRA, TUR, IND, CHL, ARG, ZAF, AUS
       nudge.y <- c( 0.08,-0.08,-0.20, 0.07,-0.02, 0.10, 0.12,-0.09,-0.07,-0.25)
       if(label.JPN.KOR) {
         nudge.x <- c(nudge.x, nudge_JPNKOR.x) #JPN KOR
