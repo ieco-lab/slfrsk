@@ -56,7 +56,7 @@ one_zero <- TRUE
 #estab_to_plot <- "max" # max was used for the quadrant figures
 
 # Need a flag to switch if we want present or future infected states transport
-present_transport <- TRUE
+present_transport <- FALSE
 
 # Set what type of multiple correlation you want to calculate
 method_cor <- "spearman"
@@ -263,8 +263,8 @@ nudge_JPNKOR.y <- c(.07,.1)
 nudge_JPNKOR.x <- c(-.05,0)
 nudge_us.infected_present.x <- c(0.00, -0.02,-0.04)  #PRESENT: adding DE, MD, NJ  
 nudge_us.infected_present.y <- c(0.10,-0.10,-0.10)
-nudge_us.infected_future.x <- c(0,0,0,0,0)  #FUTURE: adding DE, MD, NJ, OH, WV
-nudge_us.infected_future.y <- c(0,0,0,0,0)
+nudge_us.infected_future.x <- c( 0.00,-0.10, 0.02,-0.04,0.00)  #FUTURE: adding OH, DE, MD, NJ, WV
+nudge_us.infected_future.y <- c(-0.10, 0.10,-0.17, 0.08,0.15)
 #lx <- 0.22
 #ly <- 0.25
 #hy <- 0.77
@@ -521,8 +521,8 @@ if(present_transport == FALSE){
   } else if(impact_prod == "grapes"){
     #nudging
     if(statez) { #STATES FUTURE GRAPES
-      nudge.x <- c(-.10,-.05,-.22,-.05, .10,-.05, .10,.025, .05,-.025)   #yield: #CA, PA, WA, MI, NY, MO, OH, OR, GA, NC
-      nudge.y <- c(-.10, .10, .10, .10,-.05, .10,-.05,-.07,-.12, .10)   #production: CA, WA, NY, PA, MI, OR, TX, VA, NC, MO
+      nudge.x <- c(-.10,-.05,-.10,-.02, .10,-.05, .10, .00,-.05,-.025)   #yield: #CA, PA, WA, MI, NY, MO, OH, OR, GA, NC
+      nudge.y <- c(-.10, .10, .08, .08,-.05, .09,-.05,-.10,-.15, .10)   #production: CA, WA, NY, PA, MI, OR, TX, VA, NC, MO
       if(label.us.infected){
         nudge.x <- c(nudge.x, nudge_us.infected_future.x)
         nudge.y <- c(nudge.y, nudge_us.infected_future.y)
