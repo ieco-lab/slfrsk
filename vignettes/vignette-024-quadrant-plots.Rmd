@@ -691,7 +691,7 @@ if(present_transport == FALSE){
       #new add in the means of the wine groupings
       geom_point(data = data_to_plot %>% group_by(wine) %>% summarize(n = n(), sd_x = sd(x_to_plot), sd_y = sd(y_to_plot), x_to_plot_mean = mean(x_to_plot), y_to_plot_mean = mean(y_to_plot)) %>% mutate(se_x = sd_x/n, se_y = sd_y / n, fill_to_plot = wine), 
                  aes(x = x_to_plot_mean, y = y_to_plot_mean, fill = fill_to_plot),
-                 shape = 23, size = 10, stroke = 2) +
+                 shape = 23, size = 5, stroke = 2) +
       annotation_custom(
         grob = rectGrob(gp = gpar(fill = "white", col = "white")),
         xmin = -1,
