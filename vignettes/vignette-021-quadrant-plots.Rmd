@@ -285,7 +285,7 @@ i <- 1
 ```
 
 
-```{r plot figures, warning=FALSE, message=FALSE, echo=FALSE, fig.height= 7.5, fig.width=7}
+```{r plot figures, warning=FALSE, message=FALSE, echo=FALSE, fig.height= 7.5, fig.width=7.5}
 #for(i in 2){
 for (i in 1:length(plots_which)) {
   
@@ -780,17 +780,19 @@ if(present_transport == FALSE){
       annotation_custom(
         grob = rectGrob(gp = gpar(fill = "white", col = "white")),
         xmin = -1,
-        xmax = 1.5,
+        xmax = 1.30,
         ymin = 1.1,
-        ymax = 1.5
+        ymax = 1.30
       ) +
       annotation_custom(
         grob = rectGrob(gp = gpar(fill = "white", col = "white")),
         ymin = -1,
-        ymax = 1.5,
+        ymax = 1.30,
         xmin = 1.11,
-        xmax = 1.5
-      )
+        xmax = 1.30
+      ) +
+      scale_x_continuous(breaks = c(0,.5,1),labels = c("low", "moderate", "high"), limits = c(0,1.2)) +
+      scale_y_continuous(breaks = c(0,.5,1),labels = c("low", "moderate", "high"), limits = c(0,1.2))
   )
 
   g <- ggplotGrob(states_plot_final)
@@ -854,7 +856,7 @@ if (statez) {
       
 }
       grid.arrange(states_grob, legend_state, nrow=1, ncol = 2, widths = c(4,2), heights = 1)
-    dev.off()
+    invisible(dev.off())
 } else{
   #plot the countries+legend
 if(present_transport){
@@ -865,25 +867,43 @@ if(present_transport){
       
 }
       grid.arrange(countries_grob, legend_country, nrow=1, ncol = 2, widths = c(4,2), heights = 1)
-    dev.off()
+    invisible(dev.off())
 
 }
   
 } # end of the 2 loop for loop for plotting states and countries
 
+```
 
-
-
-  lay <- rbind(c(1,1,1,NA,NA,NA),
-               c(1,1,1,NA,NA,NA),
-               c(1,1,1,NA,3,3),
-               c(NA,NA,NA,NA,3,3),
-               c(2,2,2,NA,3,3),
-               c(2,2,2,NA,NA,NA),
-               c(2,2,2,NA,NA,NA)
+Combine the plots into a stacked plot nicely
+```{r combined plot, message=FALSE, fig.height= 7.5, fig.width=7.5}
+#set up a layout grid
+  lay <- rbind(c( 1, 1, 1,NA,NA,NA),
+               c( 1, 1, 1,NA,NA,NA),
+               c( 1, 1, 1,NA, 3, 3),
+               c(NA,NA,NA,NA, 3, 3),
+               c( 2, 2, 2,NA, 3, 3),
+               c( 2, 2, 2,NA,NA,NA),
+               c( 2, 2, 2,NA,NA,NA)
   )
+
+#countries_grob2 <- countries_grob
+#countries_grob2$layout[countries_grob2$layout$name == "panel", "clip"] <- "on"
+#countries_grob2$layout[countries_grob2$layout$name == "spacer", "clip"] <- "on"
+
+
+if(present_transport){
+    pdf(file.path(here::here(),"vignettes", paste0("combined_present_max_",impact_prod,".pdf")),width = 10, height = 12)
+
+} else{
+    pdf(file.path(here::here(),"vignettes", paste0("combined_future_max_",impact_prod,".pdf")),width = 10, height = 12)
+      
+}
+  grid.arrange(states_grob, countries_grob, legend_country, nrow = 7, ncol = 6, layout_matrix = lay, heights = c(2,2,2, 0, 2,2,2), widths = c(1,1,1,0,0.38,0.38))
+  invisible(dev.off())
   
-  grid.arrange(states_grob, countries_grob, legend_country, nrow = 7, ncol = 6, layout_matrix = lay, heights = c(1,1,1, 0.22, 1,1,1), widths = c(0.8,0.8,0.8,0.01,0.7,0.7))
+#nice version for knitting
+grid.arrange(states_grob,legend_country, countries_grob,  nrow = 2, ncol = 2, widths = c(3,1.25), heights = c(5,5))
 ```
 
 
