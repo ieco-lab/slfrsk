@@ -56,7 +56,7 @@ one_zero <- TRUE
 #estab_to_plot <- "max" # max was used for the quadrant figures
 
 # Need a flag to switch if we want present or future infected states transport
-present_transport <- TRUE
+present_transport <- FALSE
 
 # Set what type of multiple correlation you want to calculate
 method_cor <- "spearman"
@@ -888,11 +888,6 @@ Combine the plots into a stacked plot nicely
                c( 2, 2, 2,NA,NA,NA),
                c( 2, 2, 2,NA,NA,NA)
   )
-
-#countries_grob2 <- countries_grob
-#countries_grob2$layout[countries_grob2$layout$name == "panel", "clip"] <- "on"
-#countries_grob2$layout[countries_grob2$layout$name == "spacer", "clip"] <- "on"
-
 
 if(present_transport){
     pdf(file.path(here::here(),"vignettes", paste0("combined_present_max_",impact_prod,".pdf")),width = 10, height = 12)
