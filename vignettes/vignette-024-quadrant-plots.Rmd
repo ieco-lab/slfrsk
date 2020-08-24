@@ -24,8 +24,8 @@ new edited version of the correlation plots
   - ~~rm the outliers for boxplots~~
   - ~~scale up the size for the points in the scatter~~
 2. ~~V2: Same as V1, but remove the boxplots.~~
-3. **V3: Same as V2, but plot colored symbols to indicate the means of yes/no wine.**
-4. V4: Same as V3, but remove the individual points for the states/countries and plot points with SEs on both axes.
+3. ~~V3: Same as V2, but plot colored symbols to indicate the means of yes/no wine.~~
+4. **V4: Same as V3, but remove the individual points for the states/countries and plot points with SEs on both axes.**
 
 ```{r setup, results='hide', message=FALSE}
 library(slfrsk)
@@ -56,7 +56,7 @@ one_zero <- TRUE
 #estab_to_plot <- "max" # max was used for the quadrant figures
 
 # Need a flag to switch if we want present or future infected states transport
-present_transport <- TRUE
+present_transport <- FALSE
 
 # Set what type of multiple correlation you want to calculate
 method_cor <- "spearman"
@@ -78,6 +78,10 @@ label.us.infected <- TRUE   #PRESENT: adding DE, MD, NJ  FUTURE: adding DE, MD, 
 
 # If you want the legend plotted on the states scatter?
 # plot_state_legend <- TRUE
+
+# If you want to plot the mean and SE values for the correlation plot?
+plot_mean <- TRUE
+plot_error <- TRUE
 
 ```
 
@@ -288,7 +292,7 @@ i <- 1
 
 
 ```{r plot figures, warning=FALSE, message=FALSE, echo=FALSE, fig.height= 7.5, fig.width=7.5}
-#for(i in 2){
+#for(i in 1){
 for (i in 1:length(plots_which)) {
   
   #selects states or countries to plot
@@ -591,19 +595,23 @@ if(present_transport == FALSE){
       geom_vline(xintercept = q_intercepts$transport, linetype = "dashed") +
       #  geom_abline(intercept = 0, slope = 1, linetype = "solid") + # add one to one
       geom_rect(mapping = aes(xmin=1.01, xmax=1.2, ymin=.49, ymax=.5), fill = "white") +
-      geom_rect(mapping = aes(ymin=1.01, ymax=1.2, xmin=.49, xmax=.51), fill = "white") +
-      geom_text_repel(data = data_to_label,
-                      aes(x = x_to_plot, y = y_to_plot, label = ID),
-                      min.segment.length = 0,
-                      direction = "x",
-                      nudge_y = nudge.y,
-                      nudge_x = nudge.x
-      ) +
-      geom_point(
-        aes(x = x_to_plot, y = y_to_plot, fill = fill_to_plot, size = size_to_plot, color = color_to_plot),
-        shape = 21, stroke = 1.3, alpha = 0.75
-      ) +
-      # geom_text(data = risk_labels, mapping = aes(x = x, y = y,label = label), color = risk_color, size = risk_size) +
+      geom_rect(mapping = aes(ymin=1.01, ymax=1.2, xmin=.49, xmax=.51), fill = "white") + {
+            #error bars
+      if(plot_error){
+        geom_errorbar(data = data_to_plot %>% group_by(wine) %>% summarize(n = n(), sd_x = sd(x_to_plot), sd_y = sd(y_to_plot), x_to_plot_mean = mean(x_to_plot), y_to_plot_mean = mean(y_to_plot)) %>% mutate(se_x = sd_x/sqrt(n), se_y = sd_y / sqrt(n), fill_to_plot = wine), aes(ymin = y_to_plot_mean - se_y, ymax = y_to_plot_mean + se_y, x = x_to_plot_mean), width = 0.01)
+      }
+       } + {
+      if(plot_error){
+      geom_errorbarh(data = data_to_plot %>% group_by(wine) %>% summarize(n = n(), sd_x = sd(x_to_plot), sd_y = sd(y_to_plot), x_to_plot_mean = mean(x_to_plot), y_to_plot_mean = mean(y_to_plot)) %>% mutate(se_x = sd_x/sqrt(n), se_y = sd_y / sqrt(n), fill_to_plot = wine), aes(xmin = x_to_plot_mean - se_x, xmax = x_to_plot_mean + se_x, y = y_to_plot_mean), height = 0.01) 
+      }
+        } + {
+      #new add in the means of the wine groupings
+        if(plot_mean) {
+          geom_point(data = data_to_plot %>% group_by(wine) %>% summarize(n = n(), sd_x = sd(x_to_plot), sd_y = sd(y_to_plot), x_to_plot_mean = mean(x_to_plot), y_to_plot_mean = mean(y_to_plot)) %>% mutate(se_x = sd_x/sqrt(n), se_y = sd_y / sqrt(n), fill_to_plot = wine), 
+                 aes(x = x_to_plot_mean, y = y_to_plot_mean, fill = fill_to_plot),
+                 shape = 23, size = 3, stroke = 1)
+        }
+            } +
       scale_fill_manual(
         values = c("no" = "#ffffff", "yes" = "#C77CFF"),
         name = "Wine Production",# "Wine Impact Potential",
@@ -625,13 +633,6 @@ if(present_transport == FALSE){
         fill = guide_legend(
           order = 1,
           override.aes = list(shape = 22, size = 5, alpha = 1)
-        ),
-        color = guide_legend(
-          order = 3
-        ),
-        size = guide_legend(    # Adjust size to edit legend grape production
-          order = 2,            # circles.
-          override.aes = list(size = c(1,3,6))
         )
       ) +
       scale_size_continuous(name = "Grape Production",
@@ -667,7 +668,7 @@ if(present_transport == FALSE){
       coord_flip()
   )
 
-  #get the legend
+        #get the legend
   get_legend <- function(myggplot) {
     tmp <- ggplot_gtable(ggplot_build(myggplot))
     leg <-
@@ -688,10 +689,6 @@ if(present_transport == FALSE){
 
 
     states_plot_final <- states_plot +
-      #new add in the means of the wine groupings
-      geom_point(data = data_to_plot %>% group_by(wine) %>% summarize(n = n(), sd_x = sd(x_to_plot), sd_y = sd(y_to_plot), x_to_plot_mean = mean(x_to_plot), y_to_plot_mean = mean(y_to_plot)) %>% mutate(se_x = sd_x/n, se_y = sd_y / n, fill_to_plot = wine), 
-                 aes(x = x_to_plot_mean, y = y_to_plot_mean, fill = fill_to_plot),
-                 shape = 23, size = 5, stroke = 2) +
       annotation_custom(
         grob = rectGrob(gp = gpar(fill = "white", col = "white")),
         xmin = -1,
@@ -708,7 +705,6 @@ if(present_transport == FALSE){
       ) +
       scale_x_continuous(breaks = c(0,.5,1),labels = c("low", "moderate", "high"), limits = c(0,1.15)) +
       scale_y_continuous(breaks = c(0,.5,1),labels = c("low", "moderate", "high"), limits = c(0,1.15))
-
   
   g <- ggplotGrob(states_plot_final)
   g$layout$clip[g$layout$name == "panel"] <- "off"
@@ -718,7 +714,7 @@ if(present_transport == FALSE){
   grid.newpage()
   grid.draw(g)
 
-  
+
   #THIS SECTION PLOTS ALL OF IT AGAIN WITH PDF SAVING AND THEN DOES THE CORR
   # present or future
  if(present_transport){
@@ -764,31 +760,42 @@ if(present_transport == FALSE){
   #plot the states+legend and save
 if (statez) {
   if(present_transport){
-    pdf(file.path(here::here(),"vignettes", paste0("states_combined_present_max_",impact_prod,"_v3.pdf")),width = 7.5, height = 7)
+    pdf(file.path(here::here(),"vignettes", paste0("states_combined_present_max_",impact_prod,"_v4.pdf")),width = 7.5, height = 7)
 
 } else{
-    pdf(file.path(here::here(),"vignettes", paste0("states_combined_future_max_",impact_prod,"_v3.pdf")),width = 7.5, height = 7)
+    pdf(file.path(here::here(),"vignettes", paste0("states_combined_future_max_",impact_prod,"_v4.pdf")),width = 7.5, height = 7)
       
 }
-      grid.arrange(states_grob, legend_state, nrow=1, ncol = 2, widths = c(4,2), heights = 1)
+      grid.arrange(states_grob, 
+                   legend_state, 
+                   nrow=1, ncol = 2, widths = c(4,2), heights = 1)
     invisible(dev.off())
 } else{
   #plot the countries+legend
 if(present_transport){
-    pdf(file.path(here::here(),"vignettes", paste0("countries_combined_present_max_",impact_prod,"_v3.pdf")),width = 7.5, height = 7)
+    pdf(file.path(here::here(),"vignettes", paste0("countries_combined_present_max_",impact_prod,"_v4.pdf")),width = 7.5, height = 7)
 
 } else{
-    pdf(file.path(here::here(),"vignettes", paste0("countries_combined_future_max_",impact_prod,"_v3.pdf")),width = 7.5, height = 7)
+    pdf(file.path(here::here(),"vignettes", paste0("countries_combined_future_max_",impact_prod,"_v4.pdf")),width = 7.5, height = 7)
       
 }
-      grid.arrange(countries_grob, legend_country, nrow=1, ncol = 2, widths = c(4,2), heights = 1)
+      grid.arrange(countries_grob, 
+                   legend_country, 
+                   nrow=1, ncol = 2, widths = c(4,2), heights = 1)
     invisible(dev.off())
 
 }
-  
+ 
 } # end of the 2 loop for loop for plotting states and countries
 
 ```
+
+checking errorbars
+```{r, message=FALSE}
+states_summary_present %>% group_by(wine) %>% summarize(n = n(), sd_x = sd(avg_infected_mass_scaled), sd_y = sd(grand_mean_max_scaled), x_to_plot_mean = mean(avg_infected_mass_scaled), y_to_plot_mean = mean(grand_mean_max_scaled)) %>% mutate(se_x = sd_x/sqrt(n), se_y = sd_y / sqrt(n))
+```
+
+
 
 Combine the plots into a stacked plot nicely
 ```{r combined plot, message=FALSE, fig.height= 12, fig.width=10}
@@ -802,23 +809,24 @@ Combine the plots into a stacked plot nicely
                c( 2, 2, 2,NA,NA,NA)
   )
 
-#countries_grob2 <- countries_grob
-#countries_grob2$layout[countries_grob2$layout$name == "panel", "clip"] <- "on"
-#countries_grob2$layout[countries_grob2$layout$name == "spacer", "clip"] <- "on"
-
-
 if(present_transport){
-    pdf(file.path(here::here(),"vignettes", paste0("combined_present_max_",impact_prod,"_v3.pdf")),width = 10, height = 12)
+    pdf(file.path(here::here(),"vignettes", paste0("combined_present_max_",impact_prod,"_v4.pdf")),width = 10, height = 12)
 
 } else{
-    pdf(file.path(here::here(),"vignettes", paste0("combined_future_max_",impact_prod,"_v3.pdf")),width = 10, height = 12)
+    pdf(file.path(here::here(),"vignettes", paste0("combined_future_max_",impact_prod,"_v4.pdf")),width = 10, height = 12)
       
 }
-  grid.arrange(states_grob, countries_grob, legend_country, nrow = 7, ncol = 6, layout_matrix = lay, heights = c(2,2,2, 0, 2,2,2), widths = c(1,1,1,0,0.38,0.38))
+  grid.arrange(states_grob, 
+               countries_grob, 
+               legend_country, 
+               nrow = 7, ncol = 6, layout_matrix = lay, heights = c(2,2,2, 0, 2,2,2), widths = c(1,1,1,0,0.38,0.38))
   invisible(dev.off())
   
 #nice version for knitting
-grid.arrange(states_grob, countries_grob, legend_country, nrow = 7, ncol = 6, layout_matrix = lay, heights = c(2,2,2, 0, 2,2,2), widths = c(1,1,1,0.1,0.6,0.6))
+grid.arrange(states_grob, 
+             countries_grob, 
+             legend_country, 
+             nrow = 7, ncol = 6, layout_matrix = lay, heights = c(2,2,2, 0, 2,2,2), widths = c(1,1,1,0.1,0.6,0.6))
 ```
 
 
