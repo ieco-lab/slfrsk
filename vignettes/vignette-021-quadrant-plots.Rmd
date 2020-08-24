@@ -36,7 +36,7 @@ library(grid)
 library(gridExtra) #only needed if one uses grid.arrange() in plotting
 ```
 
-#Setup
+# Setup
 ## Read in data
 ```{r read in summary data}
 data("states_summary_present")
@@ -877,8 +877,8 @@ if(present_transport){
 
 ```
 
-Combine the plots into a stacked plot nicely
-```{r combined plot, message=FALSE, fig.height= 12, fig.width=10}
+Combine the plots into a stacked plot nicely with the legend
+```{r combined plot with legend, message=FALSE, fig.height= 12, fig.width=10}
 #set up a layout grid
   lay <- rbind(c( 1, 1, 1,NA,NA,NA),
                c( 1, 1, 1,NA,NA,NA),
@@ -893,14 +893,46 @@ if(present_transport){
     pdf(file.path(here::here(),"vignettes", paste0("combined_present_max_",impact_prod,".pdf")),width = 10, height = 12)
 
 } else{
-    pdf(file.path(here::here(),"vignettes", paste0("combined_future_max_",impact_prod,".pdf")),width = 10, height = 12)
+    pdf(file.path(here::here(),"vignettes", paste0("combined_future_max_",impact_prod,".pdf")),width = 7.5, height = 12)
       
 }
-  grid.arrange(states_grob, countries_grob, legend_country, nrow = 7, ncol = 6, layout_matrix = lay, heights = c(2,2,2, 0, 2,2,2), widths = c(1,1,1,0,0.38,0.38))
+  grid.arrange(states_grob, countries_grob, legend_country, nrow = 7, ncol = 6, layout_matrix = lay, heights = c(1,1,1, 0, 1,1,1), widths = c(1,1,1,0.1,0.57,0.57))
   invisible(dev.off())
   
 #nice version for knitting
 grid.arrange(states_grob, countries_grob, legend_country, nrow = 7, ncol = 6, layout_matrix = lay, heights = c(2,2,2, 0, 2,2,2), widths = c(1,1,1,0.1,0.6,0.6))
 ```
+Save with the legend as a separate file
+```{r combined plot with separate legend pdf}
+#save the plots w/o legend
+#set up a layout grid
+  lay <- rbind(c( 1, 1, 1, 1, 1,NA),
+               c( 1, 1, 1, 1, 1,NA),
+               c( 1, 1, 1, 1, 1,NA),
+               c(NA,NA,NA,NA,NA,NA),
+               c( 2, 2, 2, 2, 2,NA),
+               c( 2, 2, 2, 2, 2,NA),
+               c( 2, 2, 2, 2, 2,NA)
+  )
+
+if(present_transport){
+    pdf(file.path(here::here(),"vignettes", paste0("combined_present_max_",impact_prod,"_nolegend.pdf")),width = 7.5, height = 12)
+} else{
+    pdf(file.path(here::here(),"vignettes", paste0("combined_future_max_",impact_prod,"_nolegend.pdf")),width = 7.5, height = 12)
+}
+#finish out the plotting
+  grid.arrange(states_grob, countries_grob, nrow = 7, ncol = 6, layout_matrix = lay, heights = c(1,1,1, 0, 1,1,1), widths = c(0.99,0.99,1,1,1,1))
+  invisible(dev.off())
 
 
+#save the legend
+if(present_transport){
+  pdf(file.path(here::here(),"vignettes", paste0("legend_combined_present_max",impact_prod,".pdf")),width = 3, height = 10) 
+} else{
+  pdf(file.path(here::here(),"vignettes", paste0("legend_combined_future_max",impact_prod,".pdf")),width = 3, height = 10) 
+}
+#finish out the plotting
+grid.draw(legend_country)
+invisible(dev.off())
+
+```
