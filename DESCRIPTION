@@ -1,7 +1,7 @@
 Package: slfrsk
 Type: Package
 Title: What the Package Does (Title Case)
-Version: 0.1.0
+Version: 9999.2.0
 Author: M.R. Helmus, N.A. Huron, J.E. Behm
 Maintainer: M.R. Helmus <mrhelmus@temple.edu>
 Description: Lycorma delicatula paninvasion severity risk assessment for wine market shock. v_0.1.0 Global US Stepping Stone of spotted lanternfly transport, establishment, and impact on grape yield and wine production.
@@ -20,3 +20,5 @@ Imports:
     tools,
     usethis
 RoxygenNote: 7.1.0
+Depends: 
+    R (>= 2.10)

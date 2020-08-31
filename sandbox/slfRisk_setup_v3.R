@@ -27,7 +27,10 @@ use_package("tools", type = "Imports") #added by NAH
 use_package("usethis", type = "Imports") #added by NAH
 use_package("FAOSTAT", type = "Imports") #added by MRH
 
-
+#----
+# Data
+countries_market <- read_csv(file.path(here(), "data-raw","wine_market_FAOSTAT_data_8-31-2020.csv"))
+usethis::use_data(countries_market)
 
 #----
 # Vignettes
