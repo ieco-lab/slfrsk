@@ -1,0 +1,120 @@
+---
+title: "vignette-041-market-plot"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{vignette-041-market-plot}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(slfrsk)
+load_all()
+```
+
+# Market Size
+## countries
+Value units are 1000 USD
+```{r FAO wine market}
+data("countries_market")
+
+dim(countries_market)
+
+countries_wine_market <- countries_market %>%
+  #filter(is.na(Flag)) %>%
+  filter(!is.na(Value)) %>%
+  filter(Year %in% (2012:2017)) %>%
+  group_by(`Area Code`,	Area, Year) %>%
+  dplyr::select(`Area Code`,	Area, Year, Value) %>% 
+  summarise(market_size = sum(Value)) %>%
+  ungroup(Year) %>%
+  mutate(market_size = log10((market_size*1000)+1)) %>%
+  summarise(market_size = mean(market_size))  %>% 
+  ungroup()
+
+# remove all that are zero
+
+countries_wine_market$market_size[countries_wine_market$market_size==0] <- NA
+dim(countries_wine_market)
+#countries_wine_market
+
+qplot(countries_wine_market$market_size)
+
+```
+
+
+```{r join market to countries_summary_future}
+
+# recode the market ids to match countries_summary_future
+
+countries_wine_market <- countries_wine_market %>%
+  mutate(ID = Area) %>%
+  mutate(
+    ID = recode(
+      ID,
+      `Bolivia (Plurinational State of)` = "Bolivia",
+      `Brunei Darussalam` = "Brunei",
+      `Cabo Verde` = "Cape Verde",
+      `China, mainland` = "China",
+      Congo = "Republic of Congo",
+      `Falkland Islands (Malvinas)` = 'Falkland Islands',
+      `China, Hong Kong SAR` = "Hong Kong",
+      `Iran (Islamic Republic of)` = "Iran",
+      `Côte d'Ivoire` = "Ivory Coast",
+      `Democratic People's Republic of Korea` = "North Korea",
+      `Republic of Korea` = "South Korea",
+      `Lao People's Democratic Republic` = "Laos",
+      `China, Macao SAR` = "Macao",
+      `Republic of Moldova` = "Moldova",
+      `Netherlands Antilles (former)` = "Bonaire, Sint Eustatius and Saba",
+      `North Macedonia` = "Macedonia",
+      Czechia = "Czech Republic",
+      `Russian Federation` = "Russia",
+      `Syrian Arab Republic`  = "Syria",
+      `China, Taiwan Province of` = "Taiwan",
+      `United Republic of Tanzania` = "Tanzania",
+      `United Kingdom of Great Britain and Northern Ireland` = "United Kingdom",
+      `United States of America` = "United States",
+      `Venezuela (Bolivarian Republic of)` = "Venezuela",
+      `Viet Nam` = "Vietnam",
+      Palestine = "Palestina",
+      Eswatini = "Swaziland"
+      
+    )
+  ) %>% dplyr::select(ID, market_size) 
+
+#setdiff(countries_summary_future$ID, countries_wine_market$ID)
+#setdiff(countries_wine_market$ID, countries_summary_future$ID)
+
+```
+
+```{r setup}
+data("countries_summary_future")
+
+countries_risk_market <- countries_summary_future %>% 
+  left_join(countries_wine_market, by = "ID") %>% 
+  dplyr::select(ID, 
+                market_size,
+                log10_avg_prod, 
+                log10_avg_infected_mass, 
+                grand_mean_max)
+
+risk_mod <- lm(log10_avg_prod ~ log10_avg_infected_mass + grand_mean_max, data = countries_risk_market)
+plot(risk_mod)
+summary(risk_mod)
+
+shock_mod <- lm(market_size ~ predict(risk_mod), data = countries_summary_future)
+summary(shock_mod)
+plot(predict(risk_mod),countries_summary_future$market_size)
+abline(shock_mod)
+i
+
+```
+
