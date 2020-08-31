@@ -272,7 +272,7 @@ i <- 1
 ```
 
 And the actual plots...
-```{r plot figures?}
+```{r plot figures, warning=FALSE, message=FALSE, echo=FALSE, fig.height= 7.5, fig.width=7.5}
 for (i in 1:length(plots_which)) {
   # for (i in 1) {
   #  for (i in 2) {
@@ -725,7 +725,7 @@ for (i in 1:length(plots_which)) {
     17 # Note that z for panel is 1.  Change it to something bigger.
 
   grid.newpage()
-  grid.draw(g)
+  #grid.draw(g)
 
   # present or future
   if(present_transport){

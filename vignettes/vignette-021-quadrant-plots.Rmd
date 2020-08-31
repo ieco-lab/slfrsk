@@ -807,7 +807,7 @@ if(present_transport == FALSE){
   grid.draw(g)
 
   
-  #THIS SECTION PLOTS ALL OF IT AGAIN WITH PDF SAVING AND THEN DOES THE CORR
+#Correlation Analysis
   # present or future
  if(present_transport){
     if (statez) { #states present
@@ -849,7 +849,8 @@ if(present_transport == FALSE){
       } 
             }
 
-  #plot the states+legend and save
+#SAVES RESULTS AS PDF
+#plot the states+legend and save
 if (statez) {
   if(present_transport){
     pdf(file.path(here::here(),"vignettes", paste0("states_combined_present_max_",impact_prod,".pdf")),width = 7.5, height = 7)
@@ -937,3 +938,89 @@ grid.draw(legend_country)
 invisible(dev.off())
 
 ```
+
+alignment correlation code: note how it is cor(grapeprod, predicted(lm(grapeprod~transport+establishment)).
+1. Can you make a quick decreasing sorted barchart of states and countries combined together (only if grapeprod is not scale(grapeprod) of the predicted values in that correlation lm.
+2. Then perhaps color coded according to high low wine and with the top 10 labeled.
+
+```{r make barchart of grape production states and countries together, fig.height= 12, fig.width=10}
+#combine the states and countries grape production data
+states_summary_future %>%
+  bind_rows(., countries_summary_future) %>%
+  filter(avg_prod != 0) %>% 
+  ggplot() +
+  geom_bar(aes(x = reorder(ID, (avg_prod)), y = avg_prod, fill = log10(avg_prod)), stat = "identity") +
+  scale_y_log10() +
+  coord_flip()
+
+```
+
+```{r fuse the predicted values back into states and countries summary data, warning=FALSE, fig.height= 25, fig.width=12}
+#size_to_plot = avg_prod
+#x_to_plot = avg_infected_mass_scaled
+#y_to_plot = grand_mean_max_scaled
+
+#STATES
+states_summary_future_pred <- states_summary_future %>%
+#first reorder the data to match the order in the plotting
+  arrange(desc(grapes), (avg_prod)) %>%
+#now bind the fitted values in
+  #left_join(., cbind(states.impact.model$model, pred_avg_prod = states.impact.model$fitted.values), by = c("avg_infected_mass_scaled" = "x_to_plot", "grand_mean_max_scaled" = "y_to_plot")) %>%
+  #select(ID:geopol_unit, grapes, avg_prod,size_to_plot:pred_avg_prod)
+  cbind(., pred_avg_prod = states.impact.model$fitted.values) %>%
+  as_tibble()
+  
+#COUNTRIES
+countries_summary_future_pred <- countries_summary_future %>%
+#first reorder the data to match the order in the plotting
+  arrange(desc(grapes), (avg_prod)) %>%
+#now bind the fitted values in
+  #left_join(., cbind(countries.impact.model$model, pred_avg_prod = countries.impact.model$fitted.values), by = c("avg_infected_mass_scaled" = "x_to_plot", "grand_mean_max_scaled" = "y_to_plot")) %>%
+  #select(ID:geopol_unit, grapes, avg_prod,size_to_plot:pred_avg_prod)
+  cbind(., pred_avg_prod = countries.impact.model$fitted.values) %>%
+  as_tibble()
+
+states_summary_future_pred %>%
+  bind_rows(., countries_summary_future_pred) %>%
+  #((predicted - min(predicted)) / max(predicted-min(predicted)))*10
+  mutate(scaled_pred_avg_prod = ((pred_avg_prod - min(pred_avg_prod)) / max(pred_avg_prod - min(pred_avg_prod)))*10) %>%
+  #filter(log10(pred_avg_prod) > 0) %>% #some values produced are NaN due to negative predicted grape production... this warning is supressed, since they are filtered out
+  ggplot() +
+  #geom_bar(aes(x = reorder(ID, (pred_avg_prod)), y = pred_avg_prod, fill = log10(pred_avg_prod)), stat = "identity") +
+  geom_bar(aes(x = reorder(ID, (scaled_pred_avg_prod)), y = scaled_pred_avg_prod, fill = (scaled_pred_avg_prod)), stat = "identity") +
+  #scale_y_log10() +
+  coord_flip()
+
+```
+
+Make scatter of predicted as y-axis and market size (your USD variable)
+
+  1. We need to see if Risk (predicted values from that alignment cor lm) is correlated to regional market size.
+  2. If it looks good,  and then we might color it by wine production from white to purple and add a regression line.
+
+```{r use the predicted values for grape avg_prod and avg_infected_trade}
+states_summary_future_pred %>%
+  mutate(category = "state") %>%
+  bind_rows(., countries_summary_future_pred %>% mutate(category = "country")) %>%
+  filter(avg_infected_trade > 0 & pred_avg_prod > 0) %>%
+  ggplot(aes(x = avg_infected_trade,  y = pred_avg_prod, color = category)) +
+  geom_point() +
+  scale_x_log10()
+
+combined.impact.model <- states_summary_future_pred %>%
+  bind_rows(., countries_summary_future_pred) %>%
+  #filter(avg_infected_trade > 0 & pred_avg_prod > 0) %>%
+lm(data = ., formula = avg_prod ~ avg_infected_mass_scaled + grand_mean_max_scaled)
+
+```
+
+
+```{r write out the summary data together}
+states_summary_future_pred %>% 
+  mutate(category = "state") %>%
+  bind_rows(., countries_summary_future_pred %>% mutate(category = "country")) %>%
+  select(ID, geopol_unit, category) %>%
+  write_csv(x = ., path = file.path(here::here(),"data-raw", "wine_market.csv"))
+
+```
+
