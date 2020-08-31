@@ -2,10 +2,9 @@ Package: slfrsk
 Type: Package
 Title: What the Package Does (Title Case)
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Author: M.R. Helmus, N.A. Huron, J.E. Behm
+Maintainer: M.R. Helmus <mrhelmus@temple.edu>
+Description: Lycorma delicatula paninvasion severity risk assessment for wine market shock. v_0.1.0 Global US Stepping Stone of spotted lanternfly transport, establishment, and impact on grape yield and wine production.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
