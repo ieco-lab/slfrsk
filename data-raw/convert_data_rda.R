@@ -1111,13 +1111,39 @@ suitability_countries_df <- suitability_countries_df[!is.na(suitability_countrie
 #round the value points
 suitability_countries_df$value <- round(suitability_countries_df$value, digits = 2)
 
-#add in the countries center for plotting the map
+#add in the countries center for plotting the map ***TURNED OFF RIGHT NOW***
 #read in the centroids for a check
-countries_centers <- read_csv(file = "./data-raw/geopolitical_centers_world.csv") %>%
-  dplyr::rename(y = y_coord, x = x_coord)
-colnames(countries_centers)[1] <- "geopol_unit"
+#countries_centers <- read_csv(file = "./data-raw/geopolitical_centers_world.csv") %>%
+#  dplyr::rename(y = y_coord, x = x_coord)
+#colnames(countries_centers)[1] <- "geopol_unit"
 
+#add in the countries capitals for plotting the map
+#read in the basic world cities data from Pareto Software, LLC, the owner of Simplemaps.com, available at: https://simplemaps.com/data/world-cities
+countries_centers <- read_csv(file = "./data-raw/worldcities.csv") %>%
+  dplyr::select(country, iso2, iso3, city_ascii, lng, lat, capital) %>%
+  dplyr::rename(geopol_unit = country, y = lat, x = lng, city_type = capital, capital = city_ascii) %>%
+  dplyr::arrange(geopol_unit) %>%
+  dplyr::filter(city_type == "primary")
 
+#fix Ivory Coast to be same as other files
+countries_centers$geopol_unit <- gsub(pattern = "Côte D???Ivoire", replacement = "Ivory Coast", x = countries_centers$geopol_unit)
+
+#need to filter out cases where a country has more than one primary capital listed to be just one of the capitals
+countries_centers <- countries_centers %>%
+  filter(!(geopol_unit == "South Africa" & capital != "Cape Town")) %>%
+  filter(!(geopol_unit == "Benin" & capital != "Porto-Novo")) %>%
+  filter(!(geopol_unit == "Bolivia" & capital != "Sucre")) %>%
+  filter(!(geopol_unit == "Burma" & capital != "Nay Pyi Taw")) %>%
+  filter(!(geopol_unit == "Burundi" & capital != "Gitega")) %>%
+  filter(!(geopol_unit == "Ivory Coast" & capital != "Yamoussoukro")) %>%
+  filter(!(geopol_unit == "Netherlands" & capital != "Amsterdam")) %>%
+  filter(!(geopol_unit == "Sri Lanka" & capital != "Colombo")) %>%
+  filter(!(geopol_unit == "Swaziland" & capital != "Mbabane")) %>%
+  filter(!(geopol_unit == "Tanzania" & capital != "Dodoma"))
+
+#rm the city_type col, it is not useful here
+countries_centers <- countries_centers %>%
+  dplyr::select(-city_type)
 
 
 ####################################################################################################################

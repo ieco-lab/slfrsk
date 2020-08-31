@@ -7,6 +7,8 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+# Setup
+
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
@@ -24,7 +26,7 @@ library(scales)
 Should we assume present infected US states or project future ones?
 ```{r present switch}
 #we need a switch for this map that does the same thing for including the following states: New York, Ohio, West Virginia, North Carolina
-present_switch <- TRUE
+present_switch <- FALSE
 # How many countries and states to highlight for labels?
 top_to_plot <- 10 
 
@@ -43,7 +45,9 @@ data("countries_centers")
 
 ```
 
-###States
+# Code and Plots
+
+## States
 
 separate conditional chunk for states trade data to clean it for the plotting
 ```{r states trade}
@@ -117,7 +121,7 @@ states_trade_final <- states_centers %>%
 ```
 
 Now plot the states
-```{r the US map, fig.height= 6.5, fig.width=7}
+```{r the US map, fig.height= 6.5, fig.width=7.5}
 
 #plot just the states and suitability first
 map_plot <- ggplot() +
@@ -156,24 +160,28 @@ map_plot
 
 ```
 
-###Countries
+## Countries
 
 separate conditional chunk for states trade data to clean it for the plotting
-```{r countries trade}
+```{r countries trade, message=FALSE}
 
 #edit the world centers to also have the SLF US invasion point
 countries_centers <- countries_centers %>%
-  #remove the others in the dataset
+  #rm the others in the dataset
   filter(!is.na(x), !is.na(y)) %>%
   #add center for SLF invasion in US
-  rbind(c("SLF", NA, -75.917622, 40.400189)) %>%
+  #rbind(c("SLF", NA, -75.917622, 40.400189)) %>%
+  rbind(c(rep("SLF", times = 4), -75.917622, 40.400189)) %>%  #(x,y) for coords
   #add the netherlands, not a wine country but needs a set of coords
-  rbind(c("Netherlands", NA, unlist(gCentroid(SpatialPointsDataFrame(map_data('world')[map_data('world')$region %in% "Netherlands",1:2], data = map_data('world')[map_data('world')$region %in% "Netherlands",]))@coords))) %>%
+  #rbind(c("Netherlands", NA, unlist(gCentroid(SpatialPointsDataFrame(map_data('world')[map_data('world')$region %in% "Netherlands",1:2], data = map_data('world')[map_data('world')$region %in% "Netherlands",]))@coords))) %>%
   #same for indonesia
-  rbind(c("Indonesia", NA, unlist(gCentroid(SpatialPointsDataFrame(map_data('world')[map_data('world')$region %in% "Indonesia",1:2], data = map_data('world')[map_data('world')$region %in% "Indonesia",]))@coords))) %>%
+  #rbind(c("Indonesia", NA, unlist(gCentroid(SpatialPointsDataFrame(map_data('world')[map_data('world')$region %in% "Indonesia",1:2], data = map_data('world')[map_data('world')$region %in% "Indonesia",]))@coords))) %>%
   #same for these if going for top 25: Singapore, Taiwan, Saudi Arabia, Vietnam, Venezuela, Gibraltar
+  #mutate(x = as.numeric(x), y = as.numeric(y), avg_wine = as.numeric(avg_wine))
   mutate(x = as.numeric(x), y = as.numeric(y))
 
+#now we manually bump Canada's coords up a little bit to make more visible
+countries_centers$y[countries_centers$geopol_unit == "Canada"] <- countries_centers$y[countries_centers$geopol_unit == "Canada"] + 5
 
 
 if(present_switch == TRUE){
@@ -206,7 +214,7 @@ countries_trade_final <- left_join(countries_summary_present, countries_centers,
   dplyr::select(origin, everything())
 
     #now merge the coords for destinations (ONLY WINE PRODUCING countries)
-countries_trade_final <- left_join(countries_summary_future, countries_centers, by = "geopol_unit") %>%
+countries_trade_final <- left_join(countries_summary_future, countries_centers) %>%
   filter(!is.na(x), !is.na(y))
   
 }
@@ -220,22 +228,20 @@ countries_trade_final <- countries_centers %>%
   cbind(countries_trade_final, .) %>%
   as_tibble()
 
-
 ```
 
 Now plot the countries
 
 To Do: 
 
-1. make arrows plot to the capitals of countries for coordinates rather than the centroids (change the x and y values in `countries_trade_final`)
+~~1. make arrows plot to the capitals of countries for coordinates rather than the centroids (change the x and y values in `countries_trade_final`) (do it manually)~~
 2. add in the legend with corrections from JEB
+  
   - Top 10 importers = high transport potential
   - viticultural area = high impact potential
   - suitablility = establishment potential
 
-
-
-```{r plot map of countries, warning=FALSE, fig.height= 6.5, fig.width=7}
+```{r plot map of countries, warning=FALSE, fig.height= 6.5, fig.width=7.5}
 #plot just the countries and suitability first
 map_plot_countries <- ggplot() +
   geom_raster(data = suitability_countries_df, aes(x = x, y = y, fill = rescale(value)), alpha=0.9, show.legend = T) +
@@ -271,5 +277,20 @@ map_plot_countries <- map_plot_countries +
 map_plot_countries 
 ```
 
+# Write plot output
 
+```{r save map plots}
+if(present_switch){
+#states
+  ggsave(plot = map_plot, filename = file.path(here::here(),"vignettes", paste0("states_map_present.pdf")), width = 7.5, height = 6.5, dpi = 300)
+#countries
+  ggsave(plot = map_plot_countries, filename = file.path(here::here(),"vignettes", paste0("countries_map_present.pdf")), width = 7.5, height = 6.5, dpi = 300)
+} else{
+  #states
+  ggsave(plot = map_plot, filename = file.path(here::here(),"vignettes", paste0("states_map_future.pdf")), width = 7.5, height = 6.5, dpi = 300)
+#countries
+  ggsave(plot = map_plot_countries, filename = file.path(here::here(),"vignettes", paste0("countries_map_future.pdf")), width = 7.5, height = 6.5, dpi = 300)
 
+}
+
+```
