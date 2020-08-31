@@ -224,6 +224,17 @@ countries_trade_final <- countries_centers %>%
 ```
 
 Now plot the countries
+
+To Do: 
+
+1. make arrows plot to the capitals of countries for coordinates rather than the centroids (change the x and y values in `countries_trade_final`)
+2. add in the legend with corrections from JEB
+  - Top 10 importers = high transport potential
+  - viticultural area = high impact potential
+  - suitablility = establishment potential
+
+
+
 ```{r plot map of countries, warning=FALSE, fig.height= 6.5, fig.width=7}
 #plot just the countries and suitability first
 map_plot_countries <- ggplot() +
