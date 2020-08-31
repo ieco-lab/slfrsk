@@ -41,4 +41,4 @@ To understand how this paninvasion risk assessment was made:
 
 ## Citation
 
-Huron, Behm, Helmus. **High risk of spotted lanternfly paninvasion**
+Huron, Behm, Helmus. <https://www.iecolab.org/>

@@ -20,11 +20,12 @@ build()
 install()
 
 use_package("dplyr", type = "Imports")
-use_package("stringr", type = "Imports") #switch to tidyverse?
+use_package("stringr", type = "Imports")
 use_package("ggplot2", type = "Imports")
 use_package("here", type = "Imports") #added by NAH
 use_package("tools", type = "Imports") #added by NAH
 use_package("usethis", type = "Imports") #added by NAH
+use_package("FAOSTAT", type = "Imports") #added by MRH
 
 
 
@@ -33,6 +34,7 @@ use_package("usethis", type = "Imports") #added by NAH
 
 usethis::use_vignette("vignette-010-tidy-data")
 usethis::use_vignette("vignette-020-quadrant-plots")
+# missing vignette initiation code 021
 usethis::use_vignette("vignette-030-risk-maps")
 usethis::use_vignette("vignette-040-market-plot")
 
