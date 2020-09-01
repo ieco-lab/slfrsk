@@ -22,6 +22,8 @@ library(tidyverse)
 library(ggrepel)
 library(DHARMa)
 #load_all()
+
+remove(list = ls())
 ```
 
 # Market Size
@@ -202,8 +204,8 @@ market_scatter<- countries_risk_market %>%
  # scale_fill_discrete(guide = FALSE) +
    scale_fill_manual( 
          values = c("no" = "#ffffff", "yes" = "#C77CFF"),
-         name = "Wine Production",# "Wine Impact Potential",
-         labels = c("high", "low")
+         name = "",# "Wine Impact Potential",
+         labels = c("wine producer", "")
        ) +
       theme(
         panel.grid.major = element_line(colour = "#f0f0f0"),
@@ -215,9 +217,9 @@ market_scatter<- countries_risk_market %>%
         #legend.position = "bottom",
         panel.background = element_blank(),
         plot.background = element_blank(),
-        legend.background = element_rect(colour = 'black', 
-                                         fill = 'white', 
-                                         linetype='solid'),
+        #legend.background = element_rect(colour = 'black', 
+        #                                 fill = 'white', 
+        #                                 linetype='solid'),
         axis.text = element_text(size = rel(1)),
         axis.title.x = element_text(hjust = .4),
         axis.title.y = element_text(hjust = .35),
@@ -236,10 +238,10 @@ market_scatter<- countries_risk_market %>%
                       #direction = "x",
                       #nudge_y = nudge.y,
                       #nudge_x = nudge.x
-      show.legend = FALSE) +
-  guides(
-        fill = FALSE
-        ) #,
+      show.legend = FALSE) #+
+  #guides(
+  #      fill = TRUE
+  #      ) #,
       #   color = guide_legend(
       #     order = 3,
       #     override.aes = list(alpha = 1)
@@ -257,7 +259,7 @@ market_scatter
 
 pdf(file.path(here::here(),
               "vignettes", 
-              paste0("market_scatter_v2_4.pdf")),
+              paste0("market_scatter_v2_7.pdf")),
     width = 8.5, height = 11)
 
 market_scatter
