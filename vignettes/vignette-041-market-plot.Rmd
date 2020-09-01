@@ -20,6 +20,7 @@ knitr::opts_chunk$set(
 library(slfrsk)
 library(tidyverse)
 library(ggrepel)
+library(DHARMa)
 #load_all()
 ```
 
@@ -72,7 +73,7 @@ countries_wine_market <- countries_wine_market %>%
       `Brunei Darussalam` = "Brunei",
       `Cabo Verde` = "Cape Verde",
       `China, mainland` = "China",
-      Congo = "Republic of Congo",
+       Congo = "Republic of Congo",
       `Falkland Islands (Malvinas)` = 'Falkland Islands',
       `China, Hong Kong SAR` = "Hong Kong",
       `Iran (Islamic Republic of)` = "Iran",
@@ -106,11 +107,12 @@ countries_wine_market <- countries_wine_market %>%
 
 ```{r, eval = TRUE}
 data("countries_summary_future")
+dim(countries_summary_future)
 `%notin%` <- Negate(`%in%`)
 
 countries_risk_market <- countries_summary_future %>% 
   left_join(countries_wine_market, by = "ID") %>%
-  filter(ID %notin% c("United States"))#%>% 
+  filter(ID %notin% c("United States", "China", "India", "Vietnam"))#%>% 
   #dplyr::select(ID, 
   #              market_size,
   #              log10_avg_prod, 
@@ -119,9 +121,19 @@ countries_risk_market <- countries_summary_future %>%
 
 # remove the us
 
-risk_mod <- lm(log10_avg_prod ~ log10_avg_infected_mass + grand_mean_max, data = countries_risk_market)
-cor.test(countries_risk_market$log10_avg_prod, predict(risk_mod))
+# dim(countries_risk_market)
+# setdiff(countries_risk_market$ID,countries_summary_future$ID)
+# setdiff(countries_summary_future$ID,countries_risk_market$ID)
+# table(countries_risk_market$ID)[table(countries_risk_market$ID)>1]
+# table(countries_summary_future$ID)[table(countries_summary_future$ID)>1]
 
+risk_mod <- lm(log10_avg_prod ~ log10_avg_infected_mass + grand_mean_max, data = countries_risk_market)
+cor.test(countries_risk_market$log10_avg_prod, predict(risk_mod), method = "spearman")
+
+## diagnostics
+# fit is good for the multivariate correlation because there is no dispersion, but do not use this model for prediction (which I do not know why you would)
+simulationOutput <- simulateResiduals(fittedModel = risk_mod, plot = T) 
+testDispersion(simulationOutput) 
 
 #plot(risk_mod)
 summary(risk_mod)
@@ -131,6 +143,11 @@ countries_risk_market <- countries_risk_market %>%
 
 shock_mod <- lm(market_size ~ risk, data = countries_risk_market)
 summary(shock_mod)
+
+## diagnostics
+# risk estimate model fit is good and no major issues in heteroskedasticity. But I am not certain why you want this model anyways, a correlation is better because it is easily scaled betwee 1-10 
+simulationOutput <- simulateResiduals(fittedModel = shock_mod, plot = T) 
+testDispersion(simulationOutput)
 
 cor.test(countries_risk_market$market_size, countries_risk_market$risk)
 (shock_cor <- cor(countries_risk_market$market_size, 
@@ -161,11 +178,13 @@ market_scatter<- countries_risk_market %>%
                        size = avg_wine, 
                        fill = wine)
          ) +
-  ggtitle(label = paste('Spotted Lanternfly paninvasion risk severity =',shock_cor,'of 10')) +
+  ggtitle(label = paste('Spotted Lanternfly Paninvasion Risk Severity =',shock_cor,'of 10')) +
   geom_point(pch = 21) + 
-  geom_abline(slope = 1, intercept = 0) + 
-  scale_x_continuous(
-    name =  substitute(expr = paste(italic("Lycorma delicatula"),'Invasion Risk')), 
+  geom_abline(slope = 1, intercept = 0, lty = 1) +
+  geom_abline(slope = 1, intercept = 5, lty = 2) +
+  geom_abline(slope = 1, intercept = -5, lty = 2) +
+    scale_x_continuous(
+    name =  substitute(expr = paste('Spotted Lanternfly (',italic("Lycorma delicatula"),') Invasion Risk')), 
     breaks = 1:10, 
     limits = c(1,10)
     ) +
@@ -196,7 +215,9 @@ market_scatter<- countries_risk_market %>%
         #legend.position = "bottom",
         panel.background = element_blank(),
         plot.background = element_blank(),
-        legend.background = element_blank(),#element_rect(colour = 'black', fill = 'white', linetype='solid'),
+        legend.background = element_rect(colour = 'black', 
+                                         fill = 'white', 
+                                         linetype='solid'),
         axis.text = element_text(size = rel(1)),
         axis.title.x = element_text(hjust = .4),
         axis.title.y = element_text(hjust = .35),
@@ -236,7 +257,7 @@ market_scatter
 
 pdf(file.path(here::here(),
               "vignettes", 
-              paste0("market_scatter_v2_0.pdf")),
+              paste0("market_scatter_v2_4.pdf")),
     width = 8.5, height = 11)
 
 market_scatter
