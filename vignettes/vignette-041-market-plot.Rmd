@@ -16,7 +16,8 @@ knitr::opts_chunk$set(
 
 ```{r setup}
 library(slfrsk)
-load_all()
+library(tidyverse)
+#load_all()
 ```
 
 # Market Size
