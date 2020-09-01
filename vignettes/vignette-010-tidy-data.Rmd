@@ -19,14 +19,16 @@ knitr::opts_chunk$set(
 library(slfrsk)
 library(tidyverse)
 library(here)
+load_all()
 ```
 
-### Data to ship with the package
-#### Correlation Figure
+Wrangle and Tidy Package data
 
 All of the following data sources will be read in as raw data from `slfrsk/data/` (originally cleaned a bit initially from raw data version in `slfrsk/data-raw/`) and then cleaned up individually. Depending on the situation, the resultant "cleaned/tidied" data may be saved to `slfrsk/data/` as a new `.rda` file.
 
-##### Maxent extractions (states and countries), we are going to summarize the mean of the models as a grand mean
+# Establishment
+## Maxent Ensemble Model
+(states and countries) we are going to summarize the mean of the models as a grand mean
   
 ```{r bring in maxent extraction summary data}
 data("states_extracts")
@@ -42,9 +44,12 @@ summary_countries_extracts <- countries_extracts %>%
   summarize(grand_mean_max = mean(obs_max), grand_se_max = sd(obs_max) / sqrt(n_distinct(model)))
 
 ```
-  
-##### trade data (states and countries, both present and future)
-###### states value
+# Transport
+## Import Trade Data
+(states and countries, both present and future)
+### U.S. State trade data
+#### states value
+In USD
 ```{r load in states trade data and clean value, message=FALSE, warning=FALSE}
 #load states value
 data("states_trade_summary_slf")
@@ -119,7 +124,9 @@ colnames(stateid) <- c("ID", "geopol_unit")
     summarise(avg_infected_trade = mean(avg_infected_trade, na.rm = T), se = mean(se))
 ```
     
-###### states mass (this also converts mass from kg to metric tons)
+#### states mass
+tonnage and volume shipped
+(converts mass from kg to metric tons)
 ```{r clean states mass, message=FALSE, warning=FALSE}
 #load states mass
 data("states_trade_mass_summary_slf")
@@ -190,8 +197,10 @@ data("states_trade_mass_summary_slf_future")
     summarise(avg_infected_mass = mean(avg_infected_mass, na.rm = T), se = mean(se))
 
 ```
-    
-######countries value
+
+### Countries trade data 
+#### countries value
+in USD
 ```{r load in countries trade data and clean value, message=FALSE,warning=FALSE}
 #load countries values
 data("countries_trade_summary_slf")
@@ -243,7 +252,8 @@ countries_trade_summary_slf_future <- countries_trade_summary_slf_future %>%
   
 ```
 
-######countries mass (this also converts from kg to metric tons)
+#### countries mass
+Tonnage (converts from kg to metric tons)
 ```{r load and clean countries mass, message=FALSE, warning=FALSE}
 #load countries mass
 data("countries_trade_mass_summary_slf")
@@ -297,6 +307,9 @@ countries_trade_mass_summary_slf_future <- countries_trade_mass_summary_slf_futu
   
 ```
   
+
+### Join Trade Data
+
 Now to bind the trade data together and $log_{10}$ transform the trade mass and value! For countries, we strip the **Western Sahara** data first, as it is not informative (zeros).
 
 ```{r bind trade data together}
@@ -318,9 +331,13 @@ summary_countries_trade_future <- left_join(summary_countries_trade_value_future
   mutate(log10_avg_infected_trade = log10(avg_infected_trade+1), log10_avg_infected_mass = log10(avg_infected_mass+1))
 
 ```
-  
-#####grape yield (metric tons/ha) and production (metric tons)
-**NOTE:** The Philippines has such low grape production that the  $log_{10}$ transformation renders it negative but by adding one prior to transformation, it becomes positive. It will likely be removed from analyses downstream.
+
+# Impact 
+### grape yield 
+(metric tons/ha) and production (metric tons)
+**NOTE:** The Philippines has such low grape production that the  $log_{10}$ transformation renders it negative but by adding one prior to transformation, it becomes positive.
+
+#### states
 ```{r read in and summarize both grape yield and production}
 data("states_grapes")
 
@@ -352,8 +369,10 @@ summary_countries_grapes <- countries_grapes %>%
 
 ```
   
-#####wine production (metric tons) 
-  
+### wine production
+(metric tons) 
+
+#### states
 ```{r read in and summarize wine production}
 data("states_wine")
 
@@ -372,9 +391,12 @@ summary_countries_wine <- countries_wine %>%
 
 ```
 
+### Join Summaries
+
 Now to piece all of the summarized data together, we will make single objects for states and countries (present and future). Binary identifying information for wine and grapes will be added as well.
 
-######States Present
+#### Present
+##### states present
 ```{r make states_summary_present}
 #add the binaries
 states_summary_present <- summary_states_extracts %>%
@@ -400,7 +422,8 @@ states_summary_present <- states_summary_present %>%
 
 ```
 
-######States Future
+#### Future
+##### states future
 ```{r make states_summary_future}
 #add the binaries
 states_summary_future <- summary_states_extracts %>%
@@ -426,7 +449,8 @@ states_summary_future <- states_summary_future %>%
 
 ```
 
-######Countries Present
+#### Present
+##### countries present
 This also includes manually changing the **United States** to a grape producer. 
 ```{r make countries_summary_present}
 #add in the binaries
@@ -465,14 +489,15 @@ countries_summary_present <- countries_summary_present %>%
 
 ```
 
-######Countries Future
-This also includes manually changing the **United States** to a grape producer.
+#### Future
+##### countries future
 ```{r make countries_summary_future}
 #add in the binaries
 countries_summary_future <- summary_countries_extracts %>%
   mutate(grapes = ifelse(geopol_unit %in% summary_countries_grapes$geopol_unit, yes = "yes", no = "no")) %>%
   mutate(wine = ifelse(geopol_unit %in% summary_countries_wine$geopol_unit, yes = "yes", no = "no"))
 
+# NOTE: must This also includes manually changing the **United States** to a grape producer.
 #change U.S. from no to yes for grapes
 countries_summary_future$grapes[countries_summary_future$geopol_unit == "United States"] <- "yes"
 
@@ -504,9 +529,8 @@ countries_summary_future <- countries_summary_future %>%
 
 ```
 
-###Write Out Data for Future Use
 
-####Correlation Plots
+# Write Out Data for Future Use
 ```{r save correlation plot  data, eval=FALSE}
 if(FALSE){
 #save(states_summary_present, file = file.path(here(), "data", "states_summary_present.rda"))
@@ -517,14 +541,14 @@ if(FALSE){
 ```
 
 
-##NOTES NOTES NOTES
+# NOTES
 *TRY TO FIX THESE COUNTRY NAMES*
 "S\x8bo Tom\x8e and Pr\x92ncipe"  
 "Cura\x8dao" 
 "Saint Barth\x8elemy"
 "C\x99te d'Ivoire"
 
-####Map Figure
+## Map Figure
   1. wineries list (usa_wineries)
   2. states_centers_wine
   3. states_centers
