@@ -55,8 +55,6 @@ qplot(countries_wine_market$market_size)
 
 ```{r join market to countries_summary_future}
 
-# recode the market ids to match countries_summary_future
-
 countries_wine_market <- countries_wine_market %>%
   mutate(ID = Area) %>%
   mutate(

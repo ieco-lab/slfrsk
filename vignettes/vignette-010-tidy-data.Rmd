@@ -19,18 +19,25 @@ knitr::opts_chunk$set(
 library(slfrsk)
 library(tidyverse)
 library(here)
-load_all()
+devtools::load_all()
 ```
 
 Wrangle and Tidy Package data
 
-All of the following data sources will be read in as raw data from `slfrsk/data/` (originally cleaned a bit initially from raw data version in `slfrsk/data-raw/`) and then cleaned up individually. Depending on the situation, the resultant "cleaned/tidied" data may be saved to `slfrsk/data/` as a new `.rda` file.
+All of the following data sources will be read in as raw data from `slfrsk/data/` (originally cleaned a bit from raw data versions in `slfrsk/data-raw/`) and then cleaned up individually in this vignette. Depending on the situation, the resultant "cleaned/tidied" data may be saved to `slfrsk/data/` as a new `.rda` file. In this vignette, the following data are treated:
+  
+  1. Establishment potential
+  2. Transport potential
+  3. Impact potential
 
 # Establishment
 ## Maxent Ensemble Model
-(states and countries) we are going to summarize the mean of the models as a grand mean
+
+Previously, we built three separate species distribution models (SDMs) with Maxent. Upstream of this vignette, we obtained summary statistics for suitability in each geopolitical unit (country and U.S. state) in each SDM, which were combined into the `states_extracts` and `countries_extracts` datasets. 
+
+Here, we explore the ensemble *maximum suitability* by obtaining the maximum suitability per geopolitical unit for each SDM and calculating the *mean* and *standard error* across the models. These summarized suitabilities constitute our predicted **Establishment Potential**.
   
-```{r bring in maxent extraction summary data}
+```{r bring in maxent extraction summary data, message=FALSE}
 data("states_extracts")
 
 summary_states_extracts <- states_extracts %>%
@@ -44,9 +51,12 @@ summary_countries_extracts <- countries_extracts %>%
   summarize(grand_mean_max = mean(obs_max), grand_se_max = sd(obs_max) / sqrt(n_distinct(model)))
 
 ```
+
 # Transport
 ## Import Trade Data
+
 (states and countries, both present and future)
+
 ### U.S. State trade data
 #### states value
 In USD
@@ -312,7 +322,7 @@ countries_trade_mass_summary_slf_future <- countries_trade_mass_summary_slf_futu
 
 Now to bind the trade data together and $log_{10}$ transform the trade mass and value! For countries, we strip the **Western Sahara** data first, as it is not informative (zeros).
 
-```{r bind trade data together}
+```{r bind trade data together, message=FALSE}
 #STATES
 summary_states_trade <- left_join(summary_states_trade_value, summary_states_trade_mass, by = c("destination", "status"), suffix = c("_trade", "_mass")) %>%
     mutate(log10_avg_infected_trade = log10(avg_infected_trade+1), log10_avg_infected_mass = log10(avg_infected_mass+1))
@@ -338,7 +348,7 @@ summary_countries_trade_future <- left_join(summary_countries_trade_value_future
 **NOTE:** The Philippines has such low grape production that the  $log_{10}$ transformation renders it negative but by adding one prior to transformation, it becomes positive.
 
 #### states
-```{r read in and summarize both grape yield and production}
+```{r read in and summarize both grape yield and production, message=FALSE}
 data("states_grapes")
 
 #summarize and log transform
@@ -373,7 +383,7 @@ summary_countries_grapes <- countries_grapes %>%
 (metric tons) 
 
 #### states
-```{r read in and summarize wine production}
+```{r read in and summarize wine production, message=FALSE}
 data("states_wine")
 
 #summarize and log transform
@@ -397,7 +407,7 @@ Now to piece all of the summarized data together, we will make single objects fo
 
 #### Present
 ##### states present
-```{r make states_summary_present}
+```{r make states_summary_present, message=FALSE}
 #add the binaries
 states_summary_present <- summary_states_extracts %>%
   mutate(grapes = ifelse(geopol_unit %in% summary_states_grapes$geopol_unit, yes = "yes", no = "no")) %>%
@@ -424,7 +434,7 @@ states_summary_present <- states_summary_present %>%
 
 #### Future
 ##### states future
-```{r make states_summary_future}
+```{r make states_summary_future, message=FALSE}
 #add the binaries
 states_summary_future <- summary_states_extracts %>%
   mutate(grapes = ifelse(geopol_unit %in% summary_states_grapes$geopol_unit, yes = "yes", no = "no")) %>%
@@ -452,7 +462,7 @@ states_summary_future <- states_summary_future %>%
 #### Present
 ##### countries present
 This also includes manually changing the **United States** to a grape producer. 
-```{r make countries_summary_present}
+```{r make countries_summary_present, message=FALSE}
 #add in the binaries
 countries_summary_present <- summary_countries_extracts %>%
   mutate(grapes = ifelse(geopol_unit %in% summary_countries_grapes$geopol_unit, yes = "yes", no = "no")) %>%
@@ -491,7 +501,7 @@ countries_summary_present <- countries_summary_present %>%
 
 #### Future
 ##### countries future
-```{r make countries_summary_future}
+```{r make countries_summary_future, message=FALSE}
 #add in the binaries
 countries_summary_future <- summary_countries_extracts %>%
   mutate(grapes = ifelse(geopol_unit %in% summary_countries_grapes$geopol_unit, yes = "yes", no = "no")) %>%
@@ -531,7 +541,7 @@ countries_summary_future <- countries_summary_future %>%
 
 
 # Write Out Data for Future Use
-```{r save correlation plot  data, eval=FALSE}
+```{r save correlation plot  data, eval=FALSE, message=FALSE}
 if(FALSE){
 #save(states_summary_present, file = file.path(here(), "data", "states_summary_present.rda"))
 #save(states_summary_future, file = file.path(here(), "data", "states_summary_future.rda"))
@@ -539,21 +549,3 @@ if(FALSE){
 #save(countries_summary_future, file = file.path(here(), "data", "countries_summary_future.rda"))
 }
 ```
-
-
-# NOTES
-*TRY TO FIX THESE COUNTRY NAMES*
-"S\x8bo Tom\x8e and Pr\x92ncipe"  
-"Cura\x8dao" 
-"Saint Barth\x8elemy"
-"C\x99te d'Ivoire"
-
-## Map Figure
-  1. wineries list (usa_wineries)
-  2. states_centers_wine
-  3. states_centers
-  4. enm_data_usa_mean <- raster("./data/geotiff_enms//slftoh_usa_downsampled_x4_mean.tif")
-  5. enm_data_mean <- raster("./data/geotiff_enms/slftoh_downsampled_x4_mean.tif")
-  6. trade data
-  7. slf coords? slf_coords <- read_csv("./data/Spotted Lanternfly/MAXENT_INPUT_VARIATE/SLF_FINAL_withPDA_24Sept18_v4_8.csv") %>%
-
