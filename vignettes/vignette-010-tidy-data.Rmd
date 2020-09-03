@@ -55,6 +55,10 @@ summary_countries_extracts <- countries_extracts %>%
 # Transport
 ## Import Trade Data
 
+Now that **establishment** data are nicely organized, we can move on to _**Transport**_. We estimate **Transport Potential** based on the average annual mass of goods traded (in metric tons) with infected U.S. states over 2012--2017 (we also track value of traded goods in USD). Our existing data can be partitioned into geopolitical units as above (states and countries), but can further be separated into two categories: 1. states with confirmed _Lycorma_ populations (`present`) and 2. states that have a high probability of hosting _Lycorma_ populations in the near future based on proximity to `present` states and records of isolated observations (`future`). 
+
+Although we maintain several possible permutations of data to analyze, we focus on mass of goods traded for `future` scenarios, as these data are unlikely to be skewed by trade of high value goods that are less likely to lead to transportation of egg masses (e.g., electronics) and provide us with a more careful outlook for risk of slf paninvasion.
+
 (states and countries, both present and future)
 
 ### U.S. State trade data
