@@ -14,18 +14,12 @@ knitr::opts_chunk$set(
 )
 ```
 
-new edited version of the correlation plots
+Build and Save Risk Correlation Quadrant Plots
 
-# To do:
+***
 
-1. **V1 : ~~Stack the two figures~~, ~~flip the axes~~, ~~include the legend~~, ~~remove the quadrant labels~~, ~~make it so that the small white points are visible~~.**
-  - ~~labeling is wrong on the corrplots for states relative to the infected~~
-  - ~~rm observed max suitability in boxplot names~~
-  - ~~rm the outliers for boxplots~~
-  - ~~scale up the size for the points in the scatter~~
-2. V2: Same as V1, but remove the boxplots.
-3. V3: Same as V2, but plot colored symbols to indicate the means of yes/no wine.
-4. V4: Same as V3, but remove the individual points for the states/countries and plot points with SEs on both axes.
+
+# Setup
 
 ```{r setup, results='hide', message=FALSE}
 library(slfrsk)
@@ -36,8 +30,8 @@ library(grid)
 library(gridExtra) #only needed if one uses grid.arrange() in plotting
 ```
 
-# Setup
 ## Read in data
+
 ```{r read in summary data}
 data("states_summary_present")
 data("states_summary_future")
