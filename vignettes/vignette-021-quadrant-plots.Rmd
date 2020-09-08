@@ -1034,27 +1034,6 @@ states_summary_future_pred %>%
 
 ```
 
-Make scatter of predicted as y-axis and market size (your USD variable)
-
-  1. We need to see if Risk (predicted values from that alignment cor lm) is correlated to regional market size.
-  2. If it looks good,  and then we might color it by wine production from white to purple and add a regression line.
-
-```{r use the predicted values for grape avg_prod and avg_infected_trade}
-states_summary_future_pred %>%
-  mutate(category = "state") %>%
-  bind_rows(., countries_summary_future_pred %>% mutate(category = "country")) %>%
-  filter(avg_infected_trade > 0 & pred_avg_prod > 0) %>%
-  ggplot(aes(x = avg_infected_trade,  y = pred_avg_prod, color = category)) +
-  geom_point() +
-  scale_x_log10()
-
-combined.impact.model <- states_summary_future_pred %>%
-  bind_rows(., countries_summary_future_pred) %>%
-  #filter(avg_infected_trade > 0 & pred_avg_prod > 0) %>%
-lm(data = ., formula = avg_prod ~ avg_infected_mass_scaled + grand_mean_max_scaled)
-
-```
-
 
 ```{r write out the summary data together, eval=FALSE}
 states_summary_future_pred %>% 
