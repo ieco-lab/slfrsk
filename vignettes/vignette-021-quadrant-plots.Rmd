@@ -77,20 +77,33 @@ rem_usa <- TRUE
 
 ## Read in data
 
-We now load the summary data from `vignette-010-tidy-data` based on the logical status of `present_transport`. Both `states` and `countries` data are loaded.
+We now load the summary data from `vignette-010-tidy-data`. Both `states` and `countries` data are loaded.
 
 ```{r read in summary data}
-#decide which data to call
-if(present_transport){
   data("states_summary_present")
   data("countries_summary_present")
-} else{
   data("states_summary_future")
   data("countries_summary_future")
-}
+
 ```
 
-Even though a column in the read data does include the $log_{10}(+1)$ transformation of **transport** potential, the mass of trade with infected states (`log10_avg_infected_mass`), the raw data were $log_{10}(+1)$ transformed and then rescaled (see `one_zero` above) as `avg_infected_mass_scaled`. The **establishment** potential is already scaled the same [0,1], but we create a new column of its values with teh same `_scaled` suffix. If `one_zero <- FALSE`, then **transport** potential is just $log_{10}(+1)$ transformed instead.
+**NATIVE**---If *Lycorma*-native countries can be coded as `native` or `not established` (not "invaded") for plotting purposes with the `native` setting above.
+
+```{r modify native slf countries}
+if(native){
+  countries_summary_present$status[countries_summary_present$geopol_unit %in% c("China", "India", "Taiwan", "Vietnam")] <- "native"
+  countries_summary_future$status[countries_summary_future$geopol_unit %in% c("China", "India", "Taiwan", "Vietnam")] <- "native"
+} else {
+  countries_summary_present$status[countries_summary_present$geopol_unit %in% c("China", "India", "Taiwan", "Vietnam")] <- "not established"
+  countries_summary_future$status[countries_summary_future$geopol_unit %in% c("China", "India", "Taiwan", "Vietnam")] <- "not established"
+  }
+```
+
+**`states` SCALING**---Even though a column in the `states` data does include the $log_{10}(+1)$ transformation of **transport** potential, the mass of trade with infected states (`log10_avg_infected_mass`), the raw data were $log_{10}(+1)$ transformed and then further rescaled (see `one_zero` above) as `avg_infected_mass_scaled`. The **establishment** potential is already scaled the same [0,1], but we create a new column of its values with the same `_scaled` suffix. 
+
+If `one_zero <- FALSE`, then **transport** potential is just $log_{10}(+1)$ transformed instead.
+
+*Please note that `states` and `countries` rescaling are done separately, as the latter has several rows that lack trade data (e.g., `NA`).*
 
 ```{r rescale states}
 # scale the import data
@@ -124,21 +137,9 @@ if(one_zero){
 
 ```
 
-Modify the native countries established category
-```{r modify native slf countries}
-if(native){
-  countries_summary_present$status[countries_summary_present$geopol_unit %in% c("China", "India", "Taiwan", "Vietnam")] <- "native"
-  countries_summary_future$status[countries_summary_future$geopol_unit %in% c("China", "India", "Taiwan", "Vietnam")] <- "native"
 
-} else {
-  countries_summary_present$status[countries_summary_present$geopol_unit %in% c("China", "India", "Taiwan", "Vietnam")] <- "not established"
-  countries_summary_future$status[countries_summary_future$geopol_unit %in% c("China", "India", "Taiwan", "Vietnam")] <- "not established"
-  
-  }
+**`countries` REMOVAL**---For the `countries` analysis, several countries in the actual dataset are not informative (usually due to lack of trade with the infected states or `NA` reported). If `rem_usa <- TRUE`, then the U.S. is also removed from the `countries` analyses. This is an important step, as the cou
 
-```
-
-Remove Unnecessary Countries
 ```{r rm countries that are not needed}
 if(rem_usa){ # TRUE if you want to remove the USA
   rems <- c("Akrotiri and Dhekelia"
@@ -196,6 +197,8 @@ countries_summary_future <- countries_summary_future %>% filter(!ID %in% rems)
 
 ```
 
+**`countries` SCALING**---Now that `countries` contains only rows of interest, we rescaled the **transport** potential as above for `states` and created the same `_scaled` data columns.
+
 Now rescale countries as states
 ```{r rescale countries}
 # scale the import data
@@ -224,20 +227,21 @@ if(one_zero){
 
   countries_summary_present <- countries_summary_present %>%
     # transport
-    mutate(avg_infected_mass_scaled = log(avg_infected_mass+1)) # %>%
-  #mutate(avg_infected_mass_scaled = scale(avg_infected_mass_scaled)) %>%
+    mutate(avg_infected_mass_scaled = log(avg_infected_mass+1)) %>%
     # establishment
-  #mutate(grand_mean_max_scaled = scale(grand_mean_max))
+    mutate(grand_mean_max_scaled = grand_mean_max)
   
   countries_summary_future <- countries_summary_future %>%
     # transport
-    mutate(avg_infected_mass_scaled = log(avg_infected_mass+1)) 
+    mutate(avg_infected_mass_scaled = log(avg_infected_mass+1)) %>%
+    # establishment
+    mutate(grand_mean_max_scaled = grand_mean_max)
 
 }
 
 ```
 
-**NOTE:** Below is code that can be used to make a version of the `country` data that removes all countries that have a no `trade` with infected states (*we leave the zeroes in for the current figures*):
+**Additional Note:** Below is code that can be used to make a version of the `country` data that removes all countries that have a no `trade` with infected states (*we leave the zeroes in for the current figures*):
 ```{r rm zeros, eval=FALSE}
 #rm the trade mass zero countries
 countries_summary_nozeros_present <- countries_summary_present %>% filter(log10_avg_infected_mass != 0)
@@ -258,8 +262,11 @@ countries_summary_nozeros_future <- countries_summary_nozeros_future %>%
 
 # Plotting
 
+Now that the data have been prepared accordingly, plotting of the relationship among all three potentials can be visualized. For ease of viewing, we begin by setting a few plotting parameters before visualization.
+
 ## Plotting parameters
-Now we have some plotting parameters to make visible up front
+
+The following plotting parameters are set to produce the published figures but could be changed for plot customization:
 
   1. label.countries.est: Label the countries that *Lycorma* has previously become established (Japan and South Korea) in the `countries` plot?
       - default is `TRUE`
@@ -267,6 +274,7 @@ Now we have some plotting parameters to make visible up front
       - default is `TRUE`
       - `present` adds DE, MD, NJ (all others already labeled)
       - `future` adds DE, MD, NJ, OH, WV (all others already labeled)
+  3. all nudge_* objects: custom settings for `geom_text_repel` starting positions of labels for the added countries or states. Within the major plotting chunk, one can change the nudging of the main plotted labels.
 
 
 ```{r params for plotting}
@@ -284,33 +292,37 @@ nudge_states.est_future.x <- c( 0.00,-0.10, 0.02,-0.04,0.00)  #FUTURE: adding OH
 nudge_states.est_future.y <- c(-0.10, 0.10,-0.17, 0.08,0.15)
 
 
-
 # Choose quadrant intercepts
 q_intercepts <- list(transport = 0.5, establishment = 0.5)
+#set margins
+hh = .001 
+# Do not change this flips between plotting the states or plotting countries
+plots_which <- c(TRUE,FALSE) 
+# How many countries and states to highlight for labels?
+top_to_plot <- 10 
+#color aesthetics
+risk_color <- "gray40"
+risk_size <- 5
 
-hh = .001 #set margins
-plots_which <- c(TRUE,FALSE) # Do not change this flips between plotting the states or plotting countries
-top_to_plot <- 10 # How many countries and states to highlight for labels?
+
 #lx <- 0.22
 #ly <- 0.25
 #hy <- 0.77
 #hx <- 0.78
-risk_color <- "gray40"
-risk_size <- 5
-
+#
 #risk_labels <-data.frame(label = c("low\nrisk","moderate\nrisk","moderate\nrisk","high\nrisk"),
 #                        x = c(lx,lx,hx,hx),
 #                        y = c(ly,hy,ly,hy),
 #                        hjust = c(0,0,0,0),
 #                        vjust = c(0,0,0,0))
 
+#constant looping var
 i <- 1
 
 ```
 
 
-```{r plot figures, warning=FALSE, message=FALSE, echo=FALSE, fig.height= 7.5, fig.width=7.5}
-#for(i in 2){
+```{r plot figures, warning=FALSE, message=FALSE, echo=TRUE, results="hide"}
 for (i in 1:length(plots_which)) {
   
   #selects states or countries to plot
@@ -825,8 +837,8 @@ if(present_transport == FALSE){
   #g$layout
   g$layout$z[g$layout$name == "panel"] <- 17 # Note that z for panel is 1.  Change it to something bigger.
 
-  grid.newpage()
-  grid.draw(g)
+  #grid.newpage()
+  #grid.draw(g)
 
   
 #Correlation Analysis
@@ -854,7 +866,7 @@ if(present_transport == FALSE){
 
     if (statez) { #states future
       states_grob <- g
-      grid.draw(g)
+      #grid.draw(g)
       data_to_cor <- as.matrix(select(data_to_plot,x_to_plot,y_to_plot,size_to_plot))
       states.impact.model <-
         impact.model <-
@@ -862,7 +874,7 @@ if(present_transport == FALSE){
       states.impact.cor <- cor.test(impact.model$model$size_to_plot, impact.model$fitted.values, method = method_cor)
     } else{ #countries future
       countries_grob <- g
-      grid.draw(g)
+      #grid.draw(g)
       data_to_cor <- as.matrix(select(data_to_plot,x_to_plot,y_to_plot,size_to_plot))
       countries.impact.model <-
         impact.model <-
