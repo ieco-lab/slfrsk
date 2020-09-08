@@ -980,9 +980,7 @@ invisible(dev.off())
 
 ```
 
-alignment correlation code: note how it is cor(grapeprod, predicted(lm(grapeprod~transport+establishment)).
-1. Can you make a quick decreasing sorted barchart of states and countries combined together (only if grapeprod is not scale(grapeprod) of the predicted values in that correlation lm.
-2. Then perhaps color coded according to high low wine and with the top 10 labeled.
+Quick code to show predicted grape production for both `states` and `countries` together on the same bar chart: This should probably be moved to `vig_041` at some point.
 
 ```{r fuse the predicted values back into states and countries summary data, warning=FALSE, fig.height= 25, fig.width=12}
 #size_to_plot = avg_prod
