@@ -49,12 +49,6 @@ Secondarily, we confirm the particular partitions of data we intend to visualize
       - default is `TRUE`
   6. rem_usa: Remove the "United States" from the `countries` plot?
       - default is `TRUE`
-  7. label.countries.est: Label the countries that *Lycorma* has previously become established (Japan and South Korea) in the `countries` plot?
-      - default is `TRUE`
-  8. label.states.est: Label the U.S. states that *Lycorma* has previously become established according to `present` or `future` scenarios in the `states` plot?
-      - default is `TRUE`
-      - `present` adds DE, MD, NJ (all others already labeled)
-      - `future` adds DE, MD, NJ, OH, WV (all others already labeled)
 
 ```{r set to run different versions}
 # Make transport scaled between one and zero
@@ -76,10 +70,6 @@ native <- TRUE
 # remove USA?
 rem_usa <- TRUE
 
-# label both of the countries (or states) with established SLF?
-label.countries.est <- TRUE
-label.states.est <- TRUE   #PRESENT: adding DE, MD, NJ  FUTURE: adding DE, MD, NJ, OH, WV
-
 # NONFUNCTIONAL---Replace this with max mean quantile_0.50 quantile_0.75 quantile_0.90 to edit which metric to plot for establishment
 #to run this, one needs to use different extract data sources further back in the cleaning process (vig01) by selecting a different variable
 #estab_to_plot <- "max" # max was used for the quadrant figures
@@ -87,7 +77,7 @@ label.states.est <- TRUE   #PRESENT: adding DE, MD, NJ  FUTURE: adding DE, MD, N
 
 ## Read in data
 
-The code below loads the summary data from `vignette-010-tidy-data` based on the logical status of `present_transport` above to keep the environment clean. Both `states` and `countries` data are loaded.
+We now load the summary data from `vignette-010-tidy-data` based on the logical status of `present_transport`. Both `states` and `countries` data are loaded.
 
 ```{r read in summary data}
 #decide which data to call
@@ -100,7 +90,8 @@ if(present_transport){
 }
 ```
 
-rescale the trade mass data to be between zero and one or $log_{10}(+1)$ transform the regular version.
+Even though a column in the read data does include the $log_{10}(+1)$ transformation of **transport** potential, the mass of trade with infected states (`log10_avg_infected_mass`), the raw data were $log_{10}(+1)$ transformed and then rescaled (see `one_zero` above) as `avg_infected_mass_scaled`. The **establishment** potential is already scaled the same [0,1], but we create a new column of its values with teh same `_scaled` suffix. If `one_zero <- FALSE`, then **transport** potential is just $log_{10}(+1)$ transformed instead.
+
 ```{r rescale states}
 # scale the import data
 
@@ -121,18 +112,14 @@ if(one_zero){
     mutate(avg_infected_mass_scaled = avg_infected_mass_scaled / max(avg_infected_mass_scaled)) %>%
     # establishment
     mutate(grand_mean_max_scaled = grand_mean_max)
-
 } else {
   states_summary_present <- states_summary_present %>%
     # transport
     mutate(avg_infected_mass_scaled = log(avg_infected_mass+1)) # %>%
-  #mutate(avg_infected_mass_scaled = scale(avg_infected_mass_scaled)) %>%
     # establishment
-  #mutate(grand_mean_max_scaled = scale(grand_mean_max))
   states_summary_future <- states_summary_future %>%
     # transport
     mutate(avg_infected_mass_scaled = log(avg_infected_mass+1))
-
 }
 
 ```
@@ -273,21 +260,37 @@ countries_summary_nozeros_future <- countries_summary_nozeros_future %>%
 
 ## Plotting parameters
 Now we have some plotting parameters to make visible up front
+
+  1. label.countries.est: Label the countries that *Lycorma* has previously become established (Japan and South Korea) in the `countries` plot?
+      - default is `TRUE`
+  2. label.states.est: Label the U.S. states that *Lycorma* has previously become established according to `present` or `future` scenarios in the `states` plot?
+      - default is `TRUE`
+      - `present` adds DE, MD, NJ (all others already labeled)
+      - `future` adds DE, MD, NJ, OH, WV (all others already labeled)
+
+
 ```{r params for plotting}
+# label both of the countries (or states) with established SLF?
+label.countries.est <- TRUE
+label.states.est <- TRUE   #PRESENT: adding DE, MD, NJ  FUTURE: adding DE, MD, NJ, OH, WV
+# labeling aestehtics for label.countries.est and label.states.est
+nudge_countries.est.x <- c(-.05,0)
+nudge_countries.est.y <- c(.07,.1)
+nudge_countries.est_future.x <- c(.00,0)
+nudge_countries.est_future.y <- c(.08,.1)
+nudge_states.est_present.x <- c(0.00, -0.02,-0.04)  #PRESENT: adding DE, MD, NJ  
+nudge_states.est_present.y <- c(0.10,-0.10,-0.10)
+nudge_states.est_future.x <- c( 0.00,-0.10, 0.02,-0.04,0.00)  #FUTURE: adding OH, DE, MD, NJ, WV
+nudge_states.est_future.y <- c(-0.10, 0.10,-0.17, 0.08,0.15)
+
+
+
 # Choose quadrant intercepts
 q_intercepts <- list(transport = 0.5, establishment = 0.5)
 
 hh = .001 #set margins
 plots_which <- c(TRUE,FALSE) # Do not change this flips between plotting the states or plotting countries
 top_to_plot <- 10 # How many countries and states to highlight for labels?
-nudge_JPNKOR.x <- c(-.05,0)
-nudge_JPNKOR.y <- c(.07,.1)
-nudge_JPNKOR_future.x <- c(.00,0)
-nudge_JPNKOR_future.y <- c(.08,.1)
-nudge_us.infected_present.x <- c(0.00, -0.02,-0.04)  #PRESENT: adding DE, MD, NJ  
-nudge_us.infected_present.y <- c(0.10,-0.10,-0.10)
-nudge_us.infected_future.x <- c( 0.00,-0.10, 0.02,-0.04,0.00)  #FUTURE: adding OH, DE, MD, NJ, WV
-nudge_us.infected_future.y <- c(-0.10, 0.10,-0.17, 0.08,0.15)
 #lx <- 0.22
 #ly <- 0.25
 #hy <- 0.77
@@ -347,16 +350,16 @@ for (i in 1:length(plots_which)) {
       #add infected state labeling if turned on
       if(label.states.est){
         if(present_transport){  #PRESENT
-          data_to_label_us.infected <- data_to_plot %>%
+          data_to_label_states.est <- data_to_plot %>%
           filter(geopol_unit %in% c("Delaware", "Maryland", "New Jersey")) %>%
           arrange(desc(size_to_plot))
-        data_to_label <- bind_rows(data_to_label,data_to_label_us.infected)
+        data_to_label <- bind_rows(data_to_label,data_to_label_states.est)
         
         } else if(present_transport == FALSE){  #FUTURE
-          data_to_label_us.infected <- data_to_plot %>%
+          data_to_label_states.est <- data_to_plot %>%
           filter(geopol_unit %in% c("Delaware", "Maryland", "New Jersey", "Ohio", "West Virginia")) %>%
           arrange(desc(size_to_plot))
-        data_to_label <- bind_rows(data_to_label,data_to_label_us.infected)
+        data_to_label <- bind_rows(data_to_label,data_to_label_states.est)
         }
       } #end of labeling for infected states
       
@@ -400,13 +403,13 @@ for (i in 1:length(plots_which)) {
       country_grape_t.test <- list(transport = t.test(avg_infected_mass_scaled~grapes, data = data_to_plot),
                                    establishment = t.test(grand_mean_max_scaled~grapes, data = data_to_plot))
       if(label.countries.est){
-        data_to_label_JPNKOR <- data_to_plot %>%
+        data_to_label_countries.est <- data_to_plot %>%
           filter(geopol_unit %in% c("Japan", "South Korea")) %>%
           mutate(ID = recode(ID,
                              Japan = "JPN",
                              `South Korea` = "KOR")) %>%
           arrange(desc(size_to_plot))
-        data_to_label <- bind_rows(data_to_label,data_to_label_JPNKOR)
+        data_to_label <- bind_rows(data_to_label,data_to_label_countries.est)
       }
     }
   } else if(impact_prod == "grapes"){
@@ -438,16 +441,16 @@ for (i in 1:length(plots_which)) {
             #add infected state labeling if turned on
       if(label.states.est){
         if(present_transport){  #PRESENT
-          data_to_label_us.infected <- data_to_plot %>%
+          data_to_label_states.est <- data_to_plot %>%
           filter(geopol_unit %in% c("Delaware", "Maryland", "New Jersey")) %>%
           arrange(desc(size_to_plot))
-        data_to_label <- bind_rows(data_to_label,data_to_label_us.infected)
+        data_to_label <- bind_rows(data_to_label,data_to_label_states.est)
         
         } else if(present_transport == FALSE){  #FUTURE
-          data_to_label_us.infected <- data_to_plot %>%
+          data_to_label_states.est <- data_to_plot %>%
           filter(geopol_unit %in% c("Delaware", "Maryland", "New Jersey", "Ohio", "West Virginia")) %>%
           arrange(desc(size_to_plot))
-        data_to_label <- bind_rows(data_to_label,data_to_label_us.infected)
+        data_to_label <- bind_rows(data_to_label,data_to_label_states.est)
         }
       } #end of labeling for infected states
 
@@ -503,13 +506,13 @@ for (i in 1:length(plots_which)) {
       country_grape_t.test <- list(transport = t.test(avg_infected_mass_scaled~grapes, data = data_to_plot),
                                    establishment = t.test(grand_mean_max_scaled~grapes, data = data_to_plot))
       if(label.countries.est){
-        data_to_label_JPNKOR <- data_to_plot %>%
+        data_to_label_countries.est <- data_to_plot %>%
           filter(geopol_unit %in% c("Japan", "South Korea")) %>%
           mutate(ID = recode(ID,
                              Japan = "JPN",
                              `South Korea` = "KOR")) %>%
           arrange(desc(size_to_plot))
-        data_to_label <- bind_rows(data_to_label,data_to_label_JPNKOR)
+        data_to_label <- bind_rows(data_to_label,data_to_label_countries.est)
       } # end of if label plotting JPN KOR
     }
   }
@@ -528,16 +531,16 @@ if(present_transport == FALSE){
       nudge.x <- c(-.1,-.1,-.1,-.05,-.1,-0.05,-.1,.06,-.01,.05)
       nudge.y <- c(.2,.10,.10,.10,.07,.15,.15,-.07,-.12,-.12)    #CA, WA, NY, PA, OR, GA, OH, MI, VA, NC
       if(label.states.est){
-        nudge.x <- c(nudge.x, nudge_us.infected_future.x)
-        nudge.y <- c(nudge.y, nudge_us.infected_future.y)
+        nudge.x <- c(nudge.x, nudge_states.est_future.x)
+        nudge.y <- c(nudge.y, nudge_states.est_future.y)
       }
       ytitle <- "Establishment Potential"
     } else {  #COUNTRIES FUTURE WINE
       nudge.x <- c(-.3,-.27,-.05,-.26,.14,.1,.20,-.21,.08,.2)
       nudge.y <- c(.13, .095, .155, .09, -.11, .13, .15,.06,-.1,-.19)  #ITA, FRA, ESP, CHN, ARG, CHL, AUS, ZAF, DEU, PRT
       if(label.countries.est) {
-        nudge.x <- c(nudge.x, nudge_JPNKOR_future.x) #JPN KOR
-        nudge.y <- c(nudge.y, nudge_JPNKOR_future.y) #JPN KOR
+        nudge.x <- c(nudge.x, nudge_countries.est_future.x) #JPN KOR
+        nudge.y <- c(nudge.y, nudge_countries.est_future.y) #JPN KOR
       }
       ytitle <- "Establishment Potential"
     }
@@ -547,8 +550,8 @@ if(present_transport == FALSE){
       nudge.x <- c(-.10,-.05,-.10,-.02, .10,-.05, .10, .00,-.05,-.025)   #yield: #CA, PA, WA, MI, NY, MO, OH, OR, GA, NC
       nudge.y <- c(-.10, .10, .08, .08,-.05, .09,-.05,-.10,-.15, .10)   #production: CA, WA, NY, PA, MI, OR, TX, VA, NC, MO
       if(label.states.est){
-        nudge.x <- c(nudge.x, nudge_us.infected_future.x)
-        nudge.y <- c(nudge.y, nudge_us.infected_future.y)
+        nudge.x <- c(nudge.x, nudge_states.est_future.x)
+        nudge.y <- c(nudge.y, nudge_states.est_future.y)
       }
       ytitle <- "Establishment Potential"
     } else {  #COUNTRIES FUTURE GRAPES
@@ -556,8 +559,8 @@ if(present_transport == FALSE){
       nudge.x <- c(-0.01,-0.00,-0.00,-0.04, 0.02,0.03,-0.04, 0.05,-0.03, 0.04)
       nudge.y <- c(-0.10,-0.20,-0.27, 0.06,-0.24,0.07, 0.11,-0.23, 0.16,-0.10)
       if(label.countries.est) {
-        nudge.x <- c(nudge.x, nudge_JPNKOR_future.x) #JPN KOR
-        nudge.y <- c(nudge.y, nudge_JPNKOR_future.y) #JPN KOR
+        nudge.x <- c(nudge.x, nudge_countries.est_future.x) #JPN KOR
+        nudge.y <- c(nudge.y, nudge_countries.est_future.y) #JPN KOR
       }
       ytitle <- "Establishment Potential"
     }
@@ -568,16 +571,16 @@ if(present_transport == FALSE){
       nudge.x <- c(.09,-.1,-.04,-.05,-.10,-0.12,-.1,.04,-.01,.05)
       nudge.y <- c(-.10,.10,.10,.10,.07,.10,.12,-.07,-.12,-.12)    #CA, WA, NY, PA, OR, GA, OH, MI, VA, NC
       if(label.states.est){
-        nudge.x <- c(nudge.x, nudge_us.infected_present.x)
-        nudge.y <- c(nudge.y, nudge_us.infected_present.y)
+        nudge.x <- c(nudge.x, nudge_states.est_present.x)
+        nudge.y <- c(nudge.y, nudge_states.est_present.y)
       }
       ytitle <- "Establishment Potential"
     } else { #COUNTRIES PRESENT WINE
       nudge.x <- c(-.03,-.10,-.02,-.03,.14,-.1,-.23,-.21,.08,.2)
       nudge.y <- c(.13, .09, .155, .09, -.11, .13, .15,.09,-.08,-.15)  #ITA, FRA, ESP, CHN, ARG, CHL, AUS, ZAF, DEU, PRT
       if(label.countries.est) {
-        nudge.x <- c(nudge.x, nudge_JPNKOR.x) #JPN KOR
-        nudge.y <- c(nudge.y, nudge_JPNKOR.y) #JPN KOR
+        nudge.x <- c(nudge.x, nudge_countries.est.x) #JPN KOR
+        nudge.y <- c(nudge.y, nudge_countries.est.y) #JPN KOR
       }
       ytitle <- "Establishment Potential"
     }
@@ -586,16 +589,16 @@ if(present_transport == FALSE){
       nudge.y <- c(-0.05, 0.095, -0.10, 0.09, -0.05, 0.085, -0.02, 0.12, -0.10, 0.13)  #CA, WA, NY, PA, MI, OR, TX, VA, NC, MO  
       nudge.x <- c( 0.10, 0.00, -0.02,  0.00, -0.05, 0.00,  0.10, 0.00,  0.02, 0.01)
       if(label.states.est){
-        nudge.x <- c(nudge.x, nudge_us.infected_present.x)
-        nudge.y <- c(nudge.y, nudge_us.infected_present.y)
+        nudge.x <- c(nudge.x, nudge_states.est_present.x)
+        nudge.y <- c(nudge.y, nudge_states.est_present.y)
       }
       ytitle <- "Establishment Potential"
     } else { #COUNTRIES PRESENT GRAPES
       nudge.x <- c(-0.01, 0.02, 0.10,-0.04, 0.06,-0.02,-0.07, 0.05,-0.20, 0.11)   #CHN, ITA, ESP, FRA, TUR, IND, CHL, ARG, ZAF, AUS
       nudge.y <- c( 0.08,-0.08,-0.20, 0.07,-0.02, 0.10, 0.12,-0.09,-0.07,-0.25)
       if(label.countries.est) {
-        nudge.x <- c(nudge.x, nudge_JPNKOR.x) #JPN KOR
-        nudge.y <- c(nudge.y, nudge_JPNKOR.y) #JPN KOR
+        nudge.x <- c(nudge.x, nudge_countries.est.x) #JPN KOR
+        nudge.y <- c(nudge.y, nudge_countries.est.y) #JPN KOR
       }
       ytitle <- "Establishment Potential"
     }
