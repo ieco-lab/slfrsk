@@ -321,6 +321,9 @@ i <- 1
 
 ```
 
+## Plotting code
+
+From here, the code to plot the correlation figures is run but the resulting figures are *NOT* shown, as they need a bit of spacing adjustments to be visualized in this vignette. However, `.pdf` output of the individual plots with attached legends are saved to `/vignettes`. Notably, both the impact model and multiple correlation code are run but not displayed. `Vignette-041-market-plot` covers these analyses.
 
 ```{r plot figures, warning=FALSE, message=FALSE, echo=TRUE, results="hide"}
 for (i in 1:length(plots_which)) {
@@ -913,7 +916,10 @@ if(present_transport){
 
 ```
 
-Combine the plots into a stacked plot nicely with the legend
+## Plotting visualization
+
+Now that the plotting code has been run, the `states` and `countries` correlation plots can be visualized together (and saved to `/vignettes` as a `.pdf`):
+
 ```{r combined plot with legend, message=FALSE, fig.height= 12, fig.width=10}
 #set up a layout grid
   lay <- rbind(c( 1, 1, 1,NA,NA,NA),
@@ -938,7 +944,8 @@ if(present_transport){
 #nice version for knitting
 grid.arrange(states_grob, countries_grob, legend_country, nrow = 7, ncol = 6, layout_matrix = lay, heights = c(2,2,2, 0, 2,2,2), widths = c(1,1,1,0.1,0.6,0.6))
 ```
-Save with the legend as a separate file
+We also save a version of the combined plots with the legend as a separate file to `/vignettes`:
+
 ```{r combined plot with separate legend pdf}
 #save the plots w/o legend
 #set up a layout grid
