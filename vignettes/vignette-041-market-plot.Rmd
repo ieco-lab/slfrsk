@@ -110,30 +110,34 @@ data("countries_summary_future")
 dim(countries_summary_future)
 `%notin%` <- Negate(`%in%`)
 
+# filter(countries_summary_future, status == "native")
+
 countries_risk_market <- countries_summary_future %>% 
   left_join(countries_wine_market, by = "ID") %>%
-  filter(ID %notin% c("United States", "China", "India", "Vietnam"))#%>% 
-  #dplyr::select(ID, 
-  #              market_size,
-  #              log10_avg_prod, 
-  #              log10_avg_infected_mass, 
-  #              grand_mean_max)
+  filter(ID %notin% c("United States", 
+                      "China", 
+                      "India", 
+                      "Taiwan", 
+                      "Japan", 
+                      "South Korea", 
+                      "Vietnam"))#%>% 
 
-# remove the us
-
+#########
+# - Use this code to check to make sure that each country only has one row
 # dim(countries_risk_market)
 # setdiff(countries_risk_market$ID,countries_summary_future$ID)
 # setdiff(countries_summary_future$ID,countries_risk_market$ID)
 # table(countries_risk_market$ID)[table(countries_risk_market$ID)>1]
 # table(countries_summary_future$ID)[table(countries_summary_future$ID)>1]
 
-risk_mod <- lm(log10_avg_prod ~ log10_avg_infected_mass + grand_mean_max, data = countries_risk_market)
+risk_mod <- lm(log10_avg_prod ~ log10_avg_infected_mass + grand_mean_max, 
+               data = countries_risk_market)
 cor.test(countries_risk_market$log10_avg_prod, predict(risk_mod), method = "spearman")
 
 ## diagnostics
 # fit is good for the multivariate correlation because there is no dispersion, but do not use this model for prediction (which I do not know why you would)
-simulationOutput <- simulateResiduals(fittedModel = risk_mod, plot = T) 
-testDispersion(simulationOutput) 
+simulationOutput_r <- simulateResiduals(fittedModel = risk_mod, plot = T) 
+testDispersion(simulationOutput_r) 
 
 #plot(risk_mod)
 summary(risk_mod)
@@ -260,8 +264,8 @@ market_scatter
 
 pdf(file.path(here::here(),
               "vignettes", 
-              paste0("market_scatter_v2_9.pdf")),
-    width = 8.5, height = 11)
+              paste0("market_scatter_v3_0.pdf")),
+    width = 8.5*.95, height = 11*.95)
 
 market_scatter
 
