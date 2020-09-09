@@ -7,8 +7,6 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-# Setup
-
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
@@ -16,12 +14,24 @@ knitr::opts_chunk$set(
 )
 ```
 
+Build and Save Maps of Transport and Establishment Potential
+
+***
+
+This vignette produces the published map figures that demonstrate where *Lycorma* is most likely to become established, the states and countries that trade most with the `future` scenario infected states, and shows locations of important viticultural areas (areas of high **impact** potential).
+
+# Setup
+
+Here we load the packages required to visualize the maps.
+
 ```{r setup, results='hide', message=FALSE}
 library(slfrsk)
 library(tidyverse)
 library(rgeos)
 library(scales)
 ```
+
+
 
 Should we assume present infected US states or project future ones?
 ```{r present switch}
