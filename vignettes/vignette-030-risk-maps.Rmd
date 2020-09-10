@@ -24,7 +24,7 @@ This vignette produces the published map figures that demonstrate where *Lycorma
 
 Here we load the packages required to visualize the maps.
 
-```{r setup, results='hide', message=FALSE}
+```{r setup, warning=FALSE, results='hide', message=FALSE}
 library(slfrsk)
 library(tidyverse)
 library(rgeos)
@@ -33,17 +33,27 @@ library(scales)
 
 ## Toggle plotting options
 
+As in `vignette-021-quadrant-plots`, we have several parameters that can be modified to visualize different versions of the figures. Here is where one could change the version of data for the map figures via the following: 
 
+  1. present_transport: Use `present` or `future` infected U.S. states? 
+      - default is `FALSE` for `future`
+  2. top_to_plot: Set the number of top **transport** potential partners to plot arrows for?
+      - default is `10`
 
-Should we assume present infected US states or project future ones?
-```{r present switch}
+```{r plotting options}
 #we need a switch for this map that does the same thing for including the following states: New York, Ohio, West Virginia, North Carolina
-present_switch <- FALSE
+present_transport <- FALSE
 # How many countries and states to highlight for labels?
 top_to_plot <- 10 
-
 ```
 
+To build the map plots, we have several sources of data that we need to read in, namely: 
+
+  1. viticultural area geographic locations
+  2. suitability maps for `U.S. states` and all `countries` from the ensemble model
+  3. locations to point to trade partners (capital cities of `states` and `countries`)
+  
+Of note, the actual trade data (**transport** potential) will be read conditionally in a later chunk below.
 
 ```{r read in the data we need}
 #location of wineries (US and COUNTRIES)
@@ -57,15 +67,16 @@ data("countries_centers")
 
 ```
 
-# Code and Plots
+# Data preparation
+
+Now that we have most of the data loaded, we can go ahead and conditionally load the **transport** potential data based on the state of `present_transport`. The **transport** potential data for `states` and `countries` are then combined with the appropriate trade partner coordinate data and an approximate center of the *Lycorma* invasion in the U.S. is added as an origin for depicting trade arrows in the map figures. The `states` data are presented first and then the `countries` thereafter.
 
 ## States
 
-separate conditional chunk for states trade data to clean it for the plotting
-```{r states trade}
+```{r states trade, message=FALSE}
 #need states trade data
 #need to read in trade data to shape network in map figure
-if(present_switch == TRUE){
+if(present_transport == TRUE){
   data("states_summary_present")
   states_centers <- states_centers %>%
     #remove the invaded states
@@ -132,49 +143,8 @@ states_trade_final <- states_centers %>%
 
 ```
 
-Now plot the states
-```{r the US map, fig.height= 6.5, fig.width=7.5}
-
-#plot just the states and suitability first
-map_plot <- ggplot() +
-  geom_raster(data = suitability_usa_df, aes(x = x, y = y, fill = rescale(value)), alpha=0.9, show.legend = T) +
-  scale_fill_gradientn(limits= c(0,1), name = "Suitability", colors = rev(c("#e31a1c","#fd8d3c", "#fecc5c", "#FFFFFF"))) +
-  geom_polygon(data = map_data('state'), aes(x = long, y = lat, group = group), fill = NA, color = "black", lwd = 0.10) +
-  theme_bw() +
-  labs(x = "", y = "") +
-  theme(panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank(),
-        panel.background = element_blank()) +
-  coord_quickmap(xlim = c(-124.7628, -66.94889), ylim = c(24.52042, 49.3833)) +
-  ggtitle(label = "")
-
-#add in lines for the infected states
-if(present_switch == TRUE){
-  map_plot <- map_plot +
-    geom_polygon(data = map_data('state', c("Delaware", "Maryland", "New Jersey", "Pennsylvania", "Virginia")), aes(x = long, y = lat, group = group), fill = NA, color = "#e31a1c", lwd = 0.75)
-  
-} else{
-  map_plot <- map_plot +
-    geom_polygon(data = map_data('state', c("Delaware", "Maryland", "New Jersey", "New York", "North Carolina", "Ohio", "Pennsylvania", "Virginia", "West Virginia")), aes(x = long, y = lat, group = group), fill = NA, color = "#e31a1c", lwd = 0.75)
-}
-
-#add in the wine AVA data
-map_plot <- map_plot +
-    geom_point(data = wineries %>% filter(Country == "United States"), aes(x = x, y = y), color = "black", fill = "purple", size = 1.5, shape = 21, alpha = 0.99, show.legend = F)
-
-#add in the trade
-map_plot <- map_plot +
-    geom_curve(aes(x = x, y = y, xend = xend, yend = yend), data = states_trade_final %>%  arrange(desc(avg_infected_mass)) %>% .[1:top_to_plot,], size = 1, curvature = 0.33, alpha = 0.8, show.legend = T, color = "#778899",
-               arrow = arrow(ends = "first", length = unit(0.01, "npc"), type = "closed"))
-
-#show it
-map_plot
-
-```
-
 ## Countries
 
-separate conditional chunk for states trade data to clean it for the plotting
 ```{r countries trade, message=FALSE}
 
 #edit the world centers to also have the SLF US invasion point
@@ -196,7 +166,7 @@ countries_centers <- countries_centers %>%
 countries_centers$y[countries_centers$geopol_unit == "Canada"] <- countries_centers$y[countries_centers$geopol_unit == "Canada"] + 5
 
 
-if(present_switch == TRUE){
+if(present_transport == TRUE){
   data("countries_summary_present")
   
   #filter out the countries with SLF
@@ -242,7 +212,52 @@ countries_trade_final <- countries_centers %>%
 
 ```
 
-Now plot the countries
+#  Plots
+
+We are now able to plot both the `states` and `countries` published map figures. We stepwise add in the different features, beginning with the suitability raster and geopolitical boundary outlines (the latter ships with `ggplot2` in `map_data()`). We then add <span style="color: red;">red outlines</span> for the U.S. states that have established *Lycorma* according to the scenario selected with `present_transport`. Following that, <span style="color:#a020f0;">purple points</span> are added for viticultural areas. Lastly, we add arrows from the approximate center of the *Lycorma* invasion in the U.S. to high **transport** potential trade partners.
+
+## States
+
+```{r the US map, fig.height= 6.5, fig.width=7.5}
+
+#plot just the states and suitability first
+map_plot <- ggplot() +
+  geom_raster(data = suitability_usa_df, aes(x = x, y = y, fill = rescale(value)), alpha=0.9, show.legend = T) +
+  scale_fill_gradientn(limits= c(0,1), name = "Suitability", colors = rev(c("#e31a1c","#fd8d3c", "#fecc5c", "#FFFFFF"))) +
+  geom_polygon(data = map_data('state'), aes(x = long, y = lat, group = group), fill = NA, color = "black", lwd = 0.10) +
+  theme_bw() +
+  labs(x = "", y = "") +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank()) +
+  coord_quickmap(xlim = c(-124.7628, -66.94889), ylim = c(24.52042, 49.3833)) +
+  ggtitle(label = "")
+
+#add in lines for the infected states
+if(present_transport == TRUE){
+  map_plot <- map_plot +
+    geom_polygon(data = map_data('state', c("Delaware", "Maryland", "New Jersey", "Pennsylvania", "Virginia")), aes(x = long, y = lat, group = group), fill = NA, color = "#e31a1c", lwd = 0.75)
+  
+} else{
+  map_plot <- map_plot +
+    geom_polygon(data = map_data('state', c("Delaware", "Maryland", "New Jersey", "New York", "North Carolina", "Ohio", "Pennsylvania", "Virginia", "West Virginia")), aes(x = long, y = lat, group = group), fill = NA, color = "#e31a1c", lwd = 0.75)
+}
+
+#add in the wine AVA data
+map_plot <- map_plot +
+    geom_point(data = wineries %>% filter(Country == "United States"), aes(x = x, y = y), color = "black", fill = "purple", size = 1.5, shape = 21, alpha = 0.99, show.legend = F)
+
+#add in the trade
+map_plot <- map_plot +
+    geom_curve(aes(x = x, y = y, xend = xend, yend = yend), data = states_trade_final %>%  arrange(desc(avg_infected_mass)) %>% .[1:top_to_plot,], size = 1, curvature = 0.33, alpha = 0.8, show.legend = T, color = "#778899",
+               arrow = arrow(ends = "first", length = unit(0.01, "npc"), type = "closed"))
+
+#show it
+map_plot
+
+```
+
+## Countries
 
 ```{r plot map of countries, warning=FALSE, fig.height= 6.5, fig.width=7.5}
 #plot just the countries and suitability first
@@ -259,7 +274,7 @@ map_plot_countries <- ggplot() +
   ggtitle(label = "")
   
 #add in lines for the infected states
-if(present_switch == TRUE){
+if(present_transport == TRUE){
   map_plot_countries <- map_plot_countries +
     geom_polygon(data = map_data('state', c("Delaware", "Maryland", "New Jersey", "Pennsylvania", "Virginia")), aes(x = long, y = lat, group = group), fill = NA, color = "red", lwd = 0.5)
 } else{
@@ -282,8 +297,10 @@ map_plot_countries
 
 # Write plot output
 
-```{r save map plots}
-if(present_switch){
+Lastly, we can save the output of our map figure plots as `.pdf` files to `/vignettes`. Note that this chunk does not run by default when knitting the vignette!
+
+```{r save map plots, eval=FALSE, warning=FALSE, message=FALSE}
+if(present_transport){
 #states
   ggsave(plot = map_plot, filename = file.path(here::here(),"vignettes", paste0("states_map_present.pdf")), width = 7.5, height = 6.5, dpi = 300)
 #countries
@@ -293,7 +310,6 @@ if(present_switch){
   ggsave(plot = map_plot, filename = file.path(here::here(),"vignettes", paste0("states_map_future.pdf")), width = 7.5, height = 6.5, dpi = 300)
 #countries
   ggsave(plot = map_plot_countries, filename = file.path(here::here(),"vignettes", paste0("countries_map_future.pdf")), width = 7.5, height = 6.5, dpi = 300)
-
 }
 
 ```

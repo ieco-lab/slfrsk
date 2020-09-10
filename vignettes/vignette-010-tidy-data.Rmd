@@ -31,7 +31,7 @@ All of the following data sources will be read in as raw data from `slfrsk/data/
 
 Here we load the required packages to prepare the data.
 
-```{r setup, warning=FALSE, message=FALSE, include=FALSE}
+```{r setup, warning=FALSE, results='hide', message=FALSE}
 library(slfrsk)
 library(tidyverse)
 library(here)
@@ -609,13 +609,13 @@ countries_summary_future <- countries_summary_future %>%
 
 # Write out data
 
-This section provides the code to save each of the final summary objects to the `/data` directory. They are currently commented out, as the package **should** ship with the files already in `/data`.
+This section provides the code to save each of the final summary objects to the `/data` directory. They are currently set to not run, as the package **should** ship with the files already in `/data`.
 
 ```{r save correlation plot  data, eval=FALSE, message=FALSE}
 if(FALSE){
-#save(states_summary_present, file = file.path(here(), "data", "states_summary_present.rda"))
-#save(states_summary_future, file = file.path(here(), "data", "states_summary_future.rda"))
-#save(countries_summary_present, file = file.path(here(), "data", "countries_summary_present.rda"))
-#save(countries_summary_future, file = file.path(here(), "data", "countries_summary_future.rda"))
+save(states_summary_present, file = file.path(here(), "data", "states_summary_present.rda"))
+save(states_summary_future, file = file.path(here(), "data", "states_summary_future.rda"))
+save(countries_summary_present, file = file.path(here(), "data", "countries_summary_present.rda"))
+save(countries_summary_future, file = file.path(here(), "data", "countries_summary_future.rda"))
 }
 ```

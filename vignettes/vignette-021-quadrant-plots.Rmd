@@ -24,7 +24,7 @@ This vignette visualizes the **Introduction, Establishment, and Impact** potenti
 
 To produce the published correlation figures, we must first conduct a few setup steps. First, we read in the appropriate data and packages.
 
-```{r setup, results='hide', message=FALSE}
+```{r setup, , warning=FALSE, results='hide', message=FALSE}
 library(slfrsk)
 library(tidyverse)
 library(here)
@@ -920,7 +920,7 @@ if(present_transport){
 
 Now that the plotting code has been run, the `states` and `countries` correlation plots can be visualized together (and saved to `/vignettes` as a `.pdf`):
 
-```{r combined plot with legend, message=FALSE, fig.height= 12, fig.width=10}
+```{r combined plot with legend layout}
 #set up a layout grid
   lay <- rbind(c( 1, 1, 1,NA,NA,NA),
                c( 1, 1, 1,NA,NA,NA),
@@ -930,7 +930,10 @@ Now that the plotting code has been run, the `states` and `countries` correlatio
                c( 2, 2, 2,NA,NA,NA),
                c( 2, 2, 2,NA,NA,NA)
   )
+```
 
+```{r optional write to pdf step, message=FALSE, eval=FALSE}
+#optional save as pdf code
 if(present_transport){
     pdf(file.path(here::here(),"vignettes", paste0("combined_present_max_",impact_prod,".pdf")),width = 10, height = 12)
 
@@ -940,13 +943,16 @@ if(present_transport){
 }
   grid.arrange(states_grob, countries_grob, legend_country, nrow = 7, ncol = 6, layout_matrix = lay, heights = c(1,1,1, 0, 1,1,1), widths = c(1,1,1,0.1,0.57,0.57))
   invisible(dev.off())
-  
+```
+
+```{r visualization step, fig.height= 12, fig.width=10, message=FALSE}
 #nice version for knitting
 grid.arrange(states_grob, countries_grob, legend_country, nrow = 7, ncol = 6, layout_matrix = lay, heights = c(2,2,2, 0, 2,2,2), widths = c(1,1,1,0.1,0.6,0.6))
 ```
+
 We also save a version of the combined plots with the legend as a separate file to `/vignettes`:
 
-```{r combined plot with separate legend pdf}
+```{r combined plot with separate legend pdf, eval=FALSE}
 #save the plots w/o legend
 #set up a layout grid
   lay <- rbind(c( 1, 1, 1, 1, 1,NA),
