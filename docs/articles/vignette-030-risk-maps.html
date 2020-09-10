@@ -105,11 +105,32 @@
 <div id="toggle-plotting-options" class="section level2">
 <h2 class="hasAnchor">
 <a href="#toggle-plotting-options" class="anchor"></a>Toggle plotting options</h2>
-<p>Should we assume present infected US states or project future ones?</p>
+<p>As in <code>vignette-021-quadrant-plots</code>, we have several parameters that can be modified to visualize different versions of the figures. Here is where one could change the version of data for the map figures via the following:</p>
+<ol style="list-style-type: decimal">
+<li>present_transport: Use <code>present</code> or <code>future</code> infected U.S. states?
+<ul>
+<li>default is <code>FALSE</code> for <code>future</code>
+</li>
+</ul>
+</li>
+<li>top_to_plot: Set the number of top <strong>transport</strong> potential partners to plot arrows for?
+<ul>
+<li>default is <code>10</code>
+</li>
+</ul>
+</li>
+</ol>
 <div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="co">#we need a switch for this map that does the same thing for including the following states: New York, Ohio, West Virginia, North Carolina</span>
-<span class="no">present_switch</span> <span class="kw">&lt;-</span> <span class="fl">FALSE</span>
+<span class="no">present_transport</span> <span class="kw">&lt;-</span> <span class="fl">FALSE</span>
 <span class="co"># How many countries and states to highlight for labels?</span>
 <span class="no">top_to_plot</span> <span class="kw">&lt;-</span> <span class="fl">10</span></pre></body></html></div>
+<p>To build the map plots, we have several sources of data that we need to read in, namely:</p>
+<ol style="list-style-type: decimal">
+<li>viticultural area geographic locations</li>
+<li>suitability maps for <code>U.S. states</code> and all <code>countries</code> from the ensemble model</li>
+<li>locations to point to trade partners (capital cities of <code>states</code> and <code>countries</code>)</li>
+</ol>
+<p>Of note, the actual trade data (<strong>transport</strong> potential) will be read conditionally in a later chunk below.</p>
 <div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="co">#location of wineries (US and COUNTRIES)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"wineries"</span>)
 <span class="co">#need usa enviro raster</span>
@@ -120,16 +141,16 @@
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"countries_centers"</span>)</pre></body></html></div>
 </div>
 </div>
-<div id="code-and-plots" class="section level1">
+<div id="data-preparation" class="section level1">
 <h1 class="hasAnchor">
-<a href="#code-and-plots" class="anchor"></a>Code and Plots</h1>
+<a href="#data-preparation" class="anchor"></a>Data preparation</h1>
+<p>Now that we have most of the data loaded, we can go ahead and conditionally load the <strong>transport</strong> potential data based on the state of <code>present_transport</code>. The <strong>transport</strong> potential data for <code>states</code> and <code>countries</code> are then combined with the appropriate trade partner coordinate data and an approximate center of the <em>Lycorma</em> invasion in the U.S. is added as an origin for depicting trade arrows in the map figures. The <code>states</code> data are presented first and then the <code>countries</code> thereafter.</p>
 <div id="states" class="section level2">
 <h2 class="hasAnchor">
 <a href="#states" class="anchor"></a>States</h2>
-<p>separate conditional chunk for states trade data to clean it for the plotting</p>
 <div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="co">#need states trade data</span>
 <span class="co">#need to read in trade data to shape network in map figure</span>
-<span class="kw">if</span>(<span class="no">present_switch</span> <span class="kw">==</span> <span class="fl">TRUE</span>){
+<span class="kw">if</span>(<span class="no">present_transport</span> <span class="kw">==</span> <span class="fl">TRUE</span>){
   <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"states_summary_present"</span>)
   <span class="no">states_centers</span> <span class="kw">&lt;-</span> <span class="no">states_centers</span> <span class="kw">%&gt;%</span>
     <span class="co">#remove the invaded states</span>
@@ -193,49 +214,11 @@
       <span class="fu">as_tibble</span>()
 
     }</pre></body></html></div>
-<p>Now plot the states</p>
-<div class="sourceCode" id="cb5"><html><body><pre class="r">
-<span class="co">#plot just the states and suitability first</span>
-<span class="no">map_plot</span> <span class="kw">&lt;-</span> <span class="fu">ggplot</span>() +
-  <span class="fu">geom_raster</span>(<span class="kw">data</span> <span class="kw">=</span> <span class="no">suitability_usa_df</span>, <span class="fu">aes</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">x</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">y</span>, <span class="kw">fill</span> <span class="kw">=</span> <span class="fu"><a href="https://scales.r-lib.org//reference/rescale.html">rescale</a></span>(<span class="no">value</span>)), <span class="kw">alpha</span><span class="kw">=</span><span class="fl">0.9</span>, <span class="kw">show.legend</span> <span class="kw">=</span> <span class="no">T</span>) +
-  <span class="fu">scale_fill_gradientn</span>(<span class="kw">limits</span><span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0</span>,<span class="fl">1</span>), <span class="kw">name</span> <span class="kw">=</span> <span class="st">"Suitability"</span>, <span class="kw">colors</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rev.html">rev</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"#e31a1c"</span>,<span class="st">"#fd8d3c"</span>, <span class="st">"#fecc5c"</span>, <span class="st">"#FFFFFF"</span>))) +
-  <span class="fu">geom_polygon</span>(<span class="kw">data</span> <span class="kw">=</span> <span class="fu">map_data</span>(<span class="st">'state'</span>), <span class="fu">aes</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">long</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">lat</span>, <span class="kw">group</span> <span class="kw">=</span> <span class="no">group</span>), <span class="kw">fill</span> <span class="kw">=</span> <span class="fl">NA</span>, <span class="kw">color</span> <span class="kw">=</span> <span class="st">"black"</span>, <span class="kw">lwd</span> <span class="kw">=</span> <span class="fl">0.10</span>) +
-  <span class="fu">theme_bw</span>() +
-  <span class="fu">labs</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="st">""</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="st">""</span>) +
-  <span class="fu">theme</span>(<span class="kw">panel.grid.major</span> <span class="kw">=</span> <span class="fu">element_blank</span>(),
-        <span class="kw">panel.grid.minor</span> <span class="kw">=</span> <span class="fu">element_blank</span>(),
-        <span class="kw">panel.background</span> <span class="kw">=</span> <span class="fu">element_blank</span>()) +
-  <span class="fu">coord_quickmap</span>(<span class="kw">xlim</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(-<span class="fl">124.7628</span>, -<span class="fl">66.94889</span>), <span class="kw">ylim</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">24.52042</span>, <span class="fl">49.3833</span>)) +
-  <span class="fu">ggtitle</span>(<span class="kw">label</span> <span class="kw">=</span> <span class="st">""</span>)
-
-<span class="co">#add in lines for the infected states</span>
-<span class="kw">if</span>(<span class="no">present_switch</span> <span class="kw">==</span> <span class="fl">TRUE</span>){
-  <span class="no">map_plot</span> <span class="kw">&lt;-</span> <span class="no">map_plot</span> +
-    <span class="fu">geom_polygon</span>(<span class="kw">data</span> <span class="kw">=</span> <span class="fu">map_data</span>(<span class="st">'state'</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Delaware"</span>, <span class="st">"Maryland"</span>, <span class="st">"New Jersey"</span>, <span class="st">"Pennsylvania"</span>, <span class="st">"Virginia"</span>)), <span class="fu">aes</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">long</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">lat</span>, <span class="kw">group</span> <span class="kw">=</span> <span class="no">group</span>), <span class="kw">fill</span> <span class="kw">=</span> <span class="fl">NA</span>, <span class="kw">color</span> <span class="kw">=</span> <span class="st">"#e31a1c"</span>, <span class="kw">lwd</span> <span class="kw">=</span> <span class="fl">0.75</span>)
-
-} <span class="kw">else</span>{
-  <span class="no">map_plot</span> <span class="kw">&lt;-</span> <span class="no">map_plot</span> +
-    <span class="fu">geom_polygon</span>(<span class="kw">data</span> <span class="kw">=</span> <span class="fu">map_data</span>(<span class="st">'state'</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Delaware"</span>, <span class="st">"Maryland"</span>, <span class="st">"New Jersey"</span>, <span class="st">"New York"</span>, <span class="st">"North Carolina"</span>, <span class="st">"Ohio"</span>, <span class="st">"Pennsylvania"</span>, <span class="st">"Virginia"</span>, <span class="st">"West Virginia"</span>)), <span class="fu">aes</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">long</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">lat</span>, <span class="kw">group</span> <span class="kw">=</span> <span class="no">group</span>), <span class="kw">fill</span> <span class="kw">=</span> <span class="fl">NA</span>, <span class="kw">color</span> <span class="kw">=</span> <span class="st">"#e31a1c"</span>, <span class="kw">lwd</span> <span class="kw">=</span> <span class="fl">0.75</span>)
-}
-
-<span class="co">#add in the wine AVA data</span>
-<span class="no">map_plot</span> <span class="kw">&lt;-</span> <span class="no">map_plot</span> +
-    <span class="fu">geom_point</span>(<span class="kw">data</span> <span class="kw">=</span> <span class="no">wineries</span> <span class="kw">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="no">Country</span> <span class="kw">==</span> <span class="st">"United States"</span>), <span class="fu">aes</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">x</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">y</span>), <span class="kw">color</span> <span class="kw">=</span> <span class="st">"black"</span>, <span class="kw">fill</span> <span class="kw">=</span> <span class="st">"purple"</span>, <span class="kw">size</span> <span class="kw">=</span> <span class="fl">1.5</span>, <span class="kw">shape</span> <span class="kw">=</span> <span class="fl">21</span>, <span class="kw">alpha</span> <span class="kw">=</span> <span class="fl">0.99</span>, <span class="kw">show.legend</span> <span class="kw">=</span> <span class="no">F</span>)
-
-<span class="co">#add in the trade</span>
-<span class="no">map_plot</span> <span class="kw">&lt;-</span> <span class="no">map_plot</span> +
-    <span class="fu">geom_curve</span>(<span class="fu">aes</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">x</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">y</span>, <span class="kw">xend</span> <span class="kw">=</span> <span class="no">xend</span>, <span class="kw">yend</span> <span class="kw">=</span> <span class="no">yend</span>), <span class="kw">data</span> <span class="kw">=</span> <span class="no">states_trade_final</span> <span class="kw">%&gt;%</span>  <span class="fu">arrange</span>(<span class="fu">desc</span>(<span class="no">avg_infected_mass</span>)) <span class="kw">%&gt;%</span> <span class="no">.</span>[<span class="fl">1</span>:<span class="no">top_to_plot</span>,], <span class="kw">size</span> <span class="kw">=</span> <span class="fl">1</span>, <span class="kw">curvature</span> <span class="kw">=</span> <span class="fl">0.33</span>, <span class="kw">alpha</span> <span class="kw">=</span> <span class="fl">0.8</span>, <span class="kw">show.legend</span> <span class="kw">=</span> <span class="no">T</span>, <span class="kw">color</span> <span class="kw">=</span> <span class="st">"#778899"</span>,
-               <span class="kw">arrow</span> <span class="kw">=</span> <span class="fu">arrow</span>(<span class="kw">ends</span> <span class="kw">=</span> <span class="st">"first"</span>, <span class="kw">length</span> <span class="kw">=</span> <span class="fu">unit</span>(<span class="fl">0.01</span>, <span class="st">"npc"</span>), <span class="kw">type</span> <span class="kw">=</span> <span class="st">"closed"</span>))
-
-<span class="co">#show it</span>
-<span class="no">map_plot</span></pre></body></html></div>
-<p><img src="vignette-030-risk-maps_files/figure-html/the%20US%20map-1.png" width="720"></p>
 </div>
 <div id="countries" class="section level2">
 <h2 class="hasAnchor">
 <a href="#countries" class="anchor"></a>Countries</h2>
-<p>separate conditional chunk for states trade data to clean it for the plotting</p>
-<div class="sourceCode" id="cb6"><html><body><pre class="r">
+<div class="sourceCode" id="cb5"><html><body><pre class="r">
 <span class="co">#edit the world centers to also have the SLF US invasion point</span>
 <span class="no">countries_centers</span> <span class="kw">&lt;-</span> <span class="no">countries_centers</span> <span class="kw">%&gt;%</span>
   <span class="co">#rm the others in the dataset</span>
@@ -255,7 +238,7 @@
 <span class="no">countries_centers</span>$<span class="no">y</span>[<span class="no">countries_centers</span>$<span class="no">geopol_unit</span> <span class="kw">==</span> <span class="st">"Canada"</span>] <span class="kw">&lt;-</span> <span class="no">countries_centers</span>$<span class="no">y</span>[<span class="no">countries_centers</span>$<span class="no">geopol_unit</span> <span class="kw">==</span> <span class="st">"Canada"</span>] + <span class="fl">5</span>
 
 
-<span class="kw">if</span>(<span class="no">present_switch</span> <span class="kw">==</span> <span class="fl">TRUE</span>){
+<span class="kw">if</span>(<span class="no">present_transport</span> <span class="kw">==</span> <span class="fl">TRUE</span>){
   <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"countries_summary_present"</span>)
 
   <span class="co">#filter out the countries with SLF</span>
@@ -298,7 +281,55 @@
   <span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="no">xend</span>, <span class="no">yend</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span>(<span class="no">countries_trade_final</span>, <span class="no">.</span>) <span class="kw">%&gt;%</span>
   <span class="fu">as_tibble</span>()</pre></body></html></div>
-<p>Now plot the countries</p>
+</div>
+</div>
+<div id="plots" class="section level1">
+<h1 class="hasAnchor">
+<a href="#plots" class="anchor"></a>Plots</h1>
+<p>We are now able to plot both the <code>states</code> and <code>countries</code> published map figures. We stepwise add in the different features, beginning with the suitability raster and geopolitical boundary outlines (the latter ships with <code>ggplot2</code> in <code>map_data()</code>). We then add <span style="color: red;">red outlines</span> for the U.S. states that have established <em>Lycorma</em> according to the scenario selected with <code>present_transport</code>. Following that, <span style="color:#a020f0;">purple points</span> are added for viticultural areas. Lastly, we add arrows from the approximate center of the <em>Lycorma</em> invasion in the U.S. to high <strong>transport</strong> potential trade partners.</p>
+<div id="states-1" class="section level2">
+<h2 class="hasAnchor">
+<a href="#states-1" class="anchor"></a>States</h2>
+<div class="sourceCode" id="cb6"><html><body><pre class="r">
+<span class="co">#plot just the states and suitability first</span>
+<span class="no">map_plot</span> <span class="kw">&lt;-</span> <span class="fu">ggplot</span>() +
+  <span class="fu">geom_raster</span>(<span class="kw">data</span> <span class="kw">=</span> <span class="no">suitability_usa_df</span>, <span class="fu">aes</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">x</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">y</span>, <span class="kw">fill</span> <span class="kw">=</span> <span class="fu"><a href="https://scales.r-lib.org//reference/rescale.html">rescale</a></span>(<span class="no">value</span>)), <span class="kw">alpha</span><span class="kw">=</span><span class="fl">0.9</span>, <span class="kw">show.legend</span> <span class="kw">=</span> <span class="no">T</span>) +
+  <span class="fu">scale_fill_gradientn</span>(<span class="kw">limits</span><span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0</span>,<span class="fl">1</span>), <span class="kw">name</span> <span class="kw">=</span> <span class="st">"Suitability"</span>, <span class="kw">colors</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rev.html">rev</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"#e31a1c"</span>,<span class="st">"#fd8d3c"</span>, <span class="st">"#fecc5c"</span>, <span class="st">"#FFFFFF"</span>))) +
+  <span class="fu">geom_polygon</span>(<span class="kw">data</span> <span class="kw">=</span> <span class="fu">map_data</span>(<span class="st">'state'</span>), <span class="fu">aes</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">long</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">lat</span>, <span class="kw">group</span> <span class="kw">=</span> <span class="no">group</span>), <span class="kw">fill</span> <span class="kw">=</span> <span class="fl">NA</span>, <span class="kw">color</span> <span class="kw">=</span> <span class="st">"black"</span>, <span class="kw">lwd</span> <span class="kw">=</span> <span class="fl">0.10</span>) +
+  <span class="fu">theme_bw</span>() +
+  <span class="fu">labs</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="st">""</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="st">""</span>) +
+  <span class="fu">theme</span>(<span class="kw">panel.grid.major</span> <span class="kw">=</span> <span class="fu">element_blank</span>(),
+        <span class="kw">panel.grid.minor</span> <span class="kw">=</span> <span class="fu">element_blank</span>(),
+        <span class="kw">panel.background</span> <span class="kw">=</span> <span class="fu">element_blank</span>()) +
+  <span class="fu">coord_quickmap</span>(<span class="kw">xlim</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(-<span class="fl">124.7628</span>, -<span class="fl">66.94889</span>), <span class="kw">ylim</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">24.52042</span>, <span class="fl">49.3833</span>)) +
+  <span class="fu">ggtitle</span>(<span class="kw">label</span> <span class="kw">=</span> <span class="st">""</span>)
+
+<span class="co">#add in lines for the infected states</span>
+<span class="kw">if</span>(<span class="no">present_transport</span> <span class="kw">==</span> <span class="fl">TRUE</span>){
+  <span class="no">map_plot</span> <span class="kw">&lt;-</span> <span class="no">map_plot</span> +
+    <span class="fu">geom_polygon</span>(<span class="kw">data</span> <span class="kw">=</span> <span class="fu">map_data</span>(<span class="st">'state'</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Delaware"</span>, <span class="st">"Maryland"</span>, <span class="st">"New Jersey"</span>, <span class="st">"Pennsylvania"</span>, <span class="st">"Virginia"</span>)), <span class="fu">aes</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">long</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">lat</span>, <span class="kw">group</span> <span class="kw">=</span> <span class="no">group</span>), <span class="kw">fill</span> <span class="kw">=</span> <span class="fl">NA</span>, <span class="kw">color</span> <span class="kw">=</span> <span class="st">"#e31a1c"</span>, <span class="kw">lwd</span> <span class="kw">=</span> <span class="fl">0.75</span>)
+
+} <span class="kw">else</span>{
+  <span class="no">map_plot</span> <span class="kw">&lt;-</span> <span class="no">map_plot</span> +
+    <span class="fu">geom_polygon</span>(<span class="kw">data</span> <span class="kw">=</span> <span class="fu">map_data</span>(<span class="st">'state'</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Delaware"</span>, <span class="st">"Maryland"</span>, <span class="st">"New Jersey"</span>, <span class="st">"New York"</span>, <span class="st">"North Carolina"</span>, <span class="st">"Ohio"</span>, <span class="st">"Pennsylvania"</span>, <span class="st">"Virginia"</span>, <span class="st">"West Virginia"</span>)), <span class="fu">aes</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">long</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">lat</span>, <span class="kw">group</span> <span class="kw">=</span> <span class="no">group</span>), <span class="kw">fill</span> <span class="kw">=</span> <span class="fl">NA</span>, <span class="kw">color</span> <span class="kw">=</span> <span class="st">"#e31a1c"</span>, <span class="kw">lwd</span> <span class="kw">=</span> <span class="fl">0.75</span>)
+}
+
+<span class="co">#add in the wine AVA data</span>
+<span class="no">map_plot</span> <span class="kw">&lt;-</span> <span class="no">map_plot</span> +
+    <span class="fu">geom_point</span>(<span class="kw">data</span> <span class="kw">=</span> <span class="no">wineries</span> <span class="kw">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="no">Country</span> <span class="kw">==</span> <span class="st">"United States"</span>), <span class="fu">aes</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">x</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">y</span>), <span class="kw">color</span> <span class="kw">=</span> <span class="st">"black"</span>, <span class="kw">fill</span> <span class="kw">=</span> <span class="st">"purple"</span>, <span class="kw">size</span> <span class="kw">=</span> <span class="fl">1.5</span>, <span class="kw">shape</span> <span class="kw">=</span> <span class="fl">21</span>, <span class="kw">alpha</span> <span class="kw">=</span> <span class="fl">0.99</span>, <span class="kw">show.legend</span> <span class="kw">=</span> <span class="no">F</span>)
+
+<span class="co">#add in the trade</span>
+<span class="no">map_plot</span> <span class="kw">&lt;-</span> <span class="no">map_plot</span> +
+    <span class="fu">geom_curve</span>(<span class="fu">aes</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">x</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">y</span>, <span class="kw">xend</span> <span class="kw">=</span> <span class="no">xend</span>, <span class="kw">yend</span> <span class="kw">=</span> <span class="no">yend</span>), <span class="kw">data</span> <span class="kw">=</span> <span class="no">states_trade_final</span> <span class="kw">%&gt;%</span>  <span class="fu">arrange</span>(<span class="fu">desc</span>(<span class="no">avg_infected_mass</span>)) <span class="kw">%&gt;%</span> <span class="no">.</span>[<span class="fl">1</span>:<span class="no">top_to_plot</span>,], <span class="kw">size</span> <span class="kw">=</span> <span class="fl">1</span>, <span class="kw">curvature</span> <span class="kw">=</span> <span class="fl">0.33</span>, <span class="kw">alpha</span> <span class="kw">=</span> <span class="fl">0.8</span>, <span class="kw">show.legend</span> <span class="kw">=</span> <span class="no">T</span>, <span class="kw">color</span> <span class="kw">=</span> <span class="st">"#778899"</span>,
+               <span class="kw">arrow</span> <span class="kw">=</span> <span class="fu">arrow</span>(<span class="kw">ends</span> <span class="kw">=</span> <span class="st">"first"</span>, <span class="kw">length</span> <span class="kw">=</span> <span class="fu">unit</span>(<span class="fl">0.01</span>, <span class="st">"npc"</span>), <span class="kw">type</span> <span class="kw">=</span> <span class="st">"closed"</span>))
+
+<span class="co">#show it</span>
+<span class="no">map_plot</span></pre></body></html></div>
+<p><img src="vignette-030-risk-maps_files/figure-html/the%20US%20map-1.png" width="720"></p>
+</div>
+<div id="countries-1" class="section level2">
+<h2 class="hasAnchor">
+<a href="#countries-1" class="anchor"></a>Countries</h2>
 <div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="co">#plot just the countries and suitability first</span>
 <span class="no">map_plot_countries</span> <span class="kw">&lt;-</span> <span class="fu">ggplot</span>() +
   <span class="fu">geom_raster</span>(<span class="kw">data</span> <span class="kw">=</span> <span class="no">suitability_countries_df</span>, <span class="fu">aes</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">x</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">y</span>, <span class="kw">fill</span> <span class="kw">=</span> <span class="fu"><a href="https://scales.r-lib.org//reference/rescale.html">rescale</a></span>(<span class="no">value</span>)), <span class="kw">alpha</span><span class="kw">=</span><span class="fl">0.9</span>, <span class="kw">show.legend</span> <span class="kw">=</span> <span class="no">T</span>) +
@@ -313,7 +344,7 @@
   <span class="fu">ggtitle</span>(<span class="kw">label</span> <span class="kw">=</span> <span class="st">""</span>)
 
 <span class="co">#add in lines for the infected states</span>
-<span class="kw">if</span>(<span class="no">present_switch</span> <span class="kw">==</span> <span class="fl">TRUE</span>){
+<span class="kw">if</span>(<span class="no">present_transport</span> <span class="kw">==</span> <span class="fl">TRUE</span>){
   <span class="no">map_plot_countries</span> <span class="kw">&lt;-</span> <span class="no">map_plot_countries</span> +
     <span class="fu">geom_polygon</span>(<span class="kw">data</span> <span class="kw">=</span> <span class="fu">map_data</span>(<span class="st">'state'</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Delaware"</span>, <span class="st">"Maryland"</span>, <span class="st">"New Jersey"</span>, <span class="st">"Pennsylvania"</span>, <span class="st">"Virginia"</span>)), <span class="fu">aes</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">long</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">lat</span>, <span class="kw">group</span> <span class="kw">=</span> <span class="no">group</span>), <span class="kw">fill</span> <span class="kw">=</span> <span class="fl">NA</span>, <span class="kw">color</span> <span class="kw">=</span> <span class="st">"red"</span>, <span class="kw">lwd</span> <span class="kw">=</span> <span class="fl">0.5</span>)
 } <span class="kw">else</span>{
@@ -338,7 +369,8 @@
 <div id="write-plot-output" class="section level1">
 <h1 class="hasAnchor">
 <a href="#write-plot-output" class="anchor"></a>Write plot output</h1>
-<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="kw">if</span>(<span class="no">present_switch</span>){
+<p>Lastly, we can save the output of our map figure plots as <code>.pdf</code> files to <code>/vignettes</code>. Note that this chunk does not run by default when knitting the vignette!</p>
+<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="kw">if</span>(<span class="no">present_transport</span>){
 <span class="co">#states</span>
   <span class="fu">ggsave</span>(<span class="kw">plot</span> <span class="kw">=</span> <span class="no">map_plot</span>, <span class="kw">filename</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="kw pkg">here</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/here/man/here.html">here</a></span>(),<span class="st">"vignettes"</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="st">"states_map_present.pdf"</span>)), <span class="kw">width</span> <span class="kw">=</span> <span class="fl">7.5</span>, <span class="kw">height</span> <span class="kw">=</span> <span class="fl">6.5</span>, <span class="kw">dpi</span> <span class="kw">=</span> <span class="fl">300</span>)
 <span class="co">#countries</span>
@@ -348,10 +380,7 @@
   <span class="fu">ggsave</span>(<span class="kw">plot</span> <span class="kw">=</span> <span class="no">map_plot</span>, <span class="kw">filename</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="kw pkg">here</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/here/man/here.html">here</a></span>(),<span class="st">"vignettes"</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="st">"states_map_future.pdf"</span>)), <span class="kw">width</span> <span class="kw">=</span> <span class="fl">7.5</span>, <span class="kw">height</span> <span class="kw">=</span> <span class="fl">6.5</span>, <span class="kw">dpi</span> <span class="kw">=</span> <span class="fl">300</span>)
 <span class="co">#countries</span>
   <span class="fu">ggsave</span>(<span class="kw">plot</span> <span class="kw">=</span> <span class="no">map_plot_countries</span>, <span class="kw">filename</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="kw pkg">here</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/here/man/here.html">here</a></span>(),<span class="st">"vignettes"</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="st">"countries_map_future.pdf"</span>)), <span class="kw">width</span> <span class="kw">=</span> <span class="fl">7.5</span>, <span class="kw">height</span> <span class="kw">=</span> <span class="fl">6.5</span>, <span class="kw">dpi</span> <span class="kw">=</span> <span class="fl">300</span>)
-
-}
-<span class="co">#&gt; Warning: Raster pixels are placed at uneven vertical intervals and will be</span>
-<span class="co">#&gt; shifted. Consider using geom_tile() instead.</span></pre></body></html></div>
+}</pre></body></html></div>
 </div>
   </div>
 
