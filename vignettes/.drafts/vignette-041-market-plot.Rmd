@@ -36,7 +36,7 @@ dim(countries_market)
 
 countries_wine_market <- countries_market %>%
   #filter(is.na(Flag)) %>%
-  filter(!is.na(Value)) %>%
+  #filter(!is.na(Value)) %>%
   filter(Year %in% (2012:2017)) %>%
   filter(Element == "Export Value") %>%
   group_by(`Area Code`,	Area, Year) %>%
@@ -66,39 +66,40 @@ range(countries_wine_market$market_size, na.rm = TRUE)
 
 countries_wine_market <- countries_wine_market %>%
   mutate(ID = Area) %>%
-  mutate(
-    ID = recode(
-      ID,
-      `Bolivia (Plurinational State of)` = "Bolivia",
-      `Brunei Darussalam` = "Brunei",
-      `Cabo Verde` = "Cape Verde",
-      `China, mainland` = "China",
-       Congo = "Republic of Congo",
-      `Falkland Islands (Malvinas)` = 'Falkland Islands',
-      `China, Hong Kong SAR` = "Hong Kong",
-      `Iran (Islamic Republic of)` = "Iran",
-      `Côte d'Ivoire` = "Ivory Coast",
-      `Democratic People's Republic of Korea` = "North Korea",
-      `Republic of Korea` = "South Korea",
-      `Lao People's Democratic Republic` = "Laos",
-      `China, Macao SAR` = "Macao",
-      `Republic of Moldova` = "Moldova",
-      `Netherlands Antilles (former)` = "Bonaire, Sint Eustatius and Saba",
-      `North Macedonia` = "Macedonia",
-      Czechia = "Czech Republic",
-      `Russian Federation` = "Russia",
-      `Syrian Arab Republic`  = "Syria",
-      `China, Taiwan Province of` = "Taiwan",
-      `United Republic of Tanzania` = "Tanzania",
-      `United Kingdom of Great Britain and Northern Ireland` = "United Kingdom",
-      `United States of America` = "United States",
-      `Venezuela (Bolivarian Republic of)` = "Venezuela",
-      `Viet Nam` = "Vietnam",
-      Palestine = "Palestina",
-      Eswatini = "Swaziland"
-      
-    )
-  ) %>% dplyr::select(ID, market_size) 
+  #mutate(
+  #  ID = recode(
+  #    ID,
+  #    `Bolivia (Plurinational State of)` = "Bolivia",
+  #    `Brunei Darussalam` = "Brunei",
+  #    `Cabo Verde` = "Cape Verde",
+  #    `China, mainland` = "China",
+  #     Congo = "Republic of Congo",
+  #    `Falkland Islands (Malvinas)` = 'Falkland Islands',
+  #    `China, Hong Kong SAR` = "Hong Kong",
+  #    `Iran (Islamic Republic of)` = "Iran",
+  #    `Côte d'Ivoire` = "Ivory Coast",
+  #    `Democratic People's Republic of Korea` = "North Korea",
+  #    `Republic of Korea` = "South Korea",
+  #    `Lao People's Democratic Republic` = "Laos",
+  #    `China, Macao SAR` = "Macao",
+  #    `Republic of Moldova` = "Moldova",
+  #    `Netherlands Antilles (former)` = "Bonaire, Sint Eustatius and Saba",
+  #    `North Macedonia` = "Macedonia",
+  #    Czechia = "Czech Republic",
+  #    `Russian Federation` = "Russia",
+  #    `Syrian Arab Republic`  = "Syria",
+  #    `China, Taiwan Province of` = "Taiwan",
+  #    `United Republic of Tanzania` = "Tanzania",
+  #    `United Kingdom of Great Britain and Northern Ireland` = "United Kingdom",
+  #    `United States of America` = "United States",
+  #    `Venezuela (Bolivarian Republic of)` = "Venezuela",
+  #    `Viet Nam` = "Vietnam",
+  #    Palestine = "Palestina",
+  #    Eswatini = "Swaziland"
+  #    
+  #  )
+  #) %>% 
+  dplyr::select(ID, market_size) 
 
 #setdiff(countries_summary_future$ID, countries_wine_market$ID)
 #setdiff(countries_wine_market$ID, countries_summary_future$ID)

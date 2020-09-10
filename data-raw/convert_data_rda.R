@@ -15,6 +15,57 @@ library(RStoolbox)
 ####################################################################################################################
 
 ##########################################################
+#wine market risk
+##########################################################
+
+#COUNTRIES
+countries_market <- read_csv("./data-raw/wine_market_FAOSTAT_data_8-31-2020.csv")
+
+
+#rm NA's
+countries_market <- countries_market %>%
+  filter(!is.na(Value))
+
+#recode some country names and make sure that Area == ID
+countries_market <- countries_market %>%
+  mutate(ID = Area) %>%
+  mutate(
+    ID = recode(
+      ID,
+      `Bolivia (Plurinational State of)` = "Bolivia",
+      `Brunei Darussalam` = "Brunei",
+      `Cabo Verde` = "Cape Verde",
+      `China, mainland` = "China",
+      Congo = "Republic of Congo",
+      `Falkland Islands (Malvinas)` = "Falkland Islands",
+      `China, Hong Kong SAR` = "Hong Kong",
+      `Iran (Islamic Republic of)` = "Iran",
+      `Côte d'Ivoire` = "Ivory Coast",
+      `Democratic People's Republic of Korea` = "North Korea",
+      `Republic of Korea` = "South Korea",
+      `Lao People's Democratic Republic` = "Laos",
+      `China, Macao SAR` = "Macao",
+      `Republic of Moldova` = "Moldova",
+      `Netherlands Antilles (former)` = "Bonaire, Sint Eustatius and Saba",
+      `North Macedonia` = "Macedonia",
+      Czechia = "Czech Republic",
+      `Russian Federation` = "Russia",
+      `Syrian Arab Republic`  = "Syria",
+      `China, Taiwan Province of` = "Taiwan",
+      `United Republic of Tanzania` = "Tanzania",
+      `United Kingdom of Great Britain and Northern Ireland` = "United Kingdom",
+      `United States of America` = "United States",
+      `Venezuela (Bolivarian Republic of)` = "Venezuela",
+      `Viet Nam` = "Vietnam",
+      Palestine = "Palestina",
+      Eswatini = "Swaziland"
+
+    )
+  ) %>%
+  mutate(Area = ID)
+
+
+##########################################################
 #correlation plots
 ##########################################################
 
@@ -1149,6 +1200,11 @@ countries_centers <- countries_centers %>%
 ####################################################################################################################
 #Write out new RDA files
 ####################################################################################################################
+
+#############################
+#wine market risk
+#############################
+save(countries_market, file = file.path(here(), "data", "countries_market.rda")) #wine import and export data by country
 
 #############################
 #trade
