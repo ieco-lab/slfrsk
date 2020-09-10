@@ -31,6 +31,8 @@ library(rgeos)
 library(scales)
 ```
 
+## Toggle plotting options
+
 
 
 Should we assume present infected US states or project future ones?

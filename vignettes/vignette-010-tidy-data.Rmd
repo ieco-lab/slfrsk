@@ -27,7 +27,7 @@ All of the following data sources will be read in as raw data from `slfrsk/data/
 
 ***
 
-#Setup
+# Setup
 
 Here we load the required packages to prepare the data.
 
