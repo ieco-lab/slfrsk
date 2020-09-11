@@ -1,0 +1,256 @@
+---
+title: "vignette-041-market-plot"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{vignette-041-market-plot}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: inline
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+Build and Save Paninvasion Risk to Wine Market Plots
+
+***
+
+This vignette aims to reproduce the published figure(s) of the relationship between the predicted 
+
+# Setup
+
+```{r setup, warning=FALSE, results='hide', message=FALSE}
+library(slfrsk)
+library(tidyverse)
+library(ggrepel)
+library(DHARMa)
+```
+
+# Load and summarize data
+
+## Market size data
+
+Value units are 1000 USD
+```{r FAO wine market, eval = TRUE, fig.height= 6, fig.width=7, warning=FALSE, message=FALSE}
+data("countries_market")
+
+dim(countries_market)
+
+countries_wine_market <- countries_market %>%
+  filter(Year %in% (2012:2017)) %>%
+  filter(Element == "Export Value") %>%
+  group_by(`Area Code`,	Area, Year) %>%
+  dplyr::select(`Area Code`,	Area, Year, Value) %>% 
+  summarise(market_size = sum(Value)) %>%
+  ungroup(Year) %>%
+  mutate(market_size = log10((market_size*1000)+1)) %>%
+  #mutate(market_size = (market_size*1000)) %>%
+  summarise(market_size = mean(market_size))  %>% 
+  ungroup()
+
+# remove all that are zero
+
+countries_wine_market$market_size[countries_wine_market$market_size==0] <- NA
+#countries_wine_market$market_size<- round(countries_wine_market$market_size)
+
+dim(countries_wine_market)
+#countries_wine_market
+
+qplot((countries_wine_market$market_size))
+
+range(countries_wine_market$market_size, na.rm = TRUE)
+```
+
+
+```{r add the ID column for joining to summary data, eval = TRUE}
+#add the ID column for joining and plotting later
+countries_wine_market <- countries_wine_market %>%
+  mutate(ID = Area) %>%
+  dplyr::select(ID, market_size) 
+```
+
+## Risk summary data
+
+```{r join market to countries_summary_future, eval = TRUE, message=FALSE}
+data("countries_summary_future")
+dim(countries_summary_future)
+`%notin%` <- Negate(`%in%`)
+
+# filter(countries_summary_future, status == "native")
+
+countries_risk_market <- countries_summary_future %>% 
+  left_join(countries_wine_market, by = "ID") %>%
+  filter(ID %notin% c("United States", 
+                      "China", 
+                      "India", 
+                      "Taiwan", 
+                      "Japan", 
+                      "South Korea", 
+                      "Vietnam"))#%>% 
+
+#########
+# - Use this code to check to make sure that each country only has one row
+# dim(countries_risk_market)
+# setdiff(countries_risk_market$ID,countries_summary_future$ID)
+# setdiff(countries_summary_future$ID,countries_risk_market$ID)
+# table(countries_risk_market$ID)[table(countries_risk_market$ID)>1]
+# table(countries_summary_future$ID)[table(countries_summary_future$ID)>1]
+
+```
+
+# Build and check model
+
+```{r, fig.height= 7, fig.width=7, message=FALSE}
+risk_mod <- lm(log10_avg_prod ~ log10_avg_infected_mass + grand_mean_max, 
+               data = countries_risk_market)
+cor.test(countries_risk_market$log10_avg_prod, predict(risk_mod), method = "spearman")
+
+## diagnostics
+# fit is good for the multivariate correlation because there is no dispersion, but do not use this model for prediction (which I do not know why you would)
+simulationOutput_r <- simulateResiduals(fittedModel = risk_mod, plot = T) 
+testDispersion(simulationOutput_r) 
+
+#plot(risk_mod)
+summary(risk_mod)
+
+countries_risk_market <- countries_risk_market %>%
+  mutate(risk = scales::rescale(predict(risk_mod), to = c(1,10)))
+
+shock_mod <- lm(market_size ~ risk, data = countries_risk_market)
+summary(shock_mod)
+
+## diagnostics
+# risk estimate model fit is good and no major issues in heteroskedasticity. But I am not certain why you want this model anyways, a correlation is better because it is easily scaled betwee 1-10 
+simulationOutput <- simulateResiduals(fittedModel = shock_mod, plot = T) 
+testDispersion(simulationOutput)
+
+cor.test(countries_risk_market$market_size, countries_risk_market$risk)
+(shock_cor <- cor(countries_risk_market$market_size, 
+                 countries_risk_market$risk,
+                 use = "complete.obs") %>% 
+  scales::rescale(to = c(1,10), from = c(-1,1)) %>%
+  round())
+#scales::rescale(-1, to = c(1,10), from = c(-1,1))
+```
+
+# Plotting risk vs market scatter
+
+The Risk of SLF to shock the global wine market is `r shock_cor`.
+
+```{r make scatter, eval = TRUE, fig.height= 12, fig.width=10, message=FALSE}
+
+#countries_risk_market %>%
+#  mutate(risk_scale = scale(risk), market_size_scale = scale(market_size)) %>%
+  #mutate(risk_scale_ticks = )
+#  ggplot(mapping = aes(x = risk_scale, 
+#                       y = market_size_scale, fill = wine), color = "black") +
+#  geom_point(pch = 21)
+
+remove(market_scatter)
+
+market_scatter<- countries_risk_market %>%
+  
+  ggplot(mapping = aes(x = (risk), 
+                       y = (market_size), 
+                       size = avg_wine, 
+                       fill = wine)
+         ) + 
+  geom_abline(slope = 1, intercept = 0, lty = 2) +
+  geom_abline(slope = 1, intercept = 5, lty = 2) +
+  geom_abline(slope = 1, intercept = -5, lty = 2) +
+
+  ggtitle(label = paste('Spotted Lanternfly Paninvasion Risk Severity =',
+                        shock_cor,'of 10 (P<0.005)')) +
+  geom_point(pch = 21) + 
+     scale_x_continuous(
+    name =  substitute(expr = paste('Spotted Lanternfly (',italic("Lycorma delicatula"),') Invasion Risk')), 
+    breaks = 1:10, 
+    limits = c(1,10)
+    ) +
+  scale_y_continuous("Wine Export Market Size, log10 USD", 
+                     breaks = seq(1,10,1), 
+                     limits = c(1,10)
+                     ) +
+  scale_size_continuous(
+        #values = c(0,),
+       name = "Wine Production",# "Wine Impact Potential",
+       # labels = c("0 t", "1.0M t", "2.0M t", "3.0M t", "4.0M t")
+        labels = c("0 t", "1E6 t", "2E6 t", "3E6 t", "4E6 t")
+
+      ) +
+ # scale_fill_discrete(guide = FALSE) +
+   scale_fill_manual( 
+         values = c("no" = "#ffffff", "yes" = "#C77CFF"),
+         name = "",# "Wine Impact Potential",
+         labels = c("wine producer", "")
+       ) +
+      theme(
+        panel.grid.major = element_line(colour = "#f0f0f0"),
+        panel.grid.minor = element_blank(),
+        #panel.grid.major = element_blank(),
+        #panel.border = element_rect(colour = "black", fill=NA, size=1),
+        axis.line = element_line(colour = "black"),
+        #legend.position = c(0.7, 0.25),
+        #legend.position = "bottom",
+        panel.background = element_blank(),
+        plot.background = element_blank(),
+        #legend.background = element_rect(colour = 'black', 
+        #                                 fill = 'white', 
+        #                                 linetype='solid'),
+        axis.text = element_text(size = rel(1)),
+        axis.title.x = element_text(hjust = .4),
+        axis.title.y = element_text(hjust = .35),
+        legend.title = element_text(face = "plain"),
+        legend.key.size = unit(0.2, "cm"),
+        legend.key = element_blank(),
+        #plot.margin = unit(c(hh, -5, hh, hh), units = "line"),
+        #axis.title = element_text(size = rel(1.3))
+      ) +
+  geom_text_repel(#data = select(countries_risk_market,
+                      aes(#x = x_to_plot, 
+                          #y = y_to_plot, 
+                          label = ID),
+                      #label = countries_risk_market$ID,
+                      min.segment.length = 0,
+                      #direction = "x",
+                      #nudge_y = nudge.y,
+                      #nudge_x = nudge.x
+      show.legend = FALSE) #+
+  #guides(
+  #      fill = TRUE
+  #      ) #,
+      #   color = guide_legend(
+      #     order = 3,
+      #     override.aes = list(alpha = 1)
+      #   ),
+      #   size = guide_legend(    # Adjust size to edit legend grape production
+      #     order = 2,            # circles.
+      #     override.aes = list(size = c(1,3,6), alpha = 1)
+      #   )
+      # ) 
+
+market_scatter
+```
+
+# Save scatter plot
+
+Here, you can set to save the scatter plot to `/vignettes` as a `.pdf` file by setting the `if` from `FALSE` to `TRUE`, as in the other vignettes.
+
+```{r, save pdf of image, message=FALSE}
+if(FALSE){
+  pdf(file.path(here::here(),
+              "vignettes", 
+              paste0("market_scatter_v3_0.pdf")),
+    width = 8.5*.95, height = 11*.95)
+
+market_scatter
+dev.off()
+}
+
+```
+
