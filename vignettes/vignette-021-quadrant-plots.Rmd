@@ -24,7 +24,7 @@ This vignette visualizes the **Introduction, Establishment, and Impact** potenti
 
 To produce the published correlation figures, we must first conduct a few setup steps. First, we read in the appropriate data and packages.
 
-```{r setup, , warning=FALSE, results='hide', message=FALSE}
+```{r setup, warning=FALSE, results='hide', message=FALSE}
 library(slfrsk)
 library(tidyverse)
 library(here)
