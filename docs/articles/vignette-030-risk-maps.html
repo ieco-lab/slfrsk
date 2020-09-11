@@ -65,6 +65,9 @@
     <li>
       <a href="../articles/vignette-040-ee-data.html">vignette-040-ee-data</a>
     </li>
+    <li>
+      <a href="../articles/vignette-041-market-plot.html">vignette-041-market-plot</a>
+    </li>
   </ul>
 </li>
       </ul>
@@ -366,11 +369,12 @@
 <p><img src="vignette-030-risk-maps_files/figure-html/plot%20map%20of%20countries-1.png" width="720"></p>
 </div>
 </div>
-<div id="write-plot-output" class="section level1">
+<div id="save-plot-output" class="section level1">
 <h1 class="hasAnchor">
-<a href="#write-plot-output" class="anchor"></a>Write plot output</h1>
-<p>Lastly, we can save the output of our map figure plots as <code>.pdf</code> files to <code>/vignettes</code>. Note that this chunk does not run by default when knitting the vignette!</p>
-<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="kw">if</span>(<span class="no">present_transport</span>){
+<a href="#save-plot-output" class="anchor"></a>Save plot output</h1>
+<p>Lastly, we can save the output of our map figure plots as <code>.pdf</code> files to <code>/vignettes</code>. Note that this chunk does not run by default but can be run by setting the top <code>if</code> from <code>FALSE</code> to <code>TRUE</code>!</p>
+<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="kw">if</span>(<span class="fl">FALSE</span>){
+  <span class="kw">if</span>(<span class="no">present_transport</span>){
 <span class="co">#states</span>
   <span class="fu">ggsave</span>(<span class="kw">plot</span> <span class="kw">=</span> <span class="no">map_plot</span>, <span class="kw">filename</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="kw pkg">here</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/here/man/here.html">here</a></span>(),<span class="st">"vignettes"</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="st">"states_map_present.pdf"</span>)), <span class="kw">width</span> <span class="kw">=</span> <span class="fl">7.5</span>, <span class="kw">height</span> <span class="kw">=</span> <span class="fl">6.5</span>, <span class="kw">dpi</span> <span class="kw">=</span> <span class="fl">300</span>)
 <span class="co">#countries</span>
@@ -380,6 +384,8 @@
   <span class="fu">ggsave</span>(<span class="kw">plot</span> <span class="kw">=</span> <span class="no">map_plot</span>, <span class="kw">filename</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="kw pkg">here</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/here/man/here.html">here</a></span>(),<span class="st">"vignettes"</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="st">"states_map_future.pdf"</span>)), <span class="kw">width</span> <span class="kw">=</span> <span class="fl">7.5</span>, <span class="kw">height</span> <span class="kw">=</span> <span class="fl">6.5</span>, <span class="kw">dpi</span> <span class="kw">=</span> <span class="fl">300</span>)
 <span class="co">#countries</span>
   <span class="fu">ggsave</span>(<span class="kw">plot</span> <span class="kw">=</span> <span class="no">map_plot_countries</span>, <span class="kw">filename</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="kw pkg">here</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/here/man/here.html">here</a></span>(),<span class="st">"vignettes"</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="st">"countries_map_future.pdf"</span>)), <span class="kw">width</span> <span class="kw">=</span> <span class="fl">7.5</span>, <span class="kw">height</span> <span class="kw">=</span> <span class="fl">6.5</span>, <span class="kw">dpi</span> <span class="kw">=</span> <span class="fl">300</span>)
+}
+
 }</pre></body></html></div>
 </div>
   </div>
