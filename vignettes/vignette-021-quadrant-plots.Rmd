@@ -918,11 +918,11 @@ if(present_transport){
 
 ## Plotting visualization
 
-Now that the plotting code has been run, the `states` and `countries` correlation plots can be visualized together (and saved to `/vignettes` as a `.pdf`):
+Now that the plotting code has been run, the `states` and `countries` correlation plots can be visualized together:
 
 ```{r combined plot with legend layout}
 #set up a layout grid
-  lay <- rbind(c( 1, 1, 1,NA,NA,NA),
+  lay1 <- rbind(c( 1, 1, 1,NA,NA,NA),
                c( 1, 1, 1,NA,NA,NA),
                c( 1, 1, 1,NA, 3, 3),
                c(NA,NA,NA,NA, 3, 3),
@@ -932,8 +932,18 @@ Now that the plotting code has been run, the `states` and `countries` correlatio
   )
 ```
 
-```{r optional write to pdf step, message=FALSE, eval=FALSE}
-#optional save as pdf code
+```{r visualization step, fig.height= 12, fig.width=10, message=FALSE}
+#nice version for knitting
+grid.arrange(states_grob, countries_grob, legend_country, nrow = 7, ncol = 6, layout_matrix = lay1, heights = c(2,2,2, 0, 2,2,2), widths = c(1,1,1,0.1,0.6,0.6))
+```
+
+# Save plot output
+
+We can also save the plots to `/vignettes` as a `.pdf`. Note that the saving chunks can be run by setting the top `if` from `FALSE` to `TRUE`!
+
+```{r optional write to pdf step, message=FALSE, eval=FALSE, fig.height= 12, fig.width=10}
+if(FALSE){
+  #optional save as pdf code
 if(present_transport){
     pdf(file.path(here::here(),"vignettes", paste0("combined_present_max_",impact_prod,".pdf")),width = 10, height = 12)
 
@@ -941,21 +951,19 @@ if(present_transport){
     pdf(file.path(here::here(),"vignettes", paste0("combined_future_max_",impact_prod,".pdf")),width = 7.5, height = 12)
       
 }
-  grid.arrange(states_grob, countries_grob, legend_country, nrow = 7, ncol = 6, layout_matrix = lay, heights = c(1,1,1, 0, 1,1,1), widths = c(1,1,1,0.1,0.57,0.57))
+  grid.arrange(states_grob, countries_grob, legend_country, nrow = 7, ncol = 6, layout_matrix = lay1, heights = c(1,1,1, 0, 1,1,1), widths = c(1,1,1,0.1,0.57,0.57))
   invisible(dev.off())
+}
+
 ```
 
-```{r visualization step, fig.height= 12, fig.width=10, message=FALSE}
-#nice version for knitting
-grid.arrange(states_grob, countries_grob, legend_country, nrow = 7, ncol = 6, layout_matrix = lay, heights = c(2,2,2, 0, 2,2,2), widths = c(1,1,1,0.1,0.6,0.6))
-```
-
-We also save a version of the combined plots with the legend as a separate file to `/vignettes`:
+We also save a version of the combined plots with the legend as a separate file to `/vignettes`. 
 
 ```{r combined plot with separate legend pdf, eval=FALSE}
-#save the plots w/o legend
+if(FALSE){
+  #save the plots w/o legend
 #set up a layout grid
-  lay <- rbind(c( 1, 1, 1, 1, 1,NA),
+  lay2 <- rbind(c( 1, 1, 1, 1, 1,NA),
                c( 1, 1, 1, 1, 1,NA),
                c( 1, 1, 1, 1, 1,NA),
                c(NA,NA,NA,NA,NA,NA),
@@ -970,7 +978,7 @@ if(present_transport){
     pdf(file.path(here::here(),"vignettes", paste0("combined_future_max_",impact_prod,"_nolegend.pdf")),width = 7.5, height = 12)
 }
 #finish out the plotting
-  grid.arrange(states_grob, countries_grob, nrow = 7, ncol = 6, layout_matrix = lay, heights = c(1,1,1, 0, 1,1,1), widths = c(0.99,0.99,1,1,1,1))
+  grid.arrange(states_grob, countries_grob, nrow = 7, ncol = 6, layout_matrix = lay2, heights = c(1,1,1, 0, 1,1,1), widths = c(0.99,0.99,1,1,1,1))
   invisible(dev.off())
 
 
@@ -983,6 +991,8 @@ if(present_transport){
 #finish out the plotting
 grid.draw(legend_country)
 invisible(dev.off())
+
+}
 
 ```
 

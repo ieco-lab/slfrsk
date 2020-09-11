@@ -236,7 +236,7 @@ market_scatter<- countries_risk_market %>%
 market_scatter
 ```
 
-# Save scatter plot
+# Save plot output
 
 Here, you can set to save the scatter plot to `/vignettes` as a `.pdf` file by setting the `if` from `FALSE` to `TRUE`, as in the other vignettes.
 

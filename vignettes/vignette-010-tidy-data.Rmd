@@ -607,9 +607,9 @@ countries_summary_future <- countries_summary_future %>%
 
 ***
 
-# Write out data
+# Save data
 
-This section provides the code to save each of the final summary objects to the `/data` directory. They are currently set to not run, as the package **should** ship with the files already in `/data`.
+This section provides the code to save each of the final summary objects to the `/data` directory. They are currently set to not run, as the package **should** ship with the files already in `/data`. Note that this chunk can be run by setting the top `if` from `FALSE` to `TRUE`!
 
 ```{r save correlation plot  data, eval=FALSE, message=FALSE}
 if(FALSE){

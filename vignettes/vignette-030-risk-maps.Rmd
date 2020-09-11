@@ -295,12 +295,13 @@ map_plot_countries <- map_plot_countries +
 map_plot_countries 
 ```
 
-# Write plot output
+# Save plot output
 
-Lastly, we can save the output of our map figure plots as `.pdf` files to `/vignettes`. Note that this chunk does not run by default when knitting the vignette!
+Lastly, we can save the output of our map figure plots as `.pdf` files to `/vignettes`. Note that this chunk does not run by default but can be run by setting the top `if` from `FALSE` to `TRUE`!
 
 ```{r save map plots, eval=FALSE, warning=FALSE, message=FALSE}
-if(present_transport){
+if(FALSE){
+  if(present_transport){
 #states
   ggsave(plot = map_plot, filename = file.path(here::here(),"vignettes", paste0("states_map_present.pdf")), width = 7.5, height = 6.5, dpi = 300)
 #countries
@@ -310,6 +311,8 @@ if(present_transport){
   ggsave(plot = map_plot, filename = file.path(here::here(),"vignettes", paste0("states_map_future.pdf")), width = 7.5, height = 6.5, dpi = 300)
 #countries
   ggsave(plot = map_plot_countries, filename = file.path(here::here(),"vignettes", paste0("countries_map_future.pdf")), width = 7.5, height = 6.5, dpi = 300)
+}
+
 }
 
 ```
