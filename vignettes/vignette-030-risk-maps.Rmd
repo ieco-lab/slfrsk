@@ -218,7 +218,7 @@ We are now able to plot both the `states` and `countries` published map figures.
 
 ## States
 
-```{r the US map, fig.height= 6.5, fig.width=7.5}
+```{r the US map, fig.height= 5, fig.width=8}
 
 #plot just the states and suitability first
 map_plot <- ggplot() +
@@ -259,7 +259,7 @@ map_plot
 
 ## Countries
 
-```{r plot map of countries, warning=FALSE, fig.height= 6.5, fig.width=7.5}
+```{r plot map of countries, warning=FALSE, fig.height= 9*.75, fig.width=16*.75}
 #plot just the countries and suitability first
 map_plot_countries <- ggplot() +
   geom_raster(data = suitability_countries_df, aes(x = x, y = y, fill = rescale(value)), alpha=0.9, show.legend = T) +
