@@ -20,7 +20,7 @@ Build and Save Paninvasion Risk to Wine Market Plots
 
 ***
 
-This vignette aims to reproduce the published figure(s) of the relationship between the predicted 
+This vignette aims to reproduce the published figure(s) of the relationship between the predicted production of **grapes** from a model that 
 
 # Setup
 
@@ -35,7 +35,8 @@ library(DHARMa)
 
 ## Market size data
 
-Value units are 1000 USD
+First we read in the `countries_market` dataset, which contains exports of wine by `country`. The data are in thousands of USD (1000's USD), and so we will need to convert to USD as we summarize the data.
+
 ```{r FAO wine market, eval = TRUE, fig.height= 6, fig.width=7, warning=FALSE, message=FALSE}
 data("countries_market")
 
@@ -49,7 +50,6 @@ countries_wine_market <- countries_market %>%
   summarise(market_size = sum(Value)) %>%
   ungroup(Year) %>%
   mutate(market_size = log10((market_size*1000)+1)) %>%
-  #mutate(market_size = (market_size*1000)) %>%
   summarise(market_size = mean(market_size))  %>% 
   ungroup()
 
