@@ -43,6 +43,7 @@ We quickly visualize the distribution of these summarized `market` size data via
 data("countries_market")
 #dim(countries_market)
 
+# http://www.fao.org/faostat/en/#data/TM
 countries_wine_market <- countries_market %>%
   filter(Year %in% (2012:2017)) %>%
   filter(Element == "Export Value") %>%
@@ -50,7 +51,10 @@ countries_wine_market <- countries_market %>%
   dplyr::select(`Area Code`,	Area, Year, Value) %>% 
   summarise(market_size = sum(Value)) %>%
   ungroup(Year) %>%
-  mutate(market_size = log10((market_size*1000)+1)) %>%
+
+  mutate(market_size = log10((market_size*1000)+1)) %>% # units are in 1000s of USD
+  #mutate(market_size = (market_size*1000)) %>%
+
   summarise(market_size = mean(market_size))  %>% 
   ungroup()
 
