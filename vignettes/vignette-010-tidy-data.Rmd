@@ -15,22 +15,39 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup, warning=FALSE, message=FALSE, include=FALSE}
+Wrangle and Tidy Package data
+
+***
+
+All of the following data sources will be read in as raw data from `slfrsk/data/` (originally cleaned a bit from raw data versions in `slfrsk/data-raw/`) and then cleaned up individually in this vignette (see `/data-raw/convert_data_rda.R` for script and commenting that includes earlier unit conversion and transformation of raw data from `.csv` to `.rda` files used here). Depending on the situation, the resultant "cleaned/tidied" data may be saved to `slfrsk/data/` as a new `.rda` file. In this vignette, the following data are treated:
+  
+  1. Establishment potential
+  2. Transport potential
+  3. Impact potential
+
+***
+
+# Setup
+
+Here we load the required packages to prepare the data.
+
+```{r setup, warning=FALSE, results='hide', message=FALSE}
 library(slfrsk)
 library(tidyverse)
 library(here)
-load_all()
+devtools::load_all()
 ```
-
-Wrangle and Tidy Package data
-
-All of the following data sources will be read in as raw data from `slfrsk/data/` (originally cleaned a bit initially from raw data version in `slfrsk/data-raw/`) and then cleaned up individually. Depending on the situation, the resultant "cleaned/tidied" data may be saved to `slfrsk/data/` as a new `.rda` file.
 
 # Establishment
 ## Maxent Ensemble Model
-(states and countries) we are going to summarize the mean of the models as a grand mean
+
+Previously, we built three separate species distribution models (SDMs) with Maxent. Upstream of this vignette, we obtained summary statistics for suitability in each geopolitical unit (country and U.S. state) in each SDM, which were combined into the `states_extracts` and `countries_extracts` datasets. 
+
+Here, we explore the ensemble *maximum suitability* by obtaining the maximum suitability per geopolitical unit for each SDM and calculating the *mean* and *standard error* across the models. These summarized suitabilities constitute our predicted **Establishment potential**.
+
+We also strip *Western Sahara* from the `countries` datasets here and for other datsets, as it is not informative for our analyses (zero trade for **Transport potential** below). 
   
-```{r bring in maxent extraction summary data}
+```{r bring in maxent extraction summary data, message=FALSE}
 data("states_extracts")
 
 summary_states_extracts <- states_extracts %>%
@@ -43,13 +60,27 @@ summary_countries_extracts <- countries_extracts %>%
   group_by(geopol_unit) %>%
   summarize(grand_mean_max = mean(obs_max), grand_se_max = sd(obs_max) / sqrt(n_distinct(model)))
 
+#rm W. Sahara
+summary_countries_extracts <- summary_countries_extracts %>%
+    filter(geopol_unit != "Western Sahara")
+
 ```
+
+***
+
 # Transport
 ## Import Trade Data
-(states and countries, both present and future)
-### U.S. State trade data
-#### states value
-In USD
+
+Now that **Establishment** data are nicely organized, we can move on to **Transport**. We estimate **Transport potential** based on the average annual mass of goods traded (in metric tons) with *Lycorma*-established U.S. states over 2012--2017 (we also track value of traded goods in USD). Our existing data can be partitioned into geopolitical units as above (states and countries), but can further be separated into two categories: 1. states with confirmed _Lycorma_ populations (`present`) and 2. states that have a high probability of hosting _Lycorma_ populations in the near future based on proximity to `present` states and records of isolated observations (`future`). 
+
+Although we maintain several possible permutations of data to analyze, we focus on mass of goods traded for `future` scenarios, as these data are unlikely to be skewed by trade of high value goods that are less likely to lead to transportation of egg masses (e.g., electronics) and provide us with a more careful outlook for risk of slf paninvasion.
+
+### U.S. States
+
+We first treat the states data by adding two letter codes and *Lycorma*-establishment status. For `present`, we treat the following states as having established *Lycorma*: **DE, MD, NJ, PA, and VA**. For `future`, we add the following states as having established *Lycorma*: **NC, NY, OH, and WV**. From here, the data are tidied and gathered before calculating the mean and standard error (SE) of trade with established states for 2012--2017. To do so, we first removed all cases of intrastate trade for established states. Then, we calculated the total trade with established states for each year before obtaining the overall mean and SE.
+
+Below, we demonstrate the code for both `present` and `future` trade data in value (USD) for U.S. `states`.
+
 ```{r load in states trade data and clean value, message=FALSE, warning=FALSE}
 #load states value
 data("states_trade_summary_slf")
@@ -76,22 +107,32 @@ colnames(stateid) <- c("ID", "geopol_unit")
   #total infected states trade, average/SE
   summary_states_trade_value <- states_trade_summary_slf %>%
     group_by(destination) %>%
-    filter(str_detect(infected_state, "pa_") | str_detect(infected_state, "de_") | str_detect(infected_state, "va_") | str_detect(infected_state, "nj_") | str_detect(infected_state, "md_")) %>%   #filter to be just trade with infected states present
-    filter(str_detect(infected_state, "201") & !str_detect(infected_state, "all")) %>%  #remove the all state trade from consideration
-    mutate(tempcol = str_split(infected_state, "_")) %>%  #make a temporary col
-    rowwise() %>%   #group by row
-    mutate(source = unlist(tempcol)[1], year = unlist(tempcol)[2]) %>%  #split out the info about states and years of trade
-    select(-tempcol) %>% #rm the temp col
-    group_by(destination, year, status) %>% #group based now on the destination, year, and infection status
+    #filter to be just trade with infected states present
+    filter(str_detect(infected_state, "pa_") | str_detect(infected_state, "de_") | str_detect(infected_state, "va_") | str_detect(infected_state, "nj_") | str_detect(infected_state, "md_")) %>%
+    #remove the all state trade from consideration
+    filter(str_detect(infected_state, "201") & !str_detect(infected_state, "all")) %>%  
+    #make a temporary col
+    mutate(tempcol = str_split(infected_state, "_")) %>%  
+    #group by row
+    rowwise() %>% 
+    #split out the info about states and years of trade
+    mutate(source = unlist(tempcol)[1], year = unlist(tempcol)[2]) %>%
+    #rm the temp col
+    select(-tempcol) %>% 
+    #group based now on the destination, year, and infection status
     #filter out the intrastate trade for infected states to avoid extra low averages by creating a hybrid string (DestinationState+abbreviated_infected state)
+    group_by(destination, year, status) %>% 
     mutate(clear_intra = paste0(destination, source)) %>%
     filter(!clear_intra %in% c("Delawarede", "Marylandmd", "New Jerseynj", "Pennsylvaniapa", "Virginiava")) %>%
     #remove workaround infected intrastate column
     dplyr::select(-clear_intra) %>%
-    summarize(avg_infected_trade = sum(trade)) %>%  #add up the trade with infected states for each destination state and year
+    #add up the trade with infected states for each destination state and year (THIS IS NOT AVG INFECTED TRADE YET)
+    summarize(avg_infected_trade = sum(trade)) %>%  
     group_by(destination, status) %>%
-    mutate(se = (sd(avg_infected_trade, na.rm = T) / sqrt(length(year)))) %>%   #obtain the standard error (SE) of infected trade across years (this repeats across all of the entries across years and thus becomes its own value)
-    summarise(avg_infected_trade = mean(avg_infected_trade, na.rm = T), se = mean(se))  #summarize the mean and SE across years!
+    #obtain the standard error (SE) of infected trade across years (this repeats across all of the entries across years and thus becomes its own value)
+    mutate(se = (sd(avg_infected_trade, na.rm = T) / sqrt(length(year)))) %>% 
+    #summarize the mean and SE across years! (there is no need to actually take the mean of SE here, but it makes summarizing simplier)
+    summarise(avg_infected_trade = mean(avg_infected_trade, na.rm = T), se = mean(se))  
   
 #FUTURE
     states_trade_summary_slf_future <-  left_join(states_trade_summary_slf_future, stateid, by = c("destination" = "geopol_unit")) %>%
@@ -123,10 +164,9 @@ colnames(stateid) <- c("ID", "geopol_unit")
     mutate(se = (sd(avg_infected_trade, na.rm = T) / sqrt(length(year)))) %>%
     summarise(avg_infected_trade = mean(avg_infected_trade, na.rm = T), se = mean(se))
 ```
+
+We repeat the same process for `states` but for the total mass of imported goods (`mass`). In doing so, we convert the existing units from kg to **metric tons**.
     
-#### states mass
-tonnage and volume shipped
-(converts mass from kg to metric tons)
 ```{r clean states mass, message=FALSE, warning=FALSE}
 #load states mass
 data("states_trade_mass_summary_slf")
@@ -195,13 +235,22 @@ data("states_trade_mass_summary_slf_future")
     group_by(destination, status) %>%
     mutate(se = (sd(avg_infected_mass, na.rm = T) / sqrt(length(year)))) %>%
     summarise(avg_infected_mass = mean(avg_infected_mass, na.rm = T), se = mean(se))
-
 ```
 
-### Countries trade data 
-#### countries value
-in USD
+> Here, you can see the summary for the first 10 states for the `future` trade data for mass of trade (metric tons).    
+    
+```{r show the data format for summarized trade so far for states, echo=FALSE}
+head(summary_states_trade_mass_future, n = 10)
+```
+
+### Countries
+
+From here, we turn to complete the same analyses for `countries` as states (value of trade in USD and then mass of trade in metric tons). Notably, we do not have to worry about the intrastate trade that we filtered out in the `states` datasets. As such, we do not bother with attaching a `$status` identifier to each country (this is done as needed for visualization later).
+
 ```{r load in countries trade data and clean value, message=FALSE,warning=FALSE}
+#COUNTRIES
+
+#VALUE
 #load countries values
 data("countries_trade_summary_slf")
 data("countries_trade_summary_slf_future")
@@ -249,12 +298,8 @@ countries_trade_summary_slf_future <- countries_trade_summary_slf_future %>%
     group_by(destination) %>%
     mutate(se = (sd(avg_infected_trade, na.rm = T) / sqrt(length(year)))) %>%
     summarise(avg_infected_trade = mean(avg_infected_trade, na.rm = T), se = mean(se))
-  
-```
 
-#### countries mass
-Tonnage (converts from kg to metric tons)
-```{r load and clean countries mass, message=FALSE, warning=FALSE}
+#MASS
 #load countries mass
 data("countries_trade_mass_summary_slf")
 data("countries_trade_mass_summary_slf_future")
@@ -304,15 +349,21 @@ countries_trade_mass_summary_slf_future <- countries_trade_mass_summary_slf_futu
     group_by(destination) %>%
     mutate(se = (sd(avg_infected_mass, na.rm = T) / sqrt(length(year)))) %>%
     summarise(avg_infected_mass = mean(avg_infected_mass, na.rm = T), se = mean(se))
-  
 ```
-  
 
-### Join Trade Data
+> Here, you can see the summary for the first 10 countries for the `future` trade data for mass of trade (metric tons), just like the `states` data.    
+    
+```{r show the data format for summarized trade so far for countries, echo=FALSE}
+head(summary_countries_trade_mass_future, n = 10)
+```
 
-Now to bind the trade data together and $log_{10}$ transform the trade mass and value! For countries, we strip the **Western Sahara** data first, as it is not informative (zeros).
+### Combined Final Trade Data
 
-```{r bind trade data together}
+Now that we have several permutations of trade with *Lycorma*-established states data (both `present` and `future` scenarios) for both geopolitical units (`states` and `countries`) as measured in **value** and **mass** (USD and metric tons, respectively), we can combine some of these data into fewer dataframes to minimize the number of files we are juggling for future analyses. To do this, we merge the **value** and **mass** data for each geopolitical unit dataset.
+
+As we do so, we take the time to create $log_{10}$ transformed versions of the trade **value** and **mass** data. To avoid possible errors for this transformation, we add a constant (`+1`) to data prior to transformation. This process for transformation is held constant for **Impact potential** data.
+
+```{r bind trade data together, message=FALSE}
 #STATES
 summary_states_trade <- left_join(summary_states_trade_value, summary_states_trade_mass, by = c("destination", "status"), suffix = c("_trade", "_mass")) %>%
     mutate(log10_avg_infected_trade = log10(avg_infected_trade+1), log10_avg_infected_mass = log10(avg_infected_mass+1))
@@ -329,16 +380,36 @@ summary_countries_trade <- left_join(summary_countries_trade_value, summary_coun
 summary_countries_trade_future <- left_join(summary_countries_trade_value_future, summary_countries_trade_mass_future, by = c("destination"), suffix = c("_trade", "_mass"))  %>%
     filter(destination != "Western Sahara") %>%
   mutate(log10_avg_infected_trade = log10(avg_infected_trade+1), log10_avg_infected_mass = log10(avg_infected_mass+1))
-
 ```
 
-# Impact 
-### grape yield 
-(metric tons/ha) and production (metric tons)
-**NOTE:** The Philippines has such low grape production that the  $log_{10}$ transformation renders it negative but by adding one prior to transformation, it becomes positive.
+> Here is the merged `states` data for `future`:
 
-#### states
-```{r read in and summarize both grape yield and production}
+```{r merged states trade, echo=FALSE}
+head(summary_states_trade_future, n = 10)
+```
+
+>And here is the merged `countries` data for `future`:
+
+```{r merged countries trade, echo=FALSE}
+head(summary_countries_trade_future, n = 10)
+```
+
+***
+
+# Impact 
+
+Given the close relationship between cultivation of grapes (`grapes`) and winemaking (`wine`), we evaluate impact potential of *Lycorma* based on data from both.
+
+## Grapes
+
+For `grapes`, two forms of cultivation data were available:
+
+  1. grape production (metric tons)
+  2. grape yield per unit area (metric tons/hectare)
+  
+Although provide both sources of data, we focus more on **production** as a total measure of output per geopolitical unit. 
+
+```{r read in and summarize both grape yield and production, message=FALSE}
 data("states_grapes")
 
 #summarize and log transform
@@ -369,11 +440,11 @@ summary_countries_grapes <- countries_grapes %>%
 
 ```
   
-### wine production
-(metric tons) 
+## Wine
 
-#### states
-```{r read in and summarize wine production}
+For `wine`, we were able to obtain wine production for both geopolitical unit datasets in units of mass, metric tons. 
+
+```{r read in and summarize wine production, message=FALSE}
 data("states_wine")
 
 #summarize and log transform
@@ -391,13 +462,20 @@ summary_countries_wine <- countries_wine %>%
 
 ```
 
-### Join Summaries
+# Potentials Summary
 
-Now to piece all of the summarized data together, we will make single objects for states and countries (present and future). Binary identifying information for wine and grapes will be added as well.
+Now that all of these data sources have been summarized and tidied, we will merge them together with `left_join()` sequentially, using the `trade` data (**Transport potential**) as the inital dataset that all others are joined to. The resultant datasets contain all permuatations of geopolitical units (`states` and `countries`) and infection scenarios (`present` and `future`).
 
-#### Present
-##### states present
-```{r make states_summary_present}
+During this process, we also use the `wine` and `grape` data to produce binary categorical data for each geopolitical unit to indicate whether it is involved directly in that industry. For this, we also manually add the *United States* as a grape producer in the `countries` datasets. Additionally, we manually add `$status` to the `countries` datasets as follows:
+
+  + Native: **China, India, Taiwan, and Vietnam**
+  + Established: **Japan, South Korea, and United States**
+
+```{r make full potentials summary datasets, message=FALSE}
+#STATES
+
+##PRESENT
+
 #add the binaries
 states_summary_present <- summary_states_extracts %>%
   mutate(grapes = ifelse(geopol_unit %in% summary_states_grapes$geopol_unit, yes = "yes", no = "no")) %>%
@@ -420,11 +498,8 @@ states_summary_present <- left_join(stateid, states_summary_present, by = "geopo
 states_summary_present <- states_summary_present %>%
   select(ID, geopol_unit, status, grand_mean_max, grand_se_max, wine, grapes, avg_wine:log10_avg_prod, everything())
 
-```
+##FUTURE
 
-#### Future
-##### states future
-```{r make states_summary_future}
 #add the binaries
 states_summary_future <- summary_states_extracts %>%
   mutate(grapes = ifelse(geopol_unit %in% summary_states_grapes$geopol_unit, yes = "yes", no = "no")) %>%
@@ -447,12 +522,16 @@ states_summary_future <- left_join(stateid, states_summary_future, by = "geopol_
 states_summary_future <- states_summary_future %>%
     select(ID, geopol_unit, status, grand_mean_max, grand_se_max, wine, grapes, avg_wine:log10_avg_prod, everything())
 
-```
 
-#### Present
-##### countries present
-This also includes manually changing the **United States** to a grape producer. 
-```{r make countries_summary_present}
+
+#################################
+
+
+
+#COUNTRIES
+
+##PRESENT
+
 #add in the binaries
 countries_summary_present <- summary_countries_extracts %>%
   mutate(grapes = ifelse(geopol_unit %in% summary_countries_grapes$geopol_unit, yes = "yes", no = "no")) %>%
@@ -487,11 +566,8 @@ countries_summary_present$status[countries_summary_present$geopol_unit %in% c("J
 countries_summary_present <- countries_summary_present %>%
     select(ID, geopol_unit, status, grand_mean_max, grand_se_max, wine, grapes, avg_wine:log10_avg_prod, everything())
 
-```
+##FUTURE
 
-#### Future
-##### countries future
-```{r make countries_summary_future}
 #add in the binaries
 countries_summary_future <- summary_countries_extracts %>%
   mutate(grapes = ifelse(geopol_unit %in% summary_countries_grapes$geopol_unit, yes = "yes", no = "no")) %>%
@@ -529,31 +605,17 @@ countries_summary_future <- countries_summary_future %>%
 
 ```
 
+***
 
-# Write Out Data for Future Use
-```{r save correlation plot  data, eval=FALSE}
+# Save data
+
+This section provides the code to save each of the final summary objects to the `/data` directory. They are currently set to not run, as the package **should** ship with the files already in `/data`. Note that this chunk can be run by setting the top `if` from `FALSE` to `TRUE`!
+
+```{r save correlation plot  data, eval=FALSE, message=FALSE}
 if(FALSE){
-#save(states_summary_present, file = file.path(here(), "data", "states_summary_present.rda"))
-#save(states_summary_future, file = file.path(here(), "data", "states_summary_future.rda"))
-#save(countries_summary_present, file = file.path(here(), "data", "countries_summary_present.rda"))
-#save(countries_summary_future, file = file.path(here(), "data", "countries_summary_future.rda"))
+save(states_summary_present, file = file.path(here(), "data", "states_summary_present.rda"))
+save(states_summary_future, file = file.path(here(), "data", "states_summary_future.rda"))
+save(countries_summary_present, file = file.path(here(), "data", "countries_summary_present.rda"))
+save(countries_summary_future, file = file.path(here(), "data", "countries_summary_future.rda"))
 }
 ```
-
-
-# NOTES
-*TRY TO FIX THESE COUNTRY NAMES*
-"S\x8bo Tom\x8e and Pr\x92ncipe"  
-"Cura\x8dao" 
-"Saint Barth\x8elemy"
-"C\x99te d'Ivoire"
-
-## Map Figure
-  1. wineries list (usa_wineries)
-  2. states_centers_wine
-  3. states_centers
-  4. enm_data_usa_mean <- raster("./data/geotiff_enms//slftoh_usa_downsampled_x4_mean.tif")
-  5. enm_data_mean <- raster("./data/geotiff_enms/slftoh_downsampled_x4_mean.tif")
-  6. trade data
-  7. slf coords? slf_coords <- read_csv("./data/Spotted Lanternfly/MAXENT_INPUT_VARIATE/SLF_FINAL_withPDA_24Sept18_v4_8.csv") %>%
-

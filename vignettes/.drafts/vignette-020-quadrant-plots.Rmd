@@ -1,8 +1,8 @@
 ---
-title: "vignette-023-quadrant-plots"
+title: "vignette-020-quadrant-plots"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{vignette-023-quadrant-plots}
+  %\VignetteIndexEntry{vignette-020-quadrant-plots}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -14,30 +14,18 @@ knitr::opts_chunk$set(
 )
 ```
 
-new edited version of the correlation plots
+This is the standard version of the correlation plot code!
 
-# To do:
-
-1. ~~V1 :Stack the two figures, flip the axes, include the legend, remove the quadrant labels, make it so that the small white points are visible.~~
-  - ~~labeling is wrong on the corrplots for states relative to the infected~~
-  - ~~rm observed max suitability in boxplot names~~
-  - ~~rm the outliers for boxplots~~
-  - ~~scale up the size for the points in the scatter~~
-2. ~~V2: Same as V1, but remove the boxplots.~~
-3. **V3: Same as V2, but plot colored symbols to indicate the means of yes/no wine.**
-4. V4: Same as V3, but remove the individual points for the states/countries and plot points with SEs on both axes.
-
-```{r setup, results='hide', message=FALSE}
+```{r setup}
 library(slfrsk)
 library(tidyverse)
 library(here)
 library(ggrepel)
 library(grid)
-library(gridExtra) #only needed if one uses grid.arrange() in plotting
+#library(gridExtra) #only needed if one uses grid.arrange() in plotting
 ```
 
-#Setup
-## Read in data
+read in data
 ```{r read in summary data}
 data("states_summary_present")
 data("states_summary_future")
@@ -45,15 +33,17 @@ data("countries_summary_present")
 data("countries_summary_future")
 ```
 
-## Toggle different versions
 ```{r set to run different versions}
 # Set these variables to run different versions of the figures.
+
 # Make transport scaled between one and zero (but note that establishment must be uncommented below)
 one_zero <- TRUE
 
 # Replace this with max mean quantile_0.50 quantile_0.75 quantile_0.90 to edit which metric to plot for establishment
-#to run this, one needs to use different extract data sources further back in the cleaning process (vig01) by selecting a different variable
-#estab_to_plot <- "max" # max was used for the quadrant figures
+estab_to_plot <- "max" # max was used for the quadrant figures
+
+# Choose quadrant intercepts
+q_intercepts <- list(transport = 0.5, establishment = 0.5) 
 
 # Need a flag to switch if we want present or future infected states transport
 present_transport <- FALSE
@@ -61,28 +51,29 @@ present_transport <- FALSE
 # Set what type of multiple correlation you want to calculate
 method_cor <- "spearman"
 
-# set whether to look at grape yield or wine production primarily NOTE THAT PLOTS ARE NOT CLEAN FOR WINE!!!
+# set whether to look at grape yield or wine production primarily
 #impact_prod <- "wine"
 impact_prod <- "grapes"
 
+# Set the version number here for the pdfs that are being produced
+vers <- paste0("4_4_prod_", impact_prod)
+
+
 # Plot the native countries?
 native <- TRUE
+
+# If you want to label both of the countries with established SLF
+label.JPN.KOR <- TRUE
+
+# If you want the legend plotted on the states scatter?
+# plot_state_legend <- TRUE
 
 # remove unnecessary "countries" NOTE USA IS REMOVED HERE
 #Philippines is also removed, as the grape yield data for it was several orders of magnitude smaller than anything else reported and so close to zero that it caused log transformation scaling issues
 rem_usa <- TRUE
 
-# If you want to label both of the countries (or states) with established SLF
-label.JPN.KOR <- TRUE
-label.us.infected <- TRUE   #PRESENT: adding DE, MD, NJ  FUTURE: adding DE, MD, NJ, OH, WV
-
-# If you want the legend plotted on the states scatter?
-# plot_state_legend <- TRUE
-
-# If you want to plot the mean values for the correlation plot?
-plot_mean <- TRUE
-
 ```
+
 
 rescale the trade mass data to be between zero and one or $log_{10}(+1)$ transform the regular version.
 ```{r rescale states}
@@ -121,7 +112,7 @@ if(one_zero){
 
 ```
 
-Modify the native countries established category
+Modify the native countries established? category?
 ```{r modify native slf countries}
 if(native){
   countries_summary_present$status[countries_summary_present$geopol_unit %in% c("China", "India", "Taiwan", "Vietnam")] <- "native"
@@ -135,7 +126,7 @@ if(native){
 
 ```
 
-Remove Unnecessary Countries
+Remove Unnecessary Countries?
 ```{r rm countries that are not needed}
 if(rem_usa){ # TRUE if you want to remove the USA
   rems <- c("Akrotiri and Dhekelia"
@@ -234,8 +225,8 @@ if(one_zero){
 
 ```
 
-Make a version of the country data that lacks zeros for trade mass
-```{r rm zeros}
+Make a version of the plot that lacks zeros for trade mass
+```{r}
 #rm the trade mass zero countries
 countries_summary_nozeros_present <- countries_summary_present %>% filter(log10_avg_infected_mass != 0)
 countries_summary_nozeros_future <- countries_summary_future %>% filter(log10_avg_infected_mass != 0)
@@ -253,65 +244,43 @@ countries_summary_nozeros_future <- countries_summary_nozeros_future %>%
 ```
 
 
-# Plotting
-
-## Plotting parameters
 Now we have some plotting parameters to make visible up front
 ```{r params for plotting}
 # Choose quadrant intercepts
 q_intercepts <- list(transport = 0.5, establishment = 0.5)
 
-hh = .001 #set margins
-plots_which <- c(TRUE,FALSE) # Do not change this flips between plotting the states or plotting countries
+hh = .01 #set margins
+plots_which <- c(TRUE,FALSE) # Do not change this flips between potting the states or plotting countries
 top_to_plot <- 10 # How many countries and states to highlight for labels?
-nudge_JPNKOR.x <- c(-.05,0)
-nudge_JPNKOR.y <- c(.07,.1)
-nudge_JPNKOR_future.x <- c(.00,0)
-nudge_JPNKOR_future.y <- c(.08,.1)
-nudge_us.infected_present.x <- c(0.00, -0.02,-0.04)  #PRESENT: adding DE, MD, NJ  
-nudge_us.infected_present.y <- c(0.10,-0.10,-0.10)
-nudge_us.infected_future.x <- c( 0.00,-0.10, 0.02,-0.04,0.00)  #FUTURE: adding OH, DE, MD, NJ, WV
-nudge_us.infected_future.y <- c(-0.10, 0.10,-0.17, 0.08,0.15)
-#lx <- 0.22
-#ly <- 0.25
-#hy <- 0.77
-#hx <- 0.78
+nudge_JPNKOR.y <- c(.1,.1)
+nudge_JPNKOR.x <- c(-.17,0)
+lx <- 0.22
+ly <- 0.25
+hy <- 0.77
+hx <- 0.78
 risk_color <- "gray40"
 risk_size <- 5
 
-#risk_labels <-data.frame(label = c("low\nrisk","moderate\nrisk","moderate\nrisk","high\nrisk"),
-#                        x = c(lx,lx,hx,hx),
-#                        y = c(ly,hy,ly,hy),
-#                        hjust = c(0,0,0,0),
-#                        vjust = c(0,0,0,0))
+risk_labels <-data.frame(label = c("low\nrisk","moderate\nrisk","moderate\nrisk","high\nrisk"),
+                         x = c(lx,lx,hx,hx),
+                         y = c(ly,hy,ly,hy),
+                         hjust = c(0,0,0,0),
+                         vjust = c(0,0,0,0))
 
 i <- 1
 
 ```
 
-
+And the actual plots...
 ```{r plot figures, warning=FALSE, message=FALSE, echo=FALSE, fig.height= 7.5, fig.width=7.5}
-#for(i in 2){
 for (i in 1:length(plots_which)) {
-  
-  #selects states or countries to plot
+  # for (i in 1) {
+  #  for (i in 2) {
   statez = plots_which[i]
-  
-  ########################
-  #DATA SELECTION STEP
-  ########################
 
-  #checks whether to use wine or grapes as the impact product to consider
   if(impact_prod == "wine"){
     if (statez) {
-      #selects the data to modify for plotting: STATES and chooses the timing
-      if(present_transport){
-        data_to_plot <- states_summary_present
-      } else{
-        data_to_plot <- states_summary_future
-      }
-      
-      #calls the exact variables to plot
+      data_to_plot <- states_summary_present
       data_to_plot <- data_to_plot %>%
         mutate(
           x_to_plot = avg_infected_mass_scaled,
@@ -321,37 +290,12 @@ for (i in 1:length(plots_which)) {
           color_to_plot = status
         ) %>%
         arrange(desc(grapes), (size_to_plot)) #so that the grape producers are on top
-      
-      #order the data that gets labeled based on top_to_plot
-      data_to_label <- tail(data_to_plot, top_to_plot)  %>% arrange(desc(size_to_plot))
-      #do welch t.test to assess if transport and establishment have the same relationship with grapes
+      data_to_label <-
+        tail(data_to_plot, top_to_plot)  %>% arrange(desc(size_to_plot))
       state_grape_t.test <- list(transport = t.test(avg_infected_mass_scaled~grapes, data = data_to_plot),
                                  establishment = t.test(grand_mean_max_scaled~grapes, data = data_to_plot))
-      
-      #add infected state labeling if turned on
-      if(label.us.infected){
-        if(present_transport){  #PRESENT
-          data_to_label_us.infected <- data_to_plot %>%
-          filter(geopol_unit %in% c("Delaware", "Maryland", "New Jersey")) %>%
-          arrange(desc(size_to_plot))
-        data_to_label <- bind_rows(data_to_label,data_to_label_us.infected)
-        
-        } else if(present_transport == FALSE){  #FUTURE
-          data_to_label_us.infected <- data_to_plot %>%
-          filter(geopol_unit %in% c("Delaware", "Maryland", "New Jersey", "Ohio", "West Virginia")) %>%
-          arrange(desc(size_to_plot))
-        data_to_label <- bind_rows(data_to_label,data_to_label_us.infected)
-        }
-      } #end of labeling for infected states
-      
     } else {
-      #selects the data to modify for plotting: COUNTRIES and selects the timing
-      if(present_transport){
-        data_to_plot <- countries_summary_present
-      } else{
-        data_to_plot <- countries_summary_future
-      }
-      
+      data_to_plot <- countries_summary_present
       data_to_plot <- data_to_plot %>%
         mutate(
           x_to_plot = avg_infected_mass_scaled,
@@ -365,7 +309,7 @@ for (i in 1:length(plots_which)) {
         tail(data_to_plot, top_to_plot)  %>%
         arrange(desc(size_to_plot)) %>%
         mutate(
-          ID = recode(              #add ISO3 codes for the labeled countries (rather than all)
+          ID = recode(
             ID,
             Italy = "ITA",
             France = "FRA",
@@ -379,8 +323,7 @@ for (i in 1:length(plots_which)) {
             Portugal = "PRT"
           )
         )
-      
-      #do welch t.test to assess if transport and establishment have the same relationship with grapes
+
       country_grape_t.test <- list(transport = t.test(avg_infected_mass_scaled~grapes, data = data_to_plot),
                                    establishment = t.test(grand_mean_max_scaled~grapes, data = data_to_plot))
       if(label.JPN.KOR){
@@ -395,13 +338,7 @@ for (i in 1:length(plots_which)) {
     }
   } else if(impact_prod == "grapes"){
     if (statez) {
-      #selects the data to modify for plotting: STATES and chooses the timing
-      if(present_transport){
-        data_to_plot <- states_summary_present
-      } else{
-        data_to_plot <- states_summary_future
-      }
-      
+      data_to_plot <- states_summary_present
       data_to_plot <- data_to_plot %>%
         mutate(
           x_to_plot = avg_infected_mass_scaled,
@@ -418,31 +355,8 @@ for (i in 1:length(plots_which)) {
         tail(data_to_plot, top_to_plot)  %>% arrange(desc(size_to_plot))
       state_grape_t.test <- list(transport = t.test(avg_infected_mass_scaled~grapes, data = data_to_plot),
                                  establishment = t.test(grand_mean_max_scaled~grapes, data = data_to_plot))
-      
-            #add infected state labeling if turned on
-      if(label.us.infected){
-        if(present_transport){  #PRESENT
-          data_to_label_us.infected <- data_to_plot %>%
-          filter(geopol_unit %in% c("Delaware", "Maryland", "New Jersey")) %>%
-          arrange(desc(size_to_plot))
-        data_to_label <- bind_rows(data_to_label,data_to_label_us.infected)
-        
-        } else if(present_transport == FALSE){  #FUTURE
-          data_to_label_us.infected <- data_to_plot %>%
-          filter(geopol_unit %in% c("Delaware", "Maryland", "New Jersey", "Ohio", "West Virginia")) %>%
-          arrange(desc(size_to_plot))
-        data_to_label <- bind_rows(data_to_label,data_to_label_us.infected)
-        }
-      } #end of labeling for infected states
-
     } else {
-      #selects the data to modify for plotting: COUNTRIES and selects the timing
-      if(present_transport){
-        data_to_plot <- countries_summary_present
-      } else{
-        data_to_plot <- countries_summary_future
-      }
-      
+      data_to_plot <- countries_summary_present
       data_to_plot <- data_to_plot %>%
         mutate(
           x_to_plot = avg_infected_mass_scaled,
@@ -457,7 +371,6 @@ for (i in 1:length(plots_which)) {
 
       data_to_label <-
         tail(data_to_plot, top_to_plot)  %>% arrange(desc(size_to_plot))
-      
       data_to_label <- data_to_label %>%
         mutate(
           ID = recode(
@@ -483,7 +396,6 @@ for (i in 1:length(plots_which)) {
             Japan = "JPN"
           )
         )
-      
       country_grape_t.test <- list(transport = t.test(avg_infected_mass_scaled~grapes, data = data_to_plot),
                                    establishment = t.test(grand_mean_max_scaled~grapes, data = data_to_plot))
       if(label.JPN.KOR){
@@ -499,99 +411,65 @@ for (i in 1:length(plots_which)) {
   }
 
 
-########################
-#PLOT SETTINGS STEP
-########################
 
-#SET ALL OF THE NUDGES FOR LABELS
-#need to add the conditional for present transport, since nudging only works based on the data
-if(present_transport == FALSE){
-  if(impact_prod == "wine"){
-    #nudging
-    if(statez) { #STATES FUTURE WINE
-      nudge.x <- c(-.1,-.1,-.1,-.05,-.1,-0.05,-.1,.06,-.01,.05)
-      nudge.y <- c(.2,.10,.10,.10,.07,.15,.15,-.07,-.12,-.12)    #CA, WA, NY, PA, OR, GA, OH, MI, VA, NC
-      if(label.us.infected){
-        nudge.x <- c(nudge.x, nudge_us.infected_future.x)
-        nudge.y <- c(nudge.y, nudge_us.infected_future.y)
+  #plot all of it
+  #need to add the conditional for present transport, since nudging only works based on the data
+  if(present_transport == FALSE){
+    if(impact_prod == "wine"){
+      #nudging
+      if(statez) {
+        nudge.y <- c(.2,.10,.10,.10,.07,.15,.15,-.07,-.12,-.12)    #CA, WA, NY, PA, OR, GA, OH, MI, VA, NC
+        nudge.x <- c(-.1,-.1,-.1,-.05,-.1,-0.05,-.1,.06,-.01,.05)
+        ytitle <- "Establishment Potential"
+      } else {
+        nudge.y <- c(.13, .095, .155, .09, -.11, .13, .15,.06,-.1,-.19)  #ITA, FRA, ESP, CHN, ARG, CHL, AUS, ZAF, DEU, PRT
+        nudge.x <- c(-.3,-.27,-.05,-.26,.14,.1,.20,-.21,.08,.2)
+        if(label.JPN.KOR) {
+          nudge.x <- c(nudge.x, nudge_JPNKOR.x) #JPN KOR
+          nudge.y <- c(nudge.y, nudge_JPNKOR.y) #JPN KOR
+        }
+        ytitle <- "Establishment Potential"
       }
-      ytitle <- "Establishment Potential"
-    } else {  #COUNTRIES FUTURE WINE
-      nudge.x <- c(-.3,-.27,-.05,-.26,.14,.1,.20,-.21,.08,.2)
-      nudge.y <- c(.13, .095, .155, .09, -.11, .13, .15,.06,-.1,-.19)  #ITA, FRA, ESP, CHN, ARG, CHL, AUS, ZAF, DEU, PRT
-      if(label.JPN.KOR) {
-        nudge.x <- c(nudge.x, nudge_JPNKOR_future.x) #JPN KOR
-        nudge.y <- c(nudge.y, nudge_JPNKOR_future.y) #JPN KOR
+    } else if(impact_prod == "grapes"){
+      #nudging
+      if(statez) {
+        nudge.y <- c( .20, .10, .10, .10,-.05, .10,-.05,-.07,-.12, .10)   #production: CA, WA, NY, PA, MI, OR, TX, VA, NC, MO
+        nudge.x <- c(-.10,-.05,-.22,-.05, .10,-.05, .10,.025, .05,-.025)   #yield: #CA, PA, WA, MI, NY, MO, OH, OR, GA, NC
+        ytitle <- "Establishment Potential"
+      } else {
+        # grape production: CHN, ITA, ESP, FRA, TUR, IND, CHL, ARG, ZAF,   AUS
+        nudge.y <-       c( .10, .11, .12, .09,-.05, .10,.125,-.06,-.1,-.07)
+        nudge.x <-       c(-.05,-.25,-.02,-.06, .01,-.05,.200, .10, .075, .145)
+        if(label.JPN.KOR) {
+          nudge.x <- c(nudge.x, nudge_JPNKOR.x) #JPN KOR
+          nudge.y <- c(nudge.y, nudge_JPNKOR.y) #JPN KOR
+        }
+        ytitle <- "Establishment Potential"
       }
-      ytitle <- "Establishment Potential"
     }
-  } else if(impact_prod == "grapes"){
-    #nudging
-    if(statez) { #STATES FUTURE GRAPES
-      nudge.x <- c(-.10,-.05,-.10,-.02, .10,-.05, .10, .00,-.05,-.025)   #yield: #CA, PA, WA, MI, NY, MO, OH, OR, GA, NC
-      nudge.y <- c(-.10, .10, .08, .08,-.05, .09,-.05,-.10,-.15, .10)   #production: CA, WA, NY, PA, MI, OR, TX, VA, NC, MO
-      if(label.us.infected){
-        nudge.x <- c(nudge.x, nudge_us.infected_future.x)
-        nudge.y <- c(nudge.y, nudge_us.infected_future.y)
-      }
-      ytitle <- "Establishment Potential"
-    } else {  #COUNTRIES FUTURE GRAPES
-      # grape production: CHN, ITA, ESP, FRA, TUR, IND, CHL, ARG, ZAF, AUS
-      nudge.x <- c(-0.01,-0.00,-0.00,-0.04, 0.02,0.03,-0.04, 0.05,-0.03, 0.04)
-      nudge.y <- c(-0.10,-0.20,-0.27, 0.06,-0.24,0.07, 0.11,-0.23, 0.16,-0.10)
-      if(label.JPN.KOR) {
-        nudge.x <- c(nudge.x, nudge_JPNKOR_future.x) #JPN KOR
-        nudge.y <- c(nudge.y, nudge_JPNKOR_future.y) #JPN KOR
-      }
-      ytitle <- "Establishment Potential"
-    }
-  }
-} else { # grapes above wine below NOTE may not work with labeling JPN and KOR
-  if(impact_prod == "wine"){
-    if(statez) { #STATES PRESENT WINE
-      nudge.x <- c(.09,-.1,-.04,-.05,-.10,-0.12,-.1,.04,-.01,.05)
+
+  } else { # grapes above wine below NOTE will not work with labeling JPN and KOR
+    if(statez) {
       nudge.y <- c(-.10,.10,.10,.10,.07,.10,.12,-.07,-.12,-.12)    #CA, WA, NY, PA, OR, GA, OH, MI, VA, NC
-      if(label.us.infected){
-        nudge.x <- c(nudge.x, nudge_us.infected_present.x)
-        nudge.y <- c(nudge.y, nudge_us.infected_present.y)
-      }
+      nudge.x <- c(.09,-.1,-.04,-.05,-.10,-0.12,-.1,.04,-.01,.05)
       ytitle <- "Establishment Potential"
-    } else { #COUNTRIES PRESENT WINE
-      nudge.x <- c(-.03,-.10,-.02,-.03,.14,-.1,-.23,-.21,.08,.2)
+    } else {
       nudge.y <- c(.13, .09, .155, .09, -.11, .13, .15,.09,-.08,-.15)  #ITA, FRA, ESP, CHN, ARG, CHL, AUS, ZAF, DEU, PRT
-      if(label.JPN.KOR) {
-        nudge.x <- c(nudge.x, nudge_JPNKOR.x) #JPN KOR
-        nudge.y <- c(nudge.y, nudge_JPNKOR.y) #JPN KOR
-      }
-      ytitle <- "Establishment Potential"
-    }
-  } else if(impact_prod == "grapes"){
-    if(statez) { #STATES PRESENT GRAPES
-      nudge.y <- c(-0.05, 0.095, -0.10, 0.09, -0.05, 0.085, -0.02, 0.12, -0.10, 0.13)  #CA, WA, NY, PA, MI, OR, TX, VA, NC, MO  
-      nudge.x <- c( 0.10, 0.00, -0.02,  0.00, -0.05, 0.00,  0.10, 0.00,  0.02, 0.01)
-      if(label.us.infected){
-        nudge.x <- c(nudge.x, nudge_us.infected_present.x)
-        nudge.y <- c(nudge.y, nudge_us.infected_present.y)
-      }
-      ytitle <- "Establishment Potential"
-    } else { #COUNTRIES PRESENT GRAPES
-      nudge.x <- c(-0.01, 0.02, 0.10,-0.04, 0.06,-0.02,-0.07, 0.05,-0.20, 0.11)   #CHN, ITA, ESP, FRA, TUR, IND, CHL, ARG, ZAF, AUS
-      nudge.y <- c( 0.08,-0.08,-0.20, 0.07,-0.02, 0.10, 0.12,-0.09,-0.07,-0.25)
-      if(label.JPN.KOR) {
-        nudge.x <- c(nudge.x, nudge_JPNKOR.x) #JPN KOR
-        nudge.y <- c(nudge.y, nudge_JPNKOR.y) #JPN KOR
-      }
+      nudge.x <- c(-.03,-.10,-.02,-.03,.14,-.1,-.23,-.21,.08,.2)
       ytitle <- "Establishment Potential"
     }
   }
-}
-  
 
-  #CREATE THE STATES PLOT
   (states_plot <- ggplot(data = data_to_plot) +
-      #geom_text(data = risk_labels, mapping = aes(x = x, y = y,label = label), color = risk_color, size = risk_size) +
+      geom_text(data = risk_labels,
+               mapping = aes(x = x, y = y,label = label),
+               color = risk_color,
+               size = risk_size) +
+      #geom_segment(aes(x = 0, xend = 1, y = .5, yend = .5), linetype = "dashed") +
+      #geom_segment(aes(y = 0, yend = 1, x = .5, xend = .5), linetype = "dashed") +
       geom_hline(yintercept = q_intercepts$establishment, linetype = "dashed") +
       geom_vline(xintercept = q_intercepts$transport, linetype = "dashed") +
+      #  geom_abline(intercept = 0, slope = 1, linetype = "solid") + # add one to one
       geom_rect(mapping = aes(xmin=1.01, xmax=1.2, ymin=.49, ymax=.5), fill = "white") +
       geom_rect(mapping = aes(ymin=1.01, ymax=1.2, xmin=.49, xmax=.51), fill = "white") +
       geom_text_repel(data = data_to_label,
@@ -602,10 +480,14 @@ if(present_transport == FALSE){
                       nudge_x = nudge.x
       ) +
       geom_point(
-        aes(x = x_to_plot, y = y_to_plot, fill = fill_to_plot, size = size_to_plot, color = color_to_plot),
+        aes(x = x_to_plot, y = y_to_plot,
+            fill = fill_to_plot, size = size_to_plot, color = color_to_plot),
         shape = 21, stroke = 1.3, alpha = 0.75
       ) +
-      # geom_text(data = risk_labels, mapping = aes(x = x, y = y,label = label), color = risk_color, size = risk_size) +
+      # geom_text(data = risk_labels,
+      #           mapping = aes(x = x, y = y,label = label),
+      #           color = risk_color,
+      #           size = risk_size) +
       scale_fill_manual(
         values = c("no" = "#ffffff", "yes" = "#C77CFF"),
         name = "Wine Production",# "Wine Impact Potential",
@@ -613,34 +495,35 @@ if(present_transport == FALSE){
       ) +
       scale_color_manual(
         values = c(
-          "red",
-          "black",
-          "blue"),
-        breaks = c(
-          "established",
-          "not established",
-          "native"),
+          "established" = "red",
+          "not established" = "black",
+          "native" = "blue"),
         name = "Regional Status",
-        labels = c("invaded","uninvaded", "native")
+        labels = c("invaded","native", "uninvaded")
       ) +
       guides(
         fill = guide_legend(
           order = 1,
-          override.aes = list(shape = 22, size = 5, alpha = 1)
+          override.aes = list(
+            shape = 22,
+            size = 5,
+            alpha = 1
+          )
         ),
         color = guide_legend(
-          order = 3,
-          override.aes = list(alpha = 1)
+          order = 3
         ),
         size = guide_legend(    # Adjust size to edit legend grape production
           order = 2,            # circles.
-          override.aes = list(size = c(1,3,6), alpha = 1)
+          override.aes = list(
+            size = c(1,3,6)
+          )
         )
       ) +
       scale_size_continuous(name = "Grape Production",
                             trans = "log10",
-                            range = c(1.5, 6),
-                            breaks = c(1.5,2,6),
+                            range = c(1, 6),
+                            breaks = c(1,2,6),
                             labels = c("low", "moderate", "high")
       ) +
       labs(x = "Transport Potential", y = ytitle) +
@@ -662,12 +545,12 @@ if(present_transport == FALSE){
         legend.title = element_text(face = "plain"),
         legend.key.size = unit(0.2, "cm"),
         legend.key = element_blank(),
-        plot.margin = unit(c(hh, -5, hh, hh), units = "line"),
+        plot.margin = unit(c(hh, hh, hh, hh), units = "line"),
         axis.title = element_text(size = rel(1.3))
       ) +
-      scale_x_continuous(breaks = c(0,.5,1),labels = c("low", "moderate", "high"), limits = c(0,1.15)) +
-      scale_y_continuous(breaks = c(0,.5,1),labels = c("low", "moderate", "high"), limits = c(0,1.15)) + 
-      coord_flip()
+      scale_x_continuous(breaks = c(0,.5,1),labels = c("low", "moderate", "high")) +
+      scale_y_continuous(breaks = c(0,.5,1),labels = c("low", "moderate", "high"))
+      #+ coord_flip()
   )
 
   #get the legend
@@ -690,136 +573,231 @@ if(present_transport == FALSE){
   (states_plot <- states_plot + theme(legend.position = "none"))
 
 
-    states_plot_final <- states_plot + {
-      #new add in the means of the wine groupings
-        if(plot_mean) {
-          geom_point(data = data_to_plot %>% group_by(wine) %>% summarize(n = n(), sd_x = sd(x_to_plot), sd_y = sd(y_to_plot), x_to_plot_mean = mean(x_to_plot), y_to_plot_mean = mean(y_to_plot)) %>% mutate(se_x = sd_x/n, se_y = sd_y / n, fill_to_plot = wine), 
-                 aes(x = x_to_plot_mean, y = y_to_plot_mean, fill = fill_to_plot),
-                 shape = 23, size = 10, stroke = 2)
-        }
-            } +
+  #boxplot
+  (
+    states_box_estab <- ggplot(data_to_plot) +
+      geom_boxplot(
+        aes(
+          x = fill_to_plot,
+          y = y_to_plot,
+          group = fill_to_plot,
+          fill = fill_to_plot
+        ),
+        show.legend = FALSE,
+        #outlier.size = 0,
+        notch = FALSE,
+        notchwidth = .25
+      ) +
+      #geom_dotplot(aes(x = fill_to_plot, y = y_to_plot, group = fill_to_plot, fill = fill_to_plot),
+      #             binaxis='y',
+      #             stackdir='center',
+      #             dotsize=1) +
+      # geom_point(aes(x = fill_to_plot,
+      #                y = y_to_plot,
+      #                fill = fill_to_plot,
+      #                size = log10(size_to_plot),
+      #                color = color_to_plot),
+      #            shape = 21,
+      #            stroke = 1.3) +
+    #labs(x = "Major grape producer", y = "Observed Max Suitability") +
+    ylim(0, 1) +
+      scale_fill_manual(
+        values = c("yes" = "#C77CFF", "no" = "#ffffff"),
+        name = ""
+      ) +
+      #ggtitle(label = "States Grape Production vs. Average Model Maxes") +
+      theme(
+        axis.line = element_blank(),
+        axis.text.x = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks = element_blank(),
+        axis.title.x = element_blank(),
+        axis.title.y = element_blank(),
+        legend.position = "none",
+        panel.background = element_blank(),
+        panel.border = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        plot.margin = unit(c(hh, hh, hh, hh), units = "line"),
+        plot.background = element_blank()
+      )
+  )
+
+  #ggplot(data = data_to_plot) + geom_density(mapping = aes(x_to_plot, fill = fill_to_plot))
+  #boxplot
+  (
+    states_box_intro <- ggplot(data_to_plot) +
+      geom_boxplot(
+        aes(
+          x = fill_to_plot,
+          y = x_to_plot,
+          group = fill_to_plot,
+          fill = fill_to_plot
+        ),
+        show.legend = FALSE,
+        #outlier.size = 0,
+        notch = FALSE,
+        notchwidth = .25
+      ) +
+      # geom_point(aes(x = fill_to_plot,
+      #                y = x_to_plot,
+      #                fill = fill_to_plot,
+      #                size = log10(size_to_plot),
+      #                color = color_to_plot),
+      #            shape = 21,
+      #            stroke = 1.3) +
+      #geom_density(aes(x_to_plot, fill = fill_to_plot), show.legend = F, alpha = 0.6) +
+      labs(x = "  ", y = "Observed Max Suitability") +
+      ylim(0, 1) +
+      scale_fill_manual(
+        values = c("yes" = "#C77CFF", "no" = "#ffffff"),
+        name = ""
+      ) +
+      coord_flip() +
+      #ggtitle(label = "States Grape Production vs. Average Model Maxes") +
+      theme(
+        axis.line = element_blank(),
+        axis.text.x = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks = element_blank(),
+        axis.title.x = element_blank(),
+        #axis.title.y=element_blank(),
+        legend.position = "none",
+        panel.background = element_blank(),
+        panel.border = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        plot.background = element_blank(),
+        plot.margin = unit(c(hh, hh, hh, hh), units = "line")
+      )
+  )
+
+
+  #arrange it in a nice combined grid
+
+  #grid.arrange(states_box_intro, grid.text(""), states_plot, states_box_estab, nrow = 2, ncol = 2, widths = c(5, 1), heights = c(1,5))
+
+
+
+  # Insert xbp_grob inside the scatter plot
+  #x = x_to_plot,
+  #y = y_to_plot
+  (
+    states_plot_final <- states_plot +
+      # annotation_custom(grob = legend, xmin = .465, ymax = .6) +
+      #coord_cartesian(clip = "off") +
+      annotation_custom(
+        grob = ggplotGrob(states_box_estab),
+        xmin = 1.01,
+        xmax = 1.11,
+        ymin = -Inf,
+        ymax = 1.05
+      ) +
+      # Insert ybp_grob inside the scatter plot
+      annotation_custom(
+        grob = ggplotGrob(states_box_intro),
+        xmin = -.1,
+        xmax = 1.05,
+        ymin = 1,
+        ymax = 1.1
+      ) +
+
       annotation_custom(
         grob = rectGrob(gp = gpar(fill = "white", col = "white")),
         xmin = -1,
-        xmax = 1.21,
-        ymin = 1.05,
-        ymax = 1.21
+        xmax = 1.5,
+        ymin = 1.1,
+        ymax = 1.5
       ) +
       annotation_custom(
         grob = rectGrob(gp = gpar(fill = "white", col = "white")),
         ymin = -1,
-        ymax = 1.21,
-        xmin = 1.05,
-        xmax = 1.21
-      ) +
-      scale_x_continuous(breaks = c(0,.5,1),labels = c("low", "moderate", "high"), limits = c(0,1.15)) +
-      scale_y_continuous(breaks = c(0,.5,1),labels = c("low", "moderate", "high"), limits = c(0,1.15))
+        ymax = 1.5,
+        xmin = 1.11,
+        xmax = 1.5
+      )
+  )
 
-  
   g <- ggplotGrob(states_plot_final)
   g$layout$clip[g$layout$name == "panel"] <- "off"
   #g$layout
-  g$layout$z[g$layout$name == "panel"] <- 17 # Note that z for panel is 1.  Change it to something bigger.
+  g$layout$z[g$layout$name == "panel"] <-
+    17 # Note that z for panel is 1.  Change it to something bigger.
 
   grid.newpage()
-  grid.draw(g)
+  #grid.draw(g)
 
-  
-  #THIS SECTION PLOTS ALL OF IT AGAIN WITH PDF SAVING AND THEN DOES THE CORR
   # present or future
- if(present_transport){
-    if (statez) { #states present
-      states_grob <- g
-      #grid.draw(g)
-      data_to_cor <- as.matrix(select(data_to_plot,x_to_plot,y_to_plot,size_to_plot))
-      states.impact.model <-
-        impact.model <-
-        lm(size_to_plot ~ x_to_plot + y_to_plot, data = data.frame(data_to_cor))
-      states.impact.cor <- cor.test(impact.model$model$size_to_plot, impact.model$fitted.values, method = method_cor)
-    } else {  #countries present
-      countries_grob <- g
-      #grid.draw(g)
-      data_to_cor <- as.matrix(select(data_to_plot,x_to_plot,y_to_plot,size_to_plot))
-      countries.impact.model <-
-        impact.model <-
-        lm(size_to_plot ~ x_to_plot + y_to_plot, data = data.frame(data_to_cor))
-      countries.impact.cor <- cor.test(impact.model$model$size_to_plot, impact.model$fitted.values, method = method_cor)
-
-  } 
-   }  else {    #future cases
-
-    if (statez) { #states future
-      states_grob <- g
-      grid.draw(g)
-      data_to_cor <- as.matrix(select(data_to_plot,x_to_plot,y_to_plot,size_to_plot))
-      states.impact.model <-
-        impact.model <-
-        lm(size_to_plot ~ x_to_plot + y_to_plot, data = data.frame(data_to_cor))
-      states.impact.cor <- cor.test(impact.model$model$size_to_plot, impact.model$fitted.values, method = method_cor)
-    } else{ #countries future
-      countries_grob <- g
-      grid.draw(g)
-      data_to_cor <- as.matrix(select(data_to_plot,x_to_plot,y_to_plot,size_to_plot))
-      countries.impact.model <-
-        impact.model <-
-        lm(size_to_plot ~ x_to_plot + y_to_plot, data = data.frame(data_to_cor))
-      countries.impact.cor <- cor.test(impact.model$model$size_to_plot, impact.model$fitted.values, method = method_cor)
-      } 
-            }
-
-  #plot the states+legend and save
-if (statez) {
   if(present_transport){
-    pdf(file.path(here::here(),"vignettes", paste0("states_combined_present_max_",impact_prod,"_v3.pdf")),width = 7.5, height = 7)
 
-} else{
-    pdf(file.path(here::here(),"vignettes", paste0("states_combined_future_max_",impact_prod,"_v3.pdf")),width = 7.5, height = 7)
-      
-}
-      grid.arrange(states_grob, legend_state, nrow=1, ncol = 2, widths = c(4,2), heights = 1)
-    invisible(dev.off())
-} else{
-  #plot the countries+legend
-if(present_transport){
-    pdf(file.path(here::here(),"vignettes", paste0("countries_combined_present_max_",impact_prod,"_v3.pdf")),width = 7.5, height = 7)
+    if (statez) {
+      states_grob <- g
+      #pdf(paste0("./submission/Global_MAXENT/figures/states_combined_",estab_to_plot,"_v",vers,".pdf"), width = 7.5, height = 7)
+      grid.draw(g)
+      #dev.off()
+      data_to_cor <- as.matrix(select(data_to_plot,x_to_plot,y_to_plot,size_to_plot))
+      states.impact.model <-
+        impact.model <-
+        lm(size_to_plot ~ x_to_plot + y_to_plot, data = data.frame(data_to_cor))
+      states.impact.cor <- cor.test(impact.model$model$size_to_plot,
+                                    impact.model$fitted.values,
+                                    method = method_cor)
+    } else {
+      countries_grob <- g
+      #pdf(paste0("./submission/Global_MAXENT/figures/countries_combined_",estab_to_plot,"_v",vers,".pdf"), width = 7.5, height = 7)
+      grid.draw(g)
+      #dev.off()
+      data_to_cor <- as.matrix(select(data_to_plot,x_to_plot,y_to_plot,size_to_plot))
+      countries.impact.model <-
+        impact.model <-
+        lm(size_to_plot ~ x_to_plot + y_to_plot, data = data.frame(data_to_cor))
+      countries.impact.cor <- cor.test(impact.model$model$size_to_plot,
+                                       impact.model$fitted.values,
+                                       method = method_cor)
+    }
+  } else {
 
-} else{
-    pdf(file.path(here::here(),"vignettes", paste0("countries_combined_future_max_",impact_prod,"_v3.pdf")),width = 7.5, height = 7)
-      
-}
-      grid.arrange(countries_grob, legend_country, nrow=1, ncol = 2, widths = c(4,2), heights = 1)
-    invisible(dev.off())
 
-}
-  
+    if (statez) {
+      states_grob <- g
+      #pdf(paste0("./submission/Global_MAXENT/figures/states_combined_future_",estab_to_plot,"_v",vers,".pdf"), width = 7.5, height = 7)
+      grid.draw(g)
+      #dev.off()
+      data_to_cor <- as.matrix(select(data_to_plot,x_to_plot,y_to_plot,size_to_plot))
+      states.impact.model <-
+        impact.model <-
+        lm(size_to_plot ~ x_to_plot + y_to_plot, data = data.frame(data_to_cor))
+      states.impact.cor <- cor.test(impact.model$model$size_to_plot,
+                                    impact.model$fitted.values,
+                                    method = method_cor)
+    } else {
+      countries_grob <- g
+      #pdf(paste0("./submission/Global_MAXENT/figures/countries_combined_future_",estab_to_plot,"_v",vers,".pdf"),width = 7.5, height = 7)
+      grid.draw(g)
+      #dev.off()
+      data_to_cor <- as.matrix(select(data_to_plot,x_to_plot,y_to_plot,size_to_plot))
+      countries.impact.model <-
+        impact.model <-
+        lm(size_to_plot ~ x_to_plot + y_to_plot, data = data.frame(data_to_cor))
+      countries.impact.cor <- cor.test(impact.model$model$size_to_plot,
+                                       impact.model$fitted.values,
+                                       method = method_cor)
+    }
+  }
 } # end of the 2 loop for loop for plotting states and countries
 
+
 ```
 
-Combine the plots into a stacked plot nicely
-```{r combined plot, message=FALSE, fig.height= 12, fig.width=10}
-#set up a layout grid
-  lay <- rbind(c( 1, 1, 1,NA,NA,NA),
-               c( 1, 1, 1,NA,NA,NA),
-               c( 1, 1, 1,NA, 3, 3),
-               c(NA,NA,NA,NA, 3, 3),
-               c( 2, 2, 2,NA, 3, 3),
-               c( 2, 2, 2,NA,NA,NA),
-               c( 2, 2, 2,NA,NA,NA)
-  )
 
-if(present_transport){
-    pdf(file.path(here::here(),"vignettes", paste0("combined_present_max_",impact_prod,"_v3.pdf")),width = 10, height = 12)
 
-} else{
-    pdf(file.path(here::here(),"vignettes", paste0("combined_future_max_",impact_prod,"_v3.pdf")),width = 10, height = 12)
-      
-}
-  grid.arrange(states_grob, countries_grob, legend_country, nrow = 7, ncol = 6, layout_matrix = lay, heights = c(2,2,2, 0, 2,2,2), widths = c(1,1,1,0,0.38,0.38))
-  invisible(dev.off())
-  
-#nice version for knitting
-grid.arrange(states_grob, countries_grob, legend_country, nrow = 7, ncol = 6, layout_matrix = lay, heights = c(2,2,2, 0, 2,2,2), widths = c(1,1,1,0.1,0.6,0.6))
-```
+
+
+
+
+
+
+
+
 
 
