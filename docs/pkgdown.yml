@@ -3,9 +3,13 @@ pkgdown: 1.5.1
 pkgdown_sha: ~
 articles:
   vignette-010-tidy-data: vignette-010-tidy-data.html
+  vignette-020-quadrant-plots: vignette-020-quadrant-plots.html
   vignette-021-quadrant-plots: vignette-021-quadrant-plots.html
+  vignette-022-quadrant-plots: vignette-022-quadrant-plots.html
+  vignette-023-quadrant-plots: vignette-023-quadrant-plots.html
+  vignette-024-quadrant-plots: vignette-024-quadrant-plots.html
   vignette-030-risk-maps: vignette-030-risk-maps.html
   vignette-040-ee-data: vignette-040-ee-data.html
-  vignette-041-market-plot: vignette-041-market-plot.html
-last_built: 2020-09-14T23:39Z
+  vignette-040-market-plot: vignette-040-market-plot.html
+last_built: 2020-08-31T12:42Z
 

@@ -15,57 +15,6 @@ library(RStoolbox)
 ####################################################################################################################
 
 ##########################################################
-#wine market risk
-##########################################################
-
-#COUNTRIES
-countries_market <- read_csv("./data-raw/wine_market_FAOSTAT_data_8-31-2020.csv")
-
-
-#rm NA's
-countries_market <- countries_market %>%
-  filter(!is.na(Value))
-
-#recode some country names and make sure that Area == ID
-countries_market <- countries_market %>%
-  mutate(ID = Area) %>%
-  mutate(
-    ID = recode(
-      ID,
-      `Bolivia (Plurinational State of)` = "Bolivia",
-      `Brunei Darussalam` = "Brunei",
-      `Cabo Verde` = "Cape Verde",
-      `China, mainland` = "China",
-      Congo = "Republic of Congo",
-      `Falkland Islands (Malvinas)` = "Falkland Islands",
-      `China, Hong Kong SAR` = "Hong Kong",
-      `Iran (Islamic Republic of)` = "Iran",
-      `Côte d'Ivoire` = "Ivory Coast",
-      `Democratic People's Republic of Korea` = "North Korea",
-      `Republic of Korea` = "South Korea",
-      `Lao People's Democratic Republic` = "Laos",
-      `China, Macao SAR` = "Macao",
-      `Republic of Moldova` = "Moldova",
-      `Netherlands Antilles (former)` = "Bonaire, Sint Eustatius and Saba",
-      `North Macedonia` = "Macedonia",
-      Czechia = "Czech Republic",
-      `Russian Federation` = "Russia",
-      `Syrian Arab Republic`  = "Syria",
-      `China, Taiwan Province of` = "Taiwan",
-      `United Republic of Tanzania` = "Tanzania",
-      `United Kingdom of Great Britain and Northern Ireland` = "United Kingdom",
-      `United States of America` = "United States",
-      `Venezuela (Bolivarian Republic of)` = "Venezuela",
-      `Viet Nam` = "Vietnam",
-      Palestine = "Palestina",
-      Eswatini = "Swaziland"
-
-    )
-  ) %>%
-  mutate(Area = ID)
-
-
-##########################################################
 #correlation plots
 ##########################################################
 
@@ -1162,49 +1111,18 @@ suitability_countries_df <- suitability_countries_df[!is.na(suitability_countrie
 #round the value points
 suitability_countries_df$value <- round(suitability_countries_df$value, digits = 2)
 
-#add in the countries center for plotting the map ***TURNED OFF RIGHT NOW***
+#add in the countries center for plotting the map
 #read in the centroids for a check
-#countries_centers <- read_csv(file = "./data-raw/geopolitical_centers_world.csv") %>%
-#  dplyr::rename(y = y_coord, x = x_coord)
-#colnames(countries_centers)[1] <- "geopol_unit"
+countries_centers <- read_csv(file = "./data-raw/geopolitical_centers_world.csv") %>%
+  dplyr::rename(y = y_coord, x = x_coord)
+colnames(countries_centers)[1] <- "geopol_unit"
 
-#add in the countries capitals for plotting the map
-#read in the basic world cities data from Pareto Software, LLC, the owner of Simplemaps.com, available at: https://simplemaps.com/data/world-cities
-countries_centers <- read_csv(file = "./data-raw/worldcities.csv") %>%
-  dplyr::select(country, iso2, iso3, city_ascii, lng, lat, capital) %>%
-  dplyr::rename(geopol_unit = country, y = lat, x = lng, city_type = capital, capital = city_ascii) %>%
-  dplyr::arrange(geopol_unit) %>%
-  dplyr::filter(city_type == "primary")
 
-#fix Ivory Coast to be same as other files
-countries_centers$geopol_unit <- gsub(pattern = "Côte D???Ivoire", replacement = "Ivory Coast", x = countries_centers$geopol_unit)
-
-#need to filter out cases where a country has more than one primary capital listed to be just one of the capitals
-countries_centers <- countries_centers %>%
-  filter(!(geopol_unit == "South Africa" & capital != "Cape Town")) %>%
-  filter(!(geopol_unit == "Benin" & capital != "Porto-Novo")) %>%
-  filter(!(geopol_unit == "Bolivia" & capital != "Sucre")) %>%
-  filter(!(geopol_unit == "Burma" & capital != "Nay Pyi Taw")) %>%
-  filter(!(geopol_unit == "Burundi" & capital != "Gitega")) %>%
-  filter(!(geopol_unit == "Ivory Coast" & capital != "Yamoussoukro")) %>%
-  filter(!(geopol_unit == "Netherlands" & capital != "Amsterdam")) %>%
-  filter(!(geopol_unit == "Sri Lanka" & capital != "Colombo")) %>%
-  filter(!(geopol_unit == "Swaziland" & capital != "Mbabane")) %>%
-  filter(!(geopol_unit == "Tanzania" & capital != "Dodoma"))
-
-#rm the city_type col, it is not useful here
-countries_centers <- countries_centers %>%
-  dplyr::select(-city_type)
 
 
 ####################################################################################################################
 #Write out new RDA files
 ####################################################################################################################
-
-#############################
-#wine market risk
-#############################
-save(countries_market, file = file.path(here(), "data", "countries_market.rda")) #wine import and export data by country
 
 #############################
 #trade
