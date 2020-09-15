@@ -37,7 +37,7 @@ library(gridExtra) #only needed if one uses grid.arrange() in plotting
 
 Secondarily, we confirm the particular partitions of data we intend to visualize (defaults match the published figures). Here is where one could change the version of data for the correlation figure via the following: 
 
-  1. one_zero: Scale **Transportation** potential to be bounded [0,1]?
+  1. one_zero: Scale **Transportation** potential to be bounded $[0,1]$?
       - default is `TRUE`
   2. present_transport: Use `present` or `future` infected U.S. states? 
       - default is `FALSE` for `future`
@@ -99,9 +99,9 @@ if(native){
   }
 ```
 
-**`states` SCALING**---Even though a column in the `states` data does include the $log_{10}(+1)$ transformation of **transport** potential, the mass of trade with infected states (`log10_avg_infected_mass`), the raw data were $log_{10}(+1)$ transformed and then further rescaled (see `one_zero` above) as `avg_infected_mass_scaled`. The **establishment** potential is already scaled the same [0,1], but we create a new column of its values with the same `_scaled` suffix. 
+**`states` SCALING**---Even though a column in the `states` data does include the $\log_{10}(+1)$ transformation of **transport** potential, the mass of trade with infected states (`log10_avg_infected_mass`), the raw data were $\log_{10}(+1)$ transformed and then further rescaled (see `one_zero` above) as `avg_infected_mass_scaled`. The **establishment** potential is already scaled the same [0,1], but we create a new column of its values with the same `_scaled` suffix. 
 
-If `one_zero <- FALSE`, then **transport** potential is just $log_{10}(+1)$ transformed instead.
+If `one_zero <- FALSE`, then **transport** potential is just $\log_{10}(+1)$ transformed instead.
 
 *Please note that `states` and `countries` rescaling are done separately, as the latter has several rows that lack trade data (e.g., `NA`).*
 

@@ -361,7 +361,7 @@ head(summary_countries_trade_mass_future, n = 10)
 
 Now that we have several permutations of trade with *Lycorma*-established states data (both `present` and `future` scenarios) for both geopolitical units (`states` and `countries`) as measured in **value** and **mass** (USD and metric tons, respectively), we can combine some of these data into fewer dataframes to minimize the number of files we are juggling for future analyses. To do this, we merge the **value** and **mass** data for each geopolitical unit dataset.
 
-As we do so, we take the time to create $log_{10}$ transformed versions of the trade **value** and **mass** data. To avoid possible errors for this transformation, we add a constant (`+1`) to data prior to transformation. This process for transformation is held constant for **Impact potential** data.
+As we do so, we take the time to create $\log_{10}$ transformed versions of the trade **value** and **mass** data. To avoid possible errors for this transformation, we add a constant (`+1`) to data prior to transformation. This process for transformation is held constant for **Impact potential** data.
 
 ```{r bind trade data together, message=FALSE}
 #STATES
