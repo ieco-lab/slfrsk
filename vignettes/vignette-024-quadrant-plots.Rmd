@@ -1,8 +1,8 @@
 ---
-title: "vignette-024-quadrant-plots"
+title: "vignette-023-quadrant-plots"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{vignette-024-quadrant-plots}
+  %\VignetteIndexEntry{vignette-023-quadrant-plots}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -19,6 +19,10 @@ new edited version of the correlation plots
 # To do:
 
 1. ~~V1 :Stack the two figures, flip the axes, include the legend, remove the quadrant labels, make it so that the small white points are visible.~~
+  - ~~labeling is wrong on the corrplots for states relative to the infected~~
+  - ~~rm observed max suitability in boxplot names~~
+  - ~~rm the outliers for boxplots~~
+  - ~~scale up the size for the points in the scatter~~
 2. ~~V2: Same as V1, but remove the boxplots.~~
 3. ~~V3: Same as V2, but plot colored symbols to indicate the means of yes/no wine.~~
 4. **V4: Same as V3, but remove the individual points for the states/countries and plot points with SEs on both axes.**
