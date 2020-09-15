@@ -233,8 +233,8 @@ market_scatter<- countries_risk_market %>%
         #                                 fill = 'white', 
         #                                 linetype='solid'),
         axis.text = element_text(size = rel(1)),
-        axis.title.x = element_text(hjust = .4),
-        axis.title.y = element_text(hjust = .35),
+        axis.title.x = element_text(hjust = .4, size = 16),
+        axis.title.y = element_text(hjust = .35, size = 16),
         legend.title = element_text(face = "plain"),
         legend.key.size = unit(0.2, "cm"),
         legend.key = element_blank(),
@@ -272,7 +272,7 @@ market_scatter
 pdf(file.path(here::here(),
               "vignettes", 
               paste0("market_scatter_v3_0.pdf")),
-    width = 8.5*.95, height = 11*.95)
+    width = 8.5, height = 11)
 
 market_scatter
 
