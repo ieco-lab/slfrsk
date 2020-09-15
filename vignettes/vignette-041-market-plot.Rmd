@@ -26,7 +26,11 @@ library(DHARMa)
 remove(list = ls())
 ```
 
-# Market Size
+# Aims and Scope
+Aim: To calculate paninvasion risk severity of spotted lanternfly (*Lycorma delicatula*) to shock the global wine market
+
+Scope: Global among countries extent. Market size estimated as the total annual USD of wine exports per country. Risk is a correlation between impact risk and market size. Rescaled between 1-10.  
+
 ## countries
 Value units are 1000 USD
 ```{r FAO wine market, eval = TRUE}
@@ -216,7 +220,7 @@ market_scatter<- countries_risk_market %>%
          labels = c("wine producer", "")
        ) +
       theme(
-        panel.grid.major = element_line(colour = "#f0f0f0"),
+        panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
         #panel.grid.major = element_blank(),
         #panel.border = element_rect(colour = "black", fill=NA, size=1),

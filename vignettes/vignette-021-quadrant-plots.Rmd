@@ -644,7 +644,7 @@ if(present_transport == FALSE){
       labs(x = "Transport Potential", y = ytitle) +
       ylim(0, 1.2) + xlim(0, 1.2) +
       theme(
-        panel.grid.major = element_line(colour = "#f0f0f0"),
+        panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
         #panel.grid.major = element_blank(),
         #panel.border = element_rect(colour = "black", fill=NA, size=1),
