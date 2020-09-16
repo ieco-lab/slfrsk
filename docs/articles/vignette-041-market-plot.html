@@ -54,7 +54,13 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
+      <a href="../articles/vignette-001-overview.html">vignette-001-overview</a>
+    </li>
+    <li>
       <a href="../articles/vignette-010-tidy-data.html">vignette-010-tidy-data</a>
+    </li>
+    <li>
+      <a href="../articles/vignette-011-suitability-models.html">vignette-011-suitability-models</a>
     </li>
     <li>
       <a href="../articles/vignette-021-quadrant-plots.html">vignette-021-quadrant-plots</a>
@@ -96,10 +102,11 @@
     
 <p>Build and Save Paninvasion Risk to Wine Market Plots</p>
 <hr>
-<p>This vignette aims to reproduce the published figure(s) of the relationship between the predicted production of <strong>grapes</strong> from a model that</p>
+<p>This vignette aims to reproduce the published figure(s) of the relationship between the predicted production of <strong>grapes</strong> from a risk model built from the alignment of the three risk potentials (<strong>impact</strong> potential regressed on <strong>transport</strong> and <strong>establishment</strong>) to the <strong>wine market share</strong> by country.</p>
 <div id="setup" class="section level1">
 <h1 class="hasAnchor">
 <a href="#setup" class="anchor"></a>Setup</h1>
+<p>We will first load the required packages to reproduce the published market risk figure.</p>
 <div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">slfrsk</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">tidyverse</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">ggrepel</span>)
@@ -111,11 +118,12 @@
 <div id="market-size-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#market-size-data" class="anchor"></a>Market size data</h2>
-<p>First we read in the <code>countries_market</code> dataset, which contains exports of wine by <code>country</code>. The data are in thousands of USD (1000’s USD), and so we will need to convert to USD as we summarize the data. We summarize the <code>market</code> data by obtaining the <strong>mean</strong> of <span class="math inline">\(log_{10}(value+1)\)</span> transformed export values from 2012–2017.</p>
-<p>We quickly visualize the distribution of these summarized <code>market</code> size data via a histogram:</p>
+<p>Next, we read in the <code>countries_market</code> dataset, which contains exports of wine by <code>country</code>. The data are in thousands of USD (1000’s USD), and so we will need to convert to USD as we summarize the data. We summarize the <code>market</code> data by obtaining the <strong>mean</strong> of <span class="math inline">\(log_{10}(value+1)\)</span> transformed export values from 2012–2017.</p>
+<p>We quickly visualize the distribution of these summarized <code>market_size</code> data via a histogram:</p>
 <div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"countries_market"</span>)
 <span class="co">#dim(countries_market)</span>
 
+<span class="co"># http://www.fao.org/faostat/en/#data/TM</span>
 <span class="no">countries_wine_market</span> <span class="kw">&lt;-</span> <span class="no">countries_market</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="no">Year</span> <span class="kw">%in%</span> (<span class="fl">2012</span>:<span class="fl">2017</span>)) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="no">Element</span> <span class="kw">==</span> <span class="st">"Export Value"</span>) <span class="kw">%&gt;%</span>
@@ -123,7 +131,10 @@
   <span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="no">`Area Code`</span>,    <span class="no">Area</span>, <span class="no">Year</span>, <span class="no">Value</span>) <span class="kw">%&gt;%</span>
   <span class="fu">summarise</span>(<span class="kw">market_size</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(<span class="no">Value</span>)) <span class="kw">%&gt;%</span>
   <span class="fu">ungroup</span>(<span class="no">Year</span>) <span class="kw">%&gt;%</span>
-  <span class="fu">mutate</span>(<span class="kw">market_size</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span>((<span class="no">market_size</span>*<span class="fl">1000</span>)+<span class="fl">1</span>)) <span class="kw">%&gt;%</span>
+
+  <span class="fu">mutate</span>(<span class="kw">market_size</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span>((<span class="no">market_size</span>*<span class="fl">1000</span>)+<span class="fl">1</span>)) <span class="kw">%&gt;%</span> <span class="co"># units are in 1000s of USD</span>
+  <span class="co">#mutate(market_size = (market_size*1000)) %&gt;%</span>
+
   <span class="fu">summarise</span>(<span class="kw">market_size</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(<span class="no">market_size</span>))  <span class="kw">%&gt;%</span>
   <span class="fu">ungroup</span>()
 
@@ -137,6 +148,7 @@
 
 <span class="fu">qplot</span>((<span class="no">countries_wine_market</span>$<span class="no">market_size</span>))</pre></body></html></div>
 <p><img src="vignette-041-market-plot_files/figure-html/FAO%20wine%20market-1.png" width="672"></p>
+<p>From here, we add an <code>ID</code> column that matches the other use of this label in other <code>slfrsk</code> vignettes. Then, we isolate <code>ID</code> and <code>market_size</code> for risk analyses.</p>
 <div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="co">#add the ID column for joining and plotting later</span>
 <span class="no">countries_wine_market</span> <span class="kw">&lt;-</span> <span class="no">countries_wine_market</span> <span class="kw">%&gt;%</span>
   <span class="fu">mutate</span>(<span class="kw">ID</span> <span class="kw">=</span> <span class="no">Area</span>) <span class="kw">%&gt;%</span>
@@ -145,9 +157,9 @@
 <div id="risk-summary-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#risk-summary-data" class="anchor"></a>Risk summary data</h2>
+<p>To merge the new <code>market_size</code> dat with our existing <code>countries</code> data, we use <code>left_join()</code> to merge the <code>market</code> and <code>summary</code> data by <code>ID</code>. We then remove the countries from the dataset that already have <em>Lycorma</em>. Note: we use a modified version of <code><a href="https://rdrr.io/r/base/match.html">%in%</a></code> and <code><a href="https://rdrr.io/r/base/funprog.html">Negate()</a></code> to create <code>%notin%</code> for removing countries.</p>
 <div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"countries_summary_future"</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span>(<span class="no">countries_summary_future</span>)
-<span class="co">#&gt; [1] 252  22</span>
+<span class="co">#dim(countries_summary_future)</span>
 <span class="no">`%notin%`</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/funprog.html">Negate</a></span>(<span class="no">`%in%`</span>)
 
 <span class="co"># filter(countries_summary_future, status == "native")</span>
@@ -174,6 +186,9 @@
 <div id="build-and-check-model" class="section level1">
 <h1 class="hasAnchor">
 <a href="#build-and-check-model" class="anchor"></a>Build and check model</h1>
+<p>From here, we now can build (or rebuild, technically <code>vignette-021-quadrant-plots</code> does this first part as well) the risk model (<code>risk_mod</code>). This model is a linear regression model of log-transformed <strong>impact</strong> potential on the log-transformed <strong>transport</strong> and normal <strong>establishment</strong> potentials. We then evaluated the strength of the correlation between the empirical and predicted <strong>impact</strong> potential before conducting some diagnostics.</p>
+<p>We then rescaled the predicted <strong>impact</strong> values to be bounded <span class="math inline">\([1,10]\)</span> to produce initial <code>risk</code> values.</p>
+<p>To create the initial <em>shock model</em> (<code>shock_mod</code>) and ultimately obtain a scaled measure of risk of <em>Lycorma</em> to shock the global wine market, we performed linear regression of the <code>market_size</code> data on <code>risk</code> for countries and conducted diagnostics as for <code>risk_mod</code>. We then evaluated the unscaled and scaled correlations between <code>market_size</code> and <code>risk</code> for countries, resulting in a severity of risk at <span class="math inline">\(8\)</span> based on a scale of <span class="math inline">\([1,10]\)</span>.</p>
 <div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="no">risk_mod</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(<span class="no">log10_avg_prod</span> ~ <span class="no">log10_avg_infected_mass</span> + <span class="no">grand_mean_max</span>,
                <span class="kw">data</span> <span class="kw">=</span> <span class="no">countries_risk_market</span>)
 <span class="fu"><a href="https://rdrr.io/r/stats/cor.test.html">cor.test</a></span>(<span class="no">countries_risk_market</span>$<span class="no">log10_avg_prod</span>, <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(<span class="no">risk_mod</span>), <span class="kw">method</span> <span class="kw">=</span> <span class="st">"spearman"</span>)
@@ -202,8 +217,6 @@
 #&gt; data:  simulationOutput
 #&gt; ratioObsSim = 1.0002, p-value = 0.984
 #&gt; alternative hypothesis: two.sided
-
-#plot(risk_mod)
 summary(risk_mod)
 #&gt; 
 #&gt; Call:
@@ -282,13 +295,12 @@ cor.test(countries_risk_market$market_size, countries_risk_market$risk)
                  use = "complete.obs") %&gt;% 
   scales::rescale(to = c(1,10), from = c(-1,1)) %&gt;%
   round())
-#&gt; [1] 8
-#scales::rescale(-1, to = c(1,10), from = c(-1,1))</a></code></pre>
+#&gt; [1] 8</a></code></pre>
 </div>
 <div id="plotting-risk-vs-market-scatter" class="section level1">
 <h1 class="hasAnchor">
 <a href="#plotting-risk-vs-market-scatter" class="anchor"></a>Plotting risk vs market scatter</h1>
-<p>The Risk of SLF to shock the global wine market is 8.</p>
+<p>With the predicted <strong>risk</strong>, we were able plot the scaled <code>risk</code> and <code>market_size</code>, resulting in the published risk of <em>Lycorma</em> to shock the global wine market plot.</p>
 <div class="sourceCode" id="cb10"><html><body><pre class="r">
 <span class="co">#countries_risk_market %&gt;%</span>
 <span class="co">#  mutate(risk_scale = scale(risk), market_size_scale = scale(market_size)) %&gt;%</span>
@@ -298,9 +310,8 @@ cor.test(countries_risk_market$market_size, countries_risk_market$risk)
 <span class="co">#  geom_point(pch = 21)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/rm.html">remove</a></span>(<span class="no">market_scatter</span>)
-<span class="co">#&gt; Warning in remove(market_scatter): object 'market_scatter' not found</span>
 
-<span class="no">market_scatter</span><span class="kw">&lt;-</span> <span class="no">countries_risk_market</span> <span class="kw">%&gt;%</span>
+<span class="no">market_scatter</span> <span class="kw">&lt;-</span> <span class="no">countries_risk_market</span> <span class="kw">%&gt;%</span>
 
   <span class="fu">ggplot</span>(<span class="kw">mapping</span> <span class="kw">=</span> <span class="fu">aes</span>(<span class="kw">x</span> <span class="kw">=</span> (<span class="no">risk</span>),
                        <span class="kw">y</span> <span class="kw">=</span> (<span class="no">market_size</span>),
@@ -381,15 +392,13 @@ cor.test(countries_risk_market$market_size, countries_risk_market$risk)
       <span class="co">#   )</span>
       <span class="co"># ) </span>
 
-<span class="no">market_scatter</span>
-<span class="co">#&gt; Warning: Removed 68 rows containing missing values (geom_point).</span>
-<span class="co">#&gt; Warning: Removed 68 rows containing missing values (geom_text_repel).</span></pre></body></html></div>
+<span class="no">market_scatter</span></pre></body></html></div>
 <p><img src="vignette-041-market-plot_files/figure-html/make%20scatter-1.png" width="960"></p>
 </div>
 <div id="save-plot-output" class="section level1">
 <h1 class="hasAnchor">
 <a href="#save-plot-output" class="anchor"></a>Save plot output</h1>
-<p>Here, you can set to save the scatter plot to <code>/vignettes</code> as a <code>.pdf</code> file by setting the <code>if</code> from <code>FALSE</code> to <code>TRUE</code>, as in the other vignettes.</p>
+<p>Here, you can set to save the scatter plot to <code>/vignettes</code> as a <code>.pdf</code> file by setting the <code>if</code> from <code>FALSE</code> to <code>TRUE</code>, as in the other vignettes. We also have a version of the data saved for the Google Earth Engine App data cleaning vignette.</p>
 <div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="kw">if</span>(<span class="fl">FALSE</span>){
   <span class="fu"><a href="https://rdrr.io/r/grDevices/pdf.html">pdf</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="kw pkg">here</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/here/man/here.html">here</a></span>(),
               <span class="st">"vignettes"</span>,
@@ -398,6 +407,8 @@ cor.test(countries_risk_market$market_size, countries_risk_market$risk)
 
 <span class="no">market_scatter</span>
 <span class="fu"><a href="https://rdrr.io/r/grDevices/dev.html">dev.off</a></span>()
+
+<span class="fu"><a href="https://rdrr.io/r/base/save.html">save</a></span>(<span class="no">countries_risk_market</span>, <span class="kw">file</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="kw pkg">here</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/here/man/here.html">here</a></span>(), <span class="st">"data"</span>, <span class="st">"countries_risk_market.rda"</span>))
 }</pre></body></html></div>
 </div>
   </div>
