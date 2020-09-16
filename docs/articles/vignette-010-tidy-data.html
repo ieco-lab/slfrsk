@@ -54,7 +54,13 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
+      <a href="../articles/vignette-001-overview.html">vignette-001-overview</a>
+    </li>
+    <li>
       <a href="../articles/vignette-010-tidy-data.html">vignette-010-tidy-data</a>
+    </li>
+    <li>
+      <a href="../articles/vignette-011-suitability-models.html">vignette-011-suitability-models</a>
     </li>
     <li>
       <a href="../articles/vignette-021-quadrant-plots.html">vignette-021-quadrant-plots</a>
@@ -445,7 +451,7 @@
 <h3 class="hasAnchor">
 <a href="#combined-final-trade-data" class="anchor"></a>Combined Final Trade Data</h3>
 <p>Now that we have several permutations of trade with <em>Lycorma</em>-established states data (both <code>present</code> and <code>future</code> scenarios) for both geopolitical units (<code>states</code> and <code>countries</code>) as measured in <strong>value</strong> and <strong>mass</strong> (USD and metric tons, respectively), we can combine some of these data into fewer dataframes to minimize the number of files we are juggling for future analyses. To do this, we merge the <strong>value</strong> and <strong>mass</strong> data for each geopolitical unit dataset.</p>
-<p>As we do so, we take the time to create <span class="math inline">\(log_{10}\)</span> transformed versions of the trade <strong>value</strong> and <strong>mass</strong> data. To avoid possible errors for this transformation, we add a constant (<code>+1</code>) to data prior to transformation. This process for transformation is held constant for <strong>Impact potential</strong> data.</p>
+<p>As we do so, we take the time to create <span class="math inline">\(\log_{10}\)</span> transformed versions of the trade <strong>value</strong> and <strong>mass</strong> data. To avoid possible errors for this transformation, we add a constant (<code>+1</code>) to data prior to transformation. This process for transformation is held constant for <strong>Impact potential</strong> data.</p>
 <div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="co">#STATES</span>
 <span class="no">summary_states_trade</span> <span class="kw">&lt;-</span> <span class="fu">left_join</span>(<span class="no">summary_states_trade_value</span>, <span class="no">summary_states_trade_mass</span>, <span class="kw">by</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"destination"</span>, <span class="st">"status"</span>), <span class="kw">suffix</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"_trade"</span>, <span class="st">"_mass"</span>)) <span class="kw">%&gt;%</span>
     <span class="fu">mutate</span>(<span class="kw">log10_avg_infected_trade</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span>(<span class="no">avg_infected_trade</span>+<span class="fl">1</span>), <span class="kw">log10_avg_infected_mass</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span>(<span class="no">avg_infected_mass</span>+<span class="fl">1</span>))
