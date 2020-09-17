@@ -1,0 +1,25 @@
+---
+title: "vignette-011-suitability-models"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{vignette-011-suitability-models}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: inline
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+Build, Evaluate, and Save Ecological Niche Models of Suitability for *Ailanthus altissima* (TOH) and *Lycorma delicatula* (SLF)
+
+***
+
+
+# Setup
+
