@@ -1196,6 +1196,19 @@ countries_centers <- countries_centers %>%
 countries_centers <- countries_centers %>%
   dplyr::select(-city_type)
 
+##########################################################
+#suitability models
+##########################################################
+
+#read in presence records
+slf_points <- read_csv(file = "./data-raw/slf_presence_records.csv") %>%
+  dplyr::rename(species = Species, x = Longitude, y = Latitude) %>%
+  mutate(species = "Lycorma delicatula") %>%
+  dplyr::select(species, x, y)
+toh_points <- read_csv(file = "./data-raw/toh_presence_records.csv") %>%
+  dplyr::rename(species = name, x = decimalLongitude, y = decimalLatitude) %>%
+  dplyr::select(species, x, y)
+
 
 ####################################################################################################################
 #Write out new RDA files
@@ -1249,3 +1262,9 @@ save(suitability_usa_df, file = file.path(here(), "data", "suitability_usa_df.rd
 save(suitability_countries_df, file = file.path(here(), "data", "suitability_countries_df.rda"))
 save(states_centers, file = file.path(here(), "data", "states_centers.rda"))
 save(countries_centers, file = file.path(here(), "data", "countries_centers.rda"))
+
+#############################
+#presence records for models
+#############################
+save(slf_points, file = file.path(here(), "data", "slf_points.rda"))
+save(toh_points, file = file.path(here(), "data", "toh_points.rda"))
