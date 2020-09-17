@@ -57,6 +57,9 @@
       <a href="../articles/vignette-010-tidy-data.html">vignette-010-tidy-data</a>
     </li>
     <li>
+      <a href="../articles/vignette-011-suitability-models.html">vignette-011-suitability-models</a>
+    </li>
+    <li>
       <a href="../articles/vignette-021-quadrant-plots.html">vignette-021-quadrant-plots</a>
     </li>
     <li>
@@ -402,7 +405,10 @@ cor.test(countries_risk_market$market_size, countries_risk_market$risk)
 <span class="no">market_scatter</span>
 <span class="fu"><a href="https://rdrr.io/r/grDevices/dev.html">dev.off</a></span>()
 
-<span class="fu"><a href="https://rdrr.io/r/base/save.html">save</a></span>(<span class="no">countries_risk_market</span>, <span class="kw">file</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="kw pkg">here</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/here/man/here.html">here</a></span>(), <span class="st">"data"</span>, <span class="st">"countries_risk_market.rda"</span>))
+<span class="no">countries_risk</span> <span class="kw">&lt;-</span> <span class="no">countries_risk_market</span> <span class="kw">%&gt;%</span>
+  <span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="no">ID</span>, <span class="no">market_size</span>, <span class="no">risk</span>)
+
+<span class="fu"><a href="https://rdrr.io/r/base/save.html">save</a></span>(<span class="no">countries_risk</span>, <span class="kw">file</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="kw pkg">here</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/here/man/here.html">here</a></span>(), <span class="st">"data"</span>, <span class="st">"countries_risk.rda"</span>))
 }</pre></body></html></div>
 </div>
   </div>
