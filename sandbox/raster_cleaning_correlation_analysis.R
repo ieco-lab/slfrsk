@@ -8,7 +8,9 @@ library(ENMTools)
 library(vegan)
 
 #set working directory
-setwd("/Volumes/GoogleDrive/My Drive/spotted_lanternfly_ieco_projects/data/environment/MAXENT LAYERS/tifs/")
+#setwd("/Volumes/GoogleDrive/My Drive/spotted_lanternfly_ieco_projects/data/environment/MAXENT LAYERS/tifs/")
+
+setwd("set your dir")
 
 #ensure that extent is identical
 #get file names
@@ -77,7 +79,7 @@ env.short <- list.files(path = "./v4", pattern = ".tif", full.names = F)
 #downsampling by a factor of 2 (read 2 cells deep around a cell) and take the mean of the cells
 for(a in seq_along(env.files)){
   holder <- raster(env.files[a])
-  down_holder <- aggregate(holder, fact = 2, fun = mean, expand = TRUE, na.rm = TRUE, filename = paste0("./v4_downsampled/", env.short[a]), overwrite = T)
+  down_holder <- raster::aggregate(holder, fact = 2, fun = mean, expand = TRUE, na.rm = TRUE, filename = paste0("./v4_downsampled/", env.short[a]), overwrite = T)
 }
 
 #reload the downsampled layers and stack for raster.cor.matrix command

@@ -29,7 +29,7 @@ The scope of this vignette is as follows:
   1. Reading and Visualization of Presence Data
   2. Preparation of Spatial Data
   3. Evaluation of Spatial Data Collinearity
-  4. Building and evaluating Maxent runs for the three models
+  4. Building and evaluating Maxent SDMs for the three models
   5. Conversion of Maxent Output from ASCII to GEOTIFF
   6. Extraction of Summary Statistics by Geopolitical Unit from Maxent models
 
@@ -62,7 +62,7 @@ map_toh <- ggplot() +
   labs(x = "", y = "") +
   theme(panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
-        panel.background = element_blank()) +
+        panel.background = element_rect(fill = "#6699cc")) +
   coord_quickmap(xlim = c(-164.5, 163.5), ylim = c(-55,85)) +
   ggtitle(label = "TOH Presence")
 
@@ -74,7 +74,7 @@ map_slf <- ggplot() +
   labs(x = "", y = "") +
   theme(panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
-        panel.background = element_blank()) +
+        panel.background = element_rect(fill = "#6699cc")) +
   coord_quickmap(xlim = c(-164.5, 163.5), ylim = c(-55,85)) +
   ggtitle(label = "SLF Presence")
 
@@ -85,6 +85,16 @@ map_toh / map_slf
 
 # 2. Preparation of Spatial Data
 
+To discern which environmental variables to use in the species distribution models (SDMs), we had to minimize collinearity among included covariates (@peterson_ecological_2011). To do so, we estimated pairwise correlation coefficients for 22 global raster covariates hypothesized to influence SLF and TOH distributions: the 20 WorldClim topographic and bioclimatic variables (@hijmans_very_2005, @fick_worldclim_2017), forest height (@simard_mapping_2011),  and access to cities (@weiss_global_2018). 
+
+For tractability of modeling at a global scale, we first downsized the resolution of these covariate rasters with `raster::aggregate(fact = 2, fun = mean, expand = TRUE, na.rm = TRUE)` and cropped their extent to $[-180, 180]$ for latitude and  $[-60, 84]$ for longitude.
+
+```{r}
+#WRITING CHUNKS TO HOLD
+#We fit these covariates combined to SLF and TOH presences, but BIO02 and ELEV explained <1.0% of the variation, so we removed these two covariates and refit the remaining covariates under default settings (v3.4.1) except for the availability of all model features and an applied threshold rule of "minimum training presence" (Phillips et al. 2006, Pearson et al. 2007). 
+```
+
+With the correlations, we identified 6 of the 22 covariates that had minimal cross-correlations: annual mean temperature (**BIO01**), mean diurnal temperature range (**BIO02**), annual precipitation (**BIO12**), precipitation seasonality (**BIO15**), elevation (**ELEV**), and access to cities (**ATC**). 
 
 
 # Visualize Models
