@@ -7,9 +7,11 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
   chunk_output_type: inline
+bibliography: references.bib
+link-citations: yes
 ---
 
-```{r setup, include=FALSE}
+```{r, include=FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
@@ -20,10 +22,43 @@ How to Build, Evaluate, and Save Ecological Niche Models of Suitability for *Ail
 
 ***
 
-This vignette is designed to demonstrate the workflow that lead to the creation of the three models used to assess the risk of 
+This vignette is designed to demonstrate the workflow that lead to the creation of the three suitability models used to assess the risk of *Lycorma* paninvasion. The description will not include actual running of some steps of this workflow, as some are unwieldy. Instead, information to ensure proper replication of those steps is provided. Notably, the maxent runs are not conducted in this vignette, although the means to do so within `R` may be possible.
+
+The scope of this vignette is as follows:
+
+  1. Reading and Visualization of Presence Data
+  2. Preparation of Spatial Data
+  3. Evaluation of Spatial Data Collinearity
+  4. Building and evaluating Maxent runs for the three models
+  5. Conversion of Maxent Output from ASCII to GEOTIFF
+  6. Extraction of Summary Statistics by Geopolitical Unit from Maxent models
 
 # Setup
+
+We load the packages that are necessary to complete any analyses that allow us to demonstrate the workflow. Packages may include comments to clarify their purpose or the steps in which they are used.
+
+```{r setup, warning=FALSE, results='hide', message=FALSE}
+library(slfrsk)
+library(tidyverse)
+library(here)
+library(ENMTools) #enviro collinearity analyses
+```
+
+# 1. Reading and Visualization of Presence Data
+
+We built models of both SLF and TOH from presence records obtained from public and collaborator databases (queried 24-09-2018 and 26-09-2018, respectively; @kim_molecular_2013, @gbif_gbif:_2019). As is standard practice, we checked all records for quality, removed duplicate and imprecise records, and obtained 8,578 TOH and 145 SLF unique and cleaned presence records.
+
+```{r read in presence records}
+
+```
+
+
+# 2. Preparation of Spatial Data
+
+
 
 # Visualize Models
 
 # Save Models
+
+# References
