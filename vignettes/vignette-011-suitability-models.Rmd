@@ -38,20 +38,50 @@ The scope of this vignette is as follows:
 We load the packages that are necessary to complete any analyses that allow us to demonstrate the workflow. Packages may include comments to clarify their purpose or the steps in which they are used.
 
 ```{r setup, warning=FALSE, results='hide', message=FALSE}
-library(slfrsk)
-library(tidyverse)
-library(here)
+library(slfrsk) #this package
+library(tidyverse)  #data manipulation
+library(here) #making directory pathways easier on different instances
 library(ENMTools) #enviro collinearity analyses
+library(patchwork) #easy combined plots
 ```
 
 # 1. Reading and Visualization of Presence Data
 
 We built models of both SLF and TOH from presence records obtained from public and collaborator databases (queried 24-09-2018 and 26-09-2018, respectively; @kim_molecular_2013, @gbif_gbif:_2019). As is standard practice, we checked all records for quality, removed duplicate and imprecise records, and obtained 8,578 TOH and 145 SLF unique and cleaned presence records.
 
-```{r read in presence records}
+```{r read in presence records and show on a quick map, fig.height= 10, fig.width=10}
+#load data
+data("slf_points")
+data("toh_points")
+
+#plot points on map: TOH
+map_toh <- ggplot() +
+  geom_polygon(data = map_data('world'), aes(x = long, y = lat, group = group), fill = "#778899", color = "black", lwd = 0.15) + #world map
+  geom_point(data = toh_points, aes(x = x, y = y), color = "blue") +
+  theme_bw() +
+  labs(x = "", y = "") +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank()) +
+  coord_quickmap(xlim = c(-164.5, 163.5), ylim = c(-55,85)) +
+  ggtitle(label = "TOH Presence")
+
+#plot points on map: SLF
+map_slf <- ggplot() +
+  geom_polygon(data = map_data('world'), aes(x = long, y = lat, group = group), fill = "#778899", color = "black", lwd = 0.15) + #world map
+  geom_point(data = slf_points, aes(x = x, y = y), color = "red") +
+  theme_bw() +
+  labs(x = "", y = "") +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank()) +
+  coord_quickmap(xlim = c(-164.5, 163.5), ylim = c(-55,85)) +
+  ggtitle(label = "SLF Presence")
+
+#patchwork output of both maps
+map_toh / map_slf
 
 ```
-
 
 # 2. Preparation of Spatial Data
 

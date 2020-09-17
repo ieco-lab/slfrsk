@@ -10,7 +10,7 @@ library(vegan)
 #set working directory
 setwd("/Volumes/GoogleDrive/My Drive/spotted_lanternfly_ieco_projects/data/environment/MAXENT LAYERS/tifs/")
 
-#ensure that extent is indentical
+#ensure that extent is identical
 #get file names
 env.files <- list.files("./originals", pattern = "[.]tif", full.names = T)
 env.files.short <- list.files("./originals", pattern = "[.]tif", full.names = F)
@@ -41,14 +41,14 @@ for(a in seq_along(env.files)){
   rasterinfo[a,"layer"] <- output.files[a]
   print(extent(raster(env.files[a])))
   same.extent <- extent(-180, 180, -60, 84)
-  
+
   #ensure that the CRS is consistent
   rast.hold <- raster(env.files[a])
   crs(rast.hold) <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
   #resample to fit the extent/resolution of the reference BIOCLIM layer
   #use bilinear interpolation, since values are continuous
   rast.hold <- resample(x = rast.hold, y = raster("./v4/global_bio_01.tif"), method = "bilinear")
-  
+
   #save summary info for new extent for checking later
   rasterinfo[a, "xmin"] <- extent(rast.hold)@xmin
   rasterinfo[a, "xmax"] <- extent(rast.hold)@xmax
@@ -56,7 +56,7 @@ for(a in seq_along(env.files)){
   rasterinfo[a, "ymax"] <- extent(rast.hold)@ymax
   rasterinfo[a, "projection"] <- rast.hold@crs@projargs
   rasterinfo[a, c("xres", "yres")] <- res(rast.hold)
-  
+
   #write out the new resampled rasters!
   writeRaster(x = rast.hold, filename = paste0("./v4/", output.files[a]), overwrite = T)
 }
@@ -74,7 +74,7 @@ env.files <- list.files(path = "./v4", pattern = ".tif", full.names = T)
 env.short <- list.files(path = "./v4", pattern = ".tif", full.names = F)
 
 #now let's do it with all of them, including the saving to disk of all downsampled raster layers in a subdirectory
-#downsampling by a factor of 2 (read 2 cells deep around a cell) and take the mean of the cells 
+#downsampling by a factor of 2 (read 2 cells deep around a cell) and take the mean of the cells
 for(a in seq_along(env.files)){
   holder <- raster(env.files[a])
   down_holder <- aggregate(holder, fact = 2, fun = mean, expand = TRUE, na.rm = TRUE, filename = paste0("./v4_downsampled/", env.short[a]), overwrite = T)
@@ -134,7 +134,7 @@ var <- eigen / sum(eigen)
 #plot the results
 colnames(pcoa$points) <- c("X", "Y")
 ggplot2::ggplot(as.data.frame(pcoa$points))  +
-  ggplot2::geom_text(ggplot2::aes(x = X, y = Y, label = gsub(rownames(pcoa$points), pattern = "global_", replacement = ""))) + 
+  ggplot2::geom_text(ggplot2::aes(x = X, y = Y, label = gsub(rownames(pcoa$points), pattern = "global_", replacement = ""))) +
   ggplot2::theme_bw() +
   ggplot2::xlab(paste0("X - ", (100*round(var[1], digits = 3)), "%")) +
   ggplot2::ylab(paste0("Y - ", (100*round(var[2], digits = 3)), "%"))
