@@ -262,7 +262,10 @@ if(FALSE){
 market_scatter
 dev.off()
 
-save(countries_risk_market, file = file.path(here::here(), "data", "countries_risk_market.rda"))
+countries_risk <- countries_risk_market %>% 
+  dplyr::select(ID, market_size, risk)
+
+save(countries_risk, file = file.path(here::here(), "data", "countries_risk.rda"))
 }
 
 ```

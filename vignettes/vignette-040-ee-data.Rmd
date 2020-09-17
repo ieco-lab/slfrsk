@@ -86,7 +86,7 @@ states_summary_future <- states_summary_future %>%
          avg_infected_mass = formatC(signif(avg_infected_mass, digits = 5), format = "e"),
          se_mass = formatC(signif(se_mass, digits = 5), format = "e"),
          log10_avg_infected_trade = signif(log10_avg_infected_trade, digits = 5),
-         log10_avg_infected_mass = signif(log10_avg_infected_mass, digits = 5),
+         log10_avg_infected_mass = signif(log10_avg_infected_mass, digits = 5)
          )
 
 #countries
@@ -119,21 +119,32 @@ countries_summary_future <- countries_summary_future %>%
          avg_infected_mass = formatC(signif(avg_infected_mass, digits = 5), format = "e"),
          se_mass = formatC(signif(se_mass, digits = 5), format = "e"),
          log10_avg_infected_trade = signif(log10_avg_infected_trade, digits = 5),
-         log10_avg_infected_mass = signif(log10_avg_infected_mass, digits = 5),
+         log10_avg_infected_mass = signif(log10_avg_infected_mass, digits = 5)
          )
 
 ```
 
-We also need to obtain the predicted invasion risk from `vignette-041-market-plot`. We have conveniently saved those data as `data/countries_risk_market.rda`, which actually is a modified version of `countries_summary_future`. We will load these data, `select` the new columns, and `join` by `ID` (note that`states` do not have values for these fields, as they were not evaluated this way).
+We also need to obtain the predicted invasion risk from `vignette-041-market-plot`. We have conveniently saved those data as `data/countries_risk_market.rda`, which actually is a modified version of `countries_summary_future`. We will load these data, round the new columns, and `join` by `ID` (note that`states` do not have values for these fields, as they were not evaluated this way).
 
 For reference, please see `vignette-041-market-plot` for methods to produce `market_size` ($log_{10}(value+1)$ transformed average wine exports) and `risk` (scaled invasion risk $[1,10]$).
 
-```{r}
-data("countries_risk_market")
+We also rename `market_size` to `mkt_size` to meet the ESRI shapefile column name requirements.
 
-countries_risk_market %>%
-  dplyr::select(ID, market_size, risk) %>%
-  mutate(market_size)
+```{r load and merge market_risk data}
+#read in market risk data
+data("countries_risk")
+
+#round similarly and rename market_size
+countries_risk <- countries_risk %>%
+  mutate(mkt_size = signif(market_size, digits = 5),
+         risk = signif(risk, digits = 5)
+         ) %>%
+  dplyr::select(-market_size)
+
+#merge the two datasets
+countries_summary_future <- countries_summary_future %>%
+  left_join(., countries_risk, by = "ID")
+
 ```
 
 ## Shapefiles
@@ -239,11 +250,11 @@ To create a streamlined dataset, we make a version that includes both `countries
 comb <- countries@data %>%
   mutate(NAME_1 = NAME_0) %>%
   full_join(., states@data) %>%
-  select(NAME_0,NAME_1,ID,status:imp_grape)
+  select(NAME_0,NAME_1,ID,status:mkt_size)
 comb_lo <- countries_lo@data %>%
   mutate(NAME_1 = NAME_0) %>%
   full_join(., states_lo@data) %>%
-  select(NAME_0,NAME_1,ID,status:imp_grape)
+  select(NAME_0,NAME_1,ID,status:mkt_size)
 
 #change the data tables
 #states
