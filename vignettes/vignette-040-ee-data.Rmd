@@ -124,6 +124,18 @@ countries_summary_future <- countries_summary_future %>%
 
 ```
 
+We also need to obtain the predicted invasion risk from `vignette-041-market-plot`. We have conveniently saved those data as `data/countries_risk_market.rda`, which actually is a modified version of `countries_summary_future`. We will load these data, `select` the new columns, and `join` by `ID` (note that`states` do not have values for these fields, as they were not evaluated this way).
+
+For reference, please see `vignette-041-market-plot` for methods to produce `market_size` ($log_{10}(value+1)$ transformed average wine exports) and `risk` (scaled invasion risk $[1,10]$).
+
+```{r}
+data("countries_risk_market")
+
+countries_risk_market %>%
+  dplyr::select(ID, market_size, risk) %>%
+  mutate(market_size)
+```
+
 ## Shapefiles
 
 We use the shared GoogleDrive file that contains downloaded GADM shapefiles (<https://gadm.org/download_world.html>) for both `countries` and `states` geopolitical borders.
