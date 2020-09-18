@@ -14,7 +14,8 @@ link-citations: yes
 ```{r, include=FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  fig.align='left'
 )
 ```
 
@@ -22,16 +23,15 @@ How to Build, Evaluate, and Save Ecological Niche Models of Suitability for *Ail
 
 ***
 
-This vignette is designed to demonstrate the workflow that lead to the creation of the three suitability models used to assess the risk of *Lycorma* paninvasion. The description will not include actual running of some steps of this workflow, as some are unwieldy. Instead, information to ensure proper replication of those steps is provided. Notably, the maxent runs are not conducted in this vignette, although the means to do so within `R` may be possible.
+This vignette is designed to demonstrate the workflow that lead to the creation of the three suitability models used to assess the risk of *Lycorma* paninvasion. The description will not include actual running of some steps of this workflow, as some are unwieldy. Instead, information to ensure proper replication of those steps is provided. Notably, the MaxEnt runs are not conducted in this vignette, although the means to do so within `R` may be possible.
 
 The scope of this vignette is as follows:
 
   1. Reading and Visualization of Presence Data
   2. Preparation of Spatial Data
   3. Evaluation of Spatial Data Collinearity
-  4. Building and evaluating Maxent SDMs for the three models
-  5. Conversion of Maxent Output from ASCII to GEOTIFF
-  6. Extraction of Summary Statistics by Geopolitical Unit from Maxent models
+  4. Building and evaluating MaxEnt SDMs
+  5. Extraction of Summary Statistics by Geopolitical Unit from SDMs
 
 # Setup
 
@@ -87,14 +87,157 @@ map_toh / map_slf
 
 To discern which environmental variables to use in the species distribution models (SDMs), we had to minimize collinearity among included covariates (@peterson_ecological_2011). To do so, we estimated pairwise correlation coefficients for 22 global raster covariates hypothesized to influence SLF and TOH distributions: the 20 WorldClim topographic and bioclimatic variables (@hijmans_very_2005, @fick_worldclim_2017), forest height (@simard_mapping_2011),  and access to cities (@weiss_global_2018). 
 
-For tractability of modeling at a global scale, we first downsized the resolution of these covariate rasters with `raster::aggregate(fact = 2, fun = mean, expand = TRUE, na.rm = TRUE)` and cropped their extent to $[-180, 180]$ for latitude and  $[-60, 84]$ for longitude.
+To limit the raster data of covariates to the area of interest, we cropped their extent to $[-180, 180]$ for latitude and  $[-60, 84]$ for longitude and ensured that the extent and resolutions matched one another by using one layer as a reference raster with `raster::resample(method = "bilinear)`. This corrected any mismatching among cropped rasters of different sources (example code below).
+
+```{r example of raster cleaning, eval=FALSE}
+if(FALSE){  #open no run if
+  
+#my path to the GoogleDrive shared directory
+mypath <- "/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk/raw_env"
+  
+#ensure that extent is identical
+#get file names
+env.files <- list.files(file.path(mypath,"originals"), pattern = "[.]tif", full.names = T)
+env.short <- list.files(file.path(mypath,"originals"), pattern = "[.]tif", full.names = F)
+
+#change the labeling of the output layers
+output.files <- env.short
+
+#change weird BIOCLIM prefix
+output.files <- gsub(pattern = "wc2.0_bio_30s", replacement = "global_bio", x = output.files)
+#change weird ENVIREM prefix
+output.files <- gsub(pattern = "current_30arcsec", replacement = "global_env", x = output.files)
+#change weird ATC prefix
+output.files <- gsub(pattern = "2015_accessibility_to_cities_v1.0", replacement = "global_atc", x = output.files)
+
+#crop one of the BIOCLIM layers to set the bounding box and resolution to have files fixed
+same.extent <- extent(-180, 180, -60, 84)
+master_layer <- crop(raster(file.path(mypath,"originals/wc2.0_bio_30s_01.tif")), y = same.extent, overwrite = F)
+
+#reset extent stepwise
+for(a in seq_along(env.files)){
+
+  #ensure that the CRS is consistent
+  rast.hold <- raster(env.files[a])
+  crs(rast.hold) <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
+  #resample to fit the extent/resolution of the reference BIOCLIM layer
+  #use bilinear interpolation, since values are continuous
+  rast.hold <- resample(x = rast.hold, y = raster(file.path(mypath,"v1/global_bio_01.tif")), method = "bilinear")
+
+  #write out the new resampled rasters!
+  writeRaster(x = rast.hold, filename = file.path(mypath,"v1", output.files[a]), overwrite = T)
+}
+
+} #closes no run if
+```
+
+For tractability, we first downsized the resolution of these global covariate rasters with `raster::aggregate(fact = 2, fun = mean, expand = TRUE, na.rm = TRUE)` before assessing collinearity (see example code below). However, the full resolution covariates were used to build all models.
+
+```{r aggregate for env corr analysis, eval=FALSE}
+if(FALSE){  #open no run if
+  
+#my path to the GoogleDrive shared directory
+mypath <- "/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk/raw_env"
+  
+#list the enviro layers to load sequentially
+env.files <- list.files(path = file.path(mypath,"v1"), pattern = ".tif", full.names = T)
+env.short <- list.files(path = file.path(mypath,"v1"), pattern = ".tif", full.names = F)
+
+#downsampling by a factor of 2 (read 2 cells deep around a cell) and take the mean of the cells
+for(a in seq_along(env.files)){
+  holder <- raster(env.files[a])
+  down_holder <- raster::aggregate(holder, fact = 2, fun = mean, expand = TRUE, na.rm = TRUE, filename =file.path(mypath,"v1_downsampled", env.short[a]), overwrite = T)
+}
+
+} #closes no run if
+```
+
+# 3. Evaluation of Spatial Data Collinearity
+
+To evaluate the correlations among the covariates, we used `ENMTools::raster.cor.matrix(method = "pearson")`. Note that this code may still take quite some time to run. For brevity, we have included a version of the correlation matrix with the compendium for quick review (location: `/data-raw/env_cor_v1_downsampled.csv`).
+
+```{r evaluate env correlations, eval=FALSE}
+if(FALSE){  #open no run if
+
+#my path to the GoogleDrive shared directory
+mypath <- "/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk/raw_env"
+
+#load the downsampled layers and stack for raster.cor.matrix command
+
+#list of layer paths
+env.files <- list.files(path = file.path(mypath,"v1_downsampled"), pattern = ".tif", full.names = T)
+
+#stack the downsized layers
+env <- raster::stack(env.files)
+
+#evaluate correlations for raster layers
+#create a correlation matrix for picking model layers
+env.corr <- ENMTools::raster.cor.matrix(env, method = "pearson")
+
+} #closes no run if
+
+```
+
+To visualize the correlations between pairs of environmental covariates easily, we take the absolute value of all correlations and present the strength of relationships as a heatmap.
+
+```{r visualize env correlations, fig.height=7, fig.width=8}
+#re-read the correlation table in again
+env.cor <- read.csv(file = file.path(here::here(),"data-raw/env_cor_v1_downsampled.csv"), row.names = 1)
+
+#here, we make cor's absolute values and make the data tidy to make it easier to plot in ggplot2
+env.cor %>%
+  abs(.) %>%
+as_tibble() %>%
+  mutate(covar = colnames(.)) %>%
+  dplyr::select(covar, everything()) %>%
+  pivot_longer(cols = -covar, names_to = "var") %>%
+  dplyr::select(var, covar, everything()) %>%
+ggplot() +
+  geom_tile(aes(x = var, y = covar, fill = value)) +
+  viridis::scale_fill_viridis(discrete = FALSE, direction = -1, limits = c(0,1), name = "abs(Correlation)") +
+  guides(x =  guide_axis(angle = 90)) +
+  labs(x = "", y = "")
+
+```
+
+With the correlations, we identified 6 of the 22 covariates that had minimal cross-correlations: annual mean temperature (**BIO01**), mean diurnal temperature range (**BIO02**), annual precipitation (**BIO12**), precipitation seasonality (**BIO15**), elevation (**ELEV**), and access to cities (**ATC**). These variables were then converted to ASCII files (`.asc`), as required by MaxEnt (example code below). We also set all `NA` values to `-9999`, which is the default value recognized as `NA` by MaxEnt.
+
+Note that these `.asc` files are massive. It is not advisable to run this chunk unless you are certain that you have sufficient space to do so. It is for this reason (in part) that we do not provide this file type for all covariates.
+
+```{r geotiff to ascii, eval=FALSE}
+if(FALSE){  #open no run if
+
+#my path to the GoogleDrive shared directory
+mypath <- "/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk/raw_env"
+
+#get and set file names  
+env.files <- list.files(path = file.path(mypath,"v1"), pattern = "[.]tif", full.names = T)
+env.short <- list.files(path = file.path(mypath,"v1"), pattern = "[.]tif", full.names = F)
+env.asc <- gsub(pattern = ".tif", replacement = ".asc", x = env.short)
+
+#loop to convert and make sure to set NA values to -9999
+for(a in seq_along(env.files)){
+  file_to_asc <- raster(env.files[a])
+  NAvalue(file_to_asc) <- -9999
+  writeRaster(x = file_to_asc, filename = file.path(mypath, "v1_maxent", env.asc[a]), format = "ascii", overwrite = F)
+}
+
+  } #closes no run if
+
+```
+
+# 4. Building and evaluating MaxEnt SDMs
+
+
+
+  5. Extraction of Summary Statistics by Geopolitical Unit from SDMs (Conversion of MaxEnt Output from ASCII to GEOTIFF)
 
 ```{r}
 #WRITING CHUNKS TO HOLD
 #We fit these covariates combined to SLF and TOH presences, but BIO02 and ELEV explained <1.0% of the variation, so we removed these two covariates and refit the remaining covariates under default settings (v3.4.1) except for the availability of all model features and an applied threshold rule of "minimum training presence" (Phillips et al. 2006, Pearson et al. 2007). 
 ```
 
-With the correlations, we identified 6 of the 22 covariates that had minimal cross-correlations: annual mean temperature (**BIO01**), mean diurnal temperature range (**BIO02**), annual precipitation (**BIO12**), precipitation seasonality (**BIO15**), elevation (**ELEV**), and access to cities (**ATC**). 
+
 
 
 # Visualize Models
