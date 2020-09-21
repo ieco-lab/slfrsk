@@ -57,7 +57,13 @@
       <a href="../articles/vignette-010-tidy-data.html">vignette-010-tidy-data</a>
     </li>
     <li>
+      <a href="../articles/vignette-011-suitability-models.html">vignette-011-suitability-models</a>
+    </li>
+    <li>
       <a href="../articles/vignette-021-quadrant-plots.html">vignette-021-quadrant-plots</a>
+    </li>
+    <li>
+      <a href="../articles/vignette-021_1-quadrant-plots.html">vignette-021_1-quadrant-plots</a>
     </li>
     <li>
       <a href="../articles/vignette-030-risk-maps.html">vignette-030-risk-maps</a>
@@ -635,7 +641,7 @@
   } <span class="kw">else</span> <span class="kw">if</span>(<span class="no">impact_prod</span> <span class="kw">==</span> <span class="st">"grapes"</span>){
     <span class="co">#nudging</span>
     <span class="kw">if</span>(<span class="no">statez</span>) { <span class="co">#STATES FUTURE GRAPES</span>
-      <span class="no">nudge.x</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(-<span class="fl">.10</span>,-<span class="fl">.05</span>,-<span class="fl">.10</span>,-<span class="fl">.02</span>, <span class="fl">.10</span>,-<span class="fl">.05</span>, <span class="fl">.10</span>, <span class="fl">.00</span>,-<span class="fl">.05</span>,-<span class="fl">.025</span>)   <span class="co">#yield: #CA, PA, WA, MI, NY, MO, OH, OR, GA, NC</span>
+      <span class="no">nudge.x</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(-<span class="fl">.00</span>,-<span class="fl">.05</span>,-<span class="fl">.10</span>,-<span class="fl">.02</span>, <span class="fl">.10</span>,-<span class="fl">.05</span>, <span class="fl">.10</span>, <span class="fl">.00</span>,-<span class="fl">.05</span>,-<span class="fl">.025</span>)   <span class="co">#yield: #CA, PA, WA, MI, NY, MO, OH, OR, GA, NC</span>
       <span class="no">nudge.y</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(-<span class="fl">.10</span>, <span class="fl">.10</span>, <span class="fl">.08</span>, <span class="fl">.08</span>,-<span class="fl">.05</span>, <span class="fl">.09</span>,-<span class="fl">.05</span>,-<span class="fl">.10</span>,-<span class="fl">.15</span>, <span class="fl">.10</span>)   <span class="co">#production: CA, WA, NY, PA, MI, OR, TX, VA, NC, MO</span>
       <span class="kw">if</span>(<span class="no">label.states.est</span>){
         <span class="no">nudge.x</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="no">nudge.x</span>, <span class="no">nudge_states.est_future.x</span>)
