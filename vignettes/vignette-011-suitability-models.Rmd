@@ -306,8 +306,9 @@ writeRaster(x = enm_ensemble, filename = file.path(mypath, "maxent_models/slftoh
 
 ## Visualization
 
-To make visualization more tractable, we reduced the size of the SDMs by using `raster::aggregate(fact = 4, fun = mean, expand = TRUE, na.rm = TRUE)` to reduce the SDM raster resolution. We also clipped the SDMs to the continental US to produce the files used for separate `states` and `countries` visualization. The three models can be visualized below for the US and then the world:
+To make visualization more tractable, we reduced the size of the SDMs by using `raster::aggregate(fun = mean, expand = TRUE, na.rm = TRUE)` (setting `fact=` to `4` for `states` and `10` for `countries`) to reduce the SDM raster resolution. We also clipped the SDMs to the continental US to produce the files used for separate `states` and `countries` visualization. The three models can be visualized below for the US and then the world:
 
+### USA Maps
 ```{r visualize models at US, fig.height=5, fig.width=16, warning=FALSE}
 #read in the data
 data("slf_usa_df")
@@ -354,6 +355,10 @@ m1_usa + m2_usa + s3_usa
 
 ```
 
+### World Maps
+
+Please note that the images for countries are downsized considerably to ensure that the visualization data can be included with the package.  
+
 ```{r visualize models at World, fig.height=5, fig.width=16, warning=FALSE}
 #read in the data
 data("slf_df")
@@ -362,7 +367,7 @@ data("toh_df")
 
 #plot just the states and suitability first
 m1 <- ggplot() +
-  geom_raster(data = toh_df, aes(x = x, y = y, fill = rescale(value)), alpha=0.9, show.legend = F) +
+  geom_raster(data = toh_df, aes(x = x, y = y, fill = rescale(value)), alpha=0.8, show.legend = F) +
   scale_fill_gradientn(limits= c(0,1), name = "Suitability", colors = rev(c("#e31a1c","#fd8d3c", "#fecc5c", "#FFFFFF"))) +
   geom_polygon(data = map_data('world'), aes(x = long, y = lat, group = group), fill = NA, color = "black", lwd = 0.15) +
   theme_bw() +
@@ -373,7 +378,7 @@ m1 <- ggplot() +
   coord_quickmap(xlim = c(-164.5, 163.5), ylim = c(-55,85)) +
   ggtitle(label = "m1")
 m2 <- ggplot() +
-  geom_raster(data = slf_df, aes(x = x, y = y, fill = rescale(value)), alpha=0.9, show.legend = F) +
+  geom_raster(data = slf_df, aes(x = x, y = y, fill = rescale(value)), alpha=0.8, show.legend = F) +
   scale_fill_gradientn(limits= c(0,1), name = "Suitability", colors = rev(c("#e31a1c","#fd8d3c", "#fecc5c", "#FFFFFF"))) +
   geom_polygon(data = map_data('world'), aes(x = long, y = lat, group = group), fill = NA, color = "black", lwd = 0.15) +
   theme_bw() +
@@ -384,7 +389,7 @@ m2 <- ggplot() +
   coord_quickmap(xlim = c(-164.5, 163.5), ylim = c(-55,85)) +
   ggtitle(label = "m2")
 s3 <- ggplot() +
-  geom_raster(data = slftoh_df, aes(x = x, y = y, fill = rescale(value)), alpha=0.9, show.legend = T) +
+  geom_raster(data = slftoh_df, aes(x = x, y = y, fill = rescale(value)), alpha=0.8, show.legend = T) +
   scale_fill_gradientn(limits= c(0,1), name = "Suitability", colors = rev(c("#e31a1c","#fd8d3c", "#fecc5c", "#FFFFFF"))) +
   geom_polygon(data = map_data('world'), aes(x = long, y = lat, group = group), fill = NA, color = "black", lwd = 0.15) +
   theme_bw() +
@@ -397,6 +402,44 @@ s3 <- ggplot() +
 
 #visualize together
 m1 + m2 + s3
+
+```
+
+### Ensemble Maps
+
+We can also visualize the ensemble images similarly (see the `vignette-030-risk-maps` for more detail versions). Note that these visualizations are also downsampled, albeit at `fact=4` for both maps.
+
+```{r visualize ensemble, warning=FALSE, fig.height= 10, fig.width=10}
+#read in data
+data("suitability_usa_df")
+data("suitability_countries_df")
+
+en_usa <- ggplot() +
+  geom_raster(data = suitability_usa_df, aes(x = x, y = y, fill = rescale(value)), alpha=0.9, show.legend = F) +
+  scale_fill_gradientn(limits= c(0,1), name = "Suitability", colors = rev(c("#e31a1c","#fd8d3c", "#fecc5c", "#FFFFFF"))) +
+  geom_polygon(data = map_data('state'), aes(x = long, y = lat, group = group), fill = NA, color = "black", lwd = 0.10) +
+  theme_bw() +
+  labs(x = "", y = "") +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank()) +
+  coord_quickmap(xlim = c(-124.7628, -66.94889), ylim = c(24.52042, 49.3833)) +
+  ggtitle(label = "USA Ensemble")
+
+en <- ggplot() +
+  geom_raster(data = suitability_countries_df, aes(x = x, y = y, fill = rescale(value)), alpha=0.8, show.legend = T) +
+  scale_fill_gradientn(limits= c(0,1), name = "Suitability", colors = rev(c("#e31a1c","#fd8d3c", "#fecc5c", "#FFFFFF"))) +
+  geom_polygon(data = map_data('world'), aes(x = long, y = lat, group = group), fill = NA, color = "black", lwd = 0.15) +
+  theme_bw() +
+  labs(x = "", y = "") +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank()) +
+  coord_quickmap(xlim = c(-164.5, 163.5), ylim = c(-55,85)) +
+  ggtitle(label = "Ensemble")
+
+#visualize
+en_usa / en
 
 ```
 
