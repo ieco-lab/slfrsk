@@ -44,6 +44,7 @@ library(here) #making directory pathways easier on different instances
 library(ENMTools) #enviro collinearity analyses
 library(patchwork) #easy combined plots
 library(scales) #rescale the plots easily
+library(rgdal) #load shapefiles
 ```
 
 # 1. Reading and Visualization of Presence Data
@@ -445,6 +446,60 @@ en_usa / en
 
 ## Extraction of Summary Statistics
 
-With the three original and ensemble SDMs, we extracted summary statistics by geopolitical unit to later use for evaluation of **suitability**. To do this, we use a custom function (`slfrsk::extract_enm()`) that uses 
+With the three original and ensemble SDMs, we extracted summary statistics by geopolitical unit to later use for evaluation of **suitability**. To do this, we use a custom function (`slfrsk::extract_enm()`) that uses a reference shapefile (we use the GADM data saved in the shared GoogleDrive directory but can be obtained online separately, <https://gadm.org/download_world.html>) to isolate the portion of the raster contained within each geopolitical unit and calculate the following summary statistics for suitability values:
+
+  1. *mean*
+  2. *standard deviation*
+  3. *relative suitable area*---the proportion of points over a given threshold supplied in the function (we specify the minimum presence threshold, or the lowest suitability of a known presence record)
+  4. *minimum*
+  5. *maximum*
+  6. quantiles at the following probabilities:
+    - *0.25*
+    - *0.50* (median)
+    - *0.75*
+    - *0.90*
+
+Here, we demonstrate how we used this function to extract the summary statistics for each `state` and `country` used as our measure of **establishment** potential.
+
+```{r demo summary stat extraction, eval=FALSE}
+if(FALSE){  #open no run if
+
+#my path to the GoogleDrive shared directory
+mypath <- "/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk"
+
+  #shapefile of world by countries
+world <- readOGR(file.path(mypath, "geo_shapefiles/gadm36_levels_shp/gadm36_0.shp"), verbose = F, p4s = '+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0')
+  #shapefile of US states (same sourcce as usa data)
+states <- readOGR(dsn = file.path(mypath, "geo_shapefiles/gadm36_USA_shp/gadm36_USA_1.shp"), verbose = F, p4s = '+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0')
+
+#load data to test
+  #global ENM data (slf based on best toh model)
+enm_data_slftoh <- raster(file.path(mypath, "maxent_models/11_07_18_maxent_slf+toh_+atc-bio02/lycorma_delicatula_avg.asc"))
+enm_slftoh <- read_csv(file.path(mypath, "maxent_models/11_07_18_maxent_slf+toh_+atc-bio02/maxentResults.csv"))
+#the threshold:   enm_slftoh$`Minimum training presence Cloglog threshold`[nrow(enm_slftoh)]
+  
+  #toh best model
+enm_data_toh <- raster("./data/Maxent runs/10_29_18_maxent_toh+atc-bio02/Ailanthus_altissima_avg.asc")
+enm_toh <- read_csv("./data/Maxent runs/10_29_18_maxent_toh+atc-bio02/maxentResults.csv")
+#the threshold:   enm_toh$`Minimum training presence Cloglog threshold`[nrow(enm_toh)]
+  
+  #slf based on same env layers as toh best model
+enm_data_slf <- raster("./data/Maxent runs/02_15_19_maxent_slf+atc-bio02/lycorma_delicatula_avg.asc")
+enm_slf <- read_csv("./data/Maxent runs/02_15_19_maxent_slf+atc-bio02/maxentResults.csv")
+#the threshold:   enm_slf$`Minimum training presence Cloglog threshold`[nrow(enm_slf)]
+
+
+#example of running the function
+#extract the states
+state_extracts_slftoh <- extract_enm(enm = enm_data_slftoh, geoshape = states, id0 = "NAME_1", id = as.character(states$NAME_1), save.plots = T, th = enm_slftoh$`Minimum training presence Cloglog threshold`[nrow(enm_slftoh)])
+write_csv(path = "./data/extract_states_11_07_18_maxent_slf+toh+atc-bio02.csv", x = state_extracts_slftoh[[1]], col_names = T)
+#try to save as a pdf
+pdf(paste0("./data/states_extract_enm_plots_slftoh_", tolower(gsub(pattern = " ", replacement = "_", x = Sys.Date())), ".pdf"))
+invisible(lapply(state_extracts_slftoh[[2]], print))
+dev.off()
+
+  } #closes no run if
+
+```
 
 # References
