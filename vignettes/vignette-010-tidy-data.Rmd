@@ -35,20 +35,21 @@ Here we load the required packages to prepare the data.
 library(slfrsk)
 library(tidyverse)
 library(here)
-devtools::load_all()
+#devtools::load_all()
 ```
 
 # Establishment
 ## Maxent Ensemble Model
 
-Previously, we built three separate species distribution models (SDMs) with Maxent. Upstream of this vignette, we obtained summary statistics for suitability in each geopolitical unit (country and U.S. state) in each SDM, which were combined into the `states_extracts` and `countries_extracts` datasets. 
+Previously, we built three separate species distribution models (SDMs) with MaxEnt. We also obtained summary statistics for suitability in each geopolitical unit (country and U.S. state) in each SDM (as well as an ensemble SDM), which were transferred to the `states_extracts` and `countries_extracts` datasets (or `states_extracts_ensemble` and `countries_extracts_ensemble` for the ensemble SDM). 
 
-Here, we explore the ensemble *maximum suitability* by obtaining the maximum suitability per geopolitical unit for each SDM and calculating the *mean* and *standard error* across the models. These summarized suitabilities constitute our predicted **Establishment potential**.
+Here, we explore the ensemble *maximum suitability* by obtaining the maximum suitability per geopolitical unit for each SDM and calculating the *mean* and *standard error* across the models (or just use the extracted maximum value for ensemble models). These summarized suitabilities constitute our predicted **Establishment potential**.
 
 We also strip *Western Sahara* from the `countries` datasets here and for other datsets, as it is not informative for our analyses (zero trade for **Transport potential** below). 
   
-```{r bring in maxent extraction summary data, message=FALSE}
-data("states_extracts")
+```{r bring in maxent extraction summary data, message=FALSE, eval=FALSE}
+if(FALSE){
+  data("states_extracts")
 
 summary_states_extracts <- states_extracts %>%
   group_by(geopol_unit) %>%
@@ -63,6 +64,30 @@ summary_countries_extracts <- countries_extracts %>%
 #rm W. Sahara
 summary_countries_extracts <- summary_countries_extracts %>%
     filter(geopol_unit != "Western Sahara")
+}
+
+```
+
+```{r bring in maxent ensemble extraction summary data, message=FALSE, eval=TRUE}
+if(TRUE){
+  data("states_extracts_ensemble")
+
+summary_states_extracts <- states_extracts_ensemble %>%
+  group_by(geopol_unit) %>%
+  summarize(grand_mean_max = mean(obs_max))
+
+data("countries_extracts")
+  
+summary_countries_extracts <- countries_extracts %>%
+  group_by(geopol_unit) %>%
+  summarize(grand_mean_max = mean(obs_max), grand_se_max = sd(obs_max) / sqrt(n_distinct(model)))
+
+#rm W. Sahara
+summary_countries_extracts <- summary_countries_extracts %>%
+    filter(geopol_unit != "Western Sahara")
+
+  
+}
 
 ```
 
@@ -496,7 +521,9 @@ states_summary_present <- left_join(stateid, states_summary_present, by = "geopo
 #################################
 #tidy the order of cols
 states_summary_present <- states_summary_present %>%
-  select(ID, geopol_unit, status, grand_mean_max, grand_se_max, wine, grapes, avg_wine:log10_avg_prod, everything())
+  #select(ID, geopol_unit, status, grand_mean_max, grand_se_max, wine, grapes, avg_wine:log10_avg_prod, everything())
+  select(ID, geopol_unit, status, grand_mean_max, wine, grapes, avg_wine:log10_avg_prod, everything())
+
 
 ##FUTURE
 
@@ -520,8 +547,8 @@ states_summary_future <- left_join(stateid, states_summary_future, by = "geopol_
 
 #tidy the order of cols
 states_summary_future <- states_summary_future %>%
-    select(ID, geopol_unit, status, grand_mean_max, grand_se_max, wine, grapes, avg_wine:log10_avg_prod, everything())
-
+    #select(ID, geopol_unit, status, grand_mean_max, grand_se_max, wine, grapes, avg_wine:log10_avg_prod, everything())
+    select(ID, geopol_unit, status, grand_mean_max, wine, grapes, avg_wine:log10_avg_prod, everything())
 
 
 #################################
@@ -616,6 +643,16 @@ if(FALSE){
 save(states_summary_present, file = file.path(here(), "data", "states_summary_present.rda"))
 save(states_summary_future, file = file.path(here(), "data", "states_summary_future.rda"))
 save(countries_summary_present, file = file.path(here(), "data", "countries_summary_present.rda"))
+save(countries_summary_future, file = file.path(here(), "data", "countries_summary_future.rda"))
+}
+```
+
+```{r save correlation plot  data for ensemble future only, eval=FALSE, message=FALSE}
+if(FALSE){
+  
+states_summary_future_ensemble <- states_summary_future
+  
+save(states_summary_future_ensemble, file = file.path(here(), "data", "states_summary_future_ensemble.rda"))
 save(countries_summary_future, file = file.path(here(), "data", "countries_summary_future.rda"))
 }
 ```

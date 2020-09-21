@@ -1137,6 +1137,9 @@ countries_extracts$geopol_unit[grep(pattern = "Saint Bart", x = countries_extrac
 #suitability models rasters
 #############################
 
+#load the summary table
+models_summary <- read_csv(file = "./data-raw/models_summary.csv")
+
 #load USA
 suitability_usa <- raster("/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk/maxent_models/slftoh_ensemble_usa_downsampled_x4_mean.tif")
 
@@ -1311,6 +1314,8 @@ save(countries_extracts, file = file.path(here(), "data", "countries_extracts.rd
 
 #ensemble extracts
 save(states_extracts_ensemble, file = file.path(here(), "data", "states_extracts_ensemble.rda"))
+
+save(models_summary, file = file.path(here(), "data", "models_summary.rda"))
 
 #############################
 #suitability models rasters

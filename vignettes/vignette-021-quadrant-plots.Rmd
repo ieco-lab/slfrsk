@@ -562,7 +562,7 @@ if(present_transport == FALSE){
   } else if(impact_prod == "grapes"){
     #nudging
     if(statez) { #STATES FUTURE GRAPES
-      nudge.x <- c(-.10,-.05,-.10,-.02, .10,-.05, .10, .00,-.05,-.025)   #yield: #CA, PA, WA, MI, NY, MO, OH, OR, GA, NC
+      nudge.x <- c(-.00,-.05,-.10,-.02, .10,-.05, .10, .00,-.05,-.025)   #yield: #CA, PA, WA, MI, NY, MO, OH, OR, GA, NC
       nudge.y <- c(-.10, .10, .08, .08,-.05, .09,-.05,-.10,-.15, .10)   #production: CA, WA, NY, PA, MI, OR, TX, VA, NC, MO
       if(label.states.est){
         nudge.x <- c(nudge.x, nudge_states.est_future.x)

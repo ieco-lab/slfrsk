@@ -259,12 +259,16 @@ For AUC, the fraction of true positives relative to type I error (positive backg
 
 Given recent concerns with model evaluation with AUC (@peterson_rethinking_2008, @lobo_auc:_2008, @jimenez-valverde_insights_2012), we confirmed model performance with average omission error, which measures the proportion of presence point(s) predicted with suitability less than the minimum training presence threshold (@pearson_predicting_2007, @anderson_species-specific_2011).
 
-```{r summary of model performance}
+```{r summary of model performance, results='asis'}
+#read in summary table and view
+data("models_summary")
 
+#print results
+knitr::kable(models_summary)
 
 ```
 
-[SUMMARY STATEMENT RE: MODEL PERFORMANCE]
+The three models performed similarly (notably without much difference between the versions of *m1* and *m2* that included **BIO02** and **ELEV**, see above for more detail), albeit with small differences across model performance metrics. Thus, we created a consensus output map by averaging the three models as an ensemble.
 
 To visualize the models and produce the ensemble model image, we first had to convert the mean model for each set of replicates (`species_name_avg.asc`) and convert it to a GeoTIFF (`.tif`), which is more easily visualized and stored (example code below).
 
@@ -321,7 +325,7 @@ writeRaster(x = enm_ensemble, filename = file.path(mypath, "maxent_models/slftoh
 To make visualization more tractable, we reduced the size of the SDMs by using `raster::aggregate(fun = mean, expand = TRUE, na.rm = TRUE)` (setting `fact=` to `4` for `states` and `10` for `countries`) to reduce the SDM raster resolution. We also clipped the SDMs to the continental US to produce the files used for separate `states` and `countries` visualization. The three models can be visualized below for the US and then the world:
 
 ### USA Maps
-```{r visualize models at US, fig.height=15, fig.width=10, warning=FALSE}
+```{r visualize models at us, fig.height=15, fig.width=10, warning=FALSE}
 #read in the data
 data("slf_usa_df")
 data("slftoh_usa_df")
@@ -371,7 +375,7 @@ m1_usa / m2_usa / s3_usa
 
 Please note that the images for countries are downsized considerably to ensure that the visualization data can be included with the package.  
 
-```{r visualize models at World, fig.height=15, fig.width=10, warning=FALSE}
+```{r visualize models at world, fig.height=15, fig.width=10, warning=FALSE}
 #read in the data
 data("slf_df")
 data("slftoh_df")
