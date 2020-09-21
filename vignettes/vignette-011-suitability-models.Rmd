@@ -253,7 +253,18 @@ A third model was created from *m1* suitability and **SLF** presence records, ba
 
   3. *s3*---a single variate SDM of SLF
   
-[UNSURE OF WHAT TO REPORT HERE FOR SUMMARY]
+Here, we report in a simple table the metrics used to evaluate the various models that were considered. Model validation was conducted with *k*-fold cross-validation (*k* partitions discussed above) via evaluation of the receiver operating characteristic of the AUC and omission error (@fielding_review_1997, @phillips_maximum_2006, @pearson_predicting_2007, @anderson_species-specific_2011). 
+
+For AUC, the fraction of true positives relative to type I error (positive background points) is compared at all possible thresholds for each model (@fielding_review_1997, @phillips_maximum_2006). The resultant plot's area under the curve is assessed relative to a random model ($AUC = 0.50$), such that values close to $1.00$ indicate strong model performance and those $\leq 0.50$  suggest poor performance (@fielding_review_1997). Given presence only data, measured AUC cannot reach $1.00$, but model AUCs that approach $1.00$ are considered to perform well (@wiley_niche_2003, @phillips_maximum_2006).
+
+Given recent concerns with model evaluation with AUC (@peterson_rethinking_2008, @lobo_auc:_2008, @jimenez-valverde_insights_2012), we confirmed model performance with average omission error, which measures the proportion of presence point(s) predicted with suitability less than the minimum training presence threshold (@pearson_predicting_2007, @anderson_species-specific_2011).
+
+```{r summary of model performance}
+
+
+```
+
+[SUMMARY STATEMENT RE: MODEL PERFORMANCE]
 
 To visualize the models and produce the ensemble model image, we first had to convert the mean model for each set of replicates (`species_name_avg.asc`) and convert it to a GeoTIFF (`.tif`), which is more easily visualized and stored (example code below).
 
@@ -450,7 +461,7 @@ With the three original and ensemble SDMs, we extracted summary statistics by ge
 
   1. *mean*
   2. *standard deviation*
-  3. *relative suitable area*---the proportion of points over a given threshold supplied in the function (we would specify the minimum presence threshold, the lowest suitability of a known presence record, but do not use this metric)
+  3. *relative suitable area*---the proportion of points over a given threshold supplied in the function (we would specify the minimum presence threshold, the lowest suitability of a known presence record, but we do not use this metric)
   4. *minimum*
   5. *maximum*
   6. quantiles at the following probabilities:
@@ -459,7 +470,7 @@ With the three original and ensemble SDMs, we extracted summary statistics by ge
     - *0.75*
     - *0.90*
 
-Here, we demonstrate how we used this function to extract the summary statistics for each `state` and `country` used as our measure of **establishment** potential. Note that we do not use the `save.plots` argument or save the output. We also use the `.tif` versions of full-scale models for these extractions, due to their smaller size.
+Here, we demonstrate how we used this function to extract the summary statistics for each `state` and `country` used as our measure of **establishment** potential. Note that we do not use the `save.plots` argument or save the output. We also use the `.tif` versions of full-scale models for these extractions, due to their smaller size. We show code that works for the `ensemble` but also include commented-out code to run for an individual model and calculate `rsa`.
 
 ```{r demo summary stat extraction, eval=FALSE}
 if(FALSE){  #open no run if
@@ -474,27 +485,31 @@ states <- readOGR(dsn = file.path(mypath, "geo_shapefiles/gadm36_USA_shp/gadm36_
 
 #load data to test
   #ensemble model
-#enm_data_slftoh <- raster(file.path(mypath, "maxent_models/11_07_18_maxent_slf+toh_+atc-bio02/lycorma_delicatula_avg.asc"))
-enm_data_slftoh <- raster(file.path(mypath, "maxent_models/slftoh.tif"))
-enm_slftoh <- read_csv(file.path(mypath, "maxent_models/11_07_18_maxent_slf+toh_+atc-bio02/maxentResults.csv"))
-#the threshold if desired:   enm_slftoh$`Minimum training presence Cloglog threshold`[nrow(enm_slftoh)]
-
-#path to ensemble
 enm_ensemble <- raster(file.path(mypath, "maxent_models/slftoh_ensemble_mean.tif"))
 
 #example of running the function
 #extract the states
-state_extracts_ensemble <- extract_enm(enm = enm_ensemble, geoshape = states, id0 = "NAME_1", id = as.character(states$NAME_1), save.plots = F)
-
-
-head(state_extracts_slftoh$summary_stats)
-
+states_extracts_ensemble <- extract_enm(enm = enm_ensemble, geoshape = states, id0 = "NAME_1", id = as.character(states$NAME_1))
 #optional save the summary data
-write_csv(path = "./extract_states_slftoh_ensemble_mean.csv", x = state_extracts_ensemble[[1]], col_names = T)
+write_csv(path = file.path(here(),"data-raw/extract_states_slftoh_ensemble_mean.csv"), x = states_extracts_ensemble[[1]], col_names = T)
 
+#countries version
+countries_extracts_ensemble <- extract_enm(enm = enm_ensemble, geoshape = world, id0 = "NAME_0", id = as.character(world$NAME_0))
+write_csv(path = file.path(here(),"data-raw/extract_countries_slftoh_ensemble_mean.csv"), x = countries_extracts_ensemble[[1]], col_names = T)
+
+
+#example with s3
+#the threshold if desired:   enm_slftoh$`Minimum training presence Cloglog threshold`[nrow(enm_slftoh)]
+
+#enm_data_slftoh <- raster(file.path(mypath, "maxent_models/11_07_18_maxent_slf+toh_+atc-bio02/lycorma_delicatula_avg.asc"))
+#enm_data_slftoh <- raster(file.path(mypath, "maxent_models/slftoh.tif"))
+#enm_slftoh <- read_csv(file.path(mypath, "maxent_models/11_07_18_maxent_slf+toh_+atc-bio02/maxentResults.csv"))
+#state_extracts_slftoh <- extract_enm(enm = enm_data_slftoh, geoshape = states, id0 = "NAME_1", id = as.character(states$NAME_1), th = enm_slftoh$`Minimum training presence Cloglog threshold`[nrow(enm_slftoh)])
 
   } #closes no run if
 
 ```
+
+Ultimately, the saved versions of these extracted suitabilities are saved in `/data-raw` and then can be handled by the script in the same directory, `convert_data-rda.R`, to be converted into `.rda` file(s), which are stored in `/data` and used by the other vignettes (with few, if any, exceptions that use the shared GoogleDrive).
 
 # References

@@ -1078,6 +1078,9 @@ states_slf_extract <- read_csv(file = "./data-raw/extract_states_02_15_19_maxent
 states_toh_extract <- read_csv(file = "./data-raw/extract_states_10_29_18_maxent_toh+atc-bio02.csv", col_names = T)
 states_slftoh_extract <- read_csv(file = "./data-raw/extract_states_11_07_18_maxent_slf+toh+atc-bio02.csv", col_names = T)
 
+#ensemble
+states_extracts_ensemble <- read_csv(file = "./data-raw/extract_states_slftoh_ensemble_mean.csv", col_names = T)
+
 #add model as a categorical var
 states_slf_extract <- states_slf_extract %>%
   mutate(model = "slf")
@@ -1306,16 +1309,21 @@ save(wineries, file = file.path(here(), "data", "wineries.rda"))
 save(states_extracts, file = file.path(here(), "data", "states_extracts.rda"))
 save(countries_extracts, file = file.path(here(), "data", "countries_extracts.rda"))
 
+#ensemble extracts
+save(states_extracts_ensemble, file = file.path(here(), "data", "states_extracts_ensemble.rda"))
+
 #############################
 #suitability models rasters
 #############################
 save(suitability_usa_df, file = file.path(here(), "data", "suitability_usa_df.rda"))
-save(slf_usa_df, file = file.path(here(), "data", "slf_usa_df.rda"))
-save(slftoh_usa_df, file = file.path(here(), "data", "slftoh_usa_df.rda"))
-save(toh_usa_df, file = file.path(here(), "data", "toh_usa_df.rda"))
 save(suitability_countries_df, file = file.path(here(), "data", "suitability_countries_df.rda"))
 save(states_centers, file = file.path(here(), "data", "states_centers.rda"))
 save(countries_centers, file = file.path(here(), "data", "countries_centers.rda"))
+
+#plotting original models
+save(slf_usa_df, file = file.path(here(), "data", "slf_usa_df.rda"))
+save(slftoh_usa_df, file = file.path(here(), "data", "slftoh_usa_df.rda"))
+save(toh_usa_df, file = file.path(here(), "data", "toh_usa_df.rda"))
 save(slf_df, file = file.path(here(), "data", "slf_df.rda"))
 save(slftoh_df, file = file.path(here(), "data", "slftoh_df.rda"))
 save(toh_df, file = file.path(here(), "data", "toh_df.rda"))

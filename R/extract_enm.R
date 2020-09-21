@@ -7,7 +7,7 @@
 #'@param id subset in \code{geoshape} identifier table to iterate through: a vector of names, may need to match this to a particular part of geoshape with \code{id0}
 #'@param id0 part of \code{'geoshape@data'} that holds the names of the geopolitical units to focus on (polygons of interest)
 #'@param th threshold of suitability used to calculate RSA. If not provided, the RSA is not calculated.
-#'@param save.plots save the density plots of points for each \code{id} iterated across (default is FALSE)?
+#'@param save.plots save the density plots of points for each \code{id} iterated across (default is FALSE)? If so, the results are stored as a second element in the list \code{[[2]]} or \code{$plots}
 #'
 #'@return Dataframe (tibble) that contains columns that include the number of species, the mean at each loss step, the variance at each loss step, and the type of type of simulated extinction. One instance of each type of extinction is run per function call and the resulting simulations are stacked in the same dataframe.
 #'
