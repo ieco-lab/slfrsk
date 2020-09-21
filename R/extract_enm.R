@@ -50,8 +50,9 @@ extract_enm <- function(enm, geoshape, id0, id, th, save.plots = FALSE){
     holder.max <- max(holder[,ncol(holder)], na.rm = T)
     ##################################################################
     #relative suitable area (RSA)
-    #need new argument that is the threshold to use
-    holder.rsa <- nrow(holder[holder[,2] >= th,]) / nrow(holder)
+    if(!missing(th)){
+      holder.rsa <- nrow(holder[holder[,2] >= th,]) / nrow(holder)
+    }
     ##################################################################
     #specified quantiles:
     #25%, median (50%), 75%, 90%
@@ -59,15 +60,21 @@ extract_enm <- function(enm, geoshape, id0, id, th, save.plots = FALSE){
 
     #time to figure out what to put in output here
     holder2 <- data.frame(geopol_unit = unique(id)[a],
-                          mean = holder.mean,
-                          sd = holder.sd,
-                          min = holder.min,
-                          max = holder.max,
-                          rsa = holder.rsa,
+                          obs_mean = holder.mean,
+                          obs_sd = holder.sd,
+                          obs_min = holder.min,
+                          obs_max = holder.max,
                           quantile_0.25 = holder.quants[["25%"]],
                           quantile_0.50 = holder.quants[["50%"]],
                           quantile_0.75 = holder.quants[["75%"]],
-                          quantile_0.90 = holder.quants[["90%"]])
+                          quantile_0.90 = holder.quants[["90%"]]
+                          )
+
+    #optional to use RSA if th is present
+    if(!missing(th)){
+      holder2 <- rbind(holder2, rsa = holder.rsa)
+    }
+
     output <- rbind(output, holder2)
   }
 

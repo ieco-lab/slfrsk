@@ -38,7 +38,7 @@ The scope of this vignette is as follows:
 We load the packages that are necessary to complete any analyses that allow us to demonstrate the workflow. Packages may include comments to clarify their purpose or the steps in which they are used.
 
 ```{r setup, warning=FALSE, results='hide', message=FALSE}
-library(slfrsk) #this package
+library(slfrsk) #this package, has extract_enm()
 library(tidyverse)  #data manipulation
 library(here) #making directory pathways easier on different instances
 library(ENMTools) #enviro collinearity analyses
@@ -450,7 +450,7 @@ With the three original and ensemble SDMs, we extracted summary statistics by ge
 
   1. *mean*
   2. *standard deviation*
-  3. *relative suitable area*---the proportion of points over a given threshold supplied in the function (we specify the minimum presence threshold, or the lowest suitability of a known presence record)
+  3. *relative suitable area*---the proportion of points over a given threshold supplied in the function (we would specify the minimum presence threshold, the lowest suitability of a known presence record, but do not use this metric)
   4. *minimum*
   5. *maximum*
   6. quantiles at the following probabilities:
@@ -459,7 +459,7 @@ With the three original and ensemble SDMs, we extracted summary statistics by ge
     - *0.75*
     - *0.90*
 
-Here, we demonstrate how we used this function to extract the summary statistics for each `state` and `country` used as our measure of **establishment** potential.
+Here, we demonstrate how we used this function to extract the summary statistics for each `state` and `country` used as our measure of **establishment** potential. Note that we do not use the `save.plots` argument or save the output. We also use the `.tif` versions of full-scale models for these extractions, due to their smaller size.
 
 ```{r demo summary stat extraction, eval=FALSE}
 if(FALSE){  #open no run if
@@ -467,36 +467,31 @@ if(FALSE){  #open no run if
 #my path to the GoogleDrive shared directory
 mypath <- "/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk"
 
-  #shapefile of world by countries
+#shapefile of world by countries
 world <- readOGR(file.path(mypath, "geo_shapefiles/gadm36_levels_shp/gadm36_0.shp"), verbose = F, p4s = '+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0')
-  #shapefile of US states (same sourcce as usa data)
+#shapefile of US states (same sourcce as usa data)
 states <- readOGR(dsn = file.path(mypath, "geo_shapefiles/gadm36_USA_shp/gadm36_USA_1.shp"), verbose = F, p4s = '+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0')
 
 #load data to test
-  #global ENM data (slf based on best toh model)
-enm_data_slftoh <- raster(file.path(mypath, "maxent_models/11_07_18_maxent_slf+toh_+atc-bio02/lycorma_delicatula_avg.asc"))
+  #ensemble model
+#enm_data_slftoh <- raster(file.path(mypath, "maxent_models/11_07_18_maxent_slf+toh_+atc-bio02/lycorma_delicatula_avg.asc"))
+enm_data_slftoh <- raster(file.path(mypath, "maxent_models/slftoh.tif"))
 enm_slftoh <- read_csv(file.path(mypath, "maxent_models/11_07_18_maxent_slf+toh_+atc-bio02/maxentResults.csv"))
-#the threshold:   enm_slftoh$`Minimum training presence Cloglog threshold`[nrow(enm_slftoh)]
-  
-  #toh best model
-enm_data_toh <- raster("./data/Maxent runs/10_29_18_maxent_toh+atc-bio02/Ailanthus_altissima_avg.asc")
-enm_toh <- read_csv("./data/Maxent runs/10_29_18_maxent_toh+atc-bio02/maxentResults.csv")
-#the threshold:   enm_toh$`Minimum training presence Cloglog threshold`[nrow(enm_toh)]
-  
-  #slf based on same env layers as toh best model
-enm_data_slf <- raster("./data/Maxent runs/02_15_19_maxent_slf+atc-bio02/lycorma_delicatula_avg.asc")
-enm_slf <- read_csv("./data/Maxent runs/02_15_19_maxent_slf+atc-bio02/maxentResults.csv")
-#the threshold:   enm_slf$`Minimum training presence Cloglog threshold`[nrow(enm_slf)]
+#the threshold if desired:   enm_slftoh$`Minimum training presence Cloglog threshold`[nrow(enm_slftoh)]
 
+#path to ensemble
+enm_ensemble <- raster(file.path(mypath, "maxent_models/slftoh_ensemble_mean.tif"))
 
 #example of running the function
 #extract the states
-state_extracts_slftoh <- extract_enm(enm = enm_data_slftoh, geoshape = states, id0 = "NAME_1", id = as.character(states$NAME_1), save.plots = T, th = enm_slftoh$`Minimum training presence Cloglog threshold`[nrow(enm_slftoh)])
-write_csv(path = "./data/extract_states_11_07_18_maxent_slf+toh+atc-bio02.csv", x = state_extracts_slftoh[[1]], col_names = T)
-#try to save as a pdf
-pdf(paste0("./data/states_extract_enm_plots_slftoh_", tolower(gsub(pattern = " ", replacement = "_", x = Sys.Date())), ".pdf"))
-invisible(lapply(state_extracts_slftoh[[2]], print))
-dev.off()
+state_extracts_ensemble <- extract_enm(enm = enm_ensemble, geoshape = states, id0 = "NAME_1", id = as.character(states$NAME_1), save.plots = F)
+
+
+head(state_extracts_slftoh$summary_stats)
+
+#optional save the summary data
+write_csv(path = "./extract_states_slftoh_ensemble_mean.csv", x = state_extracts_ensemble[[1]], col_names = T)
+
 
   } #closes no run if
 
