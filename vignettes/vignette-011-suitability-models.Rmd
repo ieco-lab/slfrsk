@@ -31,7 +31,7 @@ The scope of this vignette is as follows:
   2. Preparation of Spatial Data
   3. Evaluation of Spatial Data Collinearity
   4. Building and evaluating MaxEnt SDMs
-  5. Extraction of Summary Statistics by Geopolitical Unit from SDMs
+  5. Visualizing SDMs and Extracting Summary Statistics by Geopolitical Unit
 
 # Setup
 
@@ -43,6 +43,7 @@ library(tidyverse)  #data manipulation
 library(here) #making directory pathways easier on different instances
 library(ENMTools) #enviro collinearity analyses
 library(patchwork) #easy combined plots
+library(scales) #rescale the plots easily
 ```
 
 # 1. Reading and Visualization of Presence Data
@@ -174,6 +175,9 @@ env <- raster::stack(env.files)
 #create a correlation matrix for picking model layers
 env.corr <- ENMTools::raster.cor.matrix(env, method = "pearson")
 
+#write out the correlations as a csv
+write_csv(x = env.corr, path = file.path(here(),"data-raw/env_cor_v1_downsampled.csv"), col_names = TRUE)
+
 } #closes no run if
 
 ```
@@ -228,20 +232,175 @@ for(a in seq_along(env.files)){
 
 # 4. Building and evaluating MaxEnt SDMs
 
+## Focal Models
 
+To further evaluate environmental covariates, we modeled each of them individually with SLF. To do this, we used MaxEnt (v3.4.1, available at <https://biodiversityinformatics.amnh.org/open_source/maxent/>) under default parameters, excluding the following changes (@phillips_maximum_2006, @pearson_predicting_2007):
 
-  5. Extraction of Summary Statistics by Geopolitical Unit from SDMs (Conversion of MaxEnt Output from ASCII to GEOTIFF)
+  - All feature types were made available but still set to `Auto Features` (Linear, Quadratic, Product, Threshold, and Hinge set to `TRUE` before setting Auto Features to `TRUE`)
+  - `Create response curves` was set to `TRUE`
+  - `Do jackknife to measure variable importance` was set to `TRUE`
+  - `Replicates` set to `5` for SLF (this sets the number of *k*-fold crossvalidation replicates and determines the test proportion from *k*)
+  - `Apply threshold rule` set to `Minimum training presence`
+  - `Threads` set to the available number of processor threads available
+  
+After fitting individual models, we fit these 6 covariates combined to SLF and TOH presences, but **BIO02** and **ELEV** explained <1.0% of the variation, so we removed them and refit the remaining covariates under the settings above, except that the number of `Replicates = 10` for **TOH**, rather than `Replicates = 5`. The resultant two models are:
+  
+  1. *m1*---a multivariate SDM of TOH
+  2. *m2*---a multivariate SDM of SLF
+  
+A third model was created from *m1* suitability and **SLF** presence records, based on evidence supporting the strong affinity of SLF for TOH as a preferred host (@parra_usda-aphis-ppq-cphst_2018, @urban_perspective:_2019):
 
-```{r}
-#WRITING CHUNKS TO HOLD
-#We fit these covariates combined to SLF and TOH presences, but BIO02 and ELEV explained <1.0% of the variation, so we removed these two covariates and refit the remaining covariates under default settings (v3.4.1) except for the availability of all model features and an applied threshold rule of "minimum training presence" (Phillips et al. 2006, Pearson et al. 2007). 
+  3. *s3*---a single variate SDM of SLF
+  
+[UNSURE OF WHAT TO REPORT HERE FOR SUMMARY]
+
+To visualize the models and produce the ensemble model image, we first had to convert the mean model for each set of replicates (`species_name_avg.asc`) and convert it to a GeoTIFF (`.tif`), which is more easily visualized and stored (example code below).
+
+```{r ascii to geotiff example, eval=FALSE}
+if(FALSE){  #open no run if
+
+#my path to the GoogleDrive shared directory
+mypath <- "/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk"
+
+#read in file as ASCII raster
+enm_data_slf <- raster(file.path(mypath, "maxent_models/02_15_19_maxent_slf+atc-bio02/lycorma_delicatula_avg.asc"))
+
+#make sure CRS is WGS84
+crs(enm_data_slf) <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
+
+#write out as a geotiff
+writeRaster(x = enm_data_slf, filename = file.path(mypath,"maxent_models/slf.tif"), format = "GTiff")
+
+  } #closes no run if
+
+```
+
+## Ensemble Model
+
+To create the ensemble model image, we averaged the three models (see code below). The resultant model image was used to extract summary statistics by geopolitical unit. 
+
+```{r ensemble, eval=FALSE}
+if(FALSE){  #open no run if
+
+#my path to the GoogleDrive shared directory
+mypath <- "/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk"
+
+#read in a geotiff version of the maxent suitability for all three models
+toh <- raster(file.path(mypath,"maxent_models/toh.tif"))
+slf <- raster(file.path(mypath,"maxent_models/slf.tif"))
+slftoh <- raster(file.path(mypath,"maxent_models/slftoh.tif"))
+
+#stack the rasters
+enm_data <- stack(c(toh, slf, slftoh))
+
+#make mean raster
+enm_ensemble <- mean(enm_data)
+
+#write out the resulting file
+writeRaster(x = enm_ensemble, filename = file.path(mypath, "maxent_models/slftoh_ensemble_mean.tif", format = "GTiff")
+
+  } #closes no run if
+```
+
+# 5. Visualizing SDMs and Extracting Summary Statistics by Geopolitical Unit
+
+## Visualization
+
+To make visualization more tractable, we reduced the size of the SDMs by using `raster::aggregate(fact = 4, fun = mean, expand = TRUE, na.rm = TRUE)` to reduce the SDM raster resolution. We also clipped the SDMs to the continental US to produce the files used for separate `states` and `countries` visualization. The three models can be visualized below for the US and then the world:
+
+```{r visualize models at US, fig.height=5, fig.width=16, warning=FALSE}
+#read in the data
+data("slf_usa_df")
+data("slftoh_usa_df")
+data("toh_usa_df")
+
+#plot just the states and suitability first
+m1_usa <- ggplot() +
+  geom_raster(data = toh_usa_df, aes(x = x, y = y, fill = rescale(value)), alpha=0.9, show.legend = F) +
+  scale_fill_gradientn(limits= c(0,1), name = "Suitability", colors = rev(c("#e31a1c","#fd8d3c", "#fecc5c", "#FFFFFF"))) +
+  geom_polygon(data = map_data('state'), aes(x = long, y = lat, group = group), fill = NA, color = "black", lwd = 0.10) +
+  theme_bw() +
+  labs(x = "", y = "") +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank()) +
+  coord_quickmap(xlim = c(-124.7628, -66.94889), ylim = c(24.52042, 49.3833)) +
+  ggtitle(label = "m1 USA")
+m2_usa <- ggplot() +
+  geom_raster(data = slf_usa_df, aes(x = x, y = y, fill = rescale(value)), alpha=0.9, show.legend = F) +
+  scale_fill_gradientn(limits= c(0,1), name = "Suitability", colors = rev(c("#e31a1c","#fd8d3c", "#fecc5c", "#FFFFFF"))) +
+  geom_polygon(data = map_data('state'), aes(x = long, y = lat, group = group), fill = NA, color = "black", lwd = 0.10) +
+  theme_bw() +
+  labs(x = "", y = "") +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank()) +
+  coord_quickmap(xlim = c(-124.7628, -66.94889), ylim = c(24.52042, 49.3833)) +
+  ggtitle(label = "m2 USA")
+s3_usa <- ggplot() +
+  geom_raster(data = slftoh_usa_df, aes(x = x, y = y, fill = rescale(value)), alpha=0.9, show.legend = T) +
+  scale_fill_gradientn(limits= c(0,1), name = "Suitability", colors = rev(c("#e31a1c","#fd8d3c", "#fecc5c", "#FFFFFF"))) +
+  geom_polygon(data = map_data('state'), aes(x = long, y = lat, group = group), fill = NA, color = "black", lwd = 0.10) +
+  theme_bw() +
+  labs(x = "", y = "") +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank()) +
+  coord_quickmap(xlim = c(-124.7628, -66.94889), ylim = c(24.52042, 49.3833)) +
+  ggtitle(label = "s3 USA")
+
+#visualize together
+m1_usa + m2_usa + s3_usa
+
+```
+
+```{r visualize models at World, fig.height=5, fig.width=16, warning=FALSE}
+#read in the data
+data("slf_df")
+data("slftoh_df")
+data("toh_df")
+
+#plot just the states and suitability first
+m1 <- ggplot() +
+  geom_raster(data = toh_df, aes(x = x, y = y, fill = rescale(value)), alpha=0.9, show.legend = F) +
+  scale_fill_gradientn(limits= c(0,1), name = "Suitability", colors = rev(c("#e31a1c","#fd8d3c", "#fecc5c", "#FFFFFF"))) +
+  geom_polygon(data = map_data('world'), aes(x = long, y = lat, group = group), fill = NA, color = "black", lwd = 0.15) +
+  theme_bw() +
+  labs(x = "", y = "") +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank()) +
+  coord_quickmap(xlim = c(-164.5, 163.5), ylim = c(-55,85)) +
+  ggtitle(label = "m1")
+m2 <- ggplot() +
+  geom_raster(data = slf_df, aes(x = x, y = y, fill = rescale(value)), alpha=0.9, show.legend = F) +
+  scale_fill_gradientn(limits= c(0,1), name = "Suitability", colors = rev(c("#e31a1c","#fd8d3c", "#fecc5c", "#FFFFFF"))) +
+  geom_polygon(data = map_data('world'), aes(x = long, y = lat, group = group), fill = NA, color = "black", lwd = 0.15) +
+  theme_bw() +
+  labs(x = "", y = "") +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank()) +
+  coord_quickmap(xlim = c(-164.5, 163.5), ylim = c(-55,85)) +
+  ggtitle(label = "m2")
+s3 <- ggplot() +
+  geom_raster(data = slftoh_df, aes(x = x, y = y, fill = rescale(value)), alpha=0.9, show.legend = T) +
+  scale_fill_gradientn(limits= c(0,1), name = "Suitability", colors = rev(c("#e31a1c","#fd8d3c", "#fecc5c", "#FFFFFF"))) +
+  geom_polygon(data = map_data('world'), aes(x = long, y = lat, group = group), fill = NA, color = "black", lwd = 0.15) +
+  theme_bw() +
+  labs(x = "", y = "") +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank()) +
+  coord_quickmap(xlim = c(-164.5, 163.5), ylim = c(-55,85)) +
+  ggtitle(label = "s3")
+
+#visualize together
+m1 + m2 + s3
+
 ```
 
 
-
-
-# Visualize Models
-
-# Save Models
+## Extraction of Summary Statistics
 
 # References

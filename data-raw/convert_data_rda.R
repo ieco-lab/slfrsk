@@ -1135,7 +1135,7 @@ countries_extracts$geopol_unit[grep(pattern = "Saint Bart", x = countries_extrac
 #############################
 
 #load USA
-suitability_usa <- raster("/Volumes/GoogleDrive/Shared drives/slfrskMapping/data/slfrsk/maxent_models/slftoh_usa_downsampled_x4_mean.tif")
+suitability_usa <- raster("/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk/maxent_models/slftoh_ensemble_usa_downsampled_x4_mean.tif")
 
 #fortify (dataframe-fy) the global model
 suitability_usa_df <- fortify(suitability_usa, maxpixels = 1e10)
@@ -1150,8 +1150,34 @@ suitability_usa_df$value <- round(suitability_usa_df$value, digits = 2)
 states_centers <- read_csv(file = "./data-raw/us_capitals.csv")
 colnames(states_centers)[1] <- "geopol_unit"
 
+#individual models
+slf_usa <- raster("/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk/maxent_models/slf_usa_downsampled_x4.tif")
+slftoh_usa <- raster("/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk/maxent_models/slftoh_usa_downsampled_x4.tif")
+toh_usa <- raster("/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk/maxent_models/toh_usa_downsampled_x4.tif")
+
+
+#fortify (dataframe-fy) the global model
+slf_usa_df <- fortify(slf_usa, maxpixels = 1e10)
+slftoh_usa_df <- fortify(slftoh_usa, maxpixels = 1e10)
+toh_usa_df <- fortify(toh_usa, maxpixels = 1e10)
+
+colnames(slf_usa_df)[3] <- "value"
+colnames(slftoh_usa_df)[3] <- "value"
+colnames(toh_usa_df)[3] <- "value"
+
+#remove the NA values to shrink the object size
+slf_usa_df <- slf_usa_df[!is.na(slf_usa_df$value),]
+slftoh_usa_df <- slftoh_usa_df[!is.na(slftoh_usa_df$value),]
+toh_usa_df <- toh_usa_df[!is.na(toh_usa_df$value),]
+
+#round the value points
+slf_usa_df$value <- round(slf_usa_df$value, digits = 2)
+slftoh_usa_df$value <- round(slftoh_usa_df$value, digits = 2)
+slf_usa_df$value <- round(slf_usa_df$value, digits = 2)
+
+
 #COUNTRIES
-suitability_countries <- raster("/Volumes/GoogleDrive/Shared drives/slfrskMapping/data/slfrsk/maxent_models/slftoh_downsampled_x4_mean.tif")
+suitability_countries <- raster("/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk/maxent_models/slftoh_ensemble_downsampled_x4_mean.tif")
 
 #fortify (dataframe-fy) the global model
 suitability_countries_df <- fortify(suitability_countries, maxpixels = 1e10)
@@ -1161,6 +1187,31 @@ suitability_countries_df <- suitability_countries_df[!is.na(suitability_countrie
 
 #round the value points
 suitability_countries_df$value <- round(suitability_countries_df$value, digits = 2)
+
+#individual models
+slf <- raster("/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk/maxent_models/slf_downsampled_x10.tif")
+slftoh <- raster("/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk/maxent_models/slftoh_downsampled_x10.tif")
+toh <- raster("/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk/maxent_models/toh_downsampled_x10.tif")
+
+
+#fortify (dataframe-fy) the global model
+slf_df <- fortify(slf, maxpixels = 1e10)
+slftoh_df <- fortify(slftoh, maxpixels = 1e10)
+toh_df <- fortify(toh, maxpixels = 1e10)
+
+colnames(slf_df)[3] <- "value"
+colnames(slftoh_df)[3] <- "value"
+colnames(toh_df)[3] <- "value"
+
+#remove the NA values to shrink the object size
+slf_df <- slf_df[!is.na(slf_df$value),]
+slftoh_df <- slftoh_df[!is.na(slftoh_df$value),]
+toh_df <- toh_df[!is.na(toh_df$value),]
+
+#round the value points
+slf_df$value <- round(slf_df$value, digits = 2)
+slftoh_df$value <- round(slftoh_df$value, digits = 2)
+slf_df$value <- round(slf_df$value, digits = 2)
 
 #add in the countries center for plotting the map ***TURNED OFF RIGHT NOW***
 #read in the centroids for a check
@@ -1259,9 +1310,15 @@ save(countries_extracts, file = file.path(here(), "data", "countries_extracts.rd
 #suitability models rasters
 #############################
 save(suitability_usa_df, file = file.path(here(), "data", "suitability_usa_df.rda"))
+save(slf_usa_df, file = file.path(here(), "data", "slf_usa_df.rda"))
+save(slftoh_usa_df, file = file.path(here(), "data", "slftoh_usa_df.rda"))
+save(toh_usa_df, file = file.path(here(), "data", "toh_usa_df.rda"))
 save(suitability_countries_df, file = file.path(here(), "data", "suitability_countries_df.rda"))
 save(states_centers, file = file.path(here(), "data", "states_centers.rda"))
 save(countries_centers, file = file.path(here(), "data", "countries_centers.rda"))
+save(slf_df, file = file.path(here(), "data", "slf_df.rda"))
+save(slftoh_df, file = file.path(here(), "data", "slftoh_df.rda"))
+save(toh_df, file = file.path(here(), "data", "toh_df.rda"))
 
 #############################
 #presence records for models
