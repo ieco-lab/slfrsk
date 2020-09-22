@@ -113,7 +113,7 @@ countries_risk_market <- countries_summary_future %>%
 
 # Build and check model
 
-From here, we now can build (or rebuild, technically `vignette-021-quadrant-plots` does this first part as well) the risk model (`risk_mod`). This model is a linear regression model of log-transformed **impact** potential on the log-transformed **transport** and normal **establishment** potentials. We then evaluated the strength of the correlation between the empirical and predicted **impact** potential before conducting some diagnostics.
+From here, we now can build (or rebuild, technically, `vignette-021-quadrant-plots` does this first part as well) the risk model (`risk_mod`). This model is a linear regression model of log-transformed **impact** potential on the log-transformed **transport** and normal **establishment** potentials. We then evaluated the strength of the correlation between the empirical and predicted **impact** potential before conducting some diagnostics.
 
 We then rescaled the predicted **impact** values to be bounded $[1,10]$ to produce initial `risk` values.
 
