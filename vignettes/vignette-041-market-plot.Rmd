@@ -1,5 +1,5 @@
 ---
-title: "vignette-041-market-plot"
+title: "Wine Market Risk of Shock Evaluation"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{vignette-041-market-plot}

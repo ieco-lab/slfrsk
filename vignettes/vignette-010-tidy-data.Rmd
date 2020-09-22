@@ -1,5 +1,5 @@
 ---
-title: "vignette-010-tidy-data"
+title: "Data Tidying"
 output: rmarkdown::html_notebook
 vignette: >
   %\VignetteIndexEntry{vignette-010-tidy-data}

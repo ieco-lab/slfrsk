@@ -1,5 +1,5 @@
 ---
-title: "vignette-011-suitability-models"
+title: "Suitability Modeling & Evaluation"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{vignette-011-suitability-models}
@@ -64,7 +64,8 @@ map_toh <- ggplot() +
   labs(x = "", y = "") +
   theme(panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
-        panel.background = element_rect(fill = "#6699cc")) +
+        #panel.background = element_rect(fill = "#6699cc")) +
+        panel.background = element_blank()) +
   coord_quickmap(xlim = c(-164.5, 163.5), ylim = c(-55,85)) +
   ggtitle(label = "TOH Presence")
 
@@ -76,7 +77,8 @@ map_slf <- ggplot() +
   labs(x = "", y = "") +
   theme(panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
-        panel.background = element_rect(fill = "#6699cc")) +
+        #panel.background = element_rect(fill = "#6699cc")) +
+        panel.background = element_blank()) +
   coord_quickmap(xlim = c(-164.5, 163.5), ylim = c(-55,85)) +
   ggtitle(label = "SLF Presence")
 

@@ -16,6 +16,7 @@ home:
 navbar:
   left:
     - icon: fa-home fa-lg
+    #- icon: fa-bug fa-lg
       href: index.html
     - text: "Overview"
       href: articles/vignette-001-overview.html
@@ -28,7 +29,7 @@ navbar:
           href: articles/vignette-011-suitability-models.html
         - text: "Risk Map Plotting"
           href: articles/vignette-030-risk-maps.html
-        - text: "Invasion Potential Alignment Calculation"
+        - text: "Invasion Potential Alignment"
           href: articles/vignette-021-quadrant-plots.html
         - text: "Wine Market Risk of Shock Evaluation"
           href: articles/vignette-041-market-plot.html
