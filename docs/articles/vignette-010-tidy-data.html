@@ -337,26 +337,82 @@
 <blockquote>
 <p>Here, you can see the summary for the first 10 states for the <code>future</code> trade data for mass of trade (metric tons).</p>
 </blockquote>
-<pre><code>#&gt; # A tibble: 10 x 4
-#&gt; # Groups:   destination [10]
-#&gt;    destination          status          avg_infected_mass      se
-#&gt;    &lt;chr&gt;                &lt;chr&gt;                       &lt;dbl&gt;   &lt;dbl&gt;
-#&gt;  1 Alabama              not established          7930257.  85607.
-#&gt;  2 Alaska               not established            89475.   3300.
-#&gt;  3 Arizona              not established          1470111.  30737.
-#&gt;  4 Arkansas             not established          2091190.  15028.
-#&gt;  5 California           not established         16078880. 438506.
-#&gt;  6 Colorado             not established          1767253.  24941.
-#&gt;  7 Connecticut          not established         24300545. 249554.
-#&gt;  8 Delaware             established             17451046. 345025.
-#&gt;  9 District of Columbia not established          3114459.  30670.
-#&gt; 10 Florida              not established         12456206. 399236.</code></pre>
+<table class="table">
+<thead><tr class="header">
+<th align="left">destination</th>
+<th align="left">status</th>
+<th align="right">avg_infected_mass</th>
+<th align="right">se</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">Alabama</td>
+<td align="left">not established</td>
+<td align="right">7930256.80</td>
+<td align="right">85606.518</td>
+</tr>
+<tr class="even">
+<td align="left">Alaska</td>
+<td align="left">not established</td>
+<td align="right">89474.98</td>
+<td align="right">3299.834</td>
+</tr>
+<tr class="odd">
+<td align="left">Arizona</td>
+<td align="left">not established</td>
+<td align="right">1470111.47</td>
+<td align="right">30737.034</td>
+</tr>
+<tr class="even">
+<td align="left">Arkansas</td>
+<td align="left">not established</td>
+<td align="right">2091189.58</td>
+<td align="right">15027.940</td>
+</tr>
+<tr class="odd">
+<td align="left">California</td>
+<td align="left">not established</td>
+<td align="right">16078879.79</td>
+<td align="right">438505.996</td>
+</tr>
+<tr class="even">
+<td align="left">Colorado</td>
+<td align="left">not established</td>
+<td align="right">1767253.23</td>
+<td align="right">24941.075</td>
+</tr>
+<tr class="odd">
+<td align="left">Connecticut</td>
+<td align="left">not established</td>
+<td align="right">24300544.86</td>
+<td align="right">249553.550</td>
+</tr>
+<tr class="even">
+<td align="left">Delaware</td>
+<td align="left">established</td>
+<td align="right">17451046.19</td>
+<td align="right">345024.866</td>
+</tr>
+<tr class="odd">
+<td align="left">District of Columbia</td>
+<td align="left">not established</td>
+<td align="right">3114458.96</td>
+<td align="right">30670.169</td>
+</tr>
+<tr class="even">
+<td align="left">Florida</td>
+<td align="left">not established</td>
+<td align="right">12456206.29</td>
+<td align="right">399235.776</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div id="countries" class="section level3">
 <h3 class="hasAnchor">
 <a href="#countries" class="anchor"></a>Countries</h3>
 <p>From here, we turn to complete the same analyses for <code>countries</code> as states (value of trade in USD and then mass of trade in metric tons). Notably, we do not have to worry about the intrastate trade that we filtered out in the <code>states</code> datasets. As such, we do not bother with attaching a <code>$status</code> identifier to each country (this is done as needed for visualization later).</p>
-<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="co">#COUNTRIES</span>
+<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="co">#COUNTRIES</span>
 
 <span class="co">#VALUE</span>
 <span class="co">#load countries values</span>
@@ -460,26 +516,72 @@
 <blockquote>
 <p>Here, you can see the summary for the first 10 countries for the <code>future</code> trade data for mass of trade (metric tons), just like the <code>states</code> data.</p>
 </blockquote>
-<pre><code>#&gt; # A tibble: 10 x 3
-#&gt;    destination         avg_infected_mass       se
-#&gt;    &lt;chr&gt;                           &lt;dbl&gt;    &lt;dbl&gt;
-#&gt;  1 Afghanistan                   28972.    9719. 
-#&gt;  2 Albania                       13072.    3989. 
-#&gt;  3 Algeria                      136316.   35801. 
-#&gt;  4 Andorra                          89.8     23.4
-#&gt;  5 Angola                        29650.    3283. 
-#&gt;  6 Anguilla                       1230.     173. 
-#&gt;  7 Antigua and Barbuda            3955.    1251. 
-#&gt;  8 Argentina                    641023.  151137. 
-#&gt;  9 Armenia                        6580.     964. 
-#&gt; 10 Aruba                         56630.   30765.</code></pre>
+<table class="table">
+<thead><tr class="header">
+<th align="left">destination</th>
+<th align="right">avg_infected_mass</th>
+<th align="right">se</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">Afghanistan</td>
+<td align="right">28971.855</td>
+<td align="right">9718.51866</td>
+</tr>
+<tr class="even">
+<td align="left">Albania</td>
+<td align="right">13071.625</td>
+<td align="right">3989.39388</td>
+</tr>
+<tr class="odd">
+<td align="left">Algeria</td>
+<td align="right">136316.445</td>
+<td align="right">35800.92100</td>
+</tr>
+<tr class="even">
+<td align="left">Andorra</td>
+<td align="right">89.847</td>
+<td align="right">23.42381</td>
+</tr>
+<tr class="odd">
+<td align="left">Angola</td>
+<td align="right">29649.890</td>
+<td align="right">3282.58809</td>
+</tr>
+<tr class="even">
+<td align="left">Anguilla</td>
+<td align="right">1230.422</td>
+<td align="right">173.24077</td>
+</tr>
+<tr class="odd">
+<td align="left">Antigua and Barbuda</td>
+<td align="right">3954.584</td>
+<td align="right">1251.36392</td>
+</tr>
+<tr class="even">
+<td align="left">Argentina</td>
+<td align="right">641023.358</td>
+<td align="right">151137.30668</td>
+</tr>
+<tr class="odd">
+<td align="left">Armenia</td>
+<td align="right">6580.410</td>
+<td align="right">964.23579</td>
+</tr>
+<tr class="even">
+<td align="left">Aruba</td>
+<td align="right">56630.088</td>
+<td align="right">30764.55954</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div id="combined-final-trade-data" class="section level3">
 <h3 class="hasAnchor">
 <a href="#combined-final-trade-data" class="anchor"></a>Combined Final Trade Data</h3>
 <p>Now that we have several permutations of trade with <em>Lycorma</em>-established states data (both <code>present</code> and <code>future</code> scenarios) for both geopolitical units (<code>states</code> and <code>countries</code>) as measured in <strong>value</strong> and <strong>mass</strong> (USD and metric tons, respectively), we can combine some of these data into fewer dataframes to minimize the number of files we are juggling for future analyses. To do this, we merge the <strong>value</strong> and <strong>mass</strong> data for each geopolitical unit dataset.</p>
 <p>As we do so, we take the time to create <span class="math inline">\(\log_{10}\)</span> transformed versions of the trade <strong>value</strong> and <strong>mass</strong> data. To avoid possible errors for this transformation, we add a constant (<code>+1</code>) to data prior to transformation. This process for transformation is held constant for <strong>Impact potential</strong> data.</p>
-<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="co">#STATES</span>
+<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="co">#STATES</span>
 <span class="no">summary_states_trade</span> <span class="kw">&lt;-</span> <span class="fu">left_join</span>(<span class="no">summary_states_trade_value</span>, <span class="no">summary_states_trade_mass</span>, <span class="kw">by</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"destination"</span>, <span class="st">"status"</span>), <span class="kw">suffix</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"_trade"</span>, <span class="st">"_mass"</span>)) <span class="kw">%&gt;%</span>
     <span class="fu">mutate</span>(<span class="kw">log10_avg_infected_trade</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span>(<span class="no">avg_infected_trade</span>+<span class="fl">1</span>), <span class="kw">log10_avg_infected_mass</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span>(<span class="no">avg_infected_mass</span>+<span class="fl">1</span>))
 
@@ -498,40 +600,245 @@
 <blockquote>
 <p>Here is the merged <code>states</code> data for <code>future</code>:</p>
 </blockquote>
-<pre><code>#&gt; # A tibble: 10 x 8
-#&gt; # Groups:   destination [10]
-#&gt;    destination status avg_infected_tr… se_trade avg_infected_ma… se_mass
-#&gt;    &lt;chr&gt;       &lt;chr&gt;             &lt;dbl&gt;    &lt;dbl&gt;            &lt;dbl&gt;   &lt;dbl&gt;
-#&gt;  1 Alabama     not e…     25228805075.   8.63e7         7930257.  85607.
-#&gt;  2 Alaska      not e…      3522984194.   2.10e8           89475.   3300.
-#&gt;  3 Arizona     not e…     15186408301.   1.49e8         1470111.  30737.
-#&gt;  4 Arkansas    not e…     10417354354.   4.16e7         2091190.  15028.
-#&gt;  5 California  not e…    108865429051.   4.35e8        16078880. 438506.
-#&gt;  6 Colorado    not e…     14988504153.   2.37e8         1767253.  24941.
-#&gt;  7 Connecticut not e…     50771613052.   3.68e8        24300545. 249554.
-#&gt;  8 Delaware    estab…     26627108451.   4.96e8        17451046. 345025.
-#&gt;  9 District o… not e…     11096538014.   5.69e8         3114459.  30670.
-#&gt; 10 Florida     not e…     63870962922.   7.11e8        12456206. 399236.
-#&gt; # … with 2 more variables: log10_avg_infected_trade &lt;dbl&gt;,
-#&gt; #   log10_avg_infected_mass &lt;dbl&gt;</code></pre>
+<table class="table">
+<colgroup>
+<col width="14%">
+<col width="11%">
+<col width="13%">
+<col width="6%">
+<col width="12%">
+<col width="7%">
+<col width="17%">
+<col width="16%">
+</colgroup>
+<thead><tr class="header">
+<th align="left">destination</th>
+<th align="left">status</th>
+<th align="right">avg_infected_trade</th>
+<th align="right">se_trade</th>
+<th align="right">avg_infected_mass</th>
+<th align="right">se_mass</th>
+<th align="right">log10_avg_infected_trade</th>
+<th align="right">log10_avg_infected_mass</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">Alabama</td>
+<td align="left">not established</td>
+<td align="right">25228805075</td>
+<td align="right">86258064</td>
+<td align="right">7930256.80</td>
+<td align="right">85606.518</td>
+<td align="right">10.401897</td>
+<td align="right">6.899287</td>
+</tr>
+<tr class="even">
+<td align="left">Alaska</td>
+<td align="left">not established</td>
+<td align="right">3522984194</td>
+<td align="right">209804739</td>
+<td align="right">89474.98</td>
+<td align="right">3299.834</td>
+<td align="right">9.546911</td>
+<td align="right">4.951706</td>
+</tr>
+<tr class="odd">
+<td align="left">Arizona</td>
+<td align="left">not established</td>
+<td align="right">15186408301</td>
+<td align="right">148520367</td>
+<td align="right">1470111.47</td>
+<td align="right">30737.034</td>
+<td align="right">10.181455</td>
+<td align="right">6.167351</td>
+</tr>
+<tr class="even">
+<td align="left">Arkansas</td>
+<td align="left">not established</td>
+<td align="right">10417354354</td>
+<td align="right">41575543</td>
+<td align="right">2091189.58</td>
+<td align="right">15027.940</td>
+<td align="right">10.017757</td>
+<td align="right">6.320394</td>
+</tr>
+<tr class="odd">
+<td align="left">California</td>
+<td align="left">not established</td>
+<td align="right">108865429051</td>
+<td align="right">435191667</td>
+<td align="right">16078879.79</td>
+<td align="right">438505.996</td>
+<td align="right">11.036890</td>
+<td align="right">7.206256</td>
+</tr>
+<tr class="even">
+<td align="left">Colorado</td>
+<td align="left">not established</td>
+<td align="right">14988504153</td>
+<td align="right">237367599</td>
+<td align="right">1767253.23</td>
+<td align="right">24941.075</td>
+<td align="right">10.175758</td>
+<td align="right">6.247299</td>
+</tr>
+<tr class="odd">
+<td align="left">Connecticut</td>
+<td align="left">not established</td>
+<td align="right">50771613052</td>
+<td align="right">367967442</td>
+<td align="right">24300544.86</td>
+<td align="right">249553.550</td>
+<td align="right">10.705621</td>
+<td align="right">7.385616</td>
+</tr>
+<tr class="even">
+<td align="left">Delaware</td>
+<td align="left">established</td>
+<td align="right">26627108451</td>
+<td align="right">495876009</td>
+<td align="right">17451046.19</td>
+<td align="right">345024.866</td>
+<td align="right">10.425324</td>
+<td align="right">7.241822</td>
+</tr>
+<tr class="odd">
+<td align="left">District of Columbia</td>
+<td align="left">not established</td>
+<td align="right">11096538014</td>
+<td align="right">569218784</td>
+<td align="right">3114458.96</td>
+<td align="right">30670.169</td>
+<td align="right">10.045188</td>
+<td align="right">6.493383</td>
+</tr>
+<tr class="even">
+<td align="left">Florida</td>
+<td align="left">not established</td>
+<td align="right">63870962922</td>
+<td align="right">711064965</td>
+<td align="right">12456206.29</td>
+<td align="right">399235.776</td>
+<td align="right">10.805304</td>
+<td align="right">7.095386</td>
+</tr>
+</tbody>
+</table>
 <blockquote>
 <p>And here is the merged <code>countries</code> data for <code>future</code>:</p>
 </blockquote>
-<pre><code>#&gt; # A tibble: 10 x 7
-#&gt;    destination avg_infected_tr… se_trade avg_infected_ma… se_mass
-#&gt;    &lt;chr&gt;                  &lt;dbl&gt;    &lt;dbl&gt;            &lt;dbl&gt;   &lt;dbl&gt;
-#&gt;  1 Afghanistan       229440094    8.40e7          28972.   9.72e3
-#&gt;  2 Albania            16087629    2.53e6          13072.   3.99e3
-#&gt;  3 Algeria           366155275.   6.48e7         136316.   3.58e4
-#&gt;  4 Andorra             1397186.   1.63e5             89.8  2.34e1
-#&gt;  5 Angola            117524118.   3.50e7          29650.   3.28e3
-#&gt;  6 Anguilla            3511810    2.02e5           1230.   1.73e2
-#&gt;  7 Antigua an…        13607937.   2.12e6           3955.   1.25e3
-#&gt;  8 Argentina        1155034980.   9.89e7         641023.   1.51e5
-#&gt;  9 Armenia            21212545    1.49e6           6580.   9.64e2
-#&gt; 10 Aruba              74149254.   9.24e6          56630.   3.08e4
-#&gt; # … with 2 more variables: log10_avg_infected_trade &lt;dbl&gt;,
-#&gt; #   log10_avg_infected_mass &lt;dbl&gt;</code></pre>
+<table class="table">
+<colgroup>
+<col width="15%">
+<col width="14%">
+<col width="8%">
+<col width="13%">
+<col width="10%">
+<col width="19%">
+<col width="18%">
+</colgroup>
+<thead><tr class="header">
+<th align="left">destination</th>
+<th align="right">avg_infected_trade</th>
+<th align="right">se_trade</th>
+<th align="right">avg_infected_mass</th>
+<th align="right">se_mass</th>
+<th align="right">log10_avg_infected_trade</th>
+<th align="right">log10_avg_infected_mass</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">Afghanistan</td>
+<td align="right">229440094</td>
+<td align="right">84000883.5</td>
+<td align="right">28971.855</td>
+<td align="right">9718.51866</td>
+<td align="right">8.360669</td>
+<td align="right">4.461991</td>
+</tr>
+<tr class="even">
+<td align="left">Albania</td>
+<td align="right">16087629</td>
+<td align="right">2532321.9</td>
+<td align="right">13071.625</td>
+<td align="right">3989.39388</td>
+<td align="right">7.206492</td>
+<td align="right">4.116363</td>
+</tr>
+<tr class="odd">
+<td align="left">Algeria</td>
+<td align="right">366155275</td>
+<td align="right">64791480.9</td>
+<td align="right">136316.445</td>
+<td align="right">35800.92100</td>
+<td align="right">8.563665</td>
+<td align="right">5.134551</td>
+</tr>
+<tr class="even">
+<td align="left">Andorra</td>
+<td align="right">1397186</td>
+<td align="right">162595.1</td>
+<td align="right">89.847</td>
+<td align="right">23.42381</td>
+<td align="right">6.145255</td>
+<td align="right">1.958311</td>
+</tr>
+<tr class="odd">
+<td align="left">Angola</td>
+<td align="right">117524118</td>
+<td align="right">35032600.7</td>
+<td align="right">29649.890</td>
+<td align="right">3282.58809</td>
+<td align="right">8.070127</td>
+<td align="right">4.472038</td>
+</tr>
+<tr class="even">
+<td align="left">Anguilla</td>
+<td align="right">3511810</td>
+<td align="right">201782.4</td>
+<td align="right">1230.422</td>
+<td align="right">173.24077</td>
+<td align="right">6.545531</td>
+<td align="right">3.090407</td>
+</tr>
+<tr class="odd">
+<td align="left">Antigua and Barbuda</td>
+<td align="right">13607937</td>
+<td align="right">2116672.9</td>
+<td align="right">3954.584</td>
+<td align="right">1251.36392</td>
+<td align="right">7.133792</td>
+<td align="right">3.597211</td>
+</tr>
+<tr class="even">
+<td align="left">Argentina</td>
+<td align="right">1155034980</td>
+<td align="right">98892083.1</td>
+<td align="right">641023.358</td>
+<td align="right">151137.30668</td>
+<td align="right">9.062595</td>
+<td align="right">5.806875</td>
+</tr>
+<tr class="odd">
+<td align="left">Armenia</td>
+<td align="right">21212545</td>
+<td align="right">1485151.7</td>
+<td align="right">6580.410</td>
+<td align="right">964.23579</td>
+<td align="right">7.326593</td>
+<td align="right">3.818319</td>
+</tr>
+<tr class="even">
+<td align="left">Aruba</td>
+<td align="right">74149254</td>
+<td align="right">9243098.9</td>
+<td align="right">56630.088</td>
+<td align="right">30764.55954</td>
+<td align="right">7.870107</td>
+<td align="right">4.753055</td>
+</tr>
+</tbody>
+</table>
 <hr>
 </div>
 </div>
@@ -549,7 +856,7 @@
 <li>grape yield per unit area (metric tons/hectare)</li>
 </ol>
 <p>Although provide both sources of data, we focus more on <strong>production</strong> as a total measure of output per geopolitical unit.</p>
-<div class="sourceCode" id="cb12"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"states_grapes"</span>)
+<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"states_grapes"</span>)
 
 <span class="co">#summarize and log transform</span>
 <span class="no">summary_states_grapes</span> <span class="kw">&lt;-</span> <span class="no">states_grapes</span> <span class="kw">%&gt;%</span>
@@ -581,7 +888,7 @@
 <h2 class="hasAnchor">
 <a href="#wine" class="anchor"></a>Wine</h2>
 <p>For <code>wine</code>, we were able to obtain wine production for both geopolitical unit datasets in units of mass, metric tons.</p>
-<div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"states_wine"</span>)
+<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"states_wine"</span>)
 
 <span class="co">#summarize and log transform</span>
 <span class="no">summary_states_wine</span> <span class="kw">&lt;-</span> <span class="no">states_wine</span> <span class="kw">%&gt;%</span>
@@ -608,7 +915,7 @@
 <li>Established: <strong>Japan, South Korea, and United States</strong>
 </li>
 </ul>
-<div class="sourceCode" id="cb14"><html><body><pre class="r"><span class="co">#STATES</span>
+<div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="co">#STATES</span>
 
 <span class="co">##PRESENT</span>
 
@@ -746,13 +1053,13 @@
 <h1 class="hasAnchor">
 <a href="#save-data" class="anchor"></a>Save data</h1>
 <p>This section provides the code to save each of the final summary objects to the <code>/data</code> directory. They are currently set to not run, as the package <strong>should</strong> ship with the files already in <code>/data</code>. Note that this chunk can be run by setting the top <code>if</code> from <code>FALSE</code> to <code>TRUE</code>!</p>
-<div class="sourceCode" id="cb15"><html><body><pre class="r"><span class="kw">if</span>(<span class="fl">FALSE</span>){
+<div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="kw">if</span>(<span class="fl">FALSE</span>){
 <span class="fu"><a href="https://rdrr.io/r/base/save.html">save</a></span>(<span class="no">states_summary_present</span>, <span class="kw">file</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="fu"><a href="https://rdrr.io/pkg/here/man/here.html">here</a></span>(), <span class="st">"data"</span>, <span class="st">"states_summary_present.rda"</span>))
 <span class="fu"><a href="https://rdrr.io/r/base/save.html">save</a></span>(<span class="no">states_summary_future</span>, <span class="kw">file</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="fu"><a href="https://rdrr.io/pkg/here/man/here.html">here</a></span>(), <span class="st">"data"</span>, <span class="st">"states_summary_future.rda"</span>))
 <span class="fu"><a href="https://rdrr.io/r/base/save.html">save</a></span>(<span class="no">countries_summary_present</span>, <span class="kw">file</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="fu"><a href="https://rdrr.io/pkg/here/man/here.html">here</a></span>(), <span class="st">"data"</span>, <span class="st">"countries_summary_present.rda"</span>))
 <span class="fu"><a href="https://rdrr.io/r/base/save.html">save</a></span>(<span class="no">countries_summary_future</span>, <span class="kw">file</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="fu"><a href="https://rdrr.io/pkg/here/man/here.html">here</a></span>(), <span class="st">"data"</span>, <span class="st">"countries_summary_future.rda"</span>))
 }</pre></body></html></div>
-<div class="sourceCode" id="cb16"><html><body><pre class="r"><span class="kw">if</span>(<span class="fl">FALSE</span>){
+<div class="sourceCode" id="cb12"><html><body><pre class="r"><span class="kw">if</span>(<span class="fl">FALSE</span>){
 
 <span class="no">states_summary_future_ensemble</span> <span class="kw">&lt;-</span> <span class="no">states_summary_future</span>
 

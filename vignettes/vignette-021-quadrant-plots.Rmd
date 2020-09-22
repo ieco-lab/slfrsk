@@ -916,6 +916,12 @@ if(present_transport){
 
 ```
 
+We can report the following alignment of potentials:
+
+  - U.S. State Alignment Correlation = `r states.impact.cor$estimate` (p = `r states.impact.cor$p.value`)
+  - Country Alignment Correlation = `r countries.impact.cor$estimate` (p = `r countries.impact.cor$p.value`)
+
+
 ## Plotting visualization
 
 Now that the plotting code has been run, the `states` and `countries` correlation plots can be visualized together:

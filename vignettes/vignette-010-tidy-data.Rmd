@@ -265,7 +265,7 @@ data("states_trade_mass_summary_slf_future")
 > Here, you can see the summary for the first 10 states for the `future` trade data for mass of trade (metric tons).    
     
 ```{r show the data format for summarized trade so far for states, echo=FALSE}
-head(summary_states_trade_mass_future, n = 10)
+knitr::kable(head(summary_states_trade_mass_future, n = 10))
 ```
 
 ### Countries
@@ -379,7 +379,7 @@ countries_trade_mass_summary_slf_future <- countries_trade_mass_summary_slf_futu
 > Here, you can see the summary for the first 10 countries for the `future` trade data for mass of trade (metric tons), just like the `states` data.    
     
 ```{r show the data format for summarized trade so far for countries, echo=FALSE}
-head(summary_countries_trade_mass_future, n = 10)
+knitr::kable(head(summary_countries_trade_mass_future, n = 10))
 ```
 
 ### Combined Final Trade Data
@@ -410,13 +410,13 @@ summary_countries_trade_future <- left_join(summary_countries_trade_value_future
 > Here is the merged `states` data for `future`:
 
 ```{r merged states trade, echo=FALSE}
-head(summary_states_trade_future, n = 10)
+knitr::kable(head(summary_states_trade_future, n = 10))
 ```
 
 >And here is the merged `countries` data for `future`:
 
 ```{r merged countries trade, echo=FALSE}
-head(summary_countries_trade_future, n = 10)
+knitr::kable(head(summary_countries_trade_future, n = 10))
 ```
 
 ***
@@ -493,8 +493,8 @@ Now that all of these data sources have been summarized and tidied, we will merg
 
 During this process, we also use the `wine` and `grape` data to produce binary categorical data for each geopolitical unit to indicate whether it is involved directly in that industry. For this, we also manually add the *United States* as a grape producer in the `countries` datasets. Additionally, we manually add `$status` to the `countries` datasets as follows:
 
-  + Native: **China, India, Taiwan, and Vietnam**
-  + Established: **Japan, South Korea, and United States**
+  - Native: **China, India, Taiwan, and Vietnam**
+  - Established: **Japan, South Korea, and United States**
 
 ```{r make full potentials summary datasets, message=FALSE}
 #STATES
