@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>vignette-001-overview • slfrsk</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/cerulean/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
@@ -38,13 +38,43 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="../articles/index.html">
+  <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
 </li>
-<li class="dropdown-header">Overview</li>
-<li class="dropdown-header">Articles</li>
+<li>
+  <a href="../articles/vignette-001-overview.html">Overview</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+<li class="divider">
+    <li>
+      <a href="../articles/vignette-010-tidy-data.html">Data Tidying</a>
+    </li>
+    <li>
+      <a href="../articles/vignette-011-suitability-models.html">Suitability Modeling &amp; Evaluation</a>
+    </li>
+    <li>
+      <a href="../articles/vignette-030-risk-maps.html">Risk Map Plotting</a>
+    </li>
+    <li>
+      <a href="../articles/vignette-021-quadrant-plots.html">Invasion Potential Alignment Calculation</a>
+    </li>
+    <li>
+      <a href="../articles/vignette-041-market-plot.html">Wine Market Risk of Shock Evaluation</a>
+    </li>
+    <li>
+      <a href="../articles/vignette-040-ee-data.html">Earth Engine Risk Extraction</a>
+    </li>
+    <li class="divider">
+  </ul>
+</li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
@@ -78,11 +108,72 @@
     
 <p>Overview of the Spotted Lanternfly Paninvasion Risk Research Compendium</p>
 <hr>
+<div id="purpose" class="section level1">
+<h1 class="hasAnchor">
+<a href="#purpose" class="anchor"></a>Purpose</h1>
+<p>Welcome to the <strong>Research Compendium</strong> Overview for “High risk of a spotted lanternfly paninvasion to shock the global wine market” [INSERT STABLE BIORXIV LINK]. This overview aims to outline the contents of the compendium to ensure that the study is transparent and reproducible.</p>
 </div>
+<div id="about-the-compendium" class="section level1">
+<h1 class="hasAnchor">
+<a href="#about-the-compendium" class="anchor"></a>About the Compendium</h1>
+<p>This compendium follows the paper structure, which assesses the severity of risk of a paninvasion of <em>Lycorma delicatula</em>, the spotted lanternfly (SLF). This emerging invasive pest was recently introduced to the U.S. and demonstrates a preference for feeding on agriculturally important crops, including grapes (<span class="citation">Urban (<a href="#ref-urban_perspective:_2019" role="doc-biblioref">2019</a>)</span>). As it continues to spread, the severity of risk for SLF paninvasion can be thought of in much the same way as emerging infectious diseases. Therefore, we adapt a framework from the epidemiologic literature (<span class="citation">Reed et al. (<a href="#ref-reed_novel_2013" role="doc-biblioref">2013</a>)</span>) and merge it with existing invasion ecology theory (<span class="citation">Blackburn et al. (<a href="#ref-blackburn_proposed_2011" role="doc-biblioref">2011</a>)</span>) to determine the severity of risk for a SLF paninvasion.</p>
+<p>Our adapted framework determines how closely three (3) risk potentials align:</p>
+<ol style="list-style-type: decimal">
+<li>
+<strong>Transportation</strong>—How likely is SLF to be carried beyond its newly-invaded U.S. range to novel geographic regions?</li>
+<li>
+<strong>Establishment</strong>—How likely is SLF to found stable populations in novel geographic regions?</li>
+<li>
+<strong>Impact</strong>—How likely is SLF to adversely effect economic activities associated with the grape and wine industries in novel geographic regions?</li>
+</ol>
+<p>We ascertain the strength of alignment at both a domestic (<em>U.S. states</em>) and global (<em>countries</em>) scale. With the resulting alignments, we assign the overall risk of a paninvasion by SLF by calculating the relationship between predicted <strong>impact</strong> risk to grape production and the market size for the <em>wine industry</em>. Lastly, we deploy a public-facing visualization app of our risk assessment with Google Earth Engine (<a href="https://ieco.users.earthengine.app/view/ieco-slf-riskmap" class="uri">https://ieco.users.earthengine.app/view/ieco-slf-riskmap</a>).</p>
+</div>
+<div id="navigating-the-compendium" class="section level1">
+<h1 class="hasAnchor">
+<a href="#navigating-the-compendium" class="anchor"></a>Navigating the Compendium</h1>
+<p>The research compendium is organized into several <strong>Articles</strong> (or vignettes) that can be accessed via the top bar of this site. Each article aims to illuminate the process by which we obtained, prepared, or visualized our results. Currently, the compendium contains the following articles:</p>
+<ol style="list-style-type: decimal">
+<li>
+<strong>Data Tidying</strong>—Demonstration of how we cleaned the data obtained to conduct this study</li>
+<li>
+<strong>Suitability Modeling &amp; Evaluation</strong>—Step-by-step process of modeling SLF suitability and extracting suitability for <strong>Establishment</strong> potential</li>
+<li>
+<strong>Risk Map Plotting</strong>—Reproduction of the risk map figure(s) in the main text</li>
+<li>
+<strong>Invasion Potential Alignment Calculation</strong>—Presentation of the evaluation of alignment for <strong>Transport</strong>, <strong>Establishment</strong>, and <strong>Impact</strong> potentials and reproduction of the invasion alignment plots in the main text with optional modifications to evaluate different data partitions</li>
+<li>
+<strong>Wine Market Risk of Shock Evaluation</strong>—Reproduction of the severity of risk figure in the main text with additional model diagnostics</li>
+<li>
+<strong>Earth Engine Risk Extraction</strong>—Conversion of the alignment and risk data for implementation in the Google Earth Engine app.</li>
+</ol>
+</div>
+<div id="citation" class="section level1">
+<h1 class="hasAnchor">
+<a href="#citation" class="anchor"></a>Citation</h1>
+<p>Huron, Behm, Helmus. <a href="https://www.iecolab.org/" class="uri">https://www.iecolab.org/</a></p>
+</div>
+<div id="references" class="section level1 unnumbered">
+<h1 class="hasAnchor">
+<a href="#references" class="anchor"></a>References</h1>
+<div id="refs" class="references">
+<div id="ref-blackburn_proposed_2011">
+<p>Blackburn, Tim M., Petr Pyšek, Sven Bacher, James T. Carlton, Richard P. Duncan, Vojtěch Jarošík, John R. U. Wilson, and David M. Richardson. 2011. “A Proposed Unified Framework for Biological Invasions.” <em>Trends in Ecology &amp; Evolution</em> 26 (7): 333–39. <a href="https://doi.org/10.1016/j.tree.2011.03.023">https://doi.org/10.1016/j.tree.2011.03.023</a>.</p>
+</div>
+<div id="ref-reed_novel_2013">
+<p>Reed, Carrie, Matthew Biggerstaff, Lyn Finelli, Lisa M Koonin, Denise Beauvais, Amra Uzicanin, Andrew Plummer, Joe Bresee, Stephen C Redd, and Daniel B Jernigan. 2013. “Novel Framework for Assessing Epidemiologic Effects of Influenza Epidemics and Pandemics.” <em>Emerging Infectious Diseases</em> 19 (1): 85.</p>
+</div>
+<div id="ref-urban_perspective:_2019">
+<p>Urban, Julie M. 2019. “Perspective: Shedding Light on Spotted Lanternfly Impacts in the USA.” <em>Pest Management Science</em>, October.</p>
+</div>
+</div>
+</div>
+  </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
 
-      </div>
+        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
+    </nav>
+</div>
 
 </div>
 

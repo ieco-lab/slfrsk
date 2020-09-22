@@ -39,12 +39,12 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fa fa-home fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="../articles/vignette-001-overview.html">Overview</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -53,28 +53,37 @@
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-<li>
-      <a href="../articles/vignette-010-tidy-data.html">vignette-010-tidy-data</a>
+<li class="divider">
+    <li>
+      <a href="../articles/vignette-010-tidy-data.html">Data Tidying</a>
     </li>
     <li>
-      <a href="../articles/vignette-011-suitability-models.html">vignette-011-suitability-models</a>
+      <a href="../articles/vignette-011-suitability-models.html">Suitability Modeling &amp; Evaluation</a>
     </li>
     <li>
-      <a href="../articles/vignette-021-quadrant-plots.html">vignette-021-quadrant-plots</a>
+      <a href="../articles/vignette-030-risk-maps.html">Risk Map Plotting</a>
     </li>
     <li>
-      <a href="../articles/vignette-030-risk-maps.html">vignette-030-risk-maps</a>
+      <a href="../articles/vignette-021-quadrant-plots.html">Invasion Potential Alignment Calculation</a>
     </li>
     <li>
-      <a href="../articles/vignette-040-ee-data.html">vignette-040-ee-data</a>
+      <a href="../articles/vignette-041-market-plot.html">Wine Market Risk of Shock Evaluation</a>
     </li>
     <li>
-      <a href="../articles/vignette-041-market-plot.html">vignette-041-market-plot</a>
+      <a href="../articles/vignette-040-ee-data.html">Earth Engine Risk Extraction</a>
     </li>
+    <li class="divider">
   </ul>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right"></ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+  <a href="https://github.com/ieco-lab/slfrsk">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
 </div>
 <!--/.nav-collapse -->
   </div>
@@ -183,7 +192,7 @@
 <div id="build-and-check-model" class="section level1">
 <h1 class="hasAnchor">
 <a href="#build-and-check-model" class="anchor"></a>Build and check model</h1>
-<p>From here, we now can build (or rebuild, technically <code>vignette-021-quadrant-plots</code> does this first part as well) the risk model (<code>risk_mod</code>). This model is a linear regression model of log-transformed <strong>impact</strong> potential on the log-transformed <strong>transport</strong> and normal <strong>establishment</strong> potentials. We then evaluated the strength of the correlation between the empirical and predicted <strong>impact</strong> potential before conducting some diagnostics.</p>
+<p>From here, we now can build (or rebuild, technically, <code>vignette-021-quadrant-plots</code> does this first part as well) the risk model (<code>risk_mod</code>). This model is a linear regression model of log-transformed <strong>impact</strong> potential on the log-transformed <strong>transport</strong> and normal <strong>establishment</strong> potentials. We then evaluated the strength of the correlation between the empirical and predicted <strong>impact</strong> potential before conducting some diagnostics.</p>
 <p>We then rescaled the predicted <strong>impact</strong> values to be bounded <span class="math inline">\([1,10]\)</span> to produce initial <code>risk</code> values.</p>
 <p>To create the initial <em>shock model</em> (<code>shock_mod</code>) and ultimately obtain a scaled measure of risk of <em>Lycorma</em> to shock the global wine market, we performed linear regression of the <code>market_size</code> data on <code>risk</code> for countries and conducted diagnostics as for <code>risk_mod</code>. We then evaluated the unscaled and scaled correlations between <code>market_size</code> and <code>risk</code> for countries, resulting in a severity of risk at <span class="math inline">\(8\)</span> based on a scale of <span class="math inline">\([1,10]\)</span>.</p>
 <div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="no">risk_mod</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(<span class="no">log10_avg_prod</span> ~ <span class="no">log10_avg_infected_mass</span> + <span class="no">grand_mean_max</span>,
@@ -195,11 +204,11 @@
 <span class="co">#&gt;  Spearman's rank correlation rho</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; data:  countries_risk_market$log10_avg_prod and predict(risk_mod)</span>
-<span class="co">#&gt; S = 844748, p-value &lt; 2.2e-16</span>
+<span class="co">#&gt; S = 834355, p-value &lt; 2.2e-16</span>
 <span class="co">#&gt; alternative hypothesis: true rho is not equal to 0</span>
 <span class="co">#&gt; sample estimates:</span>
 <span class="co">#&gt;       rho </span>
-<span class="co">#&gt; 0.6553426</span>
+<span class="co">#&gt; 0.6553803</span>
 
 <span class="co">## diagnostics</span>
 <span class="co"># fit is good for the multivariate correlation because there is no dispersion, but do not use this model for prediction (which I do not know why you would)</span>
@@ -212,7 +221,7 @@
 #&gt;  simulated
 #&gt; 
 #&gt; data:  simulationOutput
-#&gt; ratioObsSim = 1.0002, p-value = 0.984
+#&gt; ratioObsSim = 1.0002, p-value = 0.96
 #&gt; alternative hypothesis: two.sided
 summary(risk_mod)
 #&gt; 
@@ -222,19 +231,19 @@ summary(risk_mod)
 #&gt; 
 #&gt; Residuals:
 #&gt;     Min      1Q  Median      3Q     Max 
-#&gt; -3.8194 -1.1247 -0.1394  0.9394  4.8824 
+#&gt; -3.8227 -1.1369 -0.1392  0.9796  4.8805 
 #&gt; 
 #&gt; Coefficients:
 #&gt;                         Estimate Std. Error t value Pr(&gt;|t|)    
-#&gt; (Intercept)             -0.86757    0.22098  -3.926 0.000113 ***
-#&gt; log10_avg_infected_mass  0.32854    0.05947   5.525  8.5e-08 ***
-#&gt; grand_mean_max           3.40880    0.38274   8.906  &lt; 2e-16 ***
+#&gt; (Intercept)              -0.8806     0.2231  -3.947 0.000104 ***
+#&gt; log10_avg_infected_mass   0.3310     0.0598   5.535 8.11e-08 ***
+#&gt; grand_mean_max            3.4118     0.3834   8.898  &lt; 2e-16 ***
 #&gt; ---
 #&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 #&gt; 
-#&gt; Residual standard error: 1.741 on 242 degrees of freedom
-#&gt; Multiple R-squared:  0.4422, Adjusted R-squared:  0.4376 
-#&gt; F-statistic: 95.93 on 2 and 242 DF,  p-value: &lt; 2.2e-16
+#&gt; Residual standard error: 1.744 on 241 degrees of freedom
+#&gt; Multiple R-squared:  0.4418, Adjusted R-squared:  0.4372 
+#&gt; F-statistic: 95.38 on 2 and 241 DF,  p-value: &lt; 2.2e-16
 
 countries_risk_market &lt;- countries_risk_market %&gt;%
   mutate(risk = scales::rescale(predict(risk_mod), to = c(1,10)))
@@ -247,19 +256,19 @@ summary(shock_mod)
 #&gt; 
 #&gt; Residuals:
 #&gt;     Min      1Q  Median      3Q     Max 
-#&gt; -4.9565 -1.1676  0.1706  1.3995  4.1868 
+#&gt; -4.9587 -1.1662  0.1689  1.4012  4.1824 
 #&gt; 
 #&gt; Coefficients:
 #&gt;             Estimate Std. Error t value Pr(&gt;|t|)    
-#&gt; (Intercept)  2.20811    0.36406   6.065 7.71e-09 ***
-#&gt; risk         0.51394    0.05815   8.838 9.25e-16 ***
+#&gt; (Intercept)   2.2029     0.3644   6.045 8.54e-09 ***
+#&gt; risk          0.5147     0.0582   8.843 8.96e-16 ***
 #&gt; ---
 #&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 #&gt; 
-#&gt; Residual standard error: 1.915 on 178 degrees of freedom
-#&gt;   (65 observations deleted due to missingness)
-#&gt; Multiple R-squared:  0.305,  Adjusted R-squared:  0.3011 
-#&gt; F-statistic: 78.11 on 1 and 178 DF,  p-value: 9.251e-16
+#&gt; Residual standard error: 1.914 on 178 degrees of freedom
+#&gt;   (64 observations deleted due to missingness)
+#&gt; Multiple R-squared:  0.3052, Adjusted R-squared:  0.3013 
+#&gt; F-statistic:  78.2 on 1 and 178 DF,  p-value: 8.956e-16
 
 ## diagnostics
 # risk estimate model fit is good and no major issues in heteroskedasticity. But I am not certain why you want this model anyways, a correlation is better because it is easily scaled betwee 1-10 
@@ -280,13 +289,13 @@ cor.test(countries_risk_market$market_size, countries_risk_market$risk)
 #&gt;  Pearson's product-moment correlation
 #&gt; 
 #&gt; data:  countries_risk_market$market_size and countries_risk_market$risk
-#&gt; t = 8.8379, df = 178, p-value = 9.251e-16
+#&gt; t = 8.8432, df = 178, p-value = 8.956e-16
 #&gt; alternative hypothesis: true correlation is not equal to 0
 #&gt; 95 percent confidence interval:
-#&gt;  0.4416650 0.6463111
+#&gt;  0.4419278 0.6465011
 #&gt; sample estimates:
-#&gt;       cor 
-#&gt; 0.5522531
+#&gt;     cor 
+#&gt; 0.55248
 (shock_cor &lt;- cor(countries_risk_market$market_size, 
                  countries_risk_market$risk,
                  use = "complete.obs") %&gt;% 
