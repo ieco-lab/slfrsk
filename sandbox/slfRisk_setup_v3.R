@@ -39,7 +39,8 @@ usethis::use_vignette("vignette-010-tidy-data")
 usethis::use_vignette("vignette-020-quadrant-plots")
 # missing vignette initiation code 021
 usethis::use_vignette("vignette-030-risk-maps")
-usethis::use_vignette("vignette-040-market-plot")
+usethis::use_vignette("vignette-040-ee-data")
+usethis::use_vignette("vignette-041-market-plot")
 
 #----
 ## ONLY RUN CAREFULLY

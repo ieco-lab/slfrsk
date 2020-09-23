@@ -1,0 +1,42 @@
+### * home
+
+home:
+  links:
+    - text: iEco Lab
+      href: https://www.iecolab.org
+    - text: Center for Biodiversity
+      href: http://www.biodiversitycenter.org
+    - text: Temple University Biology
+      href: https://bio.cst.temple.edu
+
+### * template
+
+### * navbar
+
+navbar:
+  left:
+    - icon: fa-home fa-lg
+    #- icon: fa-bug fa-lg
+      href: index.html
+    - text: "Overview"
+      href: articles/vignette-001-overview.html
+    - text: "Articles"
+      menu:
+        - text: ----------------
+        - text: "Data Tidying"
+          href:  articles/vignette-010-tidy-data.html
+        - text: "Suitability Modeling & Evaluation"
+          href: articles/vignette-011-suitability-models.html
+        - text: "Risk Map Plotting"
+          href: articles/vignette-030-risk-maps.html
+        - text: "Invasion Potential Alignment"
+          href: articles/vignette-021-quadrant-plots.html
+        - text: "Wine Market Risk of Shock Evaluation"
+          href: articles/vignette-041-market-plot.html
+        - text: "Earth Engine Risk Extraction"
+          href: articles/vignette-040-ee-data.html
+        - text: ----------------
+
+  right:
+    - icon: fa-github fa-lg
+      href: https://github.com/ieco-lab/slfrsk

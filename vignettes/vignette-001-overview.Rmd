@@ -1,0 +1,56 @@
+---
+title: "Overview"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{vignette-001-overview}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: inline
+bibliography: references.bib
+link-citations: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+Overview of the Spotted Lanternfly Paninvasion Risk Research Compendium
+
+***
+
+# Purpose
+
+Welcome to the **Research Compendium** Overview for "High risk of a spotted lanternfly paninvasion to shock the global wine market" [INSERT STABLE BIORXIV LINK]. This overview aims to outline the contents of the compendium to ensure that the study is transparent and reproducible.
+
+# About the Compendium
+
+This compendium follows the paper structure, which assesses the severity of risk of a paninvasion of *Lycorma delicatula*, the spotted lanternfly (SLF). This emerging invasive pest was recently introduced to the U.S. and demonstrates a preference for feeding on agriculturally important crops, including grapes (@urban_perspective:_2019). As it continues to spread, the severity of risk for SLF paninvasion can be thought of in much the same way as emerging infectious diseases. Therefore, we adapt a framework from the epidemiologic literature (@reed_novel_2013) and merge it with existing invasion ecology theory (@blackburn_proposed_2011) to determine the severity of risk for a SLF paninvasion.
+
+Our adapted framework determines how closely three (3) risk potentials align:
+
+  1. **Transportation**---How likely is SLF to be carried beyond its newly-invaded U.S. range to novel geographic regions?
+  2. **Establishment**---How likely is SLF to found stable populations in novel geographic regions?
+  3. **Impact**---How likely is SLF to adversely effect economic activities associated with the grape and wine industries in novel geographic regions?
+
+We ascertain the strength of alignment at both a domestic (*U.S. states*) and global (*countries*) scale. With the resulting alignments, we assign the overall risk of a paninvasion by SLF by calculating the relationship between predicted **impact** risk to grape production and the market size for the *wine industry*. Lastly, we deploy a public-facing visualization app of our risk assessment with Google Earth Engine (<https://ieco.users.earthengine.app/view/ieco-slf-riskmap>).
+
+# Navigating the Compendium
+
+The research compendium is organized into several **Articles** (or vignettes) that can be accessed via the top bar of this site. Each article aims to illuminate the process by which we obtained, prepared, or visualized our results. Currently, the compendium contains the following articles:
+
+  1. **Data Tidying**---Demonstration of how we cleaned the data obtained to conduct this study
+  2. **Suitability Modeling & Evaluation**---Step-by-step process of modeling SLF suitability and extracting suitability for **Establishment** potential
+  3. **Risk Map Plotting**---Reproduction of the risk map figure(s) in the main text
+  4. **Invasion Potential Alignment Calculation**---Presentation of the evaluation of alignment for **Transport**, **Establishment**, and **Impact** potentials and reproduction of the invasion alignment plots in the main text with optional modifications to evaluate different data partitions
+  5. **Wine Market Risk of Shock Evaluation**---Reproduction of the severity of risk figure in the main text with additional model diagnostics
+  6. **Earth Engine Risk Extraction**---Conversion of the alignment and risk data for implementation in the Google Earth Engine app.
+  
+# Citation
+
+Huron, Behm, Helmus. <https://www.iecolab.org/>
+
+# References
