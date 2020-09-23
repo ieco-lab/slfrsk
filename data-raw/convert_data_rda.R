@@ -15,6 +15,57 @@ library(RStoolbox)
 ####################################################################################################################
 
 ##########################################################
+#wine market risk
+##########################################################
+
+#COUNTRIES
+countries_market <- read_csv("./data-raw/wine_market_FAOSTAT_data_8-31-2020.csv")
+
+
+#rm NA's
+countries_market <- countries_market %>%
+  filter(!is.na(Value))
+
+#recode some country names and make sure that Area == ID
+countries_market <- countries_market %>%
+  mutate(ID = Area) %>%
+  mutate(
+    ID = recode(
+      ID,
+      `Bolivia (Plurinational State of)` = "Bolivia",
+      `Brunei Darussalam` = "Brunei",
+      `Cabo Verde` = "Cape Verde",
+      `China, mainland` = "China",
+      Congo = "Republic of Congo",
+      `Falkland Islands (Malvinas)` = "Falkland Islands",
+      `China, Hong Kong SAR` = "Hong Kong",
+      `Iran (Islamic Republic of)` = "Iran",
+      `Côte d'Ivoire` = "Ivory Coast",
+      `Democratic People's Republic of Korea` = "North Korea",
+      `Republic of Korea` = "South Korea",
+      `Lao People's Democratic Republic` = "Laos",
+      `China, Macao SAR` = "Macao",
+      `Republic of Moldova` = "Moldova",
+      `Netherlands Antilles (former)` = "Bonaire, Sint Eustatius and Saba",
+      `North Macedonia` = "Macedonia",
+      Czechia = "Czech Republic",
+      `Russian Federation` = "Russia",
+      `Syrian Arab Republic`  = "Syria",
+      `China, Taiwan Province of` = "Taiwan",
+      `United Republic of Tanzania` = "Tanzania",
+      `United Kingdom of Great Britain and Northern Ireland` = "United Kingdom",
+      `United States of America` = "United States",
+      `Venezuela (Bolivarian Republic of)` = "Venezuela",
+      `Viet Nam` = "Vietnam",
+      Palestine = "Palestina",
+      Eswatini = "Swaziland"
+
+    )
+  ) %>%
+  mutate(Area = ID)
+
+
+##########################################################
 #correlation plots
 ##########################################################
 
@@ -1027,6 +1078,9 @@ states_slf_extract <- read_csv(file = "./data-raw/extract_states_02_15_19_maxent
 states_toh_extract <- read_csv(file = "./data-raw/extract_states_10_29_18_maxent_toh+atc-bio02.csv", col_names = T)
 states_slftoh_extract <- read_csv(file = "./data-raw/extract_states_11_07_18_maxent_slf+toh+atc-bio02.csv", col_names = T)
 
+#ensemble
+states_extracts_ensemble <- read_csv(file = "./data-raw/extract_states_slftoh_ensemble_mean.csv", col_names = T)
+
 #add model as a categorical var
 states_slf_extract <- states_slf_extract %>%
   mutate(model = "slf")
@@ -1083,8 +1137,11 @@ countries_extracts$geopol_unit[grep(pattern = "Saint Bart", x = countries_extrac
 #suitability models rasters
 #############################
 
+#load the summary table
+models_summary <- read_csv(file = "./data-raw/models_summary.csv")
+
 #load USA
-suitability_usa <- raster("/Volumes/GoogleDrive/Shared drives/slfrskMapping/data/slfrsk/maxent_models/slftoh_usa_downsampled_x4_mean.tif")
+suitability_usa <- raster("/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk/maxent_models/slftoh_ensemble_usa_downsampled_x4_mean.tif")
 
 #fortify (dataframe-fy) the global model
 suitability_usa_df <- fortify(suitability_usa, maxpixels = 1e10)
@@ -1099,8 +1156,34 @@ suitability_usa_df$value <- round(suitability_usa_df$value, digits = 2)
 states_centers <- read_csv(file = "./data-raw/us_capitals.csv")
 colnames(states_centers)[1] <- "geopol_unit"
 
+#individual models
+slf_usa <- raster("/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk/maxent_models/slf_usa_downsampled_x4.tif")
+slftoh_usa <- raster("/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk/maxent_models/slftoh_usa_downsampled_x4.tif")
+toh_usa <- raster("/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk/maxent_models/toh_usa_downsampled_x4.tif")
+
+
+#fortify (dataframe-fy) the global model
+slf_usa_df <- fortify(slf_usa, maxpixels = 1e10)
+slftoh_usa_df <- fortify(slftoh_usa, maxpixels = 1e10)
+toh_usa_df <- fortify(toh_usa, maxpixels = 1e10)
+
+colnames(slf_usa_df)[3] <- "value"
+colnames(slftoh_usa_df)[3] <- "value"
+colnames(toh_usa_df)[3] <- "value"
+
+#remove the NA values to shrink the object size
+slf_usa_df <- slf_usa_df[!is.na(slf_usa_df$value),]
+slftoh_usa_df <- slftoh_usa_df[!is.na(slftoh_usa_df$value),]
+toh_usa_df <- toh_usa_df[!is.na(toh_usa_df$value),]
+
+#round the value points
+slf_usa_df$value <- round(slf_usa_df$value, digits = 2)
+slftoh_usa_df$value <- round(slftoh_usa_df$value, digits = 2)
+slf_usa_df$value <- round(slf_usa_df$value, digits = 2)
+
+
 #COUNTRIES
-suitability_countries <- raster("/Volumes/GoogleDrive/Shared drives/slfrskMapping/data/slfrsk/maxent_models/slftoh_downsampled_x4_mean.tif")
+suitability_countries <- raster("/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk/maxent_models/slftoh_ensemble_downsampled_x4_mean.tif")
 
 #fortify (dataframe-fy) the global model
 suitability_countries_df <- fortify(suitability_countries, maxpixels = 1e10)
@@ -1111,18 +1194,87 @@ suitability_countries_df <- suitability_countries_df[!is.na(suitability_countrie
 #round the value points
 suitability_countries_df$value <- round(suitability_countries_df$value, digits = 2)
 
-#add in the countries center for plotting the map
+#individual models
+slf <- raster("/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk/maxent_models/slf_downsampled_x10.tif")
+slftoh <- raster("/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk/maxent_models/slftoh_downsampled_x10.tif")
+toh <- raster("/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk/maxent_models/toh_downsampled_x10.tif")
+
+
+#fortify (dataframe-fy) the global model
+slf_df <- fortify(slf, maxpixels = 1e10)
+slftoh_df <- fortify(slftoh, maxpixels = 1e10)
+toh_df <- fortify(toh, maxpixels = 1e10)
+
+colnames(slf_df)[3] <- "value"
+colnames(slftoh_df)[3] <- "value"
+colnames(toh_df)[3] <- "value"
+
+#remove the NA values to shrink the object size
+slf_df <- slf_df[!is.na(slf_df$value),]
+slftoh_df <- slftoh_df[!is.na(slftoh_df$value),]
+toh_df <- toh_df[!is.na(toh_df$value),]
+
+#round the value points
+slf_df$value <- round(slf_df$value, digits = 2)
+slftoh_df$value <- round(slftoh_df$value, digits = 2)
+slf_df$value <- round(slf_df$value, digits = 2)
+
+#add in the countries center for plotting the map ***TURNED OFF RIGHT NOW***
 #read in the centroids for a check
-countries_centers <- read_csv(file = "./data-raw/geopolitical_centers_world.csv") %>%
-  dplyr::rename(y = y_coord, x = x_coord)
-colnames(countries_centers)[1] <- "geopol_unit"
+#countries_centers <- read_csv(file = "./data-raw/geopolitical_centers_world.csv") %>%
+#  dplyr::rename(y = y_coord, x = x_coord)
+#colnames(countries_centers)[1] <- "geopol_unit"
 
+#add in the countries capitals for plotting the map
+#read in the basic world cities data from Pareto Software, LLC, the owner of Simplemaps.com, available at: https://simplemaps.com/data/world-cities
+countries_centers <- read_csv(file = "./data-raw/worldcities.csv") %>%
+  dplyr::select(country, iso2, iso3, city_ascii, lng, lat, capital) %>%
+  dplyr::rename(geopol_unit = country, y = lat, x = lng, city_type = capital, capital = city_ascii) %>%
+  dplyr::arrange(geopol_unit) %>%
+  dplyr::filter(city_type == "primary")
 
+#fix Ivory Coast to be same as other files
+countries_centers$geopol_unit <- gsub(pattern = "Côte D???Ivoire", replacement = "Ivory Coast", x = countries_centers$geopol_unit)
+
+#need to filter out cases where a country has more than one primary capital listed to be just one of the capitals
+countries_centers <- countries_centers %>%
+  filter(!(geopol_unit == "South Africa" & capital != "Cape Town")) %>%
+  filter(!(geopol_unit == "Benin" & capital != "Porto-Novo")) %>%
+  filter(!(geopol_unit == "Bolivia" & capital != "Sucre")) %>%
+  filter(!(geopol_unit == "Burma" & capital != "Nay Pyi Taw")) %>%
+  filter(!(geopol_unit == "Burundi" & capital != "Gitega")) %>%
+  filter(!(geopol_unit == "Ivory Coast" & capital != "Yamoussoukro")) %>%
+  filter(!(geopol_unit == "Netherlands" & capital != "Amsterdam")) %>%
+  filter(!(geopol_unit == "Sri Lanka" & capital != "Colombo")) %>%
+  filter(!(geopol_unit == "Swaziland" & capital != "Mbabane")) %>%
+  filter(!(geopol_unit == "Tanzania" & capital != "Dodoma"))
+
+#rm the city_type col, it is not useful here
+countries_centers <- countries_centers %>%
+  dplyr::select(-city_type)
+
+##########################################################
+#suitability models
+##########################################################
+
+#read in presence records
+slf_points <- read_csv(file = "./data-raw/slf_presence_records.csv") %>%
+  dplyr::rename(species = Species, x = Longitude, y = Latitude) %>%
+  mutate(species = "Lycorma delicatula") %>%
+  dplyr::select(species, x, y)
+toh_points <- read_csv(file = "./data-raw/toh_presence_records.csv") %>%
+  dplyr::rename(species = name, x = decimalLongitude, y = decimalLatitude) %>%
+  dplyr::select(species, x, y)
 
 
 ####################################################################################################################
 #Write out new RDA files
 ####################################################################################################################
+
+#############################
+#wine market risk
+#############################
+save(countries_market, file = file.path(here(), "data", "countries_market.rda")) #wine import and export data by country
 
 #############################
 #trade
@@ -1160,6 +1312,11 @@ save(wineries, file = file.path(here(), "data", "wineries.rda"))
 save(states_extracts, file = file.path(here(), "data", "states_extracts.rda"))
 save(countries_extracts, file = file.path(here(), "data", "countries_extracts.rda"))
 
+#ensemble extracts
+save(states_extracts_ensemble, file = file.path(here(), "data", "states_extracts_ensemble.rda"))
+
+save(models_summary, file = file.path(here(), "data", "models_summary.rda"))
+
 #############################
 #suitability models rasters
 #############################
@@ -1167,3 +1324,17 @@ save(suitability_usa_df, file = file.path(here(), "data", "suitability_usa_df.rd
 save(suitability_countries_df, file = file.path(here(), "data", "suitability_countries_df.rda"))
 save(states_centers, file = file.path(here(), "data", "states_centers.rda"))
 save(countries_centers, file = file.path(here(), "data", "countries_centers.rda"))
+
+#plotting original models
+save(slf_usa_df, file = file.path(here(), "data", "slf_usa_df.rda"))
+save(slftoh_usa_df, file = file.path(here(), "data", "slftoh_usa_df.rda"))
+save(toh_usa_df, file = file.path(here(), "data", "toh_usa_df.rda"))
+save(slf_df, file = file.path(here(), "data", "slf_df.rda"))
+save(slftoh_df, file = file.path(here(), "data", "slftoh_df.rda"))
+save(toh_df, file = file.path(here(), "data", "toh_df.rda"))
+
+#############################
+#presence records for models
+#############################
+save(slf_points, file = file.path(here(), "data", "slf_points.rda"))
+save(toh_points, file = file.path(here(), "data", "toh_points.rda"))
