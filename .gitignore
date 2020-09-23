@@ -6,4 +6,5 @@ inst/doc
 desktop.ini
 *Icon
 **/*Icon
+vignettes/*.pdf
 **/*.pdf
