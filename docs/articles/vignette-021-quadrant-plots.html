@@ -998,17 +998,64 @@
 }
 
 } <span class="co"># end of the 2 loop for loop for plotting states and countries</span></pre></body></html></div>
+<p>We also tag on a quick piece of code that will calculate the correlations for both versions of the <code>impact_prod</code> for the <code>future</code> case.</p>
+<div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="co">#grapes</span>
+<span class="co">#STATES</span>
+
+<span class="co">#build model</span>
+<span class="no">states_grapes_impact_model</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(<span class="kw">formula</span> <span class="kw">=</span> <span class="no">avg_prod</span> ~ <span class="no">avg_infected_mass_scaled</span> + <span class="no">grand_mean_max_scaled</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="no">states_summary_future</span>)
+<span class="co">#do cor</span>
+<span class="no">states_grapes_impact_cor</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/cor.test.html">cor.test</a></span>(<span class="no">states_grapes_impact_model</span>$<span class="no">model</span>$<span class="no">avg_prod</span>, <span class="no">states_grapes_impact_model</span>$<span class="no">fitted.values</span>, <span class="kw">method</span> <span class="kw">=</span> <span class="no">method_cor</span>)
+
+<span class="co">#COUNTRIES</span>
+<span class="co">#build model</span>
+<span class="no">countries_grapes_impact_model</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(<span class="kw">formula</span> <span class="kw">=</span> <span class="no">avg_prod</span> ~ <span class="no">avg_infected_mass_scaled</span> + <span class="no">grand_mean_max_scaled</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="no">countries_summary_future</span>)
+<span class="co">#do cor</span>
+<span class="no">countries_grapes_impact_cor</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/cor.test.html">cor.test</a></span>(<span class="no">countries_grapes_impact_model</span>$<span class="no">model</span>$<span class="no">avg_prod</span>, <span class="no">countries_grapes_impact_model</span>$<span class="no">fitted.values</span>, <span class="kw">method</span> <span class="kw">=</span> <span class="no">method_cor</span>)
+
+<span class="co">#wine</span>
+<span class="co">#STATES</span>
+<span class="co">#model</span>
+<span class="no">states_wine_impact_model</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(<span class="kw">formula</span> <span class="kw">=</span> <span class="no">avg_wine</span> ~ <span class="no">avg_infected_mass_scaled</span> + <span class="no">grand_mean_max_scaled</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="no">states_summary_future</span>)
+<span class="co">#cor</span>
+<span class="no">states_wine_impact_cor</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/cor.test.html">cor.test</a></span>(<span class="no">states_wine_impact_model</span>$<span class="no">model</span>$<span class="no">avg_wine</span>, <span class="no">states_wine_impact_model</span>$<span class="no">fitted.values</span>, <span class="kw">method</span> <span class="kw">=</span> <span class="no">method_cor</span>)
+
+<span class="co">#COUNTRIES</span>
+<span class="co">#model</span>
+<span class="no">countries_wine_impact_model</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(<span class="kw">formula</span> <span class="kw">=</span> <span class="no">avg_wine</span> ~ <span class="no">avg_infected_mass_scaled</span> + <span class="no">grand_mean_max_scaled</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="no">countries_summary_future</span>)
+<span class="co">#cor</span>
+<span class="no">countries_wine_impact_cor</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/cor.test.html">cor.test</a></span>(<span class="no">countries_wine_impact_model</span>$<span class="no">model</span>$<span class="no">avg_wine</span>, <span class="no">countries_wine_impact_model</span>$<span class="no">fitted.values</span>, <span class="kw">method</span> <span class="kw">=</span> <span class="no">method_cor</span>)</pre></body></html></div>
 </div>
-<div id="plotting-results-visualization" class="section level2">
+<div id="plotting-results-and-visualization" class="section level2">
 <h2 class="hasAnchor">
-<a href="#plotting-results-visualization" class="anchor"></a>Plotting results visualization</h2>
-<p>We can report the following alignment of potentials for <strong>grapes</strong> as the impact product:</p>
+<a href="#plotting-results-and-visualization" class="anchor"></a>Plotting results and visualization</h2>
+<div id="correlation-results" class="section level3">
+<h3 class="hasAnchor">
+<a href="#correlation-results" class="anchor"></a>Correlation results</h3>
+<p>We can report the following alignment of potentials:</p>
+<ol style="list-style-type: decimal">
+<li><strong>GRAPES</strong></li>
+</ol>
 <ul>
 <li>U.S. State Alignment Correlation = 0.4202787 (p = 0.0021366)</li>
 <li>Country Alignment Correlation = 0.6603492 (p = 4.635465710^{-30})</li>
 </ul>
+<ol start="2" style="list-style-type: decimal">
+<li><strong>WINE</strong></li>
+</ol>
+<ul>
+<li>U.S. State Alignment Correlation = 0.5137767 (p = 1.152435810^{-4})</li>
+<li>Country Alignment Correlation = 0.6049824 (p = 2.987574910^{-24})</li>
+</ul>
+<blockquote>
+<p>Note: <strong>grapes</strong> is the plotted impact product.</p>
+</blockquote>
+</div>
+<div id="plot-visualization" class="section level3">
+<h3 class="hasAnchor">
+<a href="#plot-visualization" class="anchor"></a>Plot visualization</h3>
 <p>Now that the plotting code has been run, the <code>states</code> and <code>countries</code> correlation plots can be visualized together:</p>
-<div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="co">#set up a layout grid</span>
+<div class="sourceCode" id="cb12"><html><body><pre class="r"><span class="co">#set up a layout grid</span>
   <span class="no">lay1</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>( <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>,<span class="fl">NA</span>,<span class="fl">NA</span>,<span class="fl">NA</span>),
                <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>( <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>,<span class="fl">NA</span>,<span class="fl">NA</span>,<span class="fl">NA</span>),
                <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>( <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>,<span class="fl">NA</span>, <span class="fl">3</span>, <span class="fl">3</span>),
@@ -1017,16 +1064,17 @@
                <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>( <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">2</span>,<span class="fl">NA</span>,<span class="fl">NA</span>,<span class="fl">NA</span>),
                <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>( <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">2</span>,<span class="fl">NA</span>,<span class="fl">NA</span>,<span class="fl">NA</span>)
   )</pre></body></html></div>
-<div class="sourceCode" id="cb12"><html><body><pre class="r"><span class="co">#nice version for knitting</span>
+<div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="co">#nice version for knitting</span>
 <span class="fu"><a href="https://rdrr.io/pkg/gridExtra/man/arrangeGrob.html">grid.arrange</a></span>(<span class="no">states_grob</span>, <span class="no">countries_grob</span>, <span class="no">legend_country</span>, <span class="kw">nrow</span> <span class="kw">=</span> <span class="fl">7</span>, <span class="kw">ncol</span> <span class="kw">=</span> <span class="fl">6</span>, <span class="kw">layout_matrix</span> <span class="kw">=</span> <span class="no">lay1</span>, <span class="kw">heights</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">2</span>,<span class="fl">2</span>,<span class="fl">2</span>, <span class="fl">0</span>, <span class="fl">2</span>,<span class="fl">2</span>,<span class="fl">2</span>), <span class="kw">widths</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">0.1</span>,<span class="fl">0.6</span>,<span class="fl">0.6</span>))</pre></body></html></div>
 <p><img src="vignette-021-quadrant-plots_files/figure-html/visualization%20step-1.png" width="960"></p>
+</div>
 </div>
 </div>
 <div id="save-plot-output" class="section level1">
 <h1 class="hasAnchor">
 <a href="#save-plot-output" class="anchor"></a>Save plot output</h1>
 <p>We can also save the plots to <code>/vignettes</code> as a <code>.pdf</code>. Note that the saving chunks can be run by setting the top <code>if</code> from <code>FALSE</code> to <code>TRUE</code>!</p>
-<div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="kw">if</span>(<span class="fl">FALSE</span>){
+<div class="sourceCode" id="cb14"><html><body><pre class="r"><span class="kw">if</span>(<span class="fl">FALSE</span>){
   <span class="co">#optional save as pdf code</span>
 <span class="kw">if</span>(<span class="no">present_transport</span>){
     <span class="fu"><a href="https://rdrr.io/r/grDevices/pdf.html">pdf</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="kw pkg">here</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/here/man/here.html">here</a></span>(),<span class="st">"vignettes"</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="st">"combined_present_max_"</span>,<span class="no">impact_prod</span>,<span class="st">".pdf"</span>)),<span class="kw">width</span> <span class="kw">=</span> <span class="fl">10</span>, <span class="kw">height</span> <span class="kw">=</span> <span class="fl">12</span>)
@@ -1039,7 +1087,7 @@
   <span class="fu"><a href="https://rdrr.io/r/base/invisible.html">invisible</a></span>(<span class="fu"><a href="https://rdrr.io/r/grDevices/dev.html">dev.off</a></span>())
 }</pre></body></html></div>
 <p>We also save a version of the combined plots with the legend as a separate file to <code>/vignettes</code>.</p>
-<div class="sourceCode" id="cb14"><html><body><pre class="r"><span class="kw">if</span>(<span class="fl">FALSE</span>){
+<div class="sourceCode" id="cb15"><html><body><pre class="r"><span class="kw">if</span>(<span class="fl">FALSE</span>){
   <span class="co">#save the plots w/o legend</span>
 <span class="co">#set up a layout grid</span>
   <span class="no">lay2</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>( <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>,<span class="fl">NA</span>),

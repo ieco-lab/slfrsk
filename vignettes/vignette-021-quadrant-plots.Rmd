@@ -916,12 +916,57 @@ if(present_transport){
 
 ```
 
-## Plotting results visualization
+We also tag on a quick piece of code that will calculate the correlations for both versions of the `impact_prod` for the `future` case.
 
-We can report the following alignment of potentials for **`r impact_prod`** as the impact product:
+```{r calculate correlations, warning=FALSE, message=FALSE}
+#grapes
+#STATES
 
-  - U.S. State Alignment Correlation = `r states.impact.cor$estimate` (p = `r states.impact.cor$p.value`)
-  - Country Alignment Correlation = `r countries.impact.cor$estimate` (p = `r countries.impact.cor$p.value`)
+#build model
+states_grapes_impact_model <- lm(formula = avg_prod ~ avg_infected_mass_scaled + grand_mean_max_scaled, data = states_summary_future)
+#do cor
+states_grapes_impact_cor <- cor.test(states_grapes_impact_model$model$avg_prod, states_grapes_impact_model$fitted.values, method = method_cor)
+
+#COUNTRIES
+#build model
+countries_grapes_impact_model <- lm(formula = avg_prod ~ avg_infected_mass_scaled + grand_mean_max_scaled, data = countries_summary_future)
+#do cor
+countries_grapes_impact_cor <- cor.test(countries_grapes_impact_model$model$avg_prod, countries_grapes_impact_model$fitted.values, method = method_cor)
+
+#wine
+#STATES
+#model
+states_wine_impact_model <- lm(formula = avg_wine ~ avg_infected_mass_scaled + grand_mean_max_scaled, data = states_summary_future)
+#cor
+states_wine_impact_cor <- cor.test(states_wine_impact_model$model$avg_wine, states_wine_impact_model$fitted.values, method = method_cor)
+
+#COUNTRIES
+#model
+countries_wine_impact_model <- lm(formula = avg_wine ~ avg_infected_mass_scaled + grand_mean_max_scaled, data = countries_summary_future)
+#cor
+countries_wine_impact_cor <- cor.test(countries_wine_impact_model$model$avg_wine, countries_wine_impact_model$fitted.values, method = method_cor)
+
+```
+
+## Plotting results and visualization
+
+### Correlation results
+
+We can report the following alignment of potentials:
+
+  1. **GRAPES**
+    
+  - U.S. State Alignment Correlation = `r states_grapes_impact_cor$estimate` (p = `r states_grapes_impact_cor$p.value`)
+  - Country Alignment Correlation = `r countries_grapes_impact_cor$estimate` (p = `r countries_grapes_impact_cor$p.value`)
+  
+  2. **WINE**
+    
+  - U.S. State Alignment Correlation = `r states_wine_impact_cor$estimate` (p = `r states_wine_impact_cor$p.value`)
+  - Country Alignment Correlation = `r countries_wine_impact_cor$estimate` (p = `r countries_wine_impact_cor$p.value`)
+
+>Note: **`r impact_prod`** is the plotted impact product.
+
+### Plot visualization
 
 Now that the plotting code has been run, the `states` and `countries` correlation plots can be visualized together:
 
