@@ -9,7 +9,7 @@
 #'@param th threshold of suitability used to calculate RSA. If not provided, the RSA is not calculated.
 #'@param save.plots save the density plots of points for each \code{id} iterated across (default is FALSE)? If so, the results are stored as a second element in the list \code{[[2]]} or \code{$plots}
 #'
-#'@return Dataframe (tibble) that contains columns that include the number of species, the mean at each loss step, the variance at each loss step, and the type of type of simulated extinction. One instance of each type of extinction is run per function call and the resulting simulations are stacked in the same dataframe.
+#'@return Dataframe (tibble) that contains columns that include
 #'
 #'@export
 
