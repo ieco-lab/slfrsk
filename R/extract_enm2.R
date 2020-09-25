@@ -22,6 +22,9 @@ extract_enm2 <- function(enm, geoshape, id0, id, th = NA, multipar = FALSE, ncor
 
     if(is.na(th)){
       output <- foreach(a = seq_along(unique(id)), .packages = c('rgeos', 'sp', 'rgdal', 'raster', 'tidyverse'), .combine = rbind) %dopar% {
+        #print out the shapefile to focus on
+        print(unique(id)[a])
+
         #obtain subset raster cut to the geoshape of interest
         holder <- raster::extract(x = enm, y = geoshape[geoshape@data[[id0]] %in% unique(id)[a],], df = T)
 
@@ -54,6 +57,9 @@ extract_enm2 <- function(enm, geoshape, id0, id, th = NA, multipar = FALSE, ncor
       }
     } else if(!is.na(th)){
       output <- foreach(a = seq_along(unique(id)), .packages = c('rgeos', 'sp', 'rgdal', 'raster', 'tidyverse'), .combine = rbind) %dopar% {
+        #print out the shapefile to focus on
+        print(unique(id)[a])
+
         #obtain subset raster cut to the geoshape of interest
         holder <- raster::extract(x = enm, y = geoshape[geoshape@data[[id0]] %in% unique(id)[a],], df = T)
 
@@ -97,6 +103,9 @@ extract_enm2 <- function(enm, geoshape, id0, id, th = NA, multipar = FALSE, ncor
   } else{
     #loop to iterate across all instances of id
     for(a in seq_along(unique(id))){
+      #print out the shapefile to focus on
+      print(unique(id)[a])
+
       #obtain subset raster cut to the geoshape of interest
       holder <- raster::extract(x = enm, y = geoshape[geoshape@data[[id0]] %in% unique(id)[a],], df = T)
 
