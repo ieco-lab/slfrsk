@@ -23,10 +23,21 @@ install()
 use_package("dplyr", type = "Imports")
 use_package("stringr", type = "Imports")
 use_package("ggplot2", type = "Imports")
+use_package("ggrepel", type = "Imports") #added by NAH
 use_package("here", type = "Imports") #added by NAH
 use_package("tools", type = "Imports") #added by NAH
 use_package("usethis", type = "Imports") #added by NAH
 use_package("FAOSTAT", type = "Imports") #added by MRH
+use_package("raster", type = "Imports") #added by NAH
+use_package("rgdal", type = "Imports") #added by NAH
+use_package("rgeos", type = "Imports") #added by NAH
+use_package("scales", type = "Imports") #added by NAH
+use_package("patchwork", type = "Imports") #added by NAH
+use_package("ENMTools", type = "Imports") #added by NAH, technically raster is a depend and rgeos ggplot2 gridExtra are all imports
+use_package("grid", type = "Imports") #added by NAH
+use_package("gridExtra", type = "Imports") #added by NAH
+use_package("DHARMa", type = "Imports") #added by NAH
+use_package("cleangeo", type = "Imports") #added by NAH
 
 #----
 # Data
