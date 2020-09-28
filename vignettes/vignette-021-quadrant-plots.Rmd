@@ -956,13 +956,13 @@ We can report the following alignment of potentials:
 
   1. **GRAPES**
     
-  - U.S. State Alignment Correlation = `r states_grapes_impact_cor$estimate` (p = `r states_grapes_impact_cor$p.value`)
-  - Country Alignment Correlation = `r countries_grapes_impact_cor$estimate` (p = `r countries_grapes_impact_cor$p.value`)
+  - U.S. State Alignment Correlation = `r formatC(states_grapes_impact_cor$estimate, format = "f", digits = 3)`, p = `r paste0(gsub('e', ' x 10^', formatC(states_grapes_impact_cor$p.value, format = "e", digits = 3)), '^')`
+  - Country Alignment Correlation = `r formatC(countries_grapes_impact_cor$estimate, format = "f", digits = 3)`, p = `r paste0(gsub('e', ' x 10^', formatC(countries_grapes_impact_cor$p.value, format = "e", digits = 3)), '^')`
   
   2. **WINE**
     
-  - U.S. State Alignment Correlation = `r states_wine_impact_cor$estimate` (p = `r states_wine_impact_cor$p.value`)
-  - Country Alignment Correlation = `r countries_wine_impact_cor$estimate` (p = `r countries_wine_impact_cor$p.value`)
+  - U.S. State Alignment Correlation = `r formatC(states_wine_impact_cor$estimate, format = "f", digits = 3)`, p = `r paste0(gsub('e', ' x 10^', formatC(states_wine_impact_cor$p.value, format = "e", digits = 3)), '^')`
+  - Country Alignment Correlation = `r formatC(countries_wine_impact_cor$estimate, format = "f", digits = 3)`, p = `r paste0(gsub('e', ' x 10^', formatC(countries_wine_impact_cor$p.value, format = "e", digits = 3)), '^')`
 
 >Note: **`r impact_prod`** is the plotted impact product.
 
