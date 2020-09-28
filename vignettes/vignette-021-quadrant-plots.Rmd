@@ -957,6 +957,9 @@ We can report the following alignment of potentials:
   1. **GRAPES**
     
   - U.S. State Alignment Correlation = `r states_grapes_impact_cor$estimate` (p = `r states_grapes_impact_cor$p.value`)
+  
+
+  
   - Country Alignment Correlation = `r countries_grapes_impact_cor$estimate` (p = `r countries_grapes_impact_cor$p.value`)
   
   2. **WINE**
