@@ -1107,6 +1107,9 @@ countries_slf_extract <- read_csv(file = "./data-raw/extract_world_11_07_18_maxe
 countries_toh_extract <- read_csv(file = "./data-raw/extract_world_11_07_18_maxent_toh+atc-bio02.csv", col_names = T)
 countries_slftoh_extract <- read_csv(file = "./data-raw/extract_world_11_07_18_maxent_slf+toh+atc-bio02.csv", col_names = T)
 
+#ensemble
+countries_extracts_ensemble <- read_csv(file = "./data-raw/extract_countries_slftoh_ensemble_mean.csv", col_names = T)
+
 #add model as a categorical var
 countries_slf_extract <- countries_slf_extract %>%
   mutate(model = "slf")
@@ -1314,6 +1317,7 @@ save(countries_extracts, file = file.path(here(), "data", "countries_extracts.rd
 
 #ensemble extracts
 save(states_extracts_ensemble, file = file.path(here(), "data", "states_extracts_ensemble.rda"))
+save(countries_extracts_ensemble, file = file.path(here(), "data", "countries_extracts_ensemble.rda"))
 
 save(models_summary, file = file.path(here(), "data", "models_summary.rda"))
 

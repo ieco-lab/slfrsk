@@ -76,16 +76,15 @@ summary_states_extracts <- states_extracts_ensemble %>%
   group_by(geopol_unit) %>%
   summarize(grand_mean_max = mean(obs_max))
 
-data("countries_extracts")
+data("countries_extracts_ensemble")
   
-summary_countries_extracts <- countries_extracts %>%
+summary_countries_extracts <- countries_extracts_ensemble %>%
   group_by(geopol_unit) %>%
-  summarize(grand_mean_max = mean(obs_max), grand_se_max = sd(obs_max) / sqrt(n_distinct(model)))
+  summarize(grand_mean_max = mean(obs_max))
 
 #rm W. Sahara
 summary_countries_extracts <- summary_countries_extracts %>%
     filter(geopol_unit != "Western Sahara")
-
   
 }
 
@@ -591,7 +590,8 @@ countries_summary_present$status[countries_summary_present$geopol_unit %in% c("J
 
 #tidy the order of cols
 countries_summary_present <- countries_summary_present %>%
-    select(ID, geopol_unit, status, grand_mean_max, grand_se_max, wine, grapes, avg_wine:log10_avg_prod, everything())
+    #select(ID, geopol_unit, status, grand_mean_max, grand_se_max, wine, grapes, avg_wine:log10_avg_prod, everything())
+    select(ID, geopol_unit, status, grand_mean_max, wine, grapes, avg_wine:log10_avg_prod, everything())
 
 ##FUTURE
 
@@ -628,7 +628,8 @@ countries_summary_future$status[countries_summary_future$geopol_unit %in% c("Jap
 
 #tidy the order of cols
 countries_summary_future <- countries_summary_future %>%
-    select(ID, geopol_unit, status, grand_mean_max, grand_se_max, wine, grapes, avg_wine:log10_avg_prod, everything())
+    #select(ID, geopol_unit, status, grand_mean_max, grand_se_max, wine, grapes, avg_wine:log10_avg_prod, everything())
+    select(ID, geopol_unit, status, grand_mean_max, wine, grapes, avg_wine:log10_avg_prod, everything())
 
 ```
 
@@ -649,10 +650,10 @@ save(countries_summary_future, file = file.path(here(), "data", "countries_summa
 
 ```{r save correlation plot  data for ensemble future only, eval=FALSE, message=FALSE}
 if(FALSE){
-  
 states_summary_future_ensemble <- states_summary_future
+countries_summary_future_ensemble <- countries_summary_future
   
 save(states_summary_future_ensemble, file = file.path(here(), "data", "states_summary_future_ensemble.rda"))
-save(countries_summary_future, file = file.path(here(), "data", "countries_summary_future.rda"))
+save(countries_summary_future, file = file.path(here(), "data", "countries_summary_future_ensemble.rda"))
 }
 ```
