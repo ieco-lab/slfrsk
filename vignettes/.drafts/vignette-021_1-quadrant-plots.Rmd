@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-Build and Save Risk Correlation Quadrant Plots (Ensemble Extracts)
+Build and Save Risk Correlation Quadrant Plots (Three Model Mean Extract)
 
 ***
 
@@ -82,18 +82,8 @@ We now load the summary data from `vignette-010-tidy-data`. Both `states` and `c
 ```{r read in summary data}
   data("states_summary_present")
   data("countries_summary_present")
-  #data("states_summary_future")
-    data("states_summary_future_ensemble")
-  #data("countries_summary_future")
-    data("countries_summary_future_ensemble")
-  
-  states_summary_future <-  states_summary_future_ensemble
-  countries_summary_future <- countries_summary_future_ensemble
-  
-  #filter out some No Data for ensemble model
-  countries_summary_future <- countries_summary_future %>%
-    filter(!ID %in% c("Antarctica", "Monaco", "Norfolk Island", "Spratly Islands"))
-
+  data("states_summary_future")
+  data("countries_summary_future")
 ```
 
 **NATIVE**---If *Lycorma*-native countries can be coded as `native` or `not established` (not "invaded") for plotting purposes with the `native` setting above.
@@ -204,6 +194,9 @@ if(rem_usa){ # TRUE if you want to remove the USA
 countries_summary_present <- countries_summary_present %>% filter(!ID %in% rems)
 countries_summary_future <- countries_summary_future %>% filter(!ID %in% rems)
 
+  #filter out some No Data for ensemble model
+  countries_summary_future <- countries_summary_future %>%
+    filter(!ID %in% c("Antarctica", "Monaco", "Norfolk Island", "Spratly Islands"))
 ```
 
 **`countries` SCALING**---Now that `countries` contains only rows of interest, we rescaled the **transport** potential as above for `states` and created the same `_scaled` data columns.
@@ -972,7 +965,7 @@ We can report the following alignment of potentials:
     
   - U.S. State Alignment Correlation = `r formatC(states_wine_impact_cor$estimate, format = "f", digits = 3)`, p = `r paste0(gsub('e', ' x 10^', formatC(states_wine_impact_cor$p.value, format = "e", digits = 3)), '^')`
   - Country Alignment Correlation = `r formatC(countries_wine_impact_cor$estimate, format = "f", digits = 3)`, p = `r paste0(gsub('e', ' x 10^', formatC(countries_wine_impact_cor$p.value, format = "e", digits = 3)), '^')`
-  
+
 >Note: **`r impact_prod`** is the plotted impact product.
 
 ### Plot visualization
@@ -1001,7 +994,7 @@ grid.arrange(states_grob, countries_grob, legend_country, nrow = 7, ncol = 6, la
 We can also save the plots to `/vignettes` as a `.pdf`. Note that the saving chunks can be run by setting the top `if` from `FALSE` to `TRUE`!
 
 ```{r optional write to pdf step, message=FALSE, eval=FALSE, fig.height= 12, fig.width=10}
-if(FALSE){
+if(TRUE){
   #optional save as pdf code
 if(present_transport){
     pdf(file.path(here::here(),"vignettes", paste0("combined_present_max_",impact_prod,".pdf")),width = 10, height = 12)
@@ -1019,7 +1012,7 @@ if(present_transport){
 We also save a version of the combined plots with the legend as a separate file to `/vignettes`. 
 
 ```{r combined plot with separate legend pdf, eval=FALSE}
-if(FALSE){
+if(TRUE){
   #save the plots w/o legend
 #set up a layout grid
   lay2 <- rbind(c( 1, 1, 1, 1, 1,NA),
@@ -1043,9 +1036,9 @@ if(present_transport){
 
 #save the legend
 if(present_transport){
-  pdf(file.path(here::here(),"vignettes", paste0("legend_combined_present_max",impact_prod,".pdf")),width = 3, height = 10) 
+  pdf(file.path(here::here(),"vignettes", paste0("legend_combined_present_max_",impact_prod,".pdf")),width = 3, height = 10) 
 } else{
-  pdf(file.path(here::here(),"vignettes", paste0("legend_combined_future_max",impact_prod,".pdf")),width = 3, height = 10) 
+  pdf(file.path(here::here(),"vignettes", paste0("legend_combined_future_max_",impact_prod,".pdf")),width = 3, height = 10) 
 }
 #finish out the plotting
 grid.draw(legend_country)
