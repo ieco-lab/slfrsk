@@ -48,7 +48,7 @@ Here, we explore the ensemble *maximum suitability* by obtaining the maximum sui
 We also strip *Western Sahara* from the `countries` datasets here and for other datsets, as it is not informative for our analyses (zero trade for **Transport potential** below). 
   
 ```{r bring in maxent extraction summary data, message=FALSE, eval=FALSE}
-if(TRUE){
+if(FALSE){
   data("states_extracts")
 
 summary_states_extracts <- states_extracts %>%
@@ -68,7 +68,7 @@ summary_countries_extracts <- summary_countries_extracts %>%
 ```
 
 ```{r bring in maxent ensemble extraction summary data, message=FALSE, eval=TRUE}
-if(FALSE){
+if(TRUE){
   data("states_extracts_ensemble")
 
 summary_states_extracts <- states_extracts_ensemble %>%

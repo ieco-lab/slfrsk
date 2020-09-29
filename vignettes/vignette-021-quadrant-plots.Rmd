@@ -932,29 +932,28 @@ We also tag on a quick piece of code that will calculate the correlations for bo
 #STATES
 
 #build model
-states_grapes_impact_model <- lm(formula = avg_prod ~ avg_infected_mass_scaled + grand_mean_max_scaled, data = states_summary_future)
+states_grapes_impact_model <- lm(formula = log10_avg_prod ~ avg_infected_mass_scaled + grand_mean_max_scaled, data = states_summary_future)
 #do cor
-states_grapes_impact_cor <- cor.test(states_grapes_impact_model$model$avg_prod, states_grapes_impact_model$fitted.values, method = method_cor)
+states_grapes_impact_cor <- cor.test(states_grapes_impact_model$model$log10_avg_prod, states_grapes_impact_model$fitted.values, method = method_cor)
 
 #COUNTRIES
 #build model
-countries_grapes_impact_model <- lm(formula = avg_prod ~ avg_infected_mass_scaled + grand_mean_max_scaled, data = countries_summary_future)
+countries_grapes_impact_model <- lm(formula = log10_avg_prod ~ avg_infected_mass_scaled + grand_mean_max_scaled, data = countries_summary_future)
 #do cor
-countries_grapes_impact_cor <- cor.test(countries_grapes_impact_model$model$avg_prod, countries_grapes_impact_model$fitted.values, method = method_cor)
+countries_grapes_impact_cor <- cor.test(countries_grapes_impact_model$model$log10_avg_prod, countries_grapes_impact_model$fitted.values, method = method_cor)
 
 #wine
 #STATES
 #model
-states_wine_impact_model <- lm(formula = avg_wine ~ avg_infected_mass_scaled + grand_mean_max_scaled, data = states_summary_future)
+states_wine_impact_model <- lm(formula = log10_avg_wine ~ avg_infected_mass_scaled + grand_mean_max_scaled, data = states_summary_future)
 #cor
-states_wine_impact_cor <- cor.test(states_wine_impact_model$model$avg_wine, states_wine_impact_model$fitted.values, method = method_cor)
+states_wine_impact_cor <- cor.test(states_wine_impact_model$model$log10_avg_wine, states_wine_impact_model$fitted.values, method = method_cor)
 
 #COUNTRIES
 #model
-countries_wine_impact_model <- lm(formula = avg_wine ~ avg_infected_mass_scaled + grand_mean_max_scaled, data = countries_summary_future)
+countries_wine_impact_model <- lm(formula = log10_avg_wine ~ avg_infected_mass_scaled + grand_mean_max_scaled, data = countries_summary_future)
 #cor
-countries_wine_impact_cor <- cor.test(countries_wine_impact_model$model$avg_wine, countries_wine_impact_model$fitted.values, method = method_cor)
-
+countries_wine_impact_cor <- cor.test(countries_wine_impact_model$model$log10_avg_wine, countries_wine_impact_model$fitted.values, method = method_cor)
 ```
 
 ## Plotting results and visualization
