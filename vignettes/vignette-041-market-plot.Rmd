@@ -84,7 +84,7 @@ countries_wine_market <- countries_wine_market %>%
 
 To merge the new `market_size` dat with our existing `countries` data, we use `left_join()` to merge the `market` and `summary` data by `ID`. We then remove the countries from the dataset that already have *Lycorma*. Note: we use a modified version of `%in%` and `Negate()` to create `%notin%` for removing countries.
 
-```{r join market to countries_summary_future, eval = TRUE, message=FALSE}
+```{r join market to countries_summary_future_ensemble, eval = TRUE, message=FALSE}
 #data("countries_summary_future")
 data("countries_summary_future_ensemble")
 countries_summary_future_ensemble <- countries_summary_future_ensemble %>%
@@ -284,7 +284,7 @@ market_scatter
 
 Here, you can set to save the scatter plot to `/vignettes` as a `.pdf` file by setting the `if` from `FALSE` to `TRUE`, as in the other vignettes. We also have a version of the data saved for the Google Earth Engine App data cleaning vignette.
 
-```{r, save pdf of image, message=FALSE}
+```{r, save pdf of image, message=FALSE, eval=FALSE}
 if(FALSE){
   pdf(file.path(here::here(),
               "vignettes", 
