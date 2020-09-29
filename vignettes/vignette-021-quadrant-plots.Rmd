@@ -108,9 +108,9 @@ if(native){
   }
 ```
 
-**`states` SCALING**---Even though a column in the `states` data does include the $\log_{10}(+1)$ transformation of **transport** potential, the mass of trade with infected states (`log10_avg_infected_mass`), the raw data were $\log_{10}(+1)$ transformed and then further rescaled (see `one_zero` above) as `avg_infected_mass_scaled`. The **establishment** potential is already scaled the same [0,1], but we create a new column of its values with the same `_scaled` suffix. 
+**`states` SCALING**---Even though a column in the `states` data does include the $log_{10}(value+1)$ transformation of **transport** potential, the mass of trade with infected states (`log10_avg_infected_mass`), the raw data were $log_{10}(value+1)$ transformed and then further rescaled (see `one_zero` above) as `avg_infected_mass_scaled`. The **establishment** potential is already scaled the same [0,1], but we create a new column of its values with the same `_scaled` suffix. 
 
-If `one_zero <- FALSE`, then **transport** potential is just $\log_{10}(+1)$ transformed instead.
+If `one_zero <- FALSE`, then **transport** potential is just $log_{10}(value+1)$ transformed instead.
 
 *Please note that `states` and `countries` rescaling are done separately, as the latter has several rows that lack trade data (e.g., `NA`).*
 

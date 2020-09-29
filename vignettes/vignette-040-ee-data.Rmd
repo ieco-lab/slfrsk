@@ -44,7 +44,7 @@ data("countries_summary_future")
 ```
 
 
-We now transform the `summary` data to represent scaled versions of the three potentials (**transport**, **establishment**, and **impact**). Each of these potentials are saved in new columns: `transport`, `establishment`, and two for **impact** (`impact_wine` and `impact_grape`), which include values for the corresponding potential that are $\log_{10}(+1)$ transformed and then bounded $[0,10]$. 
+We now transform the `summary` data to represent scaled versions of the three potentials (**transport**, **establishment**, and **impact**). Each of these potentials are saved in new columns: `transport`, `establishment`, and two for **impact** (`impact_wine` and `impact_grape`), which include values for the corresponding potential that are $\log_{10}(value+1)$  transformed and then bounded $[0,10]$. 
 
 To bound these values, each $\log$-transformed value undergoes the following, based on the existing input data and round to a single digit for visualization:
 
