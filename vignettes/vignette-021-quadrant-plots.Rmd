@@ -291,10 +291,10 @@ The following plotting parameters are set to produce the published figures but c
 label.countries.est <- TRUE
 label.states.est <- TRUE   #PRESENT: adding DE, MD, NJ  FUTURE: adding DE, MD, NJ, OH, WV
 # labeling aestehtics for label.countries.est and label.states.est
-nudge_countries.est.x <- c(-.05,0)
+nudge_countries.est.x <- c(-.05,0) 
 nudge_countries.est.y <- c(.07,.1)
-nudge_countries.est_future.x <- c(.00,0)
-nudge_countries.est_future.y <- c(.08,.1)
+nudge_countries.est_future.x <- c(.05,0)  #jpn and kor
+nudge_countries.est_future.y <- c(.14,.1)
 nudge_states.est_present.x <- c(0.00, -0.02,-0.04)  #PRESENT: adding DE, MD, NJ  
 nudge_states.est_present.y <- c(0.10,-0.10,-0.10)
 nudge_states.est_future.x <- c( 0.00,-0.10, 0.02,-0.04,0.00)  #FUTURE: adding OH, DE, MD, NJ, WV
@@ -579,9 +579,14 @@ if(present_transport == FALSE){
       }
       ytitle <- "Establishment Potential"
     } else {  #COUNTRIES FUTURE GRAPES
+      #ensemble version
+      # grape prod: CHN, ITA, ESP, FRA, TUR, IND, CHL, ARG, ZAF, AUS
+      nudge.x <- c(-0.00, 0.01,-0.02, 0.00,-0.02, 0.03,-0.02, 0.08,-0.02, 0.06)
+      nudge.y <- c(-0.10, 0.10, 0.15, 0.09,-0.24, 0.05, 0.13,-0.23, 0.29, -0.23)
+      #old version
       # grape production: CHN, ITA, ESP, FRA, TUR, IND, CHL, ARG, ZAF, AUS
-      nudge.x <- c(-0.01,-0.00,-0.00,-0.04, 0.02,0.03,-0.04, 0.05,-0.03, 0.04)
-      nudge.y <- c(-0.10,-0.20,-0.27, 0.06,-0.24,0.07, 0.11,-0.23, 0.16,-0.10)
+      #nudge.x <- c(-0.01,-0.00,-0.00,-0.04, 0.02,0.03,-0.04, 0.05,-0.03, 0.04)
+      #nudge.y <- c(-0.10,-0.20,-0.27, 0.06,-0.24,0.07, 0.11,-0.23, 0.16,-0.10)
       if(label.countries.est) {
         nudge.x <- c(nudge.x, nudge_countries.est_future.x) #JPN KOR
         nudge.y <- c(nudge.y, nudge_countries.est_future.y) #JPN KOR

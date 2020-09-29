@@ -46,28 +46,9 @@ Previously, we built three separate species distribution models (SDMs) with MaxE
 Here, we explore the ensemble *maximum suitability* by obtaining the maximum suitability per geopolitical unit for each SDM and calculating the *mean* and *standard error* across the models (or just use the extracted maximum value for ensemble models). These summarized suitabilities constitute our predicted **Establishment potential**.
 
 We also strip *Western Sahara* from the `countries` datasets here and for other datsets, as it is not informative for our analyses (zero trade for **Transport potential** below). 
-  
-```{r bring in maxent extraction summary data, message=FALSE, eval=FALSE}
-if(FALSE){
-  data("states_extracts")
-
-summary_states_extracts <- states_extracts %>%
-  group_by(geopol_unit) %>%
-  summarize(grand_mean_max = mean(obs_max), grand_se_max = sd(obs_max) / sqrt(n_distinct(model)))
-
-data("countries_extracts")
-  
-summary_countries_extracts <- countries_extracts %>%
-  group_by(geopol_unit) %>%
-  summarize(grand_mean_max = mean(obs_max), grand_se_max = sd(obs_max) / sqrt(n_distinct(model)))
-
-#rm W. Sahara
-summary_countries_extracts <- summary_countries_extracts %>%
-    filter(geopol_unit != "Western Sahara")
-}
-```
 
 ```{r bring in maxent ensemble extraction summary data, message=FALSE, eval=TRUE}
+#new extract of ensemble
 if(TRUE){
   data("states_extracts_ensemble")
 
@@ -85,6 +66,27 @@ summary_countries_extracts <- countries_extracts_ensemble %>%
 summary_countries_extracts <- summary_countries_extracts %>%
     filter(geopol_unit != "Western Sahara")
   
+}
+```
+  
+```{r bring in maxent extraction summary data, message=FALSE, eval=FALSE, echo=FALSE}
+#old extracts
+if(FALSE){
+  data("states_extracts")
+
+summary_states_extracts <- states_extracts %>%
+  group_by(geopol_unit) %>%
+  summarize(grand_mean_max = mean(obs_max), grand_se_max = sd(obs_max) / sqrt(n_distinct(model)))
+
+data("countries_extracts")
+  
+summary_countries_extracts <- countries_extracts %>%
+  group_by(geopol_unit) %>%
+  summarize(grand_mean_max = mean(obs_max), grand_se_max = sd(obs_max) / sqrt(n_distinct(model)))
+
+#rm W. Sahara
+summary_countries_extracts <- summary_countries_extracts %>%
+    filter(geopol_unit != "Western Sahara")
 }
 ```
 
