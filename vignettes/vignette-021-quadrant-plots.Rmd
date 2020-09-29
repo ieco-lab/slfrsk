@@ -852,49 +852,6 @@ if(present_transport == FALSE){
   #grid.newpage()
   #grid.draw(g)
 
-  
-#Correlation Analysis
-  # present or future
- if(present_transport){
-    if (statez) { #states present
-      states_grob <- g
-      #grid.draw(g)
-      data_to_cor <- as.matrix(select(data_to_plot,x_to_plot,y_to_plot,size_to_plot))
-      states.impact.model <-
-        impact.model <-
-        lm(size_to_plot ~ x_to_plot + y_to_plot, data = data.frame(data_to_cor))
-      states.impact.cor <- cor.test(impact.model$model$size_to_plot, impact.model$fitted.values, method = method_cor)
-    } else {  #countries present
-      countries_grob <- g
-      #grid.draw(g)
-      data_to_cor <- as.matrix(select(data_to_plot,x_to_plot,y_to_plot,size_to_plot))
-      countries.impact.model <-
-        impact.model <-
-        lm(size_to_plot ~ x_to_plot + y_to_plot, data = data.frame(data_to_cor))
-      countries.impact.cor <- cor.test(impact.model$model$size_to_plot, impact.model$fitted.values, method = method_cor)
-
-  } 
-   }  else {    #future cases
-
-    if (statez) { #states future
-      states_grob <- g
-      #grid.draw(g)
-      data_to_cor <- as.matrix(select(data_to_plot,x_to_plot,y_to_plot,size_to_plot))
-      states.impact.model <-
-        impact.model <-
-        lm(size_to_plot ~ x_to_plot + y_to_plot, data = data.frame(data_to_cor))
-      states.impact.cor <- cor.test(impact.model$model$size_to_plot, impact.model$fitted.values, method = method_cor)
-    } else{ #countries future
-      countries_grob <- g
-      #grid.draw(g)
-      data_to_cor <- as.matrix(select(data_to_plot,x_to_plot,y_to_plot,size_to_plot))
-      countries.impact.model <-
-        impact.model <-
-        lm(size_to_plot ~ x_to_plot + y_to_plot, data = data.frame(data_to_cor))
-      countries.impact.cor <- cor.test(impact.model$model$size_to_plot, impact.model$fitted.values, method = method_cor)
-      } 
-            }
-
 #SAVES RESULTS AS PDF
 #plot the states+legend and save
 if (statez) {
