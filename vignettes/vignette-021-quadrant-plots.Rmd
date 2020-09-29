@@ -852,6 +852,23 @@ if(present_transport == FALSE){
   #grid.newpage()
   #grid.draw(g)
 
+  
+#Correlation Analysis
+  # present or future
+ if(present_transport){
+    if (statez) { #states present
+      states_grob <- g
+    } else {  #countries present
+      countries_grob <- g
+  } 
+   }  else {    #future cases
+    if (statez) { #states future
+      states_grob <- g
+    } else{ #countries future
+      countries_grob <- g
+      } 
+            }
+
 #SAVES RESULTS AS PDF
 #plot the states+legend and save
 if (statez) {
@@ -882,7 +899,7 @@ if(present_transport){
 
 ```
 
-We also tag on a quick piece of code that will calculate the correlations for both versions of the `impact_prod` for the `future` case.
+We also tag on a quick piece of code that will calculate the correlations for both versions of the `impact_prod` for the `future` case. We remove `countries` with established *Lycorma* populations.
 
 ```{r calculate correlations, warning=FALSE, message=FALSE}
 #grapes
@@ -895,7 +912,14 @@ states_grapes_impact_cor <- cor.test(states_grapes_impact_model$model$log10_avg_
 
 #COUNTRIES
 #build model
-countries_grapes_impact_model <- lm(formula = log10_avg_prod ~ avg_infected_mass_scaled + grand_mean_max_scaled, data = countries_summary_future)
+countries_grapes_impact_model <- lm(formula = log10_avg_prod ~ avg_infected_mass_scaled + grand_mean_max_scaled, data = countries_summary_future %>%
+  filter(!ID %in% c("United States", 
+                      "China", 
+                      "India", 
+                      "Taiwan", 
+                      "Japan", 
+                      "South Korea", 
+                      "Vietnam")))
 #do cor
 countries_grapes_impact_cor <- cor.test(countries_grapes_impact_model$model$log10_avg_prod, countries_grapes_impact_model$fitted.values, method = method_cor)
 
@@ -908,7 +932,14 @@ states_wine_impact_cor <- cor.test(states_wine_impact_model$model$log10_avg_wine
 
 #COUNTRIES
 #model
-countries_wine_impact_model <- lm(formula = log10_avg_wine ~ avg_infected_mass_scaled + grand_mean_max_scaled, data = countries_summary_future)
+countries_wine_impact_model <- lm(formula = log10_avg_wine ~ avg_infected_mass_scaled + grand_mean_max_scaled, data = countries_summary_future %>%
+  filter(!ID %in% c("United States", 
+                      "China", 
+                      "India", 
+                      "Taiwan", 
+                      "Japan", 
+                      "South Korea", 
+                      "Vietnam")))
 #cor
 countries_wine_impact_cor <- cor.test(countries_wine_impact_model$model$log10_avg_wine, countries_wine_impact_model$fitted.values, method = method_cor)
 ```
