@@ -1,0 +1,38 @@
+---
+title: "Terms"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{vignette-002-terms}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: inline
+link-citations: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+Terms Used in the Spotted Lanternfly Paninvasion Risk Research Compendium
+
+***
+
+# Purpose
+
+This page briefly defines commonly used terms in the **Research Compendium** for quick reference.
+
+# Definitions
+
+- **paninvasion**---
+- **shock** (economic)---
+- **potential**---
+- **alignment**---
+- **risk severity**
+- **invasion risk**
+- **SLF**---
+- **TOH**---
+- **phylloxera**---
