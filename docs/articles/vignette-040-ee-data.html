@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slfrsk</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">9999.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -128,7 +128,7 @@
 <p>We then read in the summary data for both <code>states</code> and <code>countries</code> from <code>vignette-010-tidy-data</code> to eventually merge with shapfiles.</p>
 <div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"states_summary_future"</span>)
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"countries_summary_future"</span>)</pre></body></html></div>
-<p>We now transform the <code>summary</code> data to represent scaled versions of the three potentials (<strong>transport</strong>, <strong>establishment</strong>, and <strong>impact</strong>). Each of these potentials are saved in new columns: <code>transport</code>, <code>establishment</code>, and two for <strong>impact</strong> (<code>impact_wine</code> and <code>impact_grape</code>), which include values for the corresponding potential that are <span class="math inline">\(\log_{10}(+1)\)</span> transformed and then bounded <span class="math inline">\([0,10]\)</span>.</p>
+<p>We now transform the <code>summary</code> data to represent scaled versions of the three potentials (<strong>transport</strong>, <strong>establishment</strong>, and <strong>impact</strong>). Each of these potentials are saved in new columns: <code>transport</code>, <code>establishment</code>, and two for <strong>impact</strong> (<code>impact_wine</code> and <code>impact_grape</code>), which include values for the corresponding potential that are <span class="math inline">\(\log_{10}(value+1)\)</span> transformed and then bounded <span class="math inline">\([0,10]\)</span>.</p>
 <p>To bound these values, each <span class="math inline">\(\log\)</span>-transformed value undergoes the following, based on the existing input data and round to a single digit for visualization:</p>
 <ul>
 <li><span class="math inline">\(transport_{[0,10]} = \frac{transport - \min(transport)}{\max(transport)}*10\)</span></li>

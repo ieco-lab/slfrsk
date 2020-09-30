@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slfrsk</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">9999.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -133,40 +133,23 @@
 <p>Previously, we built three separate species distribution models (SDMs) with MaxEnt. We also obtained summary statistics for suitability in each geopolitical unit (country and U.S. state) in each SDM (as well as an ensemble SDM), which were transferred to the <code>states_extracts</code> and <code>countries_extracts</code> datasets (or <code>states_extracts_ensemble</code> and <code>countries_extracts_ensemble</code> for the ensemble SDM).</p>
 <p>Here, we explore the ensemble <em>maximum suitability</em> by obtaining the maximum suitability per geopolitical unit for each SDM and calculating the <em>mean</em> and <em>standard error</em> across the models (or just use the extracted maximum value for ensemble models). These summarized suitabilities constitute our predicted <strong>Establishment potential</strong>.</p>
 <p>We also strip <em>Western Sahara</em> from the <code>countries</code> datasets here and for other datsets, as it is not informative for our analyses (zero trade for <strong>Transport potential</strong> below).</p>
-<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="kw">if</span>(<span class="fl">FALSE</span>){
-  <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"states_extracts"</span>)
-
-<span class="no">summary_states_extracts</span> <span class="kw">&lt;-</span> <span class="no">states_extracts</span> <span class="kw">%&gt;%</span>
-  <span class="fu">group_by</span>(<span class="no">geopol_unit</span>) <span class="kw">%&gt;%</span>
-  <span class="fu">summarize</span>(<span class="kw">grand_mean_max</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(<span class="no">obs_max</span>), <span class="kw">grand_se_max</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span>(<span class="no">obs_max</span>) / <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span>(<span class="fu">n_distinct</span>(<span class="no">model</span>)))
-
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"countries_extracts"</span>)
-
-<span class="no">summary_countries_extracts</span> <span class="kw">&lt;-</span> <span class="no">countries_extracts</span> <span class="kw">%&gt;%</span>
-  <span class="fu">group_by</span>(<span class="no">geopol_unit</span>) <span class="kw">%&gt;%</span>
-  <span class="fu">summarize</span>(<span class="kw">grand_mean_max</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(<span class="no">obs_max</span>), <span class="kw">grand_se_max</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span>(<span class="no">obs_max</span>) / <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span>(<span class="fu">n_distinct</span>(<span class="no">model</span>)))
-
-<span class="co">#rm W. Sahara</span>
-<span class="no">summary_countries_extracts</span> <span class="kw">&lt;-</span> <span class="no">summary_countries_extracts</span> <span class="kw">%&gt;%</span>
-    <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="no">geopol_unit</span> <span class="kw">!=</span> <span class="st">"Western Sahara"</span>)
-}</pre></body></html></div>
-<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="kw">if</span>(<span class="fl">TRUE</span>){
+<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="co">#new extract of ensemble</span>
+<span class="kw">if</span>(<span class="fl">TRUE</span>){
   <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"states_extracts_ensemble"</span>)
 
 <span class="no">summary_states_extracts</span> <span class="kw">&lt;-</span> <span class="no">states_extracts_ensemble</span> <span class="kw">%&gt;%</span>
   <span class="fu">group_by</span>(<span class="no">geopol_unit</span>) <span class="kw">%&gt;%</span>
   <span class="fu">summarize</span>(<span class="kw">grand_mean_max</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(<span class="no">obs_max</span>))
 
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"countries_extracts"</span>)
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"countries_extracts_ensemble"</span>)
 
-<span class="no">summary_countries_extracts</span> <span class="kw">&lt;-</span> <span class="no">countries_extracts</span> <span class="kw">%&gt;%</span>
+<span class="no">summary_countries_extracts</span> <span class="kw">&lt;-</span> <span class="no">countries_extracts_ensemble</span> <span class="kw">%&gt;%</span>
   <span class="fu">group_by</span>(<span class="no">geopol_unit</span>) <span class="kw">%&gt;%</span>
-  <span class="fu">summarize</span>(<span class="kw">grand_mean_max</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(<span class="no">obs_max</span>), <span class="kw">grand_se_max</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span>(<span class="no">obs_max</span>) / <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span>(<span class="fu">n_distinct</span>(<span class="no">model</span>)))
+  <span class="fu">summarize</span>(<span class="kw">grand_mean_max</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(<span class="no">obs_max</span>))
 
 <span class="co">#rm W. Sahara</span>
 <span class="no">summary_countries_extracts</span> <span class="kw">&lt;-</span> <span class="no">summary_countries_extracts</span> <span class="kw">%&gt;%</span>
     <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="no">geopol_unit</span> <span class="kw">!=</span> <span class="st">"Western Sahara"</span>)
-
 
 }</pre></body></html></div>
 <hr>
@@ -185,7 +168,7 @@
 <a href="#u-s--states" class="anchor"></a>U.S. States</h3>
 <p>We first treat the states data by adding two letter codes and <em>Lycorma</em>-establishment status. For <code>present</code>, we treat the following states as having established <em>Lycorma</em>: <strong>DE, MD, NJ, PA, and VA</strong>. For <code>future</code>, we add the following states as having established <em>Lycorma</em>: <strong>NC, NY, OH, and WV</strong>. From here, the data are tidied and gathered before calculating the mean and standard error (SE) of trade with established states for 2012–2017. To do so, we first removed all cases of intrastate trade for established states. Then, we calculated the total trade with established states for each year before obtaining the overall mean and SE.</p>
 <p>Below, we demonstrate the code for both <code>present</code> and <code>future</code> trade data in value (USD) for U.S. <code>states</code>.</p>
-<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="co">#load states value</span>
+<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="co">#load states value</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"states_trade_summary_slf"</span>)
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"states_trade_summary_slf_future"</span>)
 
@@ -267,7 +250,7 @@
     <span class="fu">mutate</span>(<span class="kw">se</span> <span class="kw">=</span> (<span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span>(<span class="no">avg_infected_trade</span>, <span class="kw">na.rm</span> <span class="kw">=</span> <span class="no">T</span>) / <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span>(<span class="no">year</span>)))) <span class="kw">%&gt;%</span>
     <span class="fu">summarise</span>(<span class="kw">avg_infected_trade</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(<span class="no">avg_infected_trade</span>, <span class="kw">na.rm</span> <span class="kw">=</span> <span class="no">T</span>), <span class="kw">se</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(<span class="no">se</span>))</pre></body></html></div>
 <p>We repeat the same process for <code>states</code> but for the total mass of imported goods (<code>mass</code>). In doing so, we convert the existing units from kg to <strong>metric tons</strong>.</p>
-<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="co">#load states mass</span>
+<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="co">#load states mass</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"states_trade_mass_summary_slf"</span>)
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"states_trade_mass_summary_slf_future"</span>)
 
@@ -412,7 +395,7 @@
 <h3 class="hasAnchor">
 <a href="#countries" class="anchor"></a>Countries</h3>
 <p>From here, we turn to complete the same analyses for <code>countries</code> as states (value of trade in USD and then mass of trade in metric tons). Notably, we do not have to worry about the intrastate trade that we filtered out in the <code>states</code> datasets. As such, we do not bother with attaching a <code>$status</code> identifier to each country (this is done as needed for visualization later).</p>
-<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="co">#COUNTRIES</span>
+<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="co">#COUNTRIES</span>
 
 <span class="co">#VALUE</span>
 <span class="co">#load countries values</span>
@@ -580,8 +563,8 @@
 <h3 class="hasAnchor">
 <a href="#combined-final-trade-data" class="anchor"></a>Combined Final Trade Data</h3>
 <p>Now that we have several permutations of trade with <em>Lycorma</em>-established states data (both <code>present</code> and <code>future</code> scenarios) for both geopolitical units (<code>states</code> and <code>countries</code>) as measured in <strong>value</strong> and <strong>mass</strong> (USD and metric tons, respectively), we can combine some of these data into fewer dataframes to minimize the number of files we are juggling for future analyses. To do this, we merge the <strong>value</strong> and <strong>mass</strong> data for each geopolitical unit dataset.</p>
-<p>As we do so, we take the time to create <span class="math inline">\(\log_{10}\)</span> transformed versions of the trade <strong>value</strong> and <strong>mass</strong> data. To avoid possible errors for this transformation, we add a constant (<code>+1</code>) to data prior to transformation. This process for transformation is held constant for <strong>Impact potential</strong> data.</p>
-<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="co">#STATES</span>
+<p>As we do so, we take the time to create <span class="math inline">\(\log_{10}\)</span> transformed versions of the trade <strong>value</strong> and <strong>mass</strong> data. To avoid possible errors for this transformation, we add a constant (<span class="math inline">\(value+1\)</span>) to data prior to transformation. This process for transformation is held constant for <strong>Impact potential</strong> data.</p>
+<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="co">#STATES</span>
 <span class="no">summary_states_trade</span> <span class="kw">&lt;-</span> <span class="fu">left_join</span>(<span class="no">summary_states_trade_value</span>, <span class="no">summary_states_trade_mass</span>, <span class="kw">by</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"destination"</span>, <span class="st">"status"</span>), <span class="kw">suffix</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"_trade"</span>, <span class="st">"_mass"</span>)) <span class="kw">%&gt;%</span>
     <span class="fu">mutate</span>(<span class="kw">log10_avg_infected_trade</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span>(<span class="no">avg_infected_trade</span>+<span class="fl">1</span>), <span class="kw">log10_avg_infected_mass</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span>(<span class="no">avg_infected_mass</span>+<span class="fl">1</span>))
 
@@ -856,7 +839,7 @@
 <li>grape yield per unit area (metric tons/hectare)</li>
 </ol>
 <p>Although provide both sources of data, we focus more on <strong>production</strong> as a total measure of output per geopolitical unit.</p>
-<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"states_grapes"</span>)
+<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"states_grapes"</span>)
 
 <span class="co">#summarize and log transform</span>
 <span class="no">summary_states_grapes</span> <span class="kw">&lt;-</span> <span class="no">states_grapes</span> <span class="kw">%&gt;%</span>
@@ -888,7 +871,7 @@
 <h2 class="hasAnchor">
 <a href="#wine" class="anchor"></a>Wine</h2>
 <p>For <code>wine</code>, we were able to obtain wine production for both geopolitical unit datasets in units of mass, metric tons.</p>
-<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"states_wine"</span>)
+<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"states_wine"</span>)
 
 <span class="co">#summarize and log transform</span>
 <span class="no">summary_states_wine</span> <span class="kw">&lt;-</span> <span class="no">states_wine</span> <span class="kw">%&gt;%</span>
@@ -915,7 +898,7 @@
 <li>Established: <strong>Japan, South Korea, and United States</strong>
 </li>
 </ul>
-<div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="co">#STATES</span>
+<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="co">#STATES</span>
 
 <span class="co">##PRESENT</span>
 
@@ -1009,7 +992,8 @@
 
 <span class="co">#tidy the order of cols</span>
 <span class="no">countries_summary_present</span> <span class="kw">&lt;-</span> <span class="no">countries_summary_present</span> <span class="kw">%&gt;%</span>
-    <span class="fu">select</span>(<span class="no">ID</span>, <span class="no">geopol_unit</span>, <span class="no">status</span>, <span class="no">grand_mean_max</span>, <span class="no">grand_se_max</span>, <span class="no">wine</span>, <span class="no">grapes</span>, <span class="no">avg_wine</span>:<span class="no">log10_avg_prod</span>, <span class="fu">everything</span>())
+    <span class="co">#select(ID, geopol_unit, status, grand_mean_max, grand_se_max, wine, grapes, avg_wine:log10_avg_prod, everything())</span>
+    <span class="fu">select</span>(<span class="no">ID</span>, <span class="no">geopol_unit</span>, <span class="no">status</span>, <span class="no">grand_mean_max</span>, <span class="no">wine</span>, <span class="no">grapes</span>, <span class="no">avg_wine</span>:<span class="no">log10_avg_prod</span>, <span class="fu">everything</span>())
 
 <span class="co">##FUTURE</span>
 
@@ -1046,25 +1030,26 @@
 
 <span class="co">#tidy the order of cols</span>
 <span class="no">countries_summary_future</span> <span class="kw">&lt;-</span> <span class="no">countries_summary_future</span> <span class="kw">%&gt;%</span>
-    <span class="fu">select</span>(<span class="no">ID</span>, <span class="no">geopol_unit</span>, <span class="no">status</span>, <span class="no">grand_mean_max</span>, <span class="no">grand_se_max</span>, <span class="no">wine</span>, <span class="no">grapes</span>, <span class="no">avg_wine</span>:<span class="no">log10_avg_prod</span>, <span class="fu">everything</span>())</pre></body></html></div>
+    <span class="co">#select(ID, geopol_unit, status, grand_mean_max, grand_se_max, wine, grapes, avg_wine:log10_avg_prod, everything())</span>
+    <span class="fu">select</span>(<span class="no">ID</span>, <span class="no">geopol_unit</span>, <span class="no">status</span>, <span class="no">grand_mean_max</span>, <span class="no">wine</span>, <span class="no">grapes</span>, <span class="no">avg_wine</span>:<span class="no">log10_avg_prod</span>, <span class="fu">everything</span>())</pre></body></html></div>
 <hr>
 </div>
 <div id="save-data" class="section level1">
 <h1 class="hasAnchor">
 <a href="#save-data" class="anchor"></a>Save data</h1>
 <p>This section provides the code to save each of the final summary objects to the <code>/data</code> directory. They are currently set to not run, as the package <strong>should</strong> ship with the files already in <code>/data</code>. Note that this chunk can be run by setting the top <code>if</code> from <code>FALSE</code> to <code>TRUE</code>!</p>
-<div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="kw">if</span>(<span class="fl">FALSE</span>){
+<div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="kw">if</span>(<span class="fl">FALSE</span>){
 <span class="fu"><a href="https://rdrr.io/r/base/save.html">save</a></span>(<span class="no">states_summary_present</span>, <span class="kw">file</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="fu"><a href="https://rdrr.io/pkg/here/man/here.html">here</a></span>(), <span class="st">"data"</span>, <span class="st">"states_summary_present.rda"</span>))
 <span class="fu"><a href="https://rdrr.io/r/base/save.html">save</a></span>(<span class="no">states_summary_future</span>, <span class="kw">file</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="fu"><a href="https://rdrr.io/pkg/here/man/here.html">here</a></span>(), <span class="st">"data"</span>, <span class="st">"states_summary_future.rda"</span>))
 <span class="fu"><a href="https://rdrr.io/r/base/save.html">save</a></span>(<span class="no">countries_summary_present</span>, <span class="kw">file</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="fu"><a href="https://rdrr.io/pkg/here/man/here.html">here</a></span>(), <span class="st">"data"</span>, <span class="st">"countries_summary_present.rda"</span>))
 <span class="fu"><a href="https://rdrr.io/r/base/save.html">save</a></span>(<span class="no">countries_summary_future</span>, <span class="kw">file</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="fu"><a href="https://rdrr.io/pkg/here/man/here.html">here</a></span>(), <span class="st">"data"</span>, <span class="st">"countries_summary_future.rda"</span>))
 }</pre></body></html></div>
-<div class="sourceCode" id="cb12"><html><body><pre class="r"><span class="kw">if</span>(<span class="fl">FALSE</span>){
-
+<div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="kw">if</span>(<span class="fl">FALSE</span>){
 <span class="no">states_summary_future_ensemble</span> <span class="kw">&lt;-</span> <span class="no">states_summary_future</span>
+<span class="no">countries_summary_future_ensemble</span> <span class="kw">&lt;-</span> <span class="no">countries_summary_future</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/save.html">save</a></span>(<span class="no">states_summary_future_ensemble</span>, <span class="kw">file</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="fu"><a href="https://rdrr.io/pkg/here/man/here.html">here</a></span>(), <span class="st">"data"</span>, <span class="st">"states_summary_future_ensemble.rda"</span>))
-<span class="fu"><a href="https://rdrr.io/r/base/save.html">save</a></span>(<span class="no">countries_summary_future</span>, <span class="kw">file</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="fu"><a href="https://rdrr.io/pkg/here/man/here.html">here</a></span>(), <span class="st">"data"</span>, <span class="st">"countries_summary_future.rda"</span>))
+<span class="fu"><a href="https://rdrr.io/r/base/save.html">save</a></span>(<span class="no">countries_summary_future_ensemble</span>, <span class="kw">file</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="fu"><a href="https://rdrr.io/pkg/here/man/here.html">here</a></span>(), <span class="st">"data"</span>, <span class="st">"countries_summary_future_ensemble.rda"</span>))
 }</pre></body></html></div>
 </div>
   </div>

@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slfrsk</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">9999.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -127,7 +127,8 @@
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">ENMTools</span>) <span class="co">#enviro collinearity analyses</span>
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">patchwork</span>) <span class="co">#easy combined plots</span>
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">scales</span>) <span class="co">#rescale the plots easily</span>
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">rgdal</span>) <span class="co">#load shapefiles</span></pre></body></html></div>
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">rgdal</span>) <span class="co">#load shapefiles</span>
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">doParallel</span>) <span class="co">#parallized extraction</span></pre></body></html></div>
 </div>
 <div id="reading-and-visualization-of-presence-data" class="section level1">
 <h1 class="hasAnchor">
@@ -590,7 +591,13 @@ writeRaster(x = enm_ensemble, filename = file.path(mypath, "maxent_models/slftoh
 
 <span class="co">#countries version</span>
 <span class="no">countries_extracts_ensemble</span> <span class="kw">&lt;-</span> <span class="fu">extract_enm</span>(<span class="kw">enm</span> <span class="kw">=</span> <span class="no">enm_ensemble</span>, <span class="kw">geoshape</span> <span class="kw">=</span> <span class="no">world</span>, <span class="kw">id0</span> <span class="kw">=</span> <span class="st">"NAME_0"</span>, <span class="kw">id</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span>(<span class="no">world</span>$<span class="no">NAME_0</span>))
+
 <span class="fu">write_csv</span>(<span class="kw">path</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="fu"><a href="https://rdrr.io/pkg/here/man/here.html">here</a></span>(),<span class="st">"data-raw/extract_countries_slftoh_ensemble_mean.csv"</span>), <span class="kw">x</span> <span class="kw">=</span> <span class="no">countries_extracts_ensemble</span><span class="kw">[[</span><span class="fl">1</span>]], <span class="kw">col_names</span> <span class="kw">=</span> <span class="no">T</span>)
+
+<span class="co">#parallelized version</span>
+<span class="no">countries_extracts_ensemble2</span> <span class="kw">&lt;-</span> <span class="fu">extract_enm2</span>(<span class="kw">enm</span> <span class="kw">=</span> <span class="no">enm_ensemble</span>, <span class="kw">geoshape</span> <span class="kw">=</span> <span class="no">world</span>, <span class="kw">id0</span> <span class="kw">=</span> <span class="st">"NAME_0"</span>, <span class="kw">id</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span>(<span class="no">world</span>$<span class="no">NAME_0</span>), <span class="kw">multipar</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">ncores</span> <span class="kw">=</span> <span class="fl">5</span>)
+<span class="co">#write out</span>
+<span class="fu">write_csv</span>(<span class="kw">path</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="fu"><a href="https://rdrr.io/pkg/here/man/here.html">here</a></span>(),<span class="st">"data-raw/extract_countries_slftoh_ensemble_mean2.csv"</span>), <span class="kw">x</span> <span class="kw">=</span> <span class="no">countries_extracts_ensemble2</span>, <span class="kw">col_names</span> <span class="kw">=</span> <span class="no">T</span>)
 
 
 <span class="co">#example with s3</span>

@@ -518,8 +518,8 @@ states_summary_present <- left_join(stateid, states_summary_present, by = "geopo
 #################################
 #tidy the order of cols
 states_summary_present <- states_summary_present %>%
-  select(ID, geopol_unit, status, grand_mean_max, grand_se_max, wine, grapes, avg_wine:log10_avg_prod, everything())
-  #select(ID, geopol_unit, status, grand_mean_max, wine, grapes, avg_wine:log10_avg_prod, everything())
+  #select(ID, geopol_unit, status, grand_mean_max, grand_se_max, wine, grapes, avg_wine:log10_avg_prod, everything())
+  select(ID, geopol_unit, status, grand_mean_max, wine, grapes, avg_wine:log10_avg_prod, everything())
 
 
 ##FUTURE
@@ -544,8 +544,8 @@ states_summary_future <- left_join(stateid, states_summary_future, by = "geopol_
 
 #tidy the order of cols
 states_summary_future <- states_summary_future %>%
-    select(ID, geopol_unit, status, grand_mean_max, grand_se_max, wine, grapes, avg_wine:log10_avg_prod, everything())
-    #select(ID, geopol_unit, status, grand_mean_max, wine, grapes, avg_wine:log10_avg_prod, everything())
+    #select(ID, geopol_unit, status, grand_mean_max, grand_se_max, wine, grapes, avg_wine:log10_avg_prod, everything())
+    select(ID, geopol_unit, status, grand_mean_max, wine, grapes, avg_wine:log10_avg_prod, everything())
 
 
 #################################
@@ -588,8 +588,8 @@ countries_summary_present$status[countries_summary_present$geopol_unit %in% c("J
 
 #tidy the order of cols
 countries_summary_present <- countries_summary_present %>%
-    select(ID, geopol_unit, status, grand_mean_max, grand_se_max, wine, grapes, avg_wine:log10_avg_prod, everything())
-    #select(ID, geopol_unit, status, grand_mean_max, wine, grapes, avg_wine:log10_avg_prod, everything())
+    #select(ID, geopol_unit, status, grand_mean_max, grand_se_max, wine, grapes, avg_wine:log10_avg_prod, everything())
+    select(ID, geopol_unit, status, grand_mean_max, wine, grapes, avg_wine:log10_avg_prod, everything())
 
 ##FUTURE
 
@@ -626,8 +626,8 @@ countries_summary_future$status[countries_summary_future$geopol_unit %in% c("Jap
 
 #tidy the order of cols
 countries_summary_future <- countries_summary_future %>%
-    select(ID, geopol_unit, status, grand_mean_max, grand_se_max, wine, grapes, avg_wine:log10_avg_prod, everything())
-    #select(ID, geopol_unit, status, grand_mean_max, wine, grapes, avg_wine:log10_avg_prod, everything())
+    #select(ID, geopol_unit, status, grand_mean_max, grand_se_max, wine, grapes, avg_wine:log10_avg_prod, everything())
+    select(ID, geopol_unit, status, grand_mean_max, wine, grapes, avg_wine:log10_avg_prod, everything())
 ```
 
 ***

@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slfrsk</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">9999.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -164,13 +164,45 @@
 <h2 class="hasAnchor">
 <a href="#risk-summary-data" class="anchor"></a>Risk summary data</h2>
 <p>To merge the new <code>market_size</code> dat with our existing <code>countries</code> data, we use <code>left_join()</code> to merge the <code>market</code> and <code>summary</code> data by <code>ID</code>. We then remove the countries from the dataset that already have <em>Lycorma</em>. Note: we use a modified version of <code><a href="https://rdrr.io/r/base/match.html">%in%</a></code> and <code><a href="https://rdrr.io/r/base/funprog.html">Negate()</a></code> to create <code>%notin%</code> for removing countries.</p>
-<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"countries_summary_future"</span>)
+<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="co">#data("countries_summary_future")</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"countries_summary_future_ensemble"</span>)
+<span class="no">countries_summary_future_ensemble</span> <span class="kw">&lt;-</span> <span class="no">countries_summary_future_ensemble</span> <span class="kw">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(!<span class="no">ID</span> <span class="kw">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Antarctica"</span>, <span class="st">"Monaco"</span>, <span class="st">"Norfolk Island"</span>, <span class="st">"Spratly Islands"</span>))
+
+<span class="co">#remove non-focal countries</span>
+<span class="no">rems</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Akrotiri and Dhekelia"</span>
+            ,<span class="st">"?land"</span>
+            ,<span class="st">"American Samoa"</span>
+            ,<span class="st">"Bouvet Island"</span>
+            ,<span class="st">"British Indian Ocean Territory"</span>
+            ,<span class="st">"Caspian Sea"</span>
+            ,<span class="st">"Christmas Island"</span>
+            ,<span class="st">"Clipperton Island"</span>
+            ,<span class="st">"Cocos Islands"</span>
+            ,<span class="st">"Falkland Islands"</span>
+            ,<span class="st">"Faroe Islands"</span>
+            ,<span class="st">"French Southern Territories"</span>
+            ,<span class="st">"Heard Island and McDonald Islands"</span>
+            ,<span class="st">"Mayotte"</span>
+            ,<span class="st">"Northern Mariana Islands"</span>
+            ,<span class="st">"Paracel Islands"</span>
+            ,<span class="st">"Pitcairn Islands"</span>
+            ,<span class="st">"Saint Pierre and Miquelon"</span>
+            ,<span class="st">"Tokelau"</span>
+            ,<span class="st">"United States Minor Outlying Islands"</span>
+            ,<span class="st">"Wallis and Futuna"</span>
+            ,<span class="st">"United States"</span>
+            ,<span class="st">"Philippines"</span>)
+
+<span class="no">countries_summary_future_ensemble</span> <span class="kw">&lt;-</span> <span class="no">countries_summary_future_ensemble</span> <span class="kw">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(!<span class="no">ID</span> <span class="kw">%in%</span> <span class="no">rems</span>)
+
+
 <span class="co">#dim(countries_summary_future)</span>
 <span class="no">`%notin%`</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/funprog.html">Negate</a></span>(<span class="no">`%in%`</span>)
 
 <span class="co"># filter(countries_summary_future, status == "native")</span>
 
-<span class="no">countries_risk_market</span> <span class="kw">&lt;-</span> <span class="no">countries_summary_future</span> <span class="kw">%&gt;%</span>
+<span class="no">countries_risk_market</span> <span class="kw">&lt;-</span> <span class="no">countries_summary_future_ensemble</span> <span class="kw">%&gt;%</span>
   <span class="fu">left_join</span>(<span class="no">countries_wine_market</span>, <span class="kw">by</span> <span class="kw">=</span> <span class="st">"ID"</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="no">ID</span> <span class="kw">%notin%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"United States"</span>,
                       <span class="st">"China"</span>,
@@ -204,11 +236,11 @@
 <span class="co">#&gt;  Spearman's rank correlation rho</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; data:  countries_risk_market$log10_avg_prod and predict(risk_mod)</span>
-<span class="co">#&gt; S = 834355, p-value &lt; 2.2e-16</span>
+<span class="co">#&gt; S = 634000, p-value &lt; 2.2e-16</span>
 <span class="co">#&gt; alternative hypothesis: true rho is not equal to 0</span>
 <span class="co">#&gt; sample estimates:</span>
 <span class="co">#&gt;       rho </span>
-<span class="co">#&gt; 0.6553803</span>
+<span class="co">#&gt; 0.6569681</span>
 
 <span class="co">## diagnostics</span>
 <span class="co"># fit is good for the multivariate correlation because there is no dispersion, but do not use this model for prediction (which I do not know why you would)</span>
@@ -221,7 +253,7 @@
 #&gt;  simulated
 #&gt; 
 #&gt; data:  simulationOutput
-#&gt; ratioObsSim = 1.0002, p-value = 0.96
+#&gt; ratioObsSim = 1.001, p-value = 0.992
 #&gt; alternative hypothesis: two.sided
 summary(risk_mod)
 #&gt; 
@@ -231,19 +263,19 @@ summary(risk_mod)
 #&gt; 
 #&gt; Residuals:
 #&gt;     Min      1Q  Median      3Q     Max 
-#&gt; -3.8227 -1.1369 -0.1392  0.9796  4.8805 
+#&gt; -4.0785 -1.1592 -0.1534  1.3044  4.8582 
 #&gt; 
 #&gt; Coefficients:
 #&gt;                         Estimate Std. Error t value Pr(&gt;|t|)    
-#&gt; (Intercept)              -0.8806     0.2231  -3.947 0.000104 ***
-#&gt; log10_avg_infected_mass   0.3310     0.0598   5.535 8.11e-08 ***
-#&gt; grand_mean_max            3.4118     0.3834   8.898  &lt; 2e-16 ***
+#&gt; (Intercept)             -1.12292    0.26804  -4.189 4.05e-05 ***
+#&gt; log10_avg_infected_mass  0.37145    0.06722   5.526 9.24e-08 ***
+#&gt; grand_mean_max           3.80413    0.43580   8.729 6.49e-16 ***
 #&gt; ---
 #&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 #&gt; 
-#&gt; Residual standard error: 1.744 on 241 degrees of freedom
-#&gt; Multiple R-squared:  0.4418, Adjusted R-squared:  0.4372 
-#&gt; F-statistic: 95.38 on 2 and 241 DF,  p-value: &lt; 2.2e-16
+#&gt; Residual standard error: 1.802 on 220 degrees of freedom
+#&gt; Multiple R-squared:  0.4359, Adjusted R-squared:  0.4308 
+#&gt; F-statistic:    85 on 2 and 220 DF,  p-value: &lt; 2.2e-16
 
 countries_risk_market &lt;- countries_risk_market %&gt;%
   mutate(risk = scales::rescale(predict(risk_mod), to = c(1,10)))
@@ -256,19 +288,19 @@ summary(shock_mod)
 #&gt; 
 #&gt; Residuals:
 #&gt;     Min      1Q  Median      3Q     Max 
-#&gt; -4.9587 -1.1662  0.1689  1.4012  4.1824 
+#&gt; -5.0134 -1.1768  0.2114  1.4480  4.1550 
 #&gt; 
 #&gt; Coefficients:
 #&gt;             Estimate Std. Error t value Pr(&gt;|t|)    
-#&gt; (Intercept)   2.2029     0.3644   6.045 8.54e-09 ***
-#&gt; risk          0.5147     0.0582   8.843 8.96e-16 ***
+#&gt; (Intercept)  2.01467    0.39067   5.157 6.85e-07 ***
+#&gt; risk         0.55208    0.06242   8.844 1.07e-15 ***
 #&gt; ---
 #&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 #&gt; 
-#&gt; Residual standard error: 1.914 on 178 degrees of freedom
-#&gt;   (64 observations deleted due to missingness)
-#&gt; Multiple R-squared:  0.3052, Adjusted R-squared:  0.3013 
-#&gt; F-statistic:  78.2 on 1 and 178 DF,  p-value: 8.956e-16
+#&gt; Residual standard error: 1.91 on 172 degrees of freedom
+#&gt;   (49 observations deleted due to missingness)
+#&gt; Multiple R-squared:  0.3126, Adjusted R-squared:  0.3086 
+#&gt; F-statistic: 78.22 on 1 and 172 DF,  p-value: 1.073e-15
 
 ## diagnostics
 # risk estimate model fit is good and no major issues in heteroskedasticity. But I am not certain why you want this model anyways, a correlation is better because it is easily scaled betwee 1-10 
@@ -281,7 +313,7 @@ simulationOutput &lt;- simulateResiduals(fittedModel = shock_mod, plot = T) </a>
 #&gt;  simulated
 #&gt; 
 #&gt; data:  simulationOutput
-#&gt; ratioObsSim = 1.002, p-value = 0.968
+#&gt; ratioObsSim = 1.0016, p-value = 0.992
 #&gt; alternative hypothesis: two.sided
 
 cor.test(countries_risk_market$market_size, countries_risk_market$risk)
@@ -289,13 +321,13 @@ cor.test(countries_risk_market$market_size, countries_risk_market$risk)
 #&gt;  Pearson's product-moment correlation
 #&gt; 
 #&gt; data:  countries_risk_market$market_size and countries_risk_market$risk
-#&gt; t = 8.8432, df = 178, p-value = 8.956e-16
+#&gt; t = 8.8442, df = 172, p-value = 1.073e-15
 #&gt; alternative hypothesis: true correlation is not equal to 0
 #&gt; 95 percent confidence interval:
-#&gt;  0.4419278 0.6465011
+#&gt;  0.4475676 0.6535203
 #&gt; sample estimates:
-#&gt;     cor 
-#&gt; 0.55248
+#&gt;       cor 
+#&gt; 0.5591094
 (shock_cor &lt;- cor(countries_risk_market$market_size, 
                  countries_risk_market$risk,
                  use = "complete.obs") %&gt;% 
