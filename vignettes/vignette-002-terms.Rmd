@@ -7,7 +7,7 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
   chunk_output_type: inline
-  bibliography: references.bib
+bibliography: references.bib
 link-citations: yes
 ---
 
@@ -30,7 +30,7 @@ This page briefly defines commonly used terms in the **Research Compendium** for
 
 - **paninvasion**---invasion of a pest species at a global scale
 - **shock** (economic)---an unforeseen or unexpected substantial change to an economic system. Here, we consider supply shock, whereby the sudden change in available raw materials/commodities is likely to greatly alter the production and price of those materials and commodities, as well as affect related industries.
-- **invasion potential**---the prospect that a pest species will successfully be moved to (transport), develop and maintain populations in (establishment), or negatively affect the production/commerce acitivites of (economic) an as-yet uninvaded region (see @blackburn_proposed_2011)
+- **invasion potential**---the prospect that a pest species will successfully be moved to (transport), develop and maintain populations in (establishment), or negatively affect the production/commerce acitivites of (economic) an as-yet uninvaded region. See @blackburn_proposed_2011.
 - **alignment**---the strong joint relationship among all three components of invasion potential
 - **risk severity**---
 - **invasion risk**---
