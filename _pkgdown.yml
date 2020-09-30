@@ -20,6 +20,8 @@ navbar:
       href: index.html
     - text: "Overview"
       href: articles/vignette-001-overview.html
+    - text: "Terms"
+      href: articles/vignette-002-terms.html
     - text: "Articles"
       menu:
         - text: ----------------
