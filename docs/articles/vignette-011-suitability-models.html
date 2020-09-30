@@ -46,6 +46,9 @@
 <li>
   <a href="../articles/vignette-001-overview.html">Overview</a>
 </li>
+<li>
+  <a href="../articles/vignette-002-terms.html">Terms</a>
+</li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     Articles
@@ -171,7 +174,7 @@
 <div id="preparation-of-spatial-data" class="section level1">
 <h1 class="hasAnchor">
 <a href="#preparation-of-spatial-data" class="anchor"></a>2. Preparation of Spatial Data</h1>
-<p>To discern which environmental variables to use in the species distribution models (SDMs), we had to minimize collinearity among included covariates (<span class="citation">Peterson et al. (<a href="#ref-peterson_ecological_2011" role="doc-biblioref">2011</a>)</span>). To do so, we estimated pairwise correlation coefficients for 22 global raster covariates hypothesized to influence SLF and TOH distributions: the 20 WorldClim topographic and bioclimatic variables (<span class="citation">Hijmans et al. (<a href="#ref-hijmans_very_2005" role="doc-biblioref">2005</a>)</span>, <span class="citation">Fick and Hijmans (<a href="#ref-fick_worldclim_2017" role="doc-biblioref">2017</a>)</span>), forest height (<span class="citation">Simard et al. (<a href="#ref-simard_mapping_2011" role="doc-biblioref">2011</a>)</span>), and access to cities (<span class="citation">Weiss et al. (<a href="#ref-weiss_global_2018" role="doc-biblioref">2018</a>)</span>).</p>
+<p>To discern which environmental variables to use in the species distribution models (SDMs), we had to minimize collinearity among included covariates (<span class="citation">Peterson et al. (<a href="#ref-peterson_ecological_2011" role="doc-biblioref">2011</a>)</span>). To do so, we estimated pairwise correlation coefficients for 22 global raster covariates hypothesized to influence SLF and TOH distributions: the 20 WorldClim topographic and bioclimatic variables (<span class="citation">Hijmans et al. (<a href="#ref-hijmans_very_2005" role="doc-biblioref">2005</a>)</span>, <span class="citation">Fick and Hijmans (<a href="#ref-fick_worldclim_2017" role="doc-biblioref">2017</a>)</span>), forest height (<span class="citation">Simard et al. (<a href="#ref-simard_mapping_2011" role="doc-biblioref">2011</a>)</span>), and access to cities (<span class="citation">(<span class="citeproc-not-found" data-reference-id="weiss_global_2018"><strong>???</strong></span>)</span>).</p>
 <p>To limit the raster data of covariates to the area of interest, we cropped their extent to <span class="math inline">\([-180, 180]\)</span> for latitude and <span class="math inline">\([-60, 84]\)</span> for longitude and ensured that the extent and resolutions matched one another by using one layer as a reference raster with <code>raster::resample(method = "bilinear)</code>. This corrected any mismatching among cropped rasters of different sources (example code below).</p>
 <div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="kw">if</span>(<span class="fl">FALSE</span>){  <span class="co">#open no run if</span>
 
@@ -660,9 +663,6 @@ writeRaster(x = enm_ensemble, filename = file.path(mypath, "maxent_models/slftoh
 </div>
 <div id="ref-urban_perspective:_2019">
 <p>Urban, Julie M. 2019. “Perspective: Shedding Light on Spotted Lanternfly Impacts in the USA.” <em>Pest Management Science</em>, October.</p>
-</div>
-<div id="ref-weiss_global_2018">
-<p>Weiss, D. J., A. Nelson, H. S. Gibson, W. Temperley, S. Peedell, A. Lieber, M. Hancher, et al. 2018. “A Global Map of Travel Time to Cities to Assess Inequalities in Accessibility in 2015.” <em>Nature</em> 553 (7688): 333–36. <a href="https://doi.org/10.1038/nature25181">https://doi.org/10.1038/nature25181</a>.</p>
 </div>
 <div id="ref-wiley_niche_2003">
 <p>Wiley, E O, Kristina M McNyset, A Townsend Peterson, C Richard Robins, and Aimee M Stewart. 2003. “Niche Modeling and Geographic Range Predictions in the Marine Environment Using a Machine-Learning Algorithm” 16 (3): 8.</p>
