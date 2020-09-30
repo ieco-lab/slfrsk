@@ -36,11 +36,15 @@ library(cleangeo) #clgeo_Clean
 
 ## Summary data
 
-We then read in the summary data for both `states` and `countries` from `vignette-010-tidy-data` to eventually merge with shapfiles. 
+We then read in the summary data for both `states` and `countries` from `vignette-010-tidy-data` to eventually merge with shapfiles. We also remove any `countries` with `establishment` potential that are `-Inf` values.
 
 ```{r read data}
-data("states_summary_future")
-data("countries_summary_future")
+data("states_summary_future_ensemble")
+data("countries_summary_future_ensemble")
+
+#rm the -Inf countries
+countries_summary_future_ensemble <- countries_summary_future_ensemble %>%
+      filter(!ID %in% c("Antarctica", "Monaco", "Norfolk Island", "Spratly Islands"))
 ```
 
 
@@ -52,12 +56,11 @@ To bound these values, each $\log$-transformed value undergoes the following, ba
   - $establishment_{[0,10]} = establishment*10$
   - $impact_{[0,10]} = \frac{impact}{\max(impact)}*10$
 
-After these transformations, we go ahead and round the raw data for reducing file size to *5 significant digits*.
+After these transformations, we go ahead and round the raw data for reducing file size to *5 significant digits*. 
 
 ```{r add the corr plot data}
-
 #states
-states_summary_future <- states_summary_future %>%
+states_summary_future_ensemble <- states_summary_future_ensemble %>%
   #transport in 2 mutate steps
   mutate(transport = log10_avg_infected_mass - min(log10_avg_infected_mass)) %>%
   mutate(transport = round(x = transport / max(transport), digits = 1)*10) %>%
@@ -69,9 +72,9 @@ states_summary_future <- states_summary_future %>%
   mutate(impact_grape = round(x = log10_avg_prod / max(log10_avg_prod), digits = 1)*10)
 
 #rounding
-states_summary_future <- states_summary_future %>%
+states_summary_future_ensemble <- states_summary_future_ensemble %>%
   mutate(grand_mean_max = signif(grand_mean_max, digits = 5),
-         grand_se_max = signif(grand_se_max, digits = 5),
+         #grand_se_max = signif(grand_se_max, digits = 5),
          avg_wine = signif(avg_wine, digits = 5),
          se_wine = signif(se_wine, digits = 5),
          log10_avg_wine = signif(log10_avg_wine, digits = 5),
@@ -90,7 +93,7 @@ states_summary_future <- states_summary_future %>%
          )
 
 #countries
-countries_summary_future <- countries_summary_future %>%
+countries_summary_future_ensemble <- countries_summary_future_ensemble %>%
   #transport in 2 mutate steps
   mutate(transport = log10_avg_infected_mass - min(log10_avg_infected_mass)) %>%
   mutate(transport = round(x = transport / max(transport), digits = 1)*10) %>%
@@ -102,9 +105,9 @@ countries_summary_future <- countries_summary_future %>%
   mutate(impact_grape = round(x = log10_avg_prod / max(log10_avg_prod), digits = 1)*10)
 
 #rounding
-countries_summary_future <- countries_summary_future %>%
+countries_summary_future_ensemble <- countries_summary_future_ensemble %>%
   mutate(grand_mean_max = signif(grand_mean_max, digits = 5),
-         grand_se_max = signif(grand_se_max, digits = 5),
+         #grand_se_max = signif(grand_se_max, digits = 5),
          avg_wine = signif(avg_wine, digits = 5),
          se_wine = signif(se_wine, digits = 5),
          log10_avg_wine = signif(log10_avg_wine, digits = 5),
@@ -121,7 +124,6 @@ countries_summary_future <- countries_summary_future %>%
          log10_avg_infected_trade = signif(log10_avg_infected_trade, digits = 5),
          log10_avg_infected_mass = signif(log10_avg_infected_mass, digits = 5)
          )
-
 ```
 
 We also need to obtain the predicted invasion risk from `vignette-041-market-plot`. We have conveniently saved those data as `data/countries_risk_market.rda`, which actually is a modified version of `countries_summary_future`. We will load these data, round the new columns, and `join` by `ID` (note that`states` do not have values for these fields, as they were not evaluated this way).
@@ -142,9 +144,8 @@ countries_risk <- countries_risk %>%
   dplyr::select(-market_size)
 
 #merge the two datasets
-countries_summary_future <- countries_summary_future %>%
+countries_summary_future_ensemble <- countries_summary_future_ensemble %>%
   left_join(., countries_risk, by = "ID")
-
 ```
 
 ## Shapefiles
@@ -157,7 +158,6 @@ states <- readOGR(dsn = "/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/
 
   #shapefile of world by countries
 countries <- readOGR("/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk/geo_shapefiles/gadm36_levels_shp/gadm36_0.shp", verbose = F, p4s = '+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0')
-
 ```
 
 There are a few shapefile data entries that need to be cleaned, so we alter the names. We also removed the US from `countries`, as in other analyses.
@@ -175,7 +175,6 @@ countries@data$NAME_0[grep(pattern = "Saint Bart", x = countries@data$NAME_0, va
 
 #rm USA
 countries <- countries[countries$NAME_0 != "United States",]
-
 ```
 
 These shapefiles are rather large and unwieldly. To make the more manageable, we use `regeos::gSimplify()` to make them smaller by modifying the `tol` parameter, which is the value used in the Douglas-Peuker algorithm. For `countries`, we downsized the used file in addition to the `_lo` versions used for both `countries` and `states`.
@@ -185,19 +184,17 @@ These shapefiles are rather large and unwieldly. To make the more manageable, we
 states_lo <- SpatialPolygonsDataFrame(Sr = rgeos::gSimplify(spgeom = states, topologyPreserve = TRUE, tol = 0.01), data = states@data)
 countries <- SpatialPolygonsDataFrame(Sr = rgeos::gSimplify(spgeom = countries, topologyPreserve = TRUE, tol = 0.01), data = countries@data)
 countries_lo <- SpatialPolygonsDataFrame(Sr = rgeos::gSimplify(spgeom = countries, topologyPreserve = TRUE, tol = 0.01), data = countries@data)
-
 ```
 
 Following this, the shapefiles were filtered to only geopolitical entities that are in the corresponding `countries` and `states` data.
 
 ```{r filter the states to just those in the trade data}
 #states
-states <- states[states@data$NAME_1 %in% unique(states_summary_future$geopol_unit),]
-states_lo <- states_lo[states_lo@data$NAME_1 %in% unique(states_summary_future$geopol_unit),]
+states <- states[states@data$NAME_1 %in% unique(states_summary_future_ensemble$geopol_unit),]
+states_lo <- states_lo[states_lo@data$NAME_1 %in% unique(states_summary_future_ensemble$geopol_unit),]
 #countries
-countries <- countries[countries@data$NAME_0 %in% unique(countries_summary_future$geopol_unit),]
-countries_lo <- countries_lo[countries_lo@data$NAME_0 %in% unique(countries_summary_future$geopol_unit),]
-
+countries <- countries[countries@data$NAME_0 %in% unique(countries_summary_future_ensemble$geopol_unit),]
+countries_lo <- countries_lo[countries_lo@data$NAME_0 %in% unique(countries_summary_future_ensemble$geopol_unit),]
 ```
 
 In the downscaling and filtering process, we needed to make sure that the geometries are intact and cleaned, and so we used the `clgeo_Clean()` function to ensure that the shapefiles work appropriately.
@@ -223,11 +220,11 @@ Now, we use `left_join()` to join the `shapefile@data` table to the correspondin
 
 ```{r add in the trade data}
 #states
-states@data <- left_join(states@data, states_summary_future, by = c("NAME_1" = "geopol_unit"))
-states_lo@data <- left_join(states_lo@data, states_summary_future, by = c("NAME_1" = "geopol_unit"))
+states@data <- left_join(states@data, states_summary_future_ensemble, by = c("NAME_1" = "geopol_unit"))
+states_lo@data <- left_join(states_lo@data, states_summary_future_ensemble, by = c("NAME_1" = "geopol_unit"))
 #countries
-countries@data <- left_join(countries@data, countries_summary_future, by = c("NAME_0" = "geopol_unit"))
-countries_lo@data <- left_join(countries_lo@data, countries_summary_future, by = c("NAME_0" = "geopol_unit"))
+countries@data <- left_join(countries@data, countries_summary_future_ensemble, by = c("NAME_0" = "geopol_unit"))
+countries_lo@data <- left_join(countries_lo@data, countries_summary_future_ensemble, by = c("NAME_0" = "geopol_unit"))
 
 ```
 
@@ -235,12 +232,18 @@ We also rename the column fields to accommodate for ESRI shapefile column name c
 
 ```{r rename fields}
 #states
-colnames(states@data)[13:35] <- c("gmean_max","gse_max","wine","grapes","avg_wine","se_wine","lavg_wine","avg_yield","se_yield","avg_prod","se_prod","lavg_yield","lavg_prod","avg_itrad","se_trad","avg_imass","se_mass","lavg_itrad","lavg_imass", "transport", "establish", "imp_wine", "imp_grape")
-colnames(states_lo@data)[13:35] <- c("gmean_max","gse_max","wine","grapes","avg_wine","se_wine","lavg_wine","avg_yield","se_yield","avg_prod","se_prod","lavg_yield","lavg_prod","avg_itrad","se_trad","avg_imass","se_mass","lavg_itrad","lavg_imass", "transport", "establish", "imp_wine", "imp_grape") 
-#countries
-colnames(countries@data)[5:27] <- c("gmean_max","gse_max","wine","grapes","avg_wine","se_wine","lavg_wine","avg_yield","se_yield","avg_prod","se_prod","lavg_yield","lavg_prod","avg_itrad","se_trad","avg_imass","se_mass","lavg_itrad","lavg_imass", "transport", "establish", "imp_wine", "imp_grape") 
-colnames(countries_lo@data)[5:27] <- c("gmean_max","gse_max","wine","grapes","avg_wine","se_wine","lavg_wine","avg_yield","se_yield","avg_prod","se_prod","lavg_yield","lavg_prod","avg_itrad","se_trad","avg_imass","se_mass","lavg_itrad","lavg_imass", "transport", "establish", "imp_wine", "imp_grape") 
+#colnames(states@data)[13:35] <- c("gmean_max","gse_max","wine","grapes","avg_wine","se_wine","lavg_wine","avg_yield","se_yield","avg_prod","se_prod","lavg_yield","lavg_prod","avg_itrad","se_trad","avg_imass","se_mass","lavg_itrad","lavg_imass", "transport", "establish", "imp_wine", "imp_grape")
+colnames(states@data)[13:34] <- c("gmean_max","wine","grapes","avg_wine","se_wine","lavg_wine","avg_yield","se_yield","avg_prod","se_prod","lavg_yield","lavg_prod","avg_itrad","se_trad","avg_imass","se_mass","lavg_itrad","lavg_imass", "transport", "establish", "imp_wine", "imp_grape")
 
+#colnames(states_lo@data)[13:35] <- c("gmean_max","gse_max","wine","grapes","avg_wine","se_wine","lavg_wine","avg_yield","se_yield","avg_prod","se_prod","lavg_yield","lavg_prod","avg_itrad","se_trad","avg_imass","se_mass","lavg_itrad","lavg_imass", "transport", "establish", "imp_wine", "imp_grape")
+colnames(states_lo@data)[13:34] <- c("gmean_max","wine","grapes","avg_wine","se_wine","lavg_wine","avg_yield","se_yield","avg_prod","se_prod","lavg_yield","lavg_prod","avg_itrad","se_trad","avg_imass","se_mass","lavg_itrad","lavg_imass", "transport", "establish", "imp_wine", "imp_grape") 
+
+#countries
+#colnames(countries@data)[5:27] <- c("gmean_max","gse_max","wine","grapes","avg_wine","se_wine","lavg_wine","avg_yield","se_yield","avg_prod","se_prod","lavg_yield","lavg_prod","avg_itrad","se_trad","avg_imass","se_mass","lavg_itrad","lavg_imass", "transport", "establish", "imp_wine", "imp_grape")
+colnames(countries@data)[5:26] <- c("gmean_max","wine","grapes","avg_wine","se_wine","lavg_wine","avg_yield","se_yield","avg_prod","se_prod","lavg_yield","lavg_prod","avg_itrad","se_trad","avg_imass","se_mass","lavg_itrad","lavg_imass", "transport", "establish", "imp_wine", "imp_grape")
+
+#colnames(countries_lo@data)[5:27] <- c("gmean_max","gse_max","wine","grapes","avg_wine","se_wine","lavg_wine","avg_yield","se_yield","avg_prod","se_prod","lavg_yield","lavg_prod","avg_itrad","se_trad","avg_imass","se_mass","lavg_itrad","lavg_imass", "transport", "establish", "imp_wine", "imp_grape")
+colnames(countries_lo@data)[5:26] <- c("gmean_max","wine","grapes","avg_wine","se_wine","lavg_wine","avg_yield","se_yield","avg_prod","se_prod","lavg_yield","lavg_prod","avg_itrad","se_trad","avg_imass","se_mass","lavg_itrad","lavg_imass", "transport", "establish", "imp_wine", "imp_grape") 
 ```
 
 To create a streamlined dataset, we make a version that includes both `countries` and `states` together, called `combined` (for combined data).
@@ -267,7 +270,6 @@ countries_lo@data <- comb %>% filter(NAME_0 != "United States")
 #final merge step
 combined <- rbind(states, countries, makeUniqueIDs = TRUE)
 combined_lo <- rbind(states_lo, countries_lo, makeUniqueIDs = TRUE)
-
 ```
 
 # Save shapefiles for EE
@@ -300,7 +302,7 @@ Fortify data to test for plotting with `ggplot2`.
 
 #fortifying to make points
 states_gg <- fortify(states_lo, region = "NAME_1")
-states_gg <- left_join(states_gg, states_summary_future, by = c("id" = "geopol_unit"))
+states_gg <- left_join(states_gg, states_summary_future_ensemble, by = c("id" = "geopol_unit"))
 
 #try with all
 #combined_gg <- fortify(combined_lo, region = "NAME_1")
