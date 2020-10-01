@@ -252,6 +252,7 @@ if(one_zero){
 
 **Additional Note:** Below is code that can be used to make a version of the `country` data that removes all countries that have a no `trade` with infected states (*we leave the zeroes in for the current figures*):
 ```{r rm zeros, eval=FALSE}
+if(false){
 #rm the trade mass zero countries
 countries_summary_nozeros_present <- countries_summary_present %>% filter(log10_avg_infected_mass != 0)
 countries_summary_nozeros_future <- countries_summary_future %>% filter(log10_avg_infected_mass != 0)
@@ -265,7 +266,7 @@ countries_summary_nozeros_future <- countries_summary_nozeros_future %>%
   mutate(avg_infected_mass_scaled = log(avg_infected_mass+1)) %>%
   mutate(avg_infected_mass_scaled = (avg_infected_mass_scaled-min(avg_infected_mass_scaled))) %>%
   mutate(avg_infected_mass_scaled = avg_infected_mass_scaled/max(avg_infected_mass_scaled))
-
+}
 ```
 
 
@@ -293,8 +294,8 @@ label.states.est <- TRUE   #PRESENT: adding DE, MD, NJ  FUTURE: adding DE, MD, N
 # labeling aestehtics for label.countries.est and label.states.est
 nudge_countries.est.x <- c(-.05,0) 
 nudge_countries.est.y <- c(.07,.1)
-nudge_countries.est_future.x <- c(.05,0)  #jpn and kor
-nudge_countries.est_future.y <- c(.14,.1)
+nudge_countries.est_future.x <- c(.05,-0.03)  #jpn and kor
+nudge_countries.est_future.y <- c(.14,.05)
 nudge_states.est_present.x <- c(0.00, -0.02,-0.04)  #PRESENT: adding DE, MD, NJ  
 nudge_states.est_present.y <- c(0.10,-0.10,-0.10)
 nudge_states.est_future.x <- c( 0.00,-0.10, 0.02,-0.04,0.00)  #FUTURE: adding OH, DE, MD, NJ, WV
@@ -1035,9 +1036,9 @@ if(present_transport){
 
 #save the legend
 if(present_transport){
-  pdf(file.path(here::here(),"vignettes", paste0("legend_combined_present_max",impact_prod,".pdf")),width = 3, height = 10) 
+  pdf(file.path(here::here(),"vignettes", paste0("legend_combined_present_max_",impact_prod,".pdf")),width = 3, height = 10) 
 } else{
-  pdf(file.path(here::here(),"vignettes", paste0("legend_combined_future_max",impact_prod,".pdf")),width = 3, height = 10) 
+  pdf(file.path(here::here(),"vignettes", paste0("legend_combined_future_max_",impact_prod,".pdf")),width = 3, height = 10) 
 }
 #finish out the plotting
 grid.draw(legend_country)

@@ -23,7 +23,7 @@ How to Build, Evaluate, and Save Ecological Niche Models of Suitability for *Ail
 
 ***
 
-This vignette is designed to demonstrate the workflow that lead to the creation of the three suitability models used to assess the risk of *Lycorma* paninvasion. The description will not include actual running of some steps of this workflow, as some are unwieldy. Instead, information to ensure proper replication of those steps is provided. Notably, the MaxEnt runs are not conducted in this vignette, although the means to do so within `R` may be possible.
+This vignette is designed to demonstrate the workflow that lead to the creation of the three suitability models used to assess the risk of **SLF** paninvasion. The description will not include actual running of some steps of this workflow, as some are unwieldy. Instead, information to ensure proper replication of those steps is provided. Notably, the MaxEnt runs are not conducted in this vignette, although the means to do so within `R` may be possible.
 
 The scope of this vignette is as follows:
 

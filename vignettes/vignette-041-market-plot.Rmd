@@ -82,7 +82,7 @@ countries_wine_market <- countries_wine_market %>%
 
 ## Risk summary data
 
-To merge the new `market_size` dat with our existing `countries` data, we use `left_join()` to merge the `market` and `summary` data by `ID`. We then remove the countries from the dataset that already have *Lycorma*. Note: we use a modified version of `%in%` and `Negate()` to create `%notin%` for removing countries.
+To merge the new `market_size` dat with our existing `countries` data, we use `left_join()` to merge the `market` and `summary` data by `ID`. We then remove the countries from the dataset that already have **SLF**. Note: we use a modified version of `%in%` and `Negate()` to create `%notin%` for removing countries.
 
 ```{r join market to countries_summary_future_ensemble, eval = TRUE, message=FALSE}
 #data("countries_summary_future")
@@ -149,7 +149,7 @@ From here, we now can build (or rebuild, technically, `vignette-021-quadrant-plo
 
 We then rescaled the predicted **impact** values to be bounded $[1,10]$ to produce initial `risk` values.
 
-To create the initial *shock model* (`shock_mod`) and ultimately obtain a scaled measure of risk of *Lycorma* to shock the global wine market, we performed linear regression of the `market_size` data on `risk` for countries and conducted diagnostics as for `risk_mod`. We then evaluated the unscaled and scaled correlations between `market_size` and `risk` for countries, resulting in a severity of risk at $8$ based on a scale of $[1,10]$.
+To create the initial *shock model* (`shock_mod`) and ultimately obtain a scaled measure of risk of **SLF** to shock the global wine market, we performed linear regression of the `market_size` data on `risk` for countries and conducted diagnostics as for `risk_mod`. We then evaluated the unscaled and scaled correlations between `market_size` and `risk` for countries, resulting in a severity of risk at $8$ based on a scale of $[1,10]$.
 
 ```{r, fig.height= 7, fig.width=7, message=FALSE}
 risk_mod <- lm(log10_avg_prod ~ log10_avg_infected_mass + grand_mean_max, 
@@ -183,7 +183,7 @@ cor.test(countries_risk_market$market_size, countries_risk_market$risk)
 
 # Plotting risk vs market scatter
 
-With the predicted **risk**, we were able plot the scaled `risk` and `market_size`, resulting in the published risk of *Lycorma* to shock the global wine market plot.
+With the predicted **risk**, we were able plot the scaled `risk` and `market_size`, resulting in the published risk of **SLF** to shock the global wine market plot.
 
 ```{r make scatter, eval = TRUE, fig.height= 12, fig.width=10, message=FALSE, warning=FALSE}
 

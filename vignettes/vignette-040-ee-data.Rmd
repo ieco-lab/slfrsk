@@ -5,6 +5,10 @@ vignette: >
   %\VignetteIndexEntry{vignette-040-ee-data}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+editor_options: 
+  chunk_output_type: inline
+bibliography: references.bib
+link-citations: yes
 ---
 
 ```{r, include = FALSE}
@@ -14,15 +18,15 @@ knitr::opts_chunk$set(
 )
 ```
 
-Convert Data for Google Earth Engine App
+Google Earth Engine App Companion
 
 ***
 
-This vignette takes the data produced so far in the `slfrsk` package and prepares it to be implemented in the interactive `slfrsk` Google Earth Engine (EE) App <https://ieco.users.earthengine.app/view/ieco-slf-riskmap>. These data are saved in the shared GoogleDrive `./slfRiskMapping/data/slfRisk/` directory. 
+This vignette is a companion to the interactive `slfrsk` interactive `slfrsk` Google Earth Engine (EE) App <https://ieco.users.earthengine.app/view/ieco-slf-riskmap>. It provides a brief description of the various visualizations (including keys and legends) and demonstrates how the data were treated prior to inclusion in the app. Output data from this vignette are saved in the shared GoogleDrive `./slfRiskMapping/data/slfRisk/` directory. 
 
 # Setup
 
-Here we load the packages that allow us to reformat shapefile data and merge with the summarized potentials data visualized in `vignette-021-quadrant-plots`.
+Here we load the packages that allow us to visualize EE color palettes and reformat shapefile data and merge with the summarized potentials data visualized in `vignette-021-quadrant-plots`.
 
 ```{r setup, results='hide', message=FALSE}
 library(slfrsk)
@@ -31,6 +35,140 @@ library(rgdal)
 library(rgeos)  #gSimplify
 library(cleangeo) #clgeo_Clean
 ```
+
+# EE App Companion
+
+The `slrsk` EE App is an interactive map that allows for highly customizable visualization. When loaded, it will display a map of the earth with several different data layers already enabled (see image below for example).
+
+![Landing page and labeled visualization tools for `slfrsk` EE App.](ee_figures/slfrsk_ee_home_label.png)
+
+## Interactive EE Tools
+
+The image shows several key tools that allow for interactive visualization. They are as follows:
+
+1. Zoom tool: can be used to zoom in (+) and zoom out (-)
+2. Annotation tools: allows for geographic annotation of points, lines, and polygons by the user. The hand icon returns to normal navigation.
+3. Location search bar: allows for navigating to a particular geographic region and functions similarly to searching on any GPS/navigation system.
+4. Layers panel: allows for toggling visibility on/off via check boxes or changing opacity (alpha) of `slfrsk` layers. See layers legend section below for further details on individual layers.
+5. Explore Geographic Focus: dropdown menu that allows for exploring key geographic regions
+  - **WRD**: whole world view
+  - **PHL**: Philadelphia metro regional view
+  - **ITA**: northern Italy grape-growing view
+  - **FRA**: southern France grape-growing view
+  - **ESP**: northern Spain grape-growing view
+  - **CAL**: norhtern California grape-growing view
+6. Establishment Potential Threshold: manually change the threshold of SLF establishment suitability (scaled [0,1]) such that values closer to 1 plot only the most suitable areas and values close to 0 plot closer to the full range of suitability.
+7. Legend Help link: clicking this link will direct back to this article (<https://ieco-lab.github.io/slfrsk/articles/vignette-040-ee-data.html>)
+
+## Layers Panel
+
+The layers panel contains several key measures of SLF invasion potential. Each layer can be turned on or off via the checkbox to the left of its name. Additionally, the opacity of each layer can be changed via the slider bar to the right of its name. Below, we present a detailed account of each layer and its source data, as well as its color scale and geometry.
+
+![Default view of Layers Panel for `slfrsk` EE App.](ee_figures/slfrsk_ee_layers_panel.png)
+
+1. **wine regions**: important viticultural regions aggregated from the Tobacco Tax and Trade Bureau (TTB, @us_alcohol_and_tobacco_tax_and_trade_bureau_established_2019) and @wikipedia_httpsenwikipediaorgwikilist_of_wine-producing_regions_2020 are depicted by **<span style="color:#800080;">purple points</span>**
+
+\newline
+
+2. **vineyards EU**: areas reported to be cultivated as vineyards in Europe according to @european_environment_agency_corine_2018 are  depicted by **<span style="color:#800080;">purple pixels</span>**
+
+\newline
+
+3. **vineyards US**: areas reported to be cultivated as vineyards in the US according to @usda_national_agricultural_statistics_service_nass_cropscape_2019 are  depicted by **<span style="color:#800080;">purple pixels</span>**
+
+\newline
+
+4. **establishment potential**: the potential for establishment of SLF as determined from the suitability in the ensemble species distribution model (scaled $[0,1]$). This layer is a shaded fill that goes with the Establishment Potential Threshold box discussed in the prior section.
+
+```{r establishment key, echo=FALSE, fig.width=5, fig.height=1, fig.align='center'}
+tibble(x= seq(from = 0, to = 0.999, by = 0.111), colors = c('#FFFFFF', '#fff7ec','#fee8c8','#fdd49e','#fdbb84','#fc8d59','#ef6548','#d7301f','#b30000','#7f0000')) %>%
+ggplot(data = .) +
+  geom_tile(aes(x = x, y = 1, fill = colors), show.legend = F) +
+scale_fill_manual(
+                  values = c("#FFFFFF" = "#FFFFFF",
+                             "#fff7ec" = "#fff7ec", 
+                             "#fee8c8" = "#fee8c8",
+                             "#fdd49e" = "#fdd49e",
+                             "#fdbb84" = "#fdbb84",
+                             "#fc8d59" = "#fc8d59",
+                             "#ef6548" = "#ef6548",
+                             "#d7301f" = "#d7301f",
+                             "#b30000" = "#b30000",
+                             "#7f0000" = "#7f0000")
+      ) +
+    theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks.y = element_blank()) +
+        labs(x = "", y = "") +
+    ggtitle("Establishment Potential") +
+    scale_x_continuous(name = "", breaks = c(0.001,0.999), labels = c("0", "1"), limits = c(-0.1,1.1))
+```
+
+\newline
+
+5. **transport potential**: the potential for transport of SLF as determined by the metric tonnage of trade with US states that are considered to have established SLF populations (scaled $[0,10]$). This layer is a border outline for countries and US states.
+
+```{r transport key, echo=FALSE, fig.width=5, fig.height=1, fig.align='center'}
+tibble(x= seq(from = 0, to = 10, by = 1), colors = rev(c('#a50026','#d73027','#f46d43','#fdae61','#fee090','#ffffbf','#e0f3f8','#abd9e9','#74add1','#4575b4','#313695'))) %>%
+ggplot(data = .) +
+  geom_tile(aes(x = x, y = 1, fill = colors), show.legend = F) +
+scale_fill_manual(
+                  values = c('#a50026' = '#a50026',
+                             '#d73027' = '#d73027',
+                             '#f46d43' = '#f46d43',
+                             '#fdae61' = '#fdae61',
+                             '#fee090' = '#fee090',
+                             '#ffffbf' = '#ffffbf',
+                             '#e0f3f8' = '#e0f3f8',
+                             '#abd9e9' = '#abd9e9',
+                             '#74add1' = '#74add1',
+                             '#4575b4' = '#4575b4',
+                             '#313695' = '#313695')
+      ) +
+    theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks.y = element_blank()) +
+        labs(x = "", y = "") +
+    ggtitle("Transport Potential") +
+    scale_x_continuous(name = "", breaks = c(0.001,9.999), labels = c("0", "10"), limits = c(-0.5,10.5))
+```
+
+\newline
+
+6. **invasion risk**: the risk of shock to the wine market as determined by the relationship between predicted values of average annual grape production based on SLF transport and establishment potential and average annual wine market size (scaled $[1,10]$). This scaling ranges from a completely negative relationship at 1 to a completely positive relationship at 10 (thus explaining the change from the $[0,10]$ scale seen for other layers) This layer is a shaded fill for *only* `countries` that **do not already have established SLF populations**.
+
+```{r risk key, echo=FALSE, fig.width=5, fig.height=1, fig.align='center'}
+tibble(x= seq(from = 0, to = 10, by = 1), colors = rev(c('#a50026','#d73027','#f46d43','#fdae61','#fee090','#ffffbf','#e0f3f8','#abd9e9','#74add1','#4575b4','#313695'))) %>%
+ggplot(data = .) +
+  geom_tile(aes(x = x, y = 1, fill = colors), show.legend = F) +
+scale_fill_manual(
+                  values = c('#a50026' = '#a50026',
+                             '#d73027' = '#d73027',
+                             '#f46d43' = '#f46d43',
+                             '#fdae61' = '#fdae61',
+                             '#fee090' = '#fee090',
+                             '#ffffbf' = '#ffffbf',
+                             '#e0f3f8' = '#e0f3f8',
+                             '#abd9e9' = '#abd9e9',
+                             '#74add1' = '#74add1',
+                             '#4575b4' = '#4575b4',
+                             '#313695' = '#313695')
+      ) +
+    theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks.y = element_blank()) +
+        labs(x = "", y = "") +
+    ggtitle("Invasion Risk") +
+    scale_x_continuous(name = "", breaks = c(0.001,9.999), labels = c("1", "10"), limits = c(-0.5,10.5))
+```
+
+\newline
 
 # Data preparation
 
@@ -276,7 +414,7 @@ combined_lo <- rbind(states_lo, countries_lo, makeUniqueIDs = TRUE)
 
 The newly merged shapefiles (`countries`, `states`, and `combined` for regular and `_lo` versions) are written to the shared GoogleDrive directory `./slfRiskMapping/data/slfRisk/geo_shapefiles/gadm36_USA_with_data/` for visualization with EE.
 
-```{r write out the shapefiles, warning=FALSE, message=FALSE}
+```{r write out the shapefiles, warning=FALSE, message=FALSE, eval=FALSE}
 #states
 writeOGR(obj = states, dsn = "/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk/geo_shapefiles/gadm36_USA_with_data/",  driver="ESRI Shapefile", layer = "states", verbose = FALSE, overwrite_layer = TRUE)
 writeOGR(obj = states_lo, dsn = "/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk/geo_shapefiles/gadm36_USA_with_data/",  driver="ESRI Shapefile", layer = "states_lores", verbose = FALSE, overwrite_layer = TRUE)
@@ -326,4 +464,4 @@ ggplot(states_gg[!states_gg$id %in% c("Alaska", "Hawaii"),]) +
   coord_quickmap()
 ```
 
-
+# References

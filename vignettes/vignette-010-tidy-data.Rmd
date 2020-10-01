@@ -35,7 +35,6 @@ Here we load the required packages to prepare the data.
 library(slfrsk)
 library(tidyverse)
 library(here)
-#devtools::load_all()
 ```
 
 # Establishment
@@ -95,13 +94,13 @@ summary_countries_extracts <- summary_countries_extracts %>%
 # Transport
 ## Import Trade Data
 
-Now that **Establishment** data are nicely organized, we can move on to **Transport**. We estimate **Transport potential** based on the average annual mass of goods traded (in metric tons) with *Lycorma*-established U.S. states over 2012--2017 (we also track value of traded goods in USD). Our existing data can be partitioned into geopolitical units as above (states and countries), but can further be separated into two categories: 1. states with confirmed _Lycorma_ populations (`present`) and 2. states that have a high probability of hosting _Lycorma_ populations in the near future based on proximity to `present` states and records of isolated observations (`future`). 
+Now that **Establishment** data are nicely organized, we can move on to **Transport**. We estimate **Transport potential** based on the average annual mass of goods traded (in metric tons) with **SLF**-established U.S. states over 2012--2017 (we also track value of traded goods in USD). Our existing data can be partitioned into geopolitical units as above (states and countries), but can further be separated into two categories: 1. states with confirmed **SLF** populations (`present`) and 2. states that have a high probability of hosting **SLF** populations in the near future based on proximity to `present` states and records of isolated observations (`future`). 
 
 Although we maintain several possible permutations of data to analyze, we focus on mass of goods traded for `future` scenarios, as these data are unlikely to be skewed by trade of high value goods that are less likely to lead to transportation of egg masses (e.g., electronics) and provide us with a more careful outlook for risk of slf paninvasion.
 
 ### U.S. States
 
-We first treat the states data by adding two letter codes and *Lycorma*-establishment status. For `present`, we treat the following states as having established *Lycorma*: **DE, MD, NJ, PA, and VA**. For `future`, we add the following states as having established *Lycorma*: **NC, NY, OH, and WV**. From here, the data are tidied and gathered before calculating the mean and standard error (SE) of trade with established states for 2012--2017. To do so, we first removed all cases of intrastate trade for established states. Then, we calculated the total trade with established states for each year before obtaining the overall mean and SE.
+We first treat the states data by adding two letter codes and **SLF**-establishment status. For `present`, we treat the following states as having established **SLF**: **DE, MD, NJ, PA, and VA**. For `future`, we add the following states as having established **SLF**: **NC, NY, OH, and WV**. From here, the data are tidied and gathered before calculating the mean and standard error (SE) of trade with established states for 2012--2017. To do so, we first removed all cases of intrastate trade for established states. Then, we calculated the total trade with established states for each year before obtaining the overall mean and SE.
 
 Below, we demonstrate the code for both `present` and `future` trade data in value (USD) for U.S. `states`.
 
@@ -121,7 +120,7 @@ colnames(stateid) <- c("ID", "geopol_unit")
 #add in the infection status of each state while adding the abbreviations
  states_trade_summary_slf <-  left_join(states_trade_summary_slf, stateid, by = c("destination" = "geopol_unit")) %>%
     mutate(status = ifelse(ID %in% c("DE", "MD", "NJ","PA", "VA"), "established", "not established")) %>%
-    select(destination, ID, status, everything())
+    dplyr::select(destination, ID, status, everything())
   
   #tidying of data
   states_trade_summary_slf <- states_trade_summary_slf %>%
@@ -142,7 +141,7 @@ colnames(stateid) <- c("ID", "geopol_unit")
     #split out the info about states and years of trade
     mutate(source = unlist(tempcol)[1], year = unlist(tempcol)[2]) %>%
     #rm the temp col
-    select(-tempcol) %>% 
+    dplyr::select(-tempcol) %>% 
     #group based now on the destination, year, and infection status
     #filter out the intrastate trade for infected states to avoid extra low averages by creating a hybrid string (DestinationState+abbreviated_infected state)
     group_by(destination, year, status) %>% 
@@ -176,7 +175,7 @@ colnames(stateid) <- c("ID", "geopol_unit")
     mutate(tempcol = str_split(infected_state, "_")) %>%
     rowwise() %>%
     mutate(source = unlist(tempcol)[1], year = unlist(tempcol)[2]) %>%
-    select(-tempcol) %>%
+    dplyr::select(-tempcol) %>%
     group_by(destination, year, status) %>%
     #filter out the intrastate trade for infected states to avoid extra low averages
     mutate(clear_intra = paste0(destination, source)) %>%
@@ -200,7 +199,7 @@ data("states_trade_mass_summary_slf_future")
   #add in the infection status of each state while adding the abbreviations
    states_trade_mass_summary_slf <- left_join(states_trade_mass_summary_slf, stateid, by = c("destination" = "geopol_unit")) %>%
     mutate(status = ifelse(ID %in% c("DE", "MD", "NJ","PA", "VA"), "established", "not established")) %>%
-    select(destination, ID, status, everything())
+    dplyr::select(destination, ID, status, everything())
 
      #tidying of data and dividing by 1000 to convert from kg to metric tons
   states_trade_mass_summary_slf <- states_trade_mass_summary_slf %>%
@@ -216,7 +215,7 @@ data("states_trade_mass_summary_slf_future")
     mutate(tempcol = str_split(infected_state, "_")) %>%
     rowwise() %>%
     mutate(source = unlist(tempcol)[1], year = unlist(tempcol)[2]) %>%
-    select(-tempcol) %>%
+    dplyr::select(-tempcol) %>%
     group_by(destination, year, status) %>%
     #filter out the intrastate trade for infected states to avoid extra low averages
     mutate(clear_intra = paste0(destination, source)) %>%
@@ -248,7 +247,7 @@ data("states_trade_mass_summary_slf_future")
     mutate(tempcol = str_split(infected_state, "_")) %>%
     rowwise() %>%
     mutate(source = unlist(tempcol)[1], year = unlist(tempcol)[2]) %>%
-    select(-tempcol) %>%
+    dplyr::select(-tempcol) %>%
     group_by(destination, year, status) %>%
     #filter out the intrastate trade for infected states to avoid extra low averages
     mutate(clear_intra = paste0(destination, source)) %>%
@@ -294,7 +293,7 @@ countries_trade_summary_slf <- countries_trade_summary_slf %>%
     mutate(tempcol = str_split(infected_state, "_")) %>%
     rowwise() %>%
     mutate(source = unlist(tempcol)[1], year = unlist(tempcol)[2]) %>%
-    select(-tempcol) %>%
+    dplyr::select(-tempcol) %>%
     group_by(destination, year) %>%
     summarize(avg_infected_trade = sum(trade)) %>%
     group_by(destination) %>%
@@ -316,7 +315,7 @@ countries_trade_summary_slf_future <- countries_trade_summary_slf_future %>%
     mutate(tempcol = str_split(infected_state, "_")) %>%
     rowwise() %>%
     mutate(source = unlist(tempcol)[1], year = unlist(tempcol)[2]) %>%
-    select(-tempcol) %>%
+    dplyr::select(-tempcol) %>%
     group_by(destination, year) %>%
     summarize(avg_infected_trade = sum(trade)) %>%
     group_by(destination) %>%
@@ -344,7 +343,7 @@ countries_trade_mass_summary_slf <- countries_trade_mass_summary_slf %>%
     mutate(tempcol = str_split(infected_state, "_")) %>%
     rowwise() %>%
     mutate(source = unlist(tempcol)[1], year = unlist(tempcol)[2]) %>%
-    select(-tempcol) %>%
+    dplyr::select(-tempcol) %>%
     group_by(destination, year) %>%
     summarize(avg_infected_mass = sum(mass)) %>%
     group_by(destination) %>%
@@ -367,7 +366,7 @@ countries_trade_mass_summary_slf_future <- countries_trade_mass_summary_slf_futu
     mutate(tempcol = str_split(infected_state, "_")) %>%
     rowwise() %>%
     mutate(source = unlist(tempcol)[1], year = unlist(tempcol)[2]) %>%
-    select(-tempcol) %>%
+    dplyr::select(-tempcol) %>%
     group_by(destination, year) %>%
     summarize(avg_infected_mass = sum(mass)) %>%
     group_by(destination) %>%
@@ -383,7 +382,7 @@ knitr::kable(head(summary_countries_trade_mass_future, n = 10))
 
 ### Combined Final Trade Data
 
-Now that we have several permutations of trade with *Lycorma*-established states data (both `present` and `future` scenarios) for both geopolitical units (`states` and `countries`) as measured in **value** and **mass** (USD and metric tons, respectively), we can combine some of these data into fewer dataframes to minimize the number of files we are juggling for future analyses. To do this, we merge the **value** and **mass** data for each geopolitical unit dataset.
+Now that we have several permutations of trade with **SLF**-established states data (both `present` and `future` scenarios) for both geopolitical units (`states` and `countries`) as measured in **value** and **mass** (USD and metric tons, respectively), we can combine some of these data into fewer dataframes to minimize the number of files we are juggling for future analyses. To do this, we merge the **value** and **mass** data for each geopolitical unit dataset.
 
 As we do so, we take the time to create $\log_{10}$ transformed versions of the trade **value** and **mass** data. To avoid possible errors for this transformation, we add a constant ($value+1$) to data prior to transformation. This process for transformation is held constant for **Impact potential** data.
 
@@ -422,7 +421,7 @@ knitr::kable(head(summary_countries_trade_future, n = 10))
 
 # Impact 
 
-Given the close relationship between cultivation of grapes (`grapes`) and winemaking (`wine`), we evaluate impact potential of *Lycorma* based on data from both.
+Given the close relationship between cultivation of grapes (`grapes`) and winemaking (`wine`), we evaluate impact potential of **SLF** based on data from both.
 
 ## Grapes
 
@@ -518,8 +517,8 @@ states_summary_present <- left_join(stateid, states_summary_present, by = "geopo
 #################################
 #tidy the order of cols
 states_summary_present <- states_summary_present %>%
-  #select(ID, geopol_unit, status, grand_mean_max, grand_se_max, wine, grapes, avg_wine:log10_avg_prod, everything())
-  select(ID, geopol_unit, status, grand_mean_max, wine, grapes, avg_wine:log10_avg_prod, everything())
+  #dplyr::select(ID, geopol_unit, status, grand_mean_max, grand_se_max, wine, grapes, avg_wine:log10_avg_prod, everything())
+  dplyr::select(ID, geopol_unit, status, grand_mean_max, wine, grapes, avg_wine:log10_avg_prod, everything())
 
 
 ##FUTURE
@@ -544,8 +543,8 @@ states_summary_future <- left_join(stateid, states_summary_future, by = "geopol_
 
 #tidy the order of cols
 states_summary_future <- states_summary_future %>%
-    #select(ID, geopol_unit, status, grand_mean_max, grand_se_max, wine, grapes, avg_wine:log10_avg_prod, everything())
-    select(ID, geopol_unit, status, grand_mean_max, wine, grapes, avg_wine:log10_avg_prod, everything())
+    #dplyr::select(ID, geopol_unit, status, grand_mean_max, grand_se_max, wine, grapes, avg_wine:log10_avg_prod, everything())
+    dplyr::select(ID, geopol_unit, status, grand_mean_max, wine, grapes, avg_wine:log10_avg_prod, everything())
 
 
 #################################
@@ -588,8 +587,8 @@ countries_summary_present$status[countries_summary_present$geopol_unit %in% c("J
 
 #tidy the order of cols
 countries_summary_present <- countries_summary_present %>%
-    #select(ID, geopol_unit, status, grand_mean_max, grand_se_max, wine, grapes, avg_wine:log10_avg_prod, everything())
-    select(ID, geopol_unit, status, grand_mean_max, wine, grapes, avg_wine:log10_avg_prod, everything())
+    #dplyr::select(ID, geopol_unit, status, grand_mean_max, grand_se_max, wine, grapes, avg_wine:log10_avg_prod, everything())
+    dplyr::select(ID, geopol_unit, status, grand_mean_max, wine, grapes, avg_wine:log10_avg_prod, everything())
 
 ##FUTURE
 
@@ -626,8 +625,8 @@ countries_summary_future$status[countries_summary_future$geopol_unit %in% c("Jap
 
 #tidy the order of cols
 countries_summary_future <- countries_summary_future %>%
-    #select(ID, geopol_unit, status, grand_mean_max, grand_se_max, wine, grapes, avg_wine:log10_avg_prod, everything())
-    select(ID, geopol_unit, status, grand_mean_max, wine, grapes, avg_wine:log10_avg_prod, everything())
+    #dplyr::select(ID, geopol_unit, status, grand_mean_max, grand_se_max, wine, grapes, avg_wine:log10_avg_prod, everything())
+    dplyr::select(ID, geopol_unit, status, grand_mean_max, wine, grapes, avg_wine:log10_avg_prod, everything())
 ```
 
 ***

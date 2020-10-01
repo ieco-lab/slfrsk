@@ -29,14 +29,41 @@ This page briefly defines commonly used terms in the **Research Compendium** for
 # Definitions
 
 - **alignment**---the strong joint relationship among all three components of invasion potential.
+
+\newline
+
 - **invasion potential**---the prospect that a pest species will successfully be moved to (transport), develop and maintain populations in (establishment), or negatively affect the production/commerce acitivites of (economic) an as-yet uninvaded region. See @blackburn_proposed_2011.
-- **invasion risk**---the chance of a novel invasion occurring.
+
+\newline
+
+- **invasion risk**---the chance for a potential pest species invasion that an area has a strong likelihood of transportation to it, contains an area of suitable habitat for establishment, and has a large area of impact. 
+
+\newline
+
 - **paninvasion**---invasion of a pest species at a global scale.
+
+\newline
+
 - **phylloxera**---grapevine phylloxera (*Daktulosphaira vitifoliae* (Fitch 1855)) is a species of insect native to North America that is the grapevine pest responsible for the Great Wine Blight of the late 1800's that destroyed most of the European grape and wine industries. International collaboration lead to the successful recovery of European grape and wine production via the combining of phylloxera-resistant North American grapevines with suisceptible European varieties via grafting or hybridization. See @gale_dying_2011 for further details.
+
+\newline
+
 - **risk severity**---the degree to which a paninvasion will lead to catastrophic economic shock, should the paninvasion occur.
+
+\newline
+
 - **SDM**---Species Distribution Models (plural: SDMs, also called environmental/ecological niche models, ENMs) characterize the relationship between one or more species and covariates (usually environmental variables) that likely explain the distribution of the species. Most SDMs use observed presence records for species and spatially explicit environmental data layers.
+
+\newline
+
 - **shock** (economic)---an unforeseen or unexpected substantial change to an economic system. Here, we consider supply shock, whereby the sudden change in available raw materials/commodities is likely to greatly alter the production and price of those materials and commodities, as well as affect related industries.
+
+\newline
+
 - **SLF**---*Lycorma delicatula* (White, 1845), the Spotted Lanternfly, is a planthopper native to China, Vietnam, India, and eastern Asia that has spread to South Korea and Japan in the early 2000's and now to the northeastern US c. 2014. As currently observed, SLF has a life cycle that includes the laying of drab, inconspicuous eggs on objects in the late summer/early fall, followed by the death of adults as the eggs overwinter. Nymphs emerge in the spring and undergo several instars before reaching sexual maturity (5 stages) as early as mid-summer. SLF feeds on plant hosts via piercing mouthparts that are used to consume phloem fluids and is known to feed on $>100$ different host species, including grapes (@urban_perspective:_2019, @barringer_worldwide_2020).
+
+\newline
+
 - **TOH**---*Ailanthus altissima* (Mill.) Swingle 1916, Tree of Heaven, is a medium-sized deciduous tree that is native to China, Taiwan, and northern Korea and has also spread and established on all major continents except Antarctica. This plant is the preferred host of SLF where both species can be found (@barringer_worldwide_2020).
 
 # References

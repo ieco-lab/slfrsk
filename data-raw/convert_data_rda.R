@@ -774,6 +774,18 @@ countries_trade_summary_slf_future <- countries_trade_summary_slf_future %>%
 countries_trade_summary_slf[is.na(countries_trade_summary_slf)] <- 0
 countries_trade_summary_slf_future[is.na(countries_trade_summary_slf_future)] <- 0
 
+#fix koreas' names
+countries_trade_summary_slf$destination <- gsub(x = countries_trade_summary_slf$destination, pattern = "Korea, North", replacement = "North Korea")
+countries_trade_summary_slf$destination <- gsub(x = countries_trade_summary_slf$destination, pattern = "Korea, South", replacement = "South Korea")
+countries_trade_summary_slf_future$destination <- gsub(x = countries_trade_summary_slf_future$destination, pattern = "Korea, North", replacement = "North Korea")
+countries_trade_summary_slf_future$destination <- gsub(x = countries_trade_summary_slf_future$destination, pattern = "Korea, South", replacement = "South Korea")
+
+#rearrange by destination
+countries_trade_summary_slf <- countries_trade_summary_slf %>%
+  arrange(destination)
+countries_trade_summary_slf_future <- countries_trade_summary_slf_future %>%
+  arrange(destination)
+
 
 #trade MASS
 {
@@ -966,10 +978,17 @@ countries_trade_mass_summary_slf_future <- countries_trade_mass_summary_slf_futu
 countries_trade_mass_summary_slf[is.na(countries_trade_mass_summary_slf)] <- 0
 countries_trade_mass_summary_slf_future[is.na(countries_trade_mass_summary_slf_future)] <- 0
 
+#fix koreas' names
+countries_trade_mass_summary_slf$destination <- gsub(x = countries_trade_mass_summary_slf$destination, pattern = "Korea, North", replacement = "North Korea")
+countries_trade_mass_summary_slf$destination <- gsub(x = countries_trade_mass_summary_slf$destination, pattern = "Korea, South", replacement = "South Korea")
+countries_trade_mass_summary_slf_future$destination <- gsub(x = countries_trade_mass_summary_slf_future$destination, pattern = "Korea, North", replacement = "North Korea")
+countries_trade_mass_summary_slf_future$destination <- gsub(x = countries_trade_mass_summary_slf_future$destination, pattern = "Korea, South", replacement = "South Korea")
 
-
-
-
+#rearrange by destination
+countries_trade_mass_summary_slf <- countries_trade_mass_summary_slf %>%
+  arrange(destination)
+countries_trade_mass_summary_slf_future <- countries_trade_mass_summary_slf_future %>%
+  arrange(destination)
 
 
 

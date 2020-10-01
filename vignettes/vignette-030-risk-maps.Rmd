@@ -18,7 +18,7 @@ Build and Save Maps of Transport and Establishment Potential
 
 ***
 
-This vignette produces the published map figures that demonstrate where *Lycorma* is most likely to become established, the states and countries that trade most with the `future` scenario infected states, and shows locations of important viticultural areas (areas of high **impact** potential).
+This vignette produces the published map figures that demonstrate where **SLF** is most likely to become established, the states and countries that trade most with the `future` scenario infected states, and shows locations of important viticultural areas (areas of high **impact** potential).
 
 # Setup
 
@@ -69,7 +69,7 @@ data("countries_centers")
 
 # Data preparation
 
-Now that we have most of the data loaded, we can go ahead and conditionally load the **transport** potential data based on the state of `present_transport`. The **transport** potential data for `states` and `countries` are then combined with the appropriate trade partner coordinate data and an approximate center of the *Lycorma* invasion in the U.S. is added as an origin for depicting trade arrows in the map figures. The `states` data are presented first and then the `countries` thereafter.
+Now that we have most of the data loaded, we can go ahead and conditionally load the **transport** potential data based on the state of `present_transport`. The **transport** potential data for `states` and `countries` are then combined with the appropriate trade partner coordinate data and an approximate center of the **SLF** invasion in the U.S. is added as an origin for depicting trade arrows in the map figures. The `states` data are presented first and then the `countries` thereafter.
 
 ## States
 
@@ -214,7 +214,7 @@ countries_trade_final <- countries_centers %>%
 
 #  Plots
 
-We are now able to plot both the `states` and `countries` published map figures. We stepwise add in the different features, beginning with the suitability raster and geopolitical boundary outlines (the latter ships with `ggplot2` in `map_data()`). We then add <span style="color: red;">red outlines</span> for the U.S. states that have established *Lycorma* according to the scenario selected with `present_transport`. Following that, <span style="color:#a020f0;">purple points</span> are added for viticultural areas. Lastly, we add arrows from the approximate center of the *Lycorma* invasion in the U.S. to high **transport** potential trade partners.
+We are now able to plot both the `states` and `countries` published map figures. We stepwise add in the different features, beginning with the suitability raster and geopolitical boundary outlines (the latter ships with `ggplot2` in `map_data()`). We then add <span style="color: red;">red outlines</span> for the U.S. states that have established **SLF** according to the scenario selected with `present_transport`. Following that, <span style="color:#a020f0;">purple points</span> are added for viticultural areas. Lastly, we add arrows from the approximate center of the **SLF** invasion in the U.S. to high **transport** potential trade partners.
 
 ## States
 
