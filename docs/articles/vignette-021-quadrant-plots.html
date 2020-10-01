@@ -336,7 +336,8 @@
 
 }</pre></body></html></div>
 <p><strong>Additional Note:</strong> Below is code that can be used to make a version of the <code>country</code> data that removes all countries that have a no <code>trade</code> with infected states (<em>we leave the zeroes in for the current figures</em>):</p>
-<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="co">#rm the trade mass zero countries</span>
+<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="kw">if</span>(<span class="no">false</span>){
+<span class="co">#rm the trade mass zero countries</span>
 <span class="no">countries_summary_nozeros_present</span> <span class="kw">&lt;-</span> <span class="no">countries_summary_present</span> <span class="kw">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="no">log10_avg_infected_mass</span> <span class="kw">!=</span> <span class="fl">0</span>)
 <span class="no">countries_summary_nozeros_future</span> <span class="kw">&lt;-</span> <span class="no">countries_summary_future</span> <span class="kw">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="no">log10_avg_infected_mass</span> <span class="kw">!=</span> <span class="fl">0</span>)
 
@@ -348,7 +349,8 @@
 <span class="no">countries_summary_nozeros_future</span> <span class="kw">&lt;-</span> <span class="no">countries_summary_nozeros_future</span> <span class="kw">%&gt;%</span>
   <span class="fu">mutate</span>(<span class="kw">avg_infected_mass_scaled</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span>(<span class="no">avg_infected_mass</span>+<span class="fl">1</span>)) <span class="kw">%&gt;%</span>
   <span class="fu">mutate</span>(<span class="kw">avg_infected_mass_scaled</span> <span class="kw">=</span> (<span class="no">avg_infected_mass_scaled</span>-<span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span>(<span class="no">avg_infected_mass_scaled</span>))) <span class="kw">%&gt;%</span>
-  <span class="fu">mutate</span>(<span class="kw">avg_infected_mass_scaled</span> <span class="kw">=</span> <span class="no">avg_infected_mass_scaled</span>/<span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span>(<span class="no">avg_infected_mass_scaled</span>))</pre></body></html></div>
+  <span class="fu">mutate</span>(<span class="kw">avg_infected_mass_scaled</span> <span class="kw">=</span> <span class="no">avg_infected_mass_scaled</span>/<span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span>(<span class="no">avg_infected_mass_scaled</span>))
+}</pre></body></html></div>
 </div>
 </div>
 <div id="plotting" class="section level1">
@@ -384,8 +386,8 @@
 <span class="co"># labeling aestehtics for label.countries.est and label.states.est</span>
 <span class="no">nudge_countries.est.x</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(-<span class="fl">.05</span>,<span class="fl">0</span>)
 <span class="no">nudge_countries.est.y</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">.07</span>,<span class="fl">.1</span>)
-<span class="no">nudge_countries.est_future.x</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">.05</span>,<span class="fl">0</span>)  <span class="co">#jpn and kor</span>
-<span class="no">nudge_countries.est_future.y</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">.14</span>,<span class="fl">.1</span>)
+<span class="no">nudge_countries.est_future.x</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">.05</span>,-<span class="fl">0.03</span>)  <span class="co">#jpn and kor</span>
+<span class="no">nudge_countries.est_future.y</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">.14</span>,<span class="fl">.05</span>)
 <span class="no">nudge_states.est_present.x</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0.00</span>, -<span class="fl">0.02</span>,-<span class="fl">0.04</span>)  <span class="co">#PRESENT: adding DE, MD, NJ  </span>
 <span class="no">nudge_states.est_present.y</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0.10</span>,-<span class="fl">0.10</span>,-<span class="fl">0.10</span>)
 <span class="no">nudge_states.est_future.x</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>( <span class="fl">0.00</span>,-<span class="fl">0.10</span>, <span class="fl">0.02</span>,-<span class="fl">0.04</span>,<span class="fl">0.00</span>)  <span class="co">#FUTURE: adding OH, DE, MD, NJ, WV</span>
@@ -1044,7 +1046,7 @@
 <ul>
 <li>U.S. State Alignment Correlation = 0.430, p = 1.636 x 10<sup>-03</sup>
 </li>
-<li>Country Alignment Correlation = 0.657, p = 6.279 x 10<sup>-29</sup>
+<li>Country Alignment Correlation = 0.656, p = 8.613 x 10<sup>-29</sup>
 </li>
 </ul>
 <ol start="2" style="list-style-type: decimal">
@@ -1053,7 +1055,7 @@
 <ul>
 <li>U.S. State Alignment Correlation = 0.522, p = 8.660 x 10<sup>-05</sup>
 </li>
-<li>Country Alignment Correlation = 0.622, p = 2.829 x 10<sup>-25</sup>
+<li>Country Alignment Correlation = 0.620, p = 4.303 x 10<sup>-25</sup>
 </li>
 </ul>
 <blockquote>
@@ -1120,9 +1122,9 @@
 
 <span class="co">#save the legend</span>
 <span class="kw">if</span>(<span class="no">present_transport</span>){
-  <span class="fu"><a href="https://rdrr.io/r/grDevices/pdf.html">pdf</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="kw pkg">here</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/here/man/here.html">here</a></span>(),<span class="st">"vignettes"</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="st">"legend_combined_present_max"</span>,<span class="no">impact_prod</span>,<span class="st">".pdf"</span>)),<span class="kw">width</span> <span class="kw">=</span> <span class="fl">3</span>, <span class="kw">height</span> <span class="kw">=</span> <span class="fl">10</span>)
+  <span class="fu"><a href="https://rdrr.io/r/grDevices/pdf.html">pdf</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="kw pkg">here</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/here/man/here.html">here</a></span>(),<span class="st">"vignettes"</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="st">"legend_combined_present_max_"</span>,<span class="no">impact_prod</span>,<span class="st">".pdf"</span>)),<span class="kw">width</span> <span class="kw">=</span> <span class="fl">3</span>, <span class="kw">height</span> <span class="kw">=</span> <span class="fl">10</span>)
 } <span class="kw">else</span>{
-  <span class="fu"><a href="https://rdrr.io/r/grDevices/pdf.html">pdf</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="kw pkg">here</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/here/man/here.html">here</a></span>(),<span class="st">"vignettes"</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="st">"legend_combined_future_max"</span>,<span class="no">impact_prod</span>,<span class="st">".pdf"</span>)),<span class="kw">width</span> <span class="kw">=</span> <span class="fl">3</span>, <span class="kw">height</span> <span class="kw">=</span> <span class="fl">10</span>)
+  <span class="fu"><a href="https://rdrr.io/r/grDevices/pdf.html">pdf</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="kw pkg">here</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/here/man/here.html">here</a></span>(),<span class="st">"vignettes"</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="st">"legend_combined_future_max_"</span>,<span class="no">impact_prod</span>,<span class="st">".pdf"</span>)),<span class="kw">width</span> <span class="kw">=</span> <span class="fl">3</span>, <span class="kw">height</span> <span class="kw">=</span> <span class="fl">10</span>)
 }
 <span class="co">#finish out the plotting</span>
 <span class="fu"><a href="https://rdrr.io/r/grid/grid.draw.html">grid.draw</a></span>(<span class="no">legend_country</span>)

@@ -111,7 +111,7 @@
     
 <p>Build and Save Maps of Transport and Establishment Potential</p>
 <hr>
-<p>This vignette produces the published map figures that demonstrate where <em>Lycorma</em> is most likely to become established, the states and countries that trade most with the <code>future</code> scenario infected states, and shows locations of important viticultural areas (areas of high <strong>impact</strong> potential).</p>
+<p>This vignette produces the published map figures that demonstrate where <strong>SLF</strong> is most likely to become established, the states and countries that trade most with the <code>future</code> scenario infected states, and shows locations of important viticultural areas (areas of high <strong>impact</strong> potential).</p>
 <div id="setup" class="section level1">
 <h1 class="hasAnchor">
 <a href="#setup" class="anchor"></a>Setup</h1>
@@ -162,7 +162,7 @@
 <div id="data-preparation" class="section level1">
 <h1 class="hasAnchor">
 <a href="#data-preparation" class="anchor"></a>Data preparation</h1>
-<p>Now that we have most of the data loaded, we can go ahead and conditionally load the <strong>transport</strong> potential data based on the state of <code>present_transport</code>. The <strong>transport</strong> potential data for <code>states</code> and <code>countries</code> are then combined with the appropriate trade partner coordinate data and an approximate center of the <em>Lycorma</em> invasion in the U.S. is added as an origin for depicting trade arrows in the map figures. The <code>states</code> data are presented first and then the <code>countries</code> thereafter.</p>
+<p>Now that we have most of the data loaded, we can go ahead and conditionally load the <strong>transport</strong> potential data based on the state of <code>present_transport</code>. The <strong>transport</strong> potential data for <code>states</code> and <code>countries</code> are then combined with the appropriate trade partner coordinate data and an approximate center of the <strong>SLF</strong> invasion in the U.S. is added as an origin for depicting trade arrows in the map figures. The <code>states</code> data are presented first and then the <code>countries</code> thereafter.</p>
 <div id="states" class="section level2">
 <h2 class="hasAnchor">
 <a href="#states" class="anchor"></a>States</h2>
@@ -304,7 +304,7 @@
 <div id="plots" class="section level1">
 <h1 class="hasAnchor">
 <a href="#plots" class="anchor"></a>Plots</h1>
-<p>We are now able to plot both the <code>states</code> and <code>countries</code> published map figures. We stepwise add in the different features, beginning with the suitability raster and geopolitical boundary outlines (the latter ships with <code>ggplot2</code> in <code>map_data()</code>). We then add <span style="color: red;">red outlines</span> for the U.S. states that have established <em>Lycorma</em> according to the scenario selected with <code>present_transport</code>. Following that, <span style="color:#a020f0;">purple points</span> are added for viticultural areas. Lastly, we add arrows from the approximate center of the <em>Lycorma</em> invasion in the U.S. to high <strong>transport</strong> potential trade partners.</p>
+<p>We are now able to plot both the <code>states</code> and <code>countries</code> published map figures. We stepwise add in the different features, beginning with the suitability raster and geopolitical boundary outlines (the latter ships with <code>ggplot2</code> in <code>map_data()</code>). We then add <span style="color: red;">red outlines</span> for the U.S. states that have established <strong>SLF</strong> according to the scenario selected with <code>present_transport</code>. Following that, <span style="color:#a020f0;">purple points</span> are added for viticultural areas. Lastly, we add arrows from the approximate center of the <strong>SLF</strong> invasion in the U.S. to high <strong>transport</strong> potential trade partners.</p>
 <div id="states-1" class="section level2">
 <h2 class="hasAnchor">
 <a href="#states-1" class="anchor"></a>States</h2>

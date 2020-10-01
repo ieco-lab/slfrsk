@@ -109,18 +109,97 @@
 
     
     
-<p>Convert Data for Google Earth Engine App</p>
+<p>Google Earth Engine App Companion</p>
 <hr>
-<p>This vignette takes the data produced so far in the <code>slfrsk</code> package and prepares it to be implemented in the interactive <code>slfrsk</code> Google Earth Engine (EE) App <a href="https://ieco.users.earthengine.app/view/ieco-slf-riskmap" class="uri">https://ieco.users.earthengine.app/view/ieco-slf-riskmap</a>. These data are saved in the shared GoogleDrive <code>./slfRiskMapping/data/slfRisk/</code> directory.</p>
+<p>This vignette is a companion to the interactive <code>slfrsk</code> interactive <code>slfrsk</code> Google Earth Engine (EE) App <a href="https://ieco.users.earthengine.app/view/ieco-slf-riskmap" class="uri">https://ieco.users.earthengine.app/view/ieco-slf-riskmap</a>. It provides a brief description of the various visualizations (including keys and legends) and demonstrates how the data were treated prior to inclusion in the app. Output data from this vignette are saved in the shared GoogleDrive <code>./slfRiskMapping/data/slfRisk/</code> directory.</p>
 <div id="setup" class="section level1">
 <h1 class="hasAnchor">
 <a href="#setup" class="anchor"></a>Setup</h1>
-<p>Here we load the packages that allow us to reformat shapefile data and merge with the summarized potentials data visualized in <code>vignette-021-quadrant-plots</code>.</p>
+<p>Here we load the packages that allow us to visualize EE color palettes and reformat shapefile data and merge with the summarized potentials data visualized in <code>vignette-021-quadrant-plots</code>.</p>
 <div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">slfrsk</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">tidyverse</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">rgdal</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">rgeos</span>)  <span class="co">#gSimplify</span>
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">cleangeo</span>) <span class="co">#clgeo_Clean</span></pre></body></html></div>
+</div>
+<div id="ee-app-companion" class="section level1">
+<h1 class="hasAnchor">
+<a href="#ee-app-companion" class="anchor"></a>EE App Companion</h1>
+<p>The <code>slrsk</code> EE App is an interactive map that allows for highly customizable visualization. When loaded, it will display a map of the earth with several different data layers already enabled (see image below for example).</p>
+<div class="figure">
+<img src="../../../../../../../../My%20Drive/spotted_lanternfly_ieco_projects/code/FINAL_CODE/R%20package/nah_work/slfrsk/vignettes/ee_figures/slfrsk_ee_home_label.png" alt=""><p class="caption">Landing page and labeled visualization tools for <code>slfrsk</code> EE App.</p>
+</div>
+<div id="interactive-ee-tools" class="section level2">
+<h2 class="hasAnchor">
+<a href="#interactive-ee-tools" class="anchor"></a>Interactive EE Tools</h2>
+<p>The image shows several key tools that allow for interactive visualization. They are as follows:</p>
+<ol style="list-style-type: decimal">
+<li>Zoom tool: can be used to zoom in (+) and zoom out (-)</li>
+<li>Annotation tools: allows for geographic annotation of points, lines, and polygons by the user. The hand icon returns to normal navigation.</li>
+<li>Location search bar: allows for navigating to a particular geographic region and functions similarly to searching on any GPS/navigation system.</li>
+<li>Layers panel: allows for toggling visibility on/off via check boxes or changing opacity (alpha) of <code>slfrsk</code> layers. See layers legend section below for further details on individual layers.</li>
+<li>Explore Geographic Focus: dropdown menu that allows for exploring key geographic regions</li>
+</ol>
+<ul>
+<li>
+<strong>WRD</strong>: whole world view</li>
+<li>
+<strong>PHL</strong>: Philadelphia metro regional view</li>
+<li>
+<strong>ITA</strong>: northern Italy grape-growing view</li>
+<li>
+<strong>FRA</strong>: southern France grape-growing view</li>
+<li>
+<strong>ESP</strong>: northern Spain grape-growing view</li>
+<li>
+<strong>CAL</strong>: norhtern California grape-growing view</li>
+</ul>
+<ol start="6" style="list-style-type: decimal">
+<li>Establishment Potential Threshold: manually change the threshold of SLF establishment suitability (scaled [0,1]) such that values closer to 1 plot only the most suitable areas and values close to 0 plot closer to the full range of suitability.</li>
+<li>Legend Help link: clicking this link will direct back to this article (<a href="https://ieco-lab.github.io/slfrsk/articles/vignette-040-ee-data.html" class="uri">https://ieco-lab.github.io/slfrsk/articles/vignette-040-ee-data.html</a>)</li>
+</ol>
+</div>
+<div id="layers-panel" class="section level2">
+<h2 class="hasAnchor">
+<a href="#layers-panel" class="anchor"></a>Layers Panel</h2>
+<p>The layers panel contains several key measures of SLF invasion potential. Each layer can be turned on or off via the checkbox to the left of its name. Additionally, the opacity of each layer can be changed via the slider bar to the right of its name. Below, we present a detailed account of each layer and its source data, as well as its color scale and geometry.</p>
+<div class="figure">
+<img src="../../../../../../../../My%20Drive/spotted_lanternfly_ieco_projects/code/FINAL_CODE/R%20package/nah_work/slfrsk/vignettes/ee_figures/slfrsk_ee_layers_panel.png" alt=""><p class="caption">Default view of Layers Panel for <code>slfrsk</code> EE App.</p>
+</div>
+<ol style="list-style-type: decimal">
+<li>
+<strong>wine regions</strong>: important viticultural regions aggregated from the Tobacco Tax and Trade Bureau (TTB, <span class="citation">Bureau (<a href="#ref-us_alcohol_and_tobacco_tax_and_trade_bureau_established_2019" role="doc-biblioref">2019</a>)</span>) and <span class="citation">Wikipedia (<a href="#ref-wikipedia_httpsenwikipediaorgwikilist_of_wine-producing_regions_2020" role="doc-biblioref">2020</a>)</span> are depicted by <strong><span style="color:#800080;">purple points</span></strong>
+</li>
+</ol>
+<ol start="2" style="list-style-type: decimal">
+<li>
+<strong>vineyards EU</strong>: areas reported to be cultivated as vineyards in Europe according to <span class="citation">Agency (<a href="#ref-european_environment_agency_corine_2018" role="doc-biblioref">2018</a>)</span> are depicted by <strong><span style="color:#800080;">purple pixels</span></strong>
+</li>
+</ol>
+<ol start="3" style="list-style-type: decimal">
+<li>
+<strong>vineyards US</strong>: areas reported to be cultivated as vineyards in the US according to <span class="citation">USDA National Agricultural Statistics Service (<a href="#ref-usda_national_agricultural_statistics_service_nass_cropscape_2019" role="doc-biblioref">2019</a>)</span> are depicted by <strong><span style="color:#800080;">purple pixels</span></strong>
+</li>
+</ol>
+<ol start="4" style="list-style-type: decimal">
+<li>
+<strong>establishment potential</strong>: the potential for establishment of SLF as determined from the suitability in the ensemble species distribution model (scaled <span class="math inline">\([0,1]\)</span>). This layer is a shaded fill that goes with the Establishment Potential Threshold box discussed in the prior section.</li>
+</ol>
+<p><img src="vignette-040-ee-data_files/figure-html/establishment%20key-1.png" width="480" style="display: block; margin: auto;"></p>
+
+<ol start="5" style="list-style-type: decimal">
+<li>
+<strong>transport potential</strong>: the potential for transport of SLF as determined by the metric tonnage of trade with US states that are considered to have established SLF populations (scaled <span class="math inline">\([0,10]\)</span>). This layer is a border outline for countries and US states.</li>
+</ol>
+<p><img src="vignette-040-ee-data_files/figure-html/transport%20key-1.png" width="480" style="display: block; margin: auto;"></p>
+
+<ol start="6" style="list-style-type: decimal">
+<li>
+<strong>invasion risk</strong>: the risk of shock to the wine market as determined by the relationship between predicted values of average annual grape production based on SLF transport and establishment potential and average annual wine market size (scaled <span class="math inline">\([1,10]\)</span>). This scaling ranges from a completely negative relationship at 1 to a completely positive relationship at 10 (thus explaining the change from the <span class="math inline">\([0,10]\)</span> scale seen for other layers) This layer is a shaded fill for <em>only</em> <code>countries</code> that <strong>do not already have established SLF populations</strong>.</li>
+</ol>
+<p><img src="vignette-040-ee-data_files/figure-html/risk%20key-1.png" width="480" style="display: block; margin: auto;"></p>
+
+</div>
 </div>
 <div id="data-preparation" class="section level1">
 <h1 class="hasAnchor">
@@ -370,6 +449,24 @@
   <span class="fu">geom_polygon</span>(<span class="fu">aes</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">long</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">lat</span>, <span class="kw">group</span> <span class="kw">=</span> <span class="no">group</span>, <span class="kw">fill</span> <span class="kw">=</span> <span class="no">impact_grape</span>)) +
   <span class="fu">coord_quickmap</span>()</pre></body></html></div>
 <p><img src="vignette-040-ee-data_files/figure-html/try%20to%20test%20plot-4.png" width="672"></p>
+</div>
+<div id="references" class="section level1 unnumbered">
+<h1 class="hasAnchor">
+<a href="#references" class="anchor"></a>References</h1>
+<div id="refs" class="references">
+<div id="ref-european_environment_agency_corine_2018">
+<p>Agency, European Environment. 2018. “CORINE Land Cover — Copernicus Land Monitoring Service.” Land Section. <a href="https://land.copernicus.eu/pan-european/corine-land-cover">https://land.copernicus.eu/pan-european/corine-land-cover</a>.</p>
+</div>
+<div id="ref-us_alcohol_and_tobacco_tax_and_trade_bureau_established_2019">
+<p>Bureau, U. S. Alcohol and Tobacco Tax and Trade. 2019. “Established AVAs.” <a href="https://www.ttb.gov/wine/established-avas">https://www.ttb.gov/wine/established-avas</a>.</p>
+</div>
+<div id="ref-usda_national_agricultural_statistics_service_nass_cropscape_2019">
+<p>USDA National Agricultural Statistics Service, NASS. 2019. “CropScape - NASS CDL Program.” <a href="https://nassgeodata.gmu.edu/CropScape/">https://nassgeodata.gmu.edu/CropScape/</a>.</p>
+</div>
+<div id="ref-wikipedia_httpsenwikipediaorgwikilist_of_wine-producing_regions_2020">
+<p>Wikipedia. 2020. “Https://En.wikipedia.org/Wiki/List_of_wine-Producing_regions.” <a href="https://en.wikipedia.org/w/index.php?title=List_of_wine-producing_regions&amp;oldid=941515058">https://en.wikipedia.org/w/index.php?title=List_of_wine-producing_regions&amp;oldid=941515058</a>.</p>
+</div>
+</div>
 </div>
   </div>
 

@@ -124,8 +124,7 @@
 <p>Here we load the required packages to prepare the data.</p>
 <div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">slfrsk</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">tidyverse</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">here</span>)
-<span class="co">#devtools::load_all()</span></pre></body></html></div>
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">here</span>)</pre></body></html></div>
 </div>
 <div id="establishment" class="section level1">
 <h1 class="hasAnchor">
@@ -164,12 +163,12 @@
 <div id="import-trade-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#import-trade-data" class="anchor"></a>Import Trade Data</h2>
-<p>Now that <strong>Establishment</strong> data are nicely organized, we can move on to <strong>Transport</strong>. We estimate <strong>Transport potential</strong> based on the average annual mass of goods traded (in metric tons) with <em>Lycorma</em>-established U.S. states over 2012–2017 (we also track value of traded goods in USD). Our existing data can be partitioned into geopolitical units as above (states and countries), but can further be separated into two categories: 1. states with confirmed <em>Lycorma</em> populations (<code>present</code>) and 2. states that have a high probability of hosting <em>Lycorma</em> populations in the near future based on proximity to <code>present</code> states and records of isolated observations (<code>future</code>).</p>
+<p>Now that <strong>Establishment</strong> data are nicely organized, we can move on to <strong>Transport</strong>. We estimate <strong>Transport potential</strong> based on the average annual mass of goods traded (in metric tons) with <strong>SLF</strong>-established U.S. states over 2012–2017 (we also track value of traded goods in USD). Our existing data can be partitioned into geopolitical units as above (states and countries), but can further be separated into two categories: 1. states with confirmed <strong>SLF</strong> populations (<code>present</code>) and 2. states that have a high probability of hosting <strong>SLF</strong> populations in the near future based on proximity to <code>present</code> states and records of isolated observations (<code>future</code>).</p>
 <p>Although we maintain several possible permutations of data to analyze, we focus on mass of goods traded for <code>future</code> scenarios, as these data are unlikely to be skewed by trade of high value goods that are less likely to lead to transportation of egg masses (e.g., electronics) and provide us with a more careful outlook for risk of slf paninvasion.</p>
 <div id="u-s--states" class="section level3">
 <h3 class="hasAnchor">
 <a href="#u-s--states" class="anchor"></a>U.S. States</h3>
-<p>We first treat the states data by adding two letter codes and <em>Lycorma</em>-establishment status. For <code>present</code>, we treat the following states as having established <em>Lycorma</em>: <strong>DE, MD, NJ, PA, and VA</strong>. For <code>future</code>, we add the following states as having established <em>Lycorma</em>: <strong>NC, NY, OH, and WV</strong>. From here, the data are tidied and gathered before calculating the mean and standard error (SE) of trade with established states for 2012–2017. To do so, we first removed all cases of intrastate trade for established states. Then, we calculated the total trade with established states for each year before obtaining the overall mean and SE.</p>
+<p>We first treat the states data by adding two letter codes and <strong>SLF</strong>-establishment status. For <code>present</code>, we treat the following states as having established <strong>SLF</strong>: <strong>DE, MD, NJ, PA, and VA</strong>. For <code>future</code>, we add the following states as having established <strong>SLF</strong>: <strong>NC, NY, OH, and WV</strong>. From here, the data are tidied and gathered before calculating the mean and standard error (SE) of trade with established states for 2012–2017. To do so, we first removed all cases of intrastate trade for established states. Then, we calculated the total trade with established states for each year before obtaining the overall mean and SE.</p>
 <p>Below, we demonstrate the code for both <code>present</code> and <code>future</code> trade data in value (USD) for U.S. <code>states</code>.</p>
 <div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="co">#load states value</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"states_trade_summary_slf"</span>)
@@ -186,7 +185,7 @@
 <span class="co">#add in the infection status of each state while adding the abbreviations</span>
  <span class="no">states_trade_summary_slf</span> <span class="kw">&lt;-</span>  <span class="fu">left_join</span>(<span class="no">states_trade_summary_slf</span>, <span class="no">stateid</span>, <span class="kw">by</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"destination"</span> <span class="kw">=</span> <span class="st">"geopol_unit"</span>)) <span class="kw">%&gt;%</span>
     <span class="fu">mutate</span>(<span class="kw">status</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span>(<span class="no">ID</span> <span class="kw">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"DE"</span>, <span class="st">"MD"</span>, <span class="st">"NJ"</span>,<span class="st">"PA"</span>, <span class="st">"VA"</span>), <span class="st">"established"</span>, <span class="st">"not established"</span>)) <span class="kw">%&gt;%</span>
-    <span class="fu">select</span>(<span class="no">destination</span>, <span class="no">ID</span>, <span class="no">status</span>, <span class="fu">everything</span>())
+    <span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="no">destination</span>, <span class="no">ID</span>, <span class="no">status</span>, <span class="fu">everything</span>())
 
   <span class="co">#tidying of data</span>
   <span class="no">states_trade_summary_slf</span> <span class="kw">&lt;-</span> <span class="no">states_trade_summary_slf</span> <span class="kw">%&gt;%</span>
@@ -207,7 +206,7 @@
     <span class="co">#split out the info about states and years of trade</span>
     <span class="fu">mutate</span>(<span class="kw">source</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span>(<span class="no">tempcol</span>)[<span class="fl">1</span>], <span class="kw">year</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span>(<span class="no">tempcol</span>)[<span class="fl">2</span>]) <span class="kw">%&gt;%</span>
     <span class="co">#rm the temp col</span>
-    <span class="fu">select</span>(-<span class="no">tempcol</span>) <span class="kw">%&gt;%</span>
+    <span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(-<span class="no">tempcol</span>) <span class="kw">%&gt;%</span>
     <span class="co">#group based now on the destination, year, and infection status</span>
     <span class="co">#filter out the intrastate trade for infected states to avoid extra low averages by creating a hybrid string (DestinationState+abbreviated_infected state)</span>
     <span class="fu">group_by</span>(<span class="no">destination</span>, <span class="no">year</span>, <span class="no">status</span>) <span class="kw">%&gt;%</span>
@@ -241,7 +240,7 @@
     <span class="fu">mutate</span>(<span class="kw">tempcol</span> <span class="kw">=</span> <span class="fu">str_split</span>(<span class="no">infected_state</span>, <span class="st">"_"</span>)) <span class="kw">%&gt;%</span>
     <span class="fu">rowwise</span>() <span class="kw">%&gt;%</span>
     <span class="fu">mutate</span>(<span class="kw">source</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span>(<span class="no">tempcol</span>)[<span class="fl">1</span>], <span class="kw">year</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span>(<span class="no">tempcol</span>)[<span class="fl">2</span>]) <span class="kw">%&gt;%</span>
-    <span class="fu">select</span>(-<span class="no">tempcol</span>) <span class="kw">%&gt;%</span>
+    <span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(-<span class="no">tempcol</span>) <span class="kw">%&gt;%</span>
     <span class="fu">group_by</span>(<span class="no">destination</span>, <span class="no">year</span>, <span class="no">status</span>) <span class="kw">%&gt;%</span>
     <span class="co">#filter out the intrastate trade for infected states to avoid extra low averages</span>
     <span class="fu">mutate</span>(<span class="kw">clear_intra</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="no">destination</span>, <span class="no">source</span>)) <span class="kw">%&gt;%</span>
@@ -261,7 +260,7 @@
   <span class="co">#add in the infection status of each state while adding the abbreviations</span>
    <span class="no">states_trade_mass_summary_slf</span> <span class="kw">&lt;-</span> <span class="fu">left_join</span>(<span class="no">states_trade_mass_summary_slf</span>, <span class="no">stateid</span>, <span class="kw">by</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"destination"</span> <span class="kw">=</span> <span class="st">"geopol_unit"</span>)) <span class="kw">%&gt;%</span>
     <span class="fu">mutate</span>(<span class="kw">status</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span>(<span class="no">ID</span> <span class="kw">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"DE"</span>, <span class="st">"MD"</span>, <span class="st">"NJ"</span>,<span class="st">"PA"</span>, <span class="st">"VA"</span>), <span class="st">"established"</span>, <span class="st">"not established"</span>)) <span class="kw">%&gt;%</span>
-    <span class="fu">select</span>(<span class="no">destination</span>, <span class="no">ID</span>, <span class="no">status</span>, <span class="fu">everything</span>())
+    <span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="no">destination</span>, <span class="no">ID</span>, <span class="no">status</span>, <span class="fu">everything</span>())
 
      <span class="co">#tidying of data and dividing by 1000 to convert from kg to metric tons</span>
   <span class="no">states_trade_mass_summary_slf</span> <span class="kw">&lt;-</span> <span class="no">states_trade_mass_summary_slf</span> <span class="kw">%&gt;%</span>
@@ -277,7 +276,7 @@
     <span class="fu">mutate</span>(<span class="kw">tempcol</span> <span class="kw">=</span> <span class="fu">str_split</span>(<span class="no">infected_state</span>, <span class="st">"_"</span>)) <span class="kw">%&gt;%</span>
     <span class="fu">rowwise</span>() <span class="kw">%&gt;%</span>
     <span class="fu">mutate</span>(<span class="kw">source</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span>(<span class="no">tempcol</span>)[<span class="fl">1</span>], <span class="kw">year</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span>(<span class="no">tempcol</span>)[<span class="fl">2</span>]) <span class="kw">%&gt;%</span>
-    <span class="fu">select</span>(-<span class="no">tempcol</span>) <span class="kw">%&gt;%</span>
+    <span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(-<span class="no">tempcol</span>) <span class="kw">%&gt;%</span>
     <span class="fu">group_by</span>(<span class="no">destination</span>, <span class="no">year</span>, <span class="no">status</span>) <span class="kw">%&gt;%</span>
     <span class="co">#filter out the intrastate trade for infected states to avoid extra low averages</span>
     <span class="fu">mutate</span>(<span class="kw">clear_intra</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="no">destination</span>, <span class="no">source</span>)) <span class="kw">%&gt;%</span>
@@ -309,7 +308,7 @@
     <span class="fu">mutate</span>(<span class="kw">tempcol</span> <span class="kw">=</span> <span class="fu">str_split</span>(<span class="no">infected_state</span>, <span class="st">"_"</span>)) <span class="kw">%&gt;%</span>
     <span class="fu">rowwise</span>() <span class="kw">%&gt;%</span>
     <span class="fu">mutate</span>(<span class="kw">source</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span>(<span class="no">tempcol</span>)[<span class="fl">1</span>], <span class="kw">year</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span>(<span class="no">tempcol</span>)[<span class="fl">2</span>]) <span class="kw">%&gt;%</span>
-    <span class="fu">select</span>(-<span class="no">tempcol</span>) <span class="kw">%&gt;%</span>
+    <span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(-<span class="no">tempcol</span>) <span class="kw">%&gt;%</span>
     <span class="fu">group_by</span>(<span class="no">destination</span>, <span class="no">year</span>, <span class="no">status</span>) <span class="kw">%&gt;%</span>
     <span class="co">#filter out the intrastate trade for infected states to avoid extra low averages</span>
     <span class="fu">mutate</span>(<span class="kw">clear_intra</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="no">destination</span>, <span class="no">source</span>)) <span class="kw">%&gt;%</span>
@@ -420,7 +419,7 @@
     <span class="fu">mutate</span>(<span class="kw">tempcol</span> <span class="kw">=</span> <span class="fu">str_split</span>(<span class="no">infected_state</span>, <span class="st">"_"</span>)) <span class="kw">%&gt;%</span>
     <span class="fu">rowwise</span>() <span class="kw">%&gt;%</span>
     <span class="fu">mutate</span>(<span class="kw">source</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span>(<span class="no">tempcol</span>)[<span class="fl">1</span>], <span class="kw">year</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span>(<span class="no">tempcol</span>)[<span class="fl">2</span>]) <span class="kw">%&gt;%</span>
-    <span class="fu">select</span>(-<span class="no">tempcol</span>) <span class="kw">%&gt;%</span>
+    <span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(-<span class="no">tempcol</span>) <span class="kw">%&gt;%</span>
     <span class="fu">group_by</span>(<span class="no">destination</span>, <span class="no">year</span>) <span class="kw">%&gt;%</span>
     <span class="fu">summarize</span>(<span class="kw">avg_infected_trade</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(<span class="no">trade</span>)) <span class="kw">%&gt;%</span>
     <span class="fu">group_by</span>(<span class="no">destination</span>) <span class="kw">%&gt;%</span>
@@ -442,7 +441,7 @@
     <span class="fu">mutate</span>(<span class="kw">tempcol</span> <span class="kw">=</span> <span class="fu">str_split</span>(<span class="no">infected_state</span>, <span class="st">"_"</span>)) <span class="kw">%&gt;%</span>
     <span class="fu">rowwise</span>() <span class="kw">%&gt;%</span>
     <span class="fu">mutate</span>(<span class="kw">source</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span>(<span class="no">tempcol</span>)[<span class="fl">1</span>], <span class="kw">year</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span>(<span class="no">tempcol</span>)[<span class="fl">2</span>]) <span class="kw">%&gt;%</span>
-    <span class="fu">select</span>(-<span class="no">tempcol</span>) <span class="kw">%&gt;%</span>
+    <span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(-<span class="no">tempcol</span>) <span class="kw">%&gt;%</span>
     <span class="fu">group_by</span>(<span class="no">destination</span>, <span class="no">year</span>) <span class="kw">%&gt;%</span>
     <span class="fu">summarize</span>(<span class="kw">avg_infected_trade</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(<span class="no">trade</span>)) <span class="kw">%&gt;%</span>
     <span class="fu">group_by</span>(<span class="no">destination</span>) <span class="kw">%&gt;%</span>
@@ -470,7 +469,7 @@
     <span class="fu">mutate</span>(<span class="kw">tempcol</span> <span class="kw">=</span> <span class="fu">str_split</span>(<span class="no">infected_state</span>, <span class="st">"_"</span>)) <span class="kw">%&gt;%</span>
     <span class="fu">rowwise</span>() <span class="kw">%&gt;%</span>
     <span class="fu">mutate</span>(<span class="kw">source</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span>(<span class="no">tempcol</span>)[<span class="fl">1</span>], <span class="kw">year</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span>(<span class="no">tempcol</span>)[<span class="fl">2</span>]) <span class="kw">%&gt;%</span>
-    <span class="fu">select</span>(-<span class="no">tempcol</span>) <span class="kw">%&gt;%</span>
+    <span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(-<span class="no">tempcol</span>) <span class="kw">%&gt;%</span>
     <span class="fu">group_by</span>(<span class="no">destination</span>, <span class="no">year</span>) <span class="kw">%&gt;%</span>
     <span class="fu">summarize</span>(<span class="kw">avg_infected_mass</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(<span class="no">mass</span>)) <span class="kw">%&gt;%</span>
     <span class="fu">group_by</span>(<span class="no">destination</span>) <span class="kw">%&gt;%</span>
@@ -493,7 +492,7 @@
     <span class="fu">mutate</span>(<span class="kw">tempcol</span> <span class="kw">=</span> <span class="fu">str_split</span>(<span class="no">infected_state</span>, <span class="st">"_"</span>)) <span class="kw">%&gt;%</span>
     <span class="fu">rowwise</span>() <span class="kw">%&gt;%</span>
     <span class="fu">mutate</span>(<span class="kw">source</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span>(<span class="no">tempcol</span>)[<span class="fl">1</span>], <span class="kw">year</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span>(<span class="no">tempcol</span>)[<span class="fl">2</span>]) <span class="kw">%&gt;%</span>
-    <span class="fu">select</span>(-<span class="no">tempcol</span>) <span class="kw">%&gt;%</span>
+    <span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(-<span class="no">tempcol</span>) <span class="kw">%&gt;%</span>
     <span class="fu">group_by</span>(<span class="no">destination</span>, <span class="no">year</span>) <span class="kw">%&gt;%</span>
     <span class="fu">summarize</span>(<span class="kw">avg_infected_mass</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(<span class="no">mass</span>)) <span class="kw">%&gt;%</span>
     <span class="fu">group_by</span>(<span class="no">destination</span>) <span class="kw">%&gt;%</span>
@@ -565,7 +564,7 @@
 <div id="combined-final-trade-data" class="section level3">
 <h3 class="hasAnchor">
 <a href="#combined-final-trade-data" class="anchor"></a>Combined Final Trade Data</h3>
-<p>Now that we have several permutations of trade with <em>Lycorma</em>-established states data (both <code>present</code> and <code>future</code> scenarios) for both geopolitical units (<code>states</code> and <code>countries</code>) as measured in <strong>value</strong> and <strong>mass</strong> (USD and metric tons, respectively), we can combine some of these data into fewer dataframes to minimize the number of files we are juggling for future analyses. To do this, we merge the <strong>value</strong> and <strong>mass</strong> data for each geopolitical unit dataset.</p>
+<p>Now that we have several permutations of trade with <strong>SLF</strong>-established states data (both <code>present</code> and <code>future</code> scenarios) for both geopolitical units (<code>states</code> and <code>countries</code>) as measured in <strong>value</strong> and <strong>mass</strong> (USD and metric tons, respectively), we can combine some of these data into fewer dataframes to minimize the number of files we are juggling for future analyses. To do this, we merge the <strong>value</strong> and <strong>mass</strong> data for each geopolitical unit dataset.</p>
 <p>As we do so, we take the time to create <span class="math inline">\(\log_{10}\)</span> transformed versions of the trade <strong>value</strong> and <strong>mass</strong> data. To avoid possible errors for this transformation, we add a constant (<span class="math inline">\(value+1\)</span>) to data prior to transformation. This process for transformation is held constant for <strong>Impact potential</strong> data.</p>
 <div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="co">#STATES</span>
 <span class="no">summary_states_trade</span> <span class="kw">&lt;-</span> <span class="fu">left_join</span>(<span class="no">summary_states_trade_value</span>, <span class="no">summary_states_trade_mass</span>, <span class="kw">by</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"destination"</span>, <span class="st">"status"</span>), <span class="kw">suffix</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"_trade"</span>, <span class="st">"_mass"</span>)) <span class="kw">%&gt;%</span>
@@ -832,7 +831,7 @@
 <div id="impact" class="section level1">
 <h1 class="hasAnchor">
 <a href="#impact" class="anchor"></a>Impact</h1>
-<p>Given the close relationship between cultivation of grapes (<code>grapes</code>) and winemaking (<code>wine</code>), we evaluate impact potential of <em>Lycorma</em> based on data from both.</p>
+<p>Given the close relationship between cultivation of grapes (<code>grapes</code>) and winemaking (<code>wine</code>), we evaluate impact potential of <strong>SLF</strong> based on data from both.</p>
 <div id="grapes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#grapes" class="anchor"></a>Grapes</h2>
@@ -925,8 +924,8 @@
 <span class="co">#################################</span>
 <span class="co">#tidy the order of cols</span>
 <span class="no">states_summary_present</span> <span class="kw">&lt;-</span> <span class="no">states_summary_present</span> <span class="kw">%&gt;%</span>
-  <span class="co">#select(ID, geopol_unit, status, grand_mean_max, grand_se_max, wine, grapes, avg_wine:log10_avg_prod, everything())</span>
-  <span class="fu">select</span>(<span class="no">ID</span>, <span class="no">geopol_unit</span>, <span class="no">status</span>, <span class="no">grand_mean_max</span>, <span class="no">wine</span>, <span class="no">grapes</span>, <span class="no">avg_wine</span>:<span class="no">log10_avg_prod</span>, <span class="fu">everything</span>())
+  <span class="co">#dplyr::select(ID, geopol_unit, status, grand_mean_max, grand_se_max, wine, grapes, avg_wine:log10_avg_prod, everything())</span>
+  <span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="no">ID</span>, <span class="no">geopol_unit</span>, <span class="no">status</span>, <span class="no">grand_mean_max</span>, <span class="no">wine</span>, <span class="no">grapes</span>, <span class="no">avg_wine</span>:<span class="no">log10_avg_prod</span>, <span class="fu">everything</span>())
 
 
 <span class="co">##FUTURE</span>
@@ -951,8 +950,8 @@
 
 <span class="co">#tidy the order of cols</span>
 <span class="no">states_summary_future</span> <span class="kw">&lt;-</span> <span class="no">states_summary_future</span> <span class="kw">%&gt;%</span>
-    <span class="co">#select(ID, geopol_unit, status, grand_mean_max, grand_se_max, wine, grapes, avg_wine:log10_avg_prod, everything())</span>
-    <span class="fu">select</span>(<span class="no">ID</span>, <span class="no">geopol_unit</span>, <span class="no">status</span>, <span class="no">grand_mean_max</span>, <span class="no">wine</span>, <span class="no">grapes</span>, <span class="no">avg_wine</span>:<span class="no">log10_avg_prod</span>, <span class="fu">everything</span>())
+    <span class="co">#dplyr::select(ID, geopol_unit, status, grand_mean_max, grand_se_max, wine, grapes, avg_wine:log10_avg_prod, everything())</span>
+    <span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="no">ID</span>, <span class="no">geopol_unit</span>, <span class="no">status</span>, <span class="no">grand_mean_max</span>, <span class="no">wine</span>, <span class="no">grapes</span>, <span class="no">avg_wine</span>:<span class="no">log10_avg_prod</span>, <span class="fu">everything</span>())
 
 
 <span class="co">#################################</span>
@@ -995,8 +994,8 @@
 
 <span class="co">#tidy the order of cols</span>
 <span class="no">countries_summary_present</span> <span class="kw">&lt;-</span> <span class="no">countries_summary_present</span> <span class="kw">%&gt;%</span>
-    <span class="co">#select(ID, geopol_unit, status, grand_mean_max, grand_se_max, wine, grapes, avg_wine:log10_avg_prod, everything())</span>
-    <span class="fu">select</span>(<span class="no">ID</span>, <span class="no">geopol_unit</span>, <span class="no">status</span>, <span class="no">grand_mean_max</span>, <span class="no">wine</span>, <span class="no">grapes</span>, <span class="no">avg_wine</span>:<span class="no">log10_avg_prod</span>, <span class="fu">everything</span>())
+    <span class="co">#dplyr::select(ID, geopol_unit, status, grand_mean_max, grand_se_max, wine, grapes, avg_wine:log10_avg_prod, everything())</span>
+    <span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="no">ID</span>, <span class="no">geopol_unit</span>, <span class="no">status</span>, <span class="no">grand_mean_max</span>, <span class="no">wine</span>, <span class="no">grapes</span>, <span class="no">avg_wine</span>:<span class="no">log10_avg_prod</span>, <span class="fu">everything</span>())
 
 <span class="co">##FUTURE</span>
 
@@ -1033,8 +1032,8 @@
 
 <span class="co">#tidy the order of cols</span>
 <span class="no">countries_summary_future</span> <span class="kw">&lt;-</span> <span class="no">countries_summary_future</span> <span class="kw">%&gt;%</span>
-    <span class="co">#select(ID, geopol_unit, status, grand_mean_max, grand_se_max, wine, grapes, avg_wine:log10_avg_prod, everything())</span>
-    <span class="fu">select</span>(<span class="no">ID</span>, <span class="no">geopol_unit</span>, <span class="no">status</span>, <span class="no">grand_mean_max</span>, <span class="no">wine</span>, <span class="no">grapes</span>, <span class="no">avg_wine</span>:<span class="no">log10_avg_prod</span>, <span class="fu">everything</span>())</pre></body></html></div>
+    <span class="co">#dplyr::select(ID, geopol_unit, status, grand_mean_max, grand_se_max, wine, grapes, avg_wine:log10_avg_prod, everything())</span>
+    <span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="no">ID</span>, <span class="no">geopol_unit</span>, <span class="no">status</span>, <span class="no">grand_mean_max</span>, <span class="no">wine</span>, <span class="no">grapes</span>, <span class="no">avg_wine</span>:<span class="no">log10_avg_prod</span>, <span class="fu">everything</span>())</pre></body></html></div>
 <hr>
 </div>
 <div id="save-data" class="section level1">
