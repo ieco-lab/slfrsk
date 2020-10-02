@@ -40,7 +40,7 @@ library(cleangeo) #clgeo_Clean
 
 The `slrsk` EE App is an interactive map that allows for highly customizable visualization. When loaded, it will display a map of the earth with several different data layers already enabled (see image below for example).
 
-![Landing page and labeled visualization tools for `slfrsk` EE App.](ee_figures/slfrsk_ee_home_label.png)
+![Landing page and labeled visualization tools for `slfrsk` EE App.](../docs/articles/ee_figures/slfrsk_ee_home_label.png)
 
 ## Interactive EE Tools
 
