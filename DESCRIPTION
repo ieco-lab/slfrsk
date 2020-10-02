@@ -2,7 +2,7 @@ Package: slfrsk
 Type: Package
 Title: Research Compendium for Lycorma delicatula paninvasion study
 Version: 0.2.0
-Authors: M.R. Helmus, N.A. Huron, J.E. Behm
+Authors: N.A. Huron, J.E. Behm, M.R. Helmus
 Maintainer: M.R. Helmus <mrhelmus@temple.edu>
 Description: Lycorma delicatula paninvasion severity risk assessment for wine market shock. v_0.1.0 Global US Stepping Stone of spotted lanternfly transport, establishment, and impact on grape yield and wine production.
 License: MIT + file LICENSE

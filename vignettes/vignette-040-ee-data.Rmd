@@ -1,5 +1,5 @@
 ---
-title: "Earth Engine Risk Extraction"
+title: "Earth Engine Risk App"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{vignette-040-ee-data}
