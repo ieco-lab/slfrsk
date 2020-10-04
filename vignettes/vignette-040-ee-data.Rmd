@@ -31,7 +31,7 @@ library(ggplot2)
 
 The `slrsk` EE App is an interactive map that allows for highly customizable visualization. When loaded, it will display a map of the earth with several different data layers already enabled (see image below for example).
 
-![Landing page and labeled visualization tools for `slfrsk` EE App.](../docs/articles/ee_figures/slfrsk_ee_home_label.png)
+![Landing page and labeled visualization tools for `slfrsk` EE App.](../docs/articles/vignette-040-ee-data_files/figure-html/slfrsk_ee_home_label.png)
 
 ## Map Widgets
 
