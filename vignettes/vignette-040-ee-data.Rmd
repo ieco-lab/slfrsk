@@ -22,27 +22,18 @@ Google Earth Engine App Companion
 
 ***
 
-This vignette is a companion to the interactive `slfrsk` interactive `slfrsk` Google Earth Engine (EE) App <https://ieco.users.earthengine.app/view/ieco-slf-riskmap>. It provides a brief description of the various visualizations (including keys and legends) and demonstrates how the data were treated prior to inclusion in the app. Output data from this vignette are saved in the shared GoogleDrive `./slfRiskMapping/data/slfRisk/` directory. 
+# Map Legend
 
-# Setup
-
-Here we load the packages that allow us to visualize EE color palettes and reformat shapefile data and merge with the summarized potentials data visualized in `vignette-021-quadrant-plots`.
-
-```{r setup, results='hide', message=FALSE}
-library(slfrsk)
-library(tidyverse)
-library(rgdal)
-library(rgeos)  #gSimplify
-library(cleangeo) #clgeo_Clean
+```{r load packages for visualization, echo=FALSE, message=FALSE, warning=FALSE}
+library(dplyr)
+library(ggplot2)
 ```
-
-# EE App Companion
 
 The `slrsk` EE App is an interactive map that allows for highly customizable visualization. When loaded, it will display a map of the earth with several different data layers already enabled (see image below for example).
 
 ![Landing page and labeled visualization tools for `slfrsk` EE App.](../docs/articles/ee_figures/slfrsk_ee_home_label.png)
 
-## Interactive EE Tools
+## Map Widgets
 
 The image shows several key tools that allow for interactive visualization. They are as follows:
 
@@ -64,7 +55,7 @@ The image shows several key tools that allow for interactive visualization. They
 
 The layers panel contains several key measures of SLF invasion potential. Each layer can be turned on or off via the checkbox to the left of its name. Additionally, the opacity of each layer can be changed via the slider bar to the right of its name. Below, we present a detailed account of each layer and its source data, as well as its color scale and geometry.
 
-![Default view of Layers Panel for `slfrsk` EE App.](ee_figures/slfrsk_ee_layers_panel.png)
+![Default view of Layers Panel for `slfrsk` EE App.](../docs/articles/ee_figures/slfrsk_ee_layers_panel.png)
 
 1. **wine regions**: important viticultural regions aggregated from the Tobacco Tax and Trade Bureau (TTB, @us_alcohol_and_tobacco_tax_and_trade_bureau_established_2019) and @wikipedia_httpsenwikipediaorgwikilist_of_wine-producing_regions_2020 are depicted by **<span style="color:#800080;">purple points</span>**
 
@@ -171,6 +162,21 @@ scale_fill_manual(
 \newline
 
 # Data preparation
+
+This vignette is a companion to the interactive `slfrsk` interactive `slfrsk` Google Earth Engine (EE) App <https://ieco.users.earthengine.app/view/ieco-slf-riskmap>. It provides a brief description of the various visualizations (including keys and legends) and demonstrates how the data were treated prior to inclusion in the app. Output data from this vignette are saved in the shared GoogleDrive `./slfRiskMapping/data/slfRisk/` directory. 
+
+## Setup
+
+Here we load the packages that allow us to visualize EE color palettes and reformat shapefile data and merge with the summarized potentials data visualized in `vignette-021-quadrant-plots`.
+
+```{r setup, results='hide', message=FALSE}
+library(slfrsk)
+library(tidyverse)
+library(rgdal)
+library(rgeos)  #gSimplify
+library(cleangeo) #clgeo_Clean
+```
+
 
 ## Summary data
 

@@ -114,27 +114,16 @@
     
 <p>Google Earth Engine App Companion</p>
 <hr>
-<p>This vignette is a companion to the interactive <code>slfrsk</code> interactive <code>slfrsk</code> Google Earth Engine (EE) App <a href="https://ieco.users.earthengine.app/view/ieco-slf-riskmap" class="uri">https://ieco.users.earthengine.app/view/ieco-slf-riskmap</a>. It provides a brief description of the various visualizations (including keys and legends) and demonstrates how the data were treated prior to inclusion in the app. Output data from this vignette are saved in the shared GoogleDrive <code>./slfRiskMapping/data/slfRisk/</code> directory.</p>
-<div id="setup" class="section level1">
+<div id="map-legend" class="section level1">
 <h1 class="hasAnchor">
-<a href="#setup" class="anchor"></a>Setup</h1>
-<p>Here we load the packages that allow us to visualize EE color palettes and reformat shapefile data and merge with the summarized potentials data visualized in <code>vignette-021-quadrant-plots</code>.</p>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">slfrsk</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">tidyverse</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">rgdal</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">rgeos</span>)  <span class="co">#gSimplify</span>
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">cleangeo</span>) <span class="co">#clgeo_Clean</span></pre></body></html></div>
-</div>
-<div id="ee-app-companion" class="section level1">
-<h1 class="hasAnchor">
-<a href="#ee-app-companion" class="anchor"></a>EE App Companion</h1>
+<a href="#map-legend" class="anchor"></a>Map Legend</h1>
 <p>The <code>slrsk</code> EE App is an interactive map that allows for highly customizable visualization. When loaded, it will display a map of the earth with several different data layers already enabled (see image below for example).</p>
 <div class="figure">
 <img src="../docs/articles/ee_figures/slfrsk_ee_home_label.png" alt=""><p class="caption">Landing page and labeled visualization tools for <code>slfrsk</code> EE App.</p>
 </div>
-<div id="interactive-ee-tools" class="section level2">
+<div id="map-widgets" class="section level2">
 <h2 class="hasAnchor">
-<a href="#interactive-ee-tools" class="anchor"></a>Interactive EE Tools</h2>
+<a href="#map-widgets" class="anchor"></a>Map Widgets</h2>
 <p>The image shows several key tools that allow for interactive visualization. They are as follows:</p>
 <ol style="list-style-type: decimal">
 <li>Zoom tool: can be used to zoom in (+) and zoom out (-)</li>
@@ -207,6 +196,17 @@
 <div id="data-preparation" class="section level1">
 <h1 class="hasAnchor">
 <a href="#data-preparation" class="anchor"></a>Data preparation</h1>
+<p>This vignette is a companion to the interactive <code>slfrsk</code> interactive <code>slfrsk</code> Google Earth Engine (EE) App <a href="https://ieco.users.earthengine.app/view/ieco-slf-riskmap" class="uri">https://ieco.users.earthengine.app/view/ieco-slf-riskmap</a>. It provides a brief description of the various visualizations (including keys and legends) and demonstrates how the data were treated prior to inclusion in the app. Output data from this vignette are saved in the shared GoogleDrive <code>./slfRiskMapping/data/slfRisk/</code> directory.</p>
+<div id="setup" class="section level2">
+<h2 class="hasAnchor">
+<a href="#setup" class="anchor"></a>Setup</h2>
+<p>Here we load the packages that allow us to visualize EE color palettes and reformat shapefile data and merge with the summarized potentials data visualized in <code>vignette-021-quadrant-plots</code>.</p>
+<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">slfrsk</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">tidyverse</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">rgdal</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">rgeos</span>)  <span class="co">#gSimplify</span>
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">cleangeo</span>) <span class="co">#clgeo_Clean</span></pre></body></html></div>
+</div>
 <div id="summary-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#summary-data" class="anchor"></a>Summary data</h2>
