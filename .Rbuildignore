@@ -6,3 +6,4 @@
 sandbox
 README.html
 ^\.github$
+pkgdown/
