@@ -5,3 +5,5 @@
 [.]ini$
 sandbox
 README.html
+^\.github$
+pkgdown/
