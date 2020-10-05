@@ -36,7 +36,11 @@ library(ggplot2)
 
 The `slrsk` EE App is an interactive map that allows for highly customizable visualization. When loaded, it will display a map of the earth with several different data layers already enabled (see image below for example).
 
+<center>
+
 ![Landing page and labeled visualization tools for `slfrsk` EE App.](slfrsk_ee_home_label.png)
+
+</center>
 
 ## Map Widgets
 
@@ -60,7 +64,11 @@ The image shows several key tools that allow for interactive visualization. They
 
 The layers panel contains several key measures of SLF invasion potential. Each layer can be turned on or off via the checkbox to the left of its name. Additionally, the opacity of each layer can be changed via the slider bar to the right of its name. Below, we present a detailed account of each layer and its source data, as well as its color scale and geometry.
 
+<center>
+
 ![Default view of Layers Panel for `slfrsk` EE App.](slfrsk_ee_layers_panel.png)
+
+</center>
 
 1. **wine regions**: important viticultural regions aggregated from the Tobacco Tax and Trade Bureau (TTB, @us_alcohol_and_tobacco_tax_and_trade_bureau_established_2019) and @wikipedia_httpsenwikipediaorgwikilist_of_wine-producing_regions_2020 are depicted by **<span style="color:#800080;">purple points</span>**
 
