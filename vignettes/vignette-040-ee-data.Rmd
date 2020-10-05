@@ -9,11 +9,6 @@ editor_options:
   chunk_output_type: inline
 bibliography: references.bib
 link-citations: yes
-resource_files:
-  - slfrsk_ee_home_label.png
-  - slfrsk_ee_layers_panel.png
-  - docs/articles/slfrsk_ee_home_label.png
-  - docs/articles/slfrsk_ee_layers_panel.png
 ---
 
 ```{r, include = FALSE}
@@ -23,7 +18,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-Google Earth Engine App Companion
+Google Earth Engine App Companion: <https://ieco.users.earthengine.app/view/ieco-slf-riskmap>
 
 ***
 
