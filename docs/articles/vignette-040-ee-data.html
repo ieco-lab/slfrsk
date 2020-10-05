@@ -437,6 +437,7 @@
 
 <span class="co">#fortifying to make points</span>
 <span class="no">states_gg</span> <span class="kw">&lt;-</span> <span class="fu">fortify</span>(<span class="no">states_lo</span>, <span class="kw">region</span> <span class="kw">=</span> <span class="st">"NAME_1"</span>)
+<span class="co">#&gt; SpP is invalid</span>
 <span class="no">states_gg</span> <span class="kw">&lt;-</span> <span class="fu">left_join</span>(<span class="no">states_gg</span>, <span class="no">states_summary_future_ensemble</span>, <span class="kw">by</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"id"</span> <span class="kw">=</span> <span class="st">"geopol_unit"</span>))
 
 <span class="co">#try with all</span>
@@ -445,16 +446,20 @@
 <p>Try to plot data with <code>ggplot2</code>.</p>
 <div class="sourceCode" id="cb15"><html><body><pre class="r"><span class="fu">ggplot</span>(<span class="no">states_gg</span>[!<span class="no">states_gg</span>$<span class="no">id</span> <span class="kw">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Alaska"</span>, <span class="st">"Hawaii"</span>),]) +
   <span class="fu">geom_polygon</span>(<span class="fu">aes</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">long</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">lat</span>, <span class="kw">group</span> <span class="kw">=</span> <span class="no">group</span>, <span class="kw">fill</span> <span class="kw">=</span> <span class="no">transport</span>)) +
-  <span class="fu">coord_quickmap</span>()
-<span class="fu">ggplot</span>(<span class="no">states_gg</span>[!<span class="no">states_gg</span>$<span class="no">id</span> <span class="kw">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Alaska"</span>, <span class="st">"Hawaii"</span>),]) +
+  <span class="fu">coord_quickmap</span>()</pre></body></html></div>
+<p><img src="vignette-040-ee-data_files/figure-html/try%20to%20test%20plot-1.png" width="672"></p>
+<div class="sourceCode" id="cb16"><html><body><pre class="r"><span class="fu">ggplot</span>(<span class="no">states_gg</span>[!<span class="no">states_gg</span>$<span class="no">id</span> <span class="kw">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Alaska"</span>, <span class="st">"Hawaii"</span>),]) +
   <span class="fu">geom_polygon</span>(<span class="fu">aes</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">long</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">lat</span>, <span class="kw">group</span> <span class="kw">=</span> <span class="no">group</span>, <span class="kw">fill</span> <span class="kw">=</span> <span class="no">establishment</span>)) +
-  <span class="fu">coord_quickmap</span>()
-<span class="fu">ggplot</span>(<span class="no">states_gg</span>[!<span class="no">states_gg</span>$<span class="no">id</span> <span class="kw">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Alaska"</span>, <span class="st">"Hawaii"</span>),]) +
+  <span class="fu">coord_quickmap</span>()</pre></body></html></div>
+<p><img src="vignette-040-ee-data_files/figure-html/try%20to%20test%20plot-2.png" width="672"></p>
+<div class="sourceCode" id="cb17"><html><body><pre class="r"><span class="fu">ggplot</span>(<span class="no">states_gg</span>[!<span class="no">states_gg</span>$<span class="no">id</span> <span class="kw">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Alaska"</span>, <span class="st">"Hawaii"</span>),]) +
   <span class="fu">geom_polygon</span>(<span class="fu">aes</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">long</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">lat</span>, <span class="kw">group</span> <span class="kw">=</span> <span class="no">group</span>, <span class="kw">fill</span> <span class="kw">=</span> <span class="no">impact_wine</span>)) +
-  <span class="fu">coord_quickmap</span>()
-<span class="fu">ggplot</span>(<span class="no">states_gg</span>[!<span class="no">states_gg</span>$<span class="no">id</span> <span class="kw">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Alaska"</span>, <span class="st">"Hawaii"</span>),]) +
+  <span class="fu">coord_quickmap</span>()</pre></body></html></div>
+<p><img src="vignette-040-ee-data_files/figure-html/try%20to%20test%20plot-3.png" width="672"></p>
+<div class="sourceCode" id="cb18"><html><body><pre class="r"><span class="fu">ggplot</span>(<span class="no">states_gg</span>[!<span class="no">states_gg</span>$<span class="no">id</span> <span class="kw">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Alaska"</span>, <span class="st">"Hawaii"</span>),]) +
   <span class="fu">geom_polygon</span>(<span class="fu">aes</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">long</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">lat</span>, <span class="kw">group</span> <span class="kw">=</span> <span class="no">group</span>, <span class="kw">fill</span> <span class="kw">=</span> <span class="no">impact_grape</span>)) +
   <span class="fu">coord_quickmap</span>()</pre></body></html></div>
+<p><img src="vignette-040-ee-data_files/figure-html/try%20to%20test%20plot-4.png" width="672"></p>
 </div>
 <div id="references" class="section level1 unnumbered">
 <h1 class="hasAnchor">

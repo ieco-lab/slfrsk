@@ -31,6 +31,7 @@ library(slfrsk)
 library(tidyverse)
 library(ggrepel)
 library(DHARMa)
+library(plotly)
 ```
 
 # Load and summarize data
@@ -185,6 +186,8 @@ cor.test(countries_risk_market$market_size, countries_risk_market$risk)
 
 With the predicted **risk**, we were able plot the scaled `risk` and `market_size`, resulting in the published risk of **SLF** to shock the global wine market plot.
 
+## Static plot
+
 ```{r make scatter, eval = TRUE, fig.height= 12, fig.width=10, message=FALSE, warning=FALSE}
 
 #countries_risk_market %>%
@@ -278,6 +281,57 @@ market_scatter <- countries_risk_market %>%
       # ) 
 
 market_scatter
+```
+
+## Interactive plot
+
+We also provide an interactive version of the risk plot with `plotly`.
+
+```{r, fig.height= 8, fig.width=8, message=FALSE, warning=FALSE}
+#build ggplot
+p1 <- countries_risk_market %>%
+    ggplot(mapping = aes(x = risk, 
+                       y = market_size, 
+                       size = avg_wine, 
+                       fill = wine,
+                       key = ID)
+         ) + 
+  geom_abline(slope = 1, intercept = 0, lty = 2) +
+  geom_abline(slope = 1, intercept = 5, lty = 2) +
+  geom_abline(slope = 1, intercept = -5, lty = 2) +
+  geom_point(pch = 21) + 
+  scale_fill_manual( 
+         values = c("no" = "#ffffff", "yes" = "#C77CFF"),
+         name = "",
+         labels = c("wine producer", "")
+       ) +
+  theme(
+        panel.grid.major = element_line(colour = "#f0f0f0"),
+        panel.grid.minor = element_blank(),
+        axis.line = element_line(colour = "black"),
+        panel.background = element_blank(),
+        plot.background = element_blank(),
+        axis.text = element_text(size = rel(1)),
+        axis.title.x = element_text(hjust = .4),
+        axis.title.y = element_text(hjust = .35),
+        legend.title = element_text(face = "plain"),
+        legend.key.size = unit(0.2, "cm"),
+        legend.key = element_blank(),
+      )
+
+#execute plotly
+ggplotly(p = p1) %>%
+  layout(xaxis = 
+           list(title = list(text = paste('Spotted Lanternfly',sprintf("(<i>Lycorma delicatula</i>)"),'Invasion Risk'), font = list(size = 11)), showspikes = T),
+         yaxis = 
+           list(title = list(text = "Wine Export Market Size, log10 USD", font = list(size = 11)), showspikes = T),
+         title = 
+           list(text = paste('Spotted Lanternfly Paninvasion Risk Severity =', shock_cor,'of 10 (P<0.005)'),
+                font = list(size = 12),
+                x = 0.1,
+                y = 0.99),
+         showlegend = F
+         )
 ```
 
 # Save plot output

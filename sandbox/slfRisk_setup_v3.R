@@ -38,6 +38,7 @@ use_package("grid", type = "Imports") #added by NAH
 use_package("gridExtra", type = "Imports") #added by NAH
 use_package("DHARMa", type = "Imports") #added by NAH
 use_package("cleangeo", type = "Imports") #added by NAH
+use_package("plotly", type = "Imports") #added by NAH
 
 #----
 # Data

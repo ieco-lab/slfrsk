@@ -34,7 +34,8 @@ Imports:
     grid,
     gridExtra,
     DHARMa,
-    cleangeo
+    cleangeo,
+    plotly
 RoxygenNote: 7.1.1
 Depends: 
     R (>= 3.50)
