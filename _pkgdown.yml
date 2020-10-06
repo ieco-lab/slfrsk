@@ -1,7 +1,7 @@
 ### * home
 
 home:
-  strip_header: true
+  strip_header: FALSE
   links:
     - text: iEco Lab
       href: https://www.iecolab.org

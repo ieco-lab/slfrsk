@@ -49,8 +49,8 @@ rem_usa <- TRUE
 # NONFUNCTIONAL---Replace this with max mean quantile_0.50 quantile_0.75 quantile_0.90 to edit which metric to plot for establishment
 #to run this, one needs to use different extract data sources further back in the cleaning process (vig01) by selecting a different variable
 #estab_to_plot <- "obs_max" # max was used for the quadrant figures
-#estab_to_plot <- "obs_mean"
-estab_to_plot <- "quantile_0.50" #median
+estab_to_plot <- "obs_mean"
+#estab_to_plot <- "quantile_0.50" #median
 ```
 
 # 2. Load the full `suitability extract ensemble` data and the `summary_future` data (`states` and `countries`). 
