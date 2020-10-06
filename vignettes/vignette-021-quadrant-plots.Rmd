@@ -291,7 +291,7 @@ The following plotting parameters are set to produce the published figures but c
 # label both of the countries (or states) with established SLF?
 label.countries.est <- TRUE
 label.states.est <- TRUE   #PRESENT: adding DE, MD, NJ  FUTURE: adding DE, MD, NJ, OH, WV
-# labeling aestehtics for label.countries.est and label.states.est
+# labeling aesthetics for label.countries.est and label.states.est
 nudge_countries.est.x <- c(-.05,0) 
 nudge_countries.est.y <- c(.07,.1)
 nudge_countries.est_future.x <- c(.05,-0.03)  #jpn and kor
