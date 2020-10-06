@@ -1,10 +1,14 @@
 ---
-title: "Earth Engine Risk Extraction"
+title: "Earth Engine Risk App"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{vignette-040-ee-data}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+editor_options: 
+  chunk_output_type: inline
+bibliography: references.bib
+link-citations: yes
 ---
 
 ```{r, include = FALSE}
@@ -14,15 +18,164 @@ knitr::opts_chunk$set(
 )
 ```
 
-Convert Data for Google Earth Engine App
+Google Earth Engine App Companion: <https://ieco.users.earthengine.app/view/ieco-slf-riskmap>
 
 ***
 
-This vignette takes the data produced so far in the `slfrsk` package and prepares it to be implemented in the interactive `slfrsk` Google Earth Engine (EE) App <https://ieco.users.earthengine.app/view/ieco-slf-riskmap>. These data are saved in the shared GoogleDrive `./slfRiskMapping/data/slfRisk/` directory. 
+# Map Legend
 
-# Setup
+```{r load packages for visualization, echo=FALSE, message=FALSE, warning=FALSE}
+library(dplyr)
+library(ggplot2)
+```
 
-Here we load the packages that allow us to reformat shapefile data and merge with the summarized potentials data visualized in `vignette-021-quadrant-plots`.
+The `slrsk` EE App is an interactive map that allows for highly customizable visualization. When loaded, it will display a map of the earth with several different data layers already enabled (see image below for example).
+
+<center>
+
+![Landing page and labeled visualization tools for `slfrsk` EE App.](/Volumes/GoogleDrive/My Drive/spotted_lanternfly_ieco_projects/code/FINAL_CODE/R package/nah_work/slfrsk/docs/articles/slfrsk_ee_home_label.png)
+
+</center>
+
+## Map Widgets
+
+The image shows several key tools that allow for interactive visualization. They are as follows:
+
+1. Zoom tool: can be used to zoom in (+) and zoom out (-)
+2. Annotation tools: allows for geographic annotation of points, lines, and polygons by the user. The hand icon returns to normal navigation.
+3. Location search bar: allows for navigating to a particular geographic region and functions similarly to searching on any GPS/navigation system.
+4. Layers panel: allows for toggling visibility on/off via check boxes or changing opacity (alpha) of `slfrsk` layers. See layers legend section below for further details on individual layers.
+5. Explore Geographic Focus: dropdown menu that allows for exploring key geographic regions
+  - **WRD**: whole world view
+  - **PHL**: Philadelphia metro regional view
+  - **ITA**: northern Italy grape-growing view
+  - **FRA**: southern France grape-growing view
+  - **ESP**: northern Spain grape-growing view
+  - **CAL**: norhtern California grape-growing view
+6. Establishment Potential Threshold: manually change the threshold of SLF establishment suitability (scaled [0,1]) such that values closer to 1 plot only the most suitable areas and values close to 0 plot closer to the full range of suitability.
+7. Legend Help link: clicking this link will direct back to this article (<https://ieco-lab.github.io/slfrsk/articles/vignette-040-ee-data.html>)
+
+## Layers Panel
+
+The layers panel contains several key measures of SLF invasion potential. Each layer can be turned on or off via the checkbox to the left of its name. Additionally, the opacity of each layer can be changed via the slider bar to the right of its name. Below, we present a detailed account of each layer and its source data, as well as its color scale and geometry.
+
+<center>
+
+![Default view of Layers Panel for `slfrsk` EE App.](/Volumes/GoogleDrive/My Drive/spotted_lanternfly_ieco_projects/code/FINAL_CODE/R package/nah_work/slfrsk/docs/articles/slfrsk_ee_layers_panel.png)
+
+</center>
+
+1. **wine regions**: important viticultural regions aggregated from the Tobacco Tax and Trade Bureau (TTB, @us_alcohol_and_tobacco_tax_and_trade_bureau_established_2019) and @wikipedia_httpsenwikipediaorgwikilist_of_wine-producing_regions_2020 are depicted by **<span style="color:#800080;">purple points</span>**
+
+\newline
+
+2. **vineyards EU**: areas reported to be cultivated as vineyards in Europe according to @european_environment_agency_corine_2018 are  depicted by **<span style="color:#800080;">purple pixels</span>**
+
+\newline
+
+3. **vineyards US**: areas reported to be cultivated as vineyards in the US according to @usda_national_agricultural_statistics_service_nass_cropscape_2019 are  depicted by **<span style="color:#800080;">purple pixels</span>**
+
+\newline
+
+4. **establishment potential**: the potential for establishment of SLF as determined from the suitability in the ensemble species distribution model (scaled $[0,1]$). This layer is a shaded fill that goes with the Establishment Potential Threshold box discussed in the prior section.
+
+```{r establishment key, echo=FALSE, fig.width=5, fig.height=1, fig.align='center'}
+tibble(x= seq(from = 0, to = 0.999, by = 0.111), colors = c('#FFFFFF', '#fff7ec','#fee8c8','#fdd49e','#fdbb84','#fc8d59','#ef6548','#d7301f','#b30000','#7f0000')) %>%
+ggplot(data = .) +
+  geom_tile(aes(x = x, y = 1, fill = colors), show.legend = F) +
+scale_fill_manual(
+                  values = c("#FFFFFF" = "#FFFFFF",
+                             "#fff7ec" = "#fff7ec", 
+                             "#fee8c8" = "#fee8c8",
+                             "#fdd49e" = "#fdd49e",
+                             "#fdbb84" = "#fdbb84",
+                             "#fc8d59" = "#fc8d59",
+                             "#ef6548" = "#ef6548",
+                             "#d7301f" = "#d7301f",
+                             "#b30000" = "#b30000",
+                             "#7f0000" = "#7f0000")
+      ) +
+    theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks.y = element_blank()) +
+        labs(x = "", y = "") +
+    ggtitle("Establishment Potential") +
+    scale_x_continuous(name = "", breaks = c(0.001,0.999), labels = c("0", "1"), limits = c(-0.1,1.1))
+```
+
+\newline
+
+5. **transport potential**: the potential for transport of SLF as determined by the metric tonnage of trade with US states that are considered to have established SLF populations (scaled $[0,10]$). This layer is a border outline for countries and US states.
+
+```{r transport key, echo=FALSE, fig.width=5, fig.height=1, fig.align='center'}
+tibble(x= seq(from = 0, to = 10, by = 1), colors = rev(c('#a50026','#d73027','#f46d43','#fdae61','#fee090','#ffffbf','#e0f3f8','#abd9e9','#74add1','#4575b4','#313695'))) %>%
+ggplot(data = .) +
+  geom_tile(aes(x = x, y = 1, fill = colors), show.legend = F) +
+scale_fill_manual(
+                  values = c('#a50026' = '#a50026',
+                             '#d73027' = '#d73027',
+                             '#f46d43' = '#f46d43',
+                             '#fdae61' = '#fdae61',
+                             '#fee090' = '#fee090',
+                             '#ffffbf' = '#ffffbf',
+                             '#e0f3f8' = '#e0f3f8',
+                             '#abd9e9' = '#abd9e9',
+                             '#74add1' = '#74add1',
+                             '#4575b4' = '#4575b4',
+                             '#313695' = '#313695')
+      ) +
+    theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks.y = element_blank()) +
+        labs(x = "", y = "") +
+    ggtitle("Transport Potential") +
+    scale_x_continuous(name = "", breaks = c(0.001,9.999), labels = c("0", "10"), limits = c(-0.5,10.5))
+```
+
+\newline
+
+6. **invasion risk**: the risk of shock to the wine market as determined by the relationship between predicted values of average annual grape production based on SLF transport and establishment potential and average annual wine market size (scaled $[1,10]$). This scaling ranges from a completely negative relationship at 1 to a completely positive relationship at 10 (thus explaining the change from the $[0,10]$ scale seen for other layers) This layer is a shaded fill for *only* `countries` that **do not already have established SLF populations**.
+
+```{r risk key, echo=FALSE, fig.width=5, fig.height=1, fig.align='center'}
+tibble(x= seq(from = 0, to = 10, by = 1), colors = rev(c('#a50026','#d73027','#f46d43','#fdae61','#fee090','#ffffbf','#e0f3f8','#abd9e9','#74add1','#4575b4','#313695'))) %>%
+ggplot(data = .) +
+  geom_tile(aes(x = x, y = 1, fill = colors), show.legend = F) +
+scale_fill_manual(
+                  values = c('#a50026' = '#a50026',
+                             '#d73027' = '#d73027',
+                             '#f46d43' = '#f46d43',
+                             '#fdae61' = '#fdae61',
+                             '#fee090' = '#fee090',
+                             '#ffffbf' = '#ffffbf',
+                             '#e0f3f8' = '#e0f3f8',
+                             '#abd9e9' = '#abd9e9',
+                             '#74add1' = '#74add1',
+                             '#4575b4' = '#4575b4',
+                             '#313695' = '#313695')
+      ) +
+    theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks.y = element_blank()) +
+        labs(x = "", y = "") +
+    ggtitle("Invasion Risk") +
+    scale_x_continuous(name = "", breaks = c(0.001,9.999), labels = c("1", "10"), limits = c(-0.5,10.5))
+```
+
+\newline
+
+# Data preparation
+
+This vignette is a companion to the interactive `slfrsk` interactive `slfrsk` Google Earth Engine (EE) App <https://ieco.users.earthengine.app/view/ieco-slf-riskmap>. It provides a brief description of the various visualizations (including keys and legends) and demonstrates how the data were treated prior to inclusion in the app. Output data from this vignette are saved in the shared GoogleDrive `./slfRiskMapping/data/slfRisk/` directory. 
+
+## Setup
+
+Here we load the packages that allow us to visualize EE color palettes and reformat shapefile data and merge with the summarized potentials data visualized in `vignette-021-quadrant-plots`.
 
 ```{r setup, results='hide', message=FALSE}
 library(slfrsk)
@@ -32,19 +185,22 @@ library(rgeos)  #gSimplify
 library(cleangeo) #clgeo_Clean
 ```
 
-# Data preparation
 
 ## Summary data
 
-We then read in the summary data for both `states` and `countries` from `vignette-010-tidy-data` to eventually merge with shapfiles. 
+We then read in the summary data for both `states` and `countries` from `vignette-010-tidy-data` to eventually merge with shapfiles. We also remove any `countries` with `establishment` potential that are `-Inf` values.
 
-```{r read data}
-data("states_summary_future")
-data("countries_summary_future")
+```{r read data, eval=TRUE}
+data("states_summary_future_ensemble")
+data("countries_summary_future_ensemble")
+
+#rm the -Inf countries
+countries_summary_future_ensemble <- countries_summary_future_ensemble %>%
+      filter(!ID %in% c("Antarctica", "Monaco", "Norfolk Island", "Spratly Islands"))
 ```
 
 
-We now transform the `summary` data to represent scaled versions of the three potentials (**transport**, **establishment**, and **impact**). Each of these potentials are saved in new columns: `transport`, `establishment`, and two for **impact** (`impact_wine` and `impact_grape`), which include values for the corresponding potential that are $\log_{10}(+1)$ transformed and then bounded $[0,10]$. 
+We now transform the `summary` data to represent scaled versions of the three potentials (**transport**, **establishment**, and **impact**). Each of these potentials are saved in new columns: `transport`, `establishment`, and two for **impact** (`impact_wine` and `impact_grape`), which include values for the corresponding potential that are $\log_{10}(value+1)$  transformed and then bounded $[0,10]$. 
 
 To bound these values, each $\log$-transformed value undergoes the following, based on the existing input data and round to a single digit for visualization:
 
@@ -52,12 +208,11 @@ To bound these values, each $\log$-transformed value undergoes the following, ba
   - $establishment_{[0,10]} = establishment*10$
   - $impact_{[0,10]} = \frac{impact}{\max(impact)}*10$
 
-After these transformations, we go ahead and round the raw data for reducing file size to *5 significant digits*.
+After these transformations, we go ahead and round the raw data for reducing file size to *5 significant digits*. 
 
-```{r add the corr plot data}
-
+```{r add the corr plot data, eval=TRUE}
 #states
-states_summary_future <- states_summary_future %>%
+states_summary_future_ensemble <- states_summary_future_ensemble %>%
   #transport in 2 mutate steps
   mutate(transport = log10_avg_infected_mass - min(log10_avg_infected_mass)) %>%
   mutate(transport = round(x = transport / max(transport), digits = 1)*10) %>%
@@ -69,9 +224,9 @@ states_summary_future <- states_summary_future %>%
   mutate(impact_grape = round(x = log10_avg_prod / max(log10_avg_prod), digits = 1)*10)
 
 #rounding
-states_summary_future <- states_summary_future %>%
+states_summary_future_ensemble <- states_summary_future_ensemble %>%
   mutate(grand_mean_max = signif(grand_mean_max, digits = 5),
-         grand_se_max = signif(grand_se_max, digits = 5),
+         #grand_se_max = signif(grand_se_max, digits = 5),
          avg_wine = signif(avg_wine, digits = 5),
          se_wine = signif(se_wine, digits = 5),
          log10_avg_wine = signif(log10_avg_wine, digits = 5),
@@ -90,7 +245,7 @@ states_summary_future <- states_summary_future %>%
          )
 
 #countries
-countries_summary_future <- countries_summary_future %>%
+countries_summary_future_ensemble <- countries_summary_future_ensemble %>%
   #transport in 2 mutate steps
   mutate(transport = log10_avg_infected_mass - min(log10_avg_infected_mass)) %>%
   mutate(transport = round(x = transport / max(transport), digits = 1)*10) %>%
@@ -102,9 +257,9 @@ countries_summary_future <- countries_summary_future %>%
   mutate(impact_grape = round(x = log10_avg_prod / max(log10_avg_prod), digits = 1)*10)
 
 #rounding
-countries_summary_future <- countries_summary_future %>%
+countries_summary_future_ensemble <- countries_summary_future_ensemble %>%
   mutate(grand_mean_max = signif(grand_mean_max, digits = 5),
-         grand_se_max = signif(grand_se_max, digits = 5),
+         #grand_se_max = signif(grand_se_max, digits = 5),
          avg_wine = signif(avg_wine, digits = 5),
          se_wine = signif(se_wine, digits = 5),
          log10_avg_wine = signif(log10_avg_wine, digits = 5),
@@ -121,7 +276,6 @@ countries_summary_future <- countries_summary_future %>%
          log10_avg_infected_trade = signif(log10_avg_infected_trade, digits = 5),
          log10_avg_infected_mass = signif(log10_avg_infected_mass, digits = 5)
          )
-
 ```
 
 We also need to obtain the predicted invasion risk from `vignette-041-market-plot`. We have conveniently saved those data as `data/countries_risk_market.rda`, which actually is a modified version of `countries_summary_future`. We will load these data, round the new columns, and `join` by `ID` (note that`states` do not have values for these fields, as they were not evaluated this way).
@@ -130,7 +284,7 @@ For reference, please see `vignette-041-market-plot` for methods to produce `mar
 
 We also rename `market_size` to `mkt_size` to meet the ESRI shapefile column name requirements.
 
-```{r load and merge market_risk data}
+```{r load and merge market_risk data, eval=TRUE}
 #read in market risk data
 data("countries_risk")
 
@@ -142,27 +296,25 @@ countries_risk <- countries_risk %>%
   dplyr::select(-market_size)
 
 #merge the two datasets
-countries_summary_future <- countries_summary_future %>%
+countries_summary_future_ensemble <- countries_summary_future_ensemble %>%
   left_join(., countries_risk, by = "ID")
-
 ```
 
 ## Shapefiles
 
 We use the shared GoogleDrive file that contains downloaded GADM shapefiles (<https://gadm.org/download_world.html>) for both `countries` and `states` geopolitical borders.
 
-```{r read in the country and state shapefiles, message=FALSE, warning=FALSE}
+```{r read in the country and state shapefiles, message=FALSE, warning=FALSE, eval=TRUE}
   #shapefile of USA: data obtained from GADM: https://gadm.org/download_world.html
 states <- readOGR(dsn = "/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk/geo_shapefiles/gadm36_USA_shp/gadm36_USA_1.shp", verbose = F, p4s = '+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0')
 
   #shapefile of world by countries
 countries <- readOGR("/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk/geo_shapefiles/gadm36_levels_shp/gadm36_0.shp", verbose = F, p4s = '+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0')
-
 ```
 
 There are a few shapefile data entries that need to be cleaned, so we alter the names. We also removed the US from `countries`, as in other analyses.
 
-```{r clean the shape data}
+```{r clean the shape data, eval=TRUE}
 #STATES
 #change DC name
 #states@data$NAME_1 <- gsub(pattern = "Washington DC", replacement = "District of Columbia", x = states@data$NAME_1)
@@ -175,34 +327,31 @@ countries@data$NAME_0[grep(pattern = "Saint Bart", x = countries@data$NAME_0, va
 
 #rm USA
 countries <- countries[countries$NAME_0 != "United States",]
-
 ```
 
 These shapefiles are rather large and unwieldly. To make the more manageable, we use `regeos::gSimplify()` to make them smaller by modifying the `tol` parameter, which is the value used in the Douglas-Peuker algorithm. For `countries`, we downsized the used file in addition to the `_lo` versions used for both `countries` and `states`.
 
-```{r make shapefiles smaller}
+```{r make shapefiles smaller, eval=TRUE}
 #note that tol= can be modified to make the polygons simpler, larger values make the shapefile coarser
 states_lo <- SpatialPolygonsDataFrame(Sr = rgeos::gSimplify(spgeom = states, topologyPreserve = TRUE, tol = 0.01), data = states@data)
 countries <- SpatialPolygonsDataFrame(Sr = rgeos::gSimplify(spgeom = countries, topologyPreserve = TRUE, tol = 0.01), data = countries@data)
 countries_lo <- SpatialPolygonsDataFrame(Sr = rgeos::gSimplify(spgeom = countries, topologyPreserve = TRUE, tol = 0.01), data = countries@data)
-
 ```
 
 Following this, the shapefiles were filtered to only geopolitical entities that are in the corresponding `countries` and `states` data.
 
-```{r filter the states to just those in the trade data}
+```{r filter the states to just those in the trade data, eval=TRUE}
 #states
-states <- states[states@data$NAME_1 %in% unique(states_summary_future$geopol_unit),]
-states_lo <- states_lo[states_lo@data$NAME_1 %in% unique(states_summary_future$geopol_unit),]
+states <- states[states@data$NAME_1 %in% unique(states_summary_future_ensemble$geopol_unit),]
+states_lo <- states_lo[states_lo@data$NAME_1 %in% unique(states_summary_future_ensemble$geopol_unit),]
 #countries
-countries <- countries[countries@data$NAME_0 %in% unique(countries_summary_future$geopol_unit),]
-countries_lo <- countries_lo[countries_lo@data$NAME_0 %in% unique(countries_summary_future$geopol_unit),]
-
+countries <- countries[countries@data$NAME_0 %in% unique(countries_summary_future_ensemble$geopol_unit),]
+countries_lo <- countries_lo[countries_lo@data$NAME_0 %in% unique(countries_summary_future_ensemble$geopol_unit),]
 ```
 
 In the downscaling and filtering process, we needed to make sure that the geometries are intact and cleaned, and so we used the `clgeo_Clean()` function to ensure that the shapefiles work appropriately.
 
-```{r make sure geometries are  clean, warning=FALSE, message=FALSE}
+```{r make sure geometries are  clean, warning=FALSE, message=FALSE, eval=TRUE}
 #check for cleaning needed?
 #clgeo_SummaryReport(clgeo_CollectionReport(states))
 #clgeo_SummaryReport(clgeo_CollectionReport(states_lo))
@@ -221,31 +370,37 @@ countries_lo <- clgeo_Clean(countries_lo)
 
 Now, we use `left_join()` to join the `shapefile@data` table to the corresponding `summary` data.
 
-```{r add in the trade data}
+```{r add in the trade data, eval=TRUE}
 #states
-states@data <- left_join(states@data, states_summary_future, by = c("NAME_1" = "geopol_unit"))
-states_lo@data <- left_join(states_lo@data, states_summary_future, by = c("NAME_1" = "geopol_unit"))
+states@data <- left_join(states@data, states_summary_future_ensemble, by = c("NAME_1" = "geopol_unit"))
+states_lo@data <- left_join(states_lo@data, states_summary_future_ensemble, by = c("NAME_1" = "geopol_unit"))
 #countries
-countries@data <- left_join(countries@data, countries_summary_future, by = c("NAME_0" = "geopol_unit"))
-countries_lo@data <- left_join(countries_lo@data, countries_summary_future, by = c("NAME_0" = "geopol_unit"))
+countries@data <- left_join(countries@data, countries_summary_future_ensemble, by = c("NAME_0" = "geopol_unit"))
+countries_lo@data <- left_join(countries_lo@data, countries_summary_future_ensemble, by = c("NAME_0" = "geopol_unit"))
 
 ```
 
 We also rename the column fields to accommodate for ESRI shapefile column name character limits. A README file exists in the GoogleDrive `./slfRiskMapping/data/slfRisk/` that outlines the keys for the old names and the shorter names used here.
 
-```{r rename fields}
+```{r rename fields, eval=TRUE}
 #states
-colnames(states@data)[13:35] <- c("gmean_max","gse_max","wine","grapes","avg_wine","se_wine","lavg_wine","avg_yield","se_yield","avg_prod","se_prod","lavg_yield","lavg_prod","avg_itrad","se_trad","avg_imass","se_mass","lavg_itrad","lavg_imass", "transport", "establish", "imp_wine", "imp_grape")
-colnames(states_lo@data)[13:35] <- c("gmean_max","gse_max","wine","grapes","avg_wine","se_wine","lavg_wine","avg_yield","se_yield","avg_prod","se_prod","lavg_yield","lavg_prod","avg_itrad","se_trad","avg_imass","se_mass","lavg_itrad","lavg_imass", "transport", "establish", "imp_wine", "imp_grape") 
-#countries
-colnames(countries@data)[5:27] <- c("gmean_max","gse_max","wine","grapes","avg_wine","se_wine","lavg_wine","avg_yield","se_yield","avg_prod","se_prod","lavg_yield","lavg_prod","avg_itrad","se_trad","avg_imass","se_mass","lavg_itrad","lavg_imass", "transport", "establish", "imp_wine", "imp_grape") 
-colnames(countries_lo@data)[5:27] <- c("gmean_max","gse_max","wine","grapes","avg_wine","se_wine","lavg_wine","avg_yield","se_yield","avg_prod","se_prod","lavg_yield","lavg_prod","avg_itrad","se_trad","avg_imass","se_mass","lavg_itrad","lavg_imass", "transport", "establish", "imp_wine", "imp_grape") 
+#colnames(states@data)[13:35] <- c("gmean_max","gse_max","wine","grapes","avg_wine","se_wine","lavg_wine","avg_yield","se_yield","avg_prod","se_prod","lavg_yield","lavg_prod","avg_itrad","se_trad","avg_imass","se_mass","lavg_itrad","lavg_imass", "transport", "establish", "imp_wine", "imp_grape")
+colnames(states@data)[13:34] <- c("gmean_max","wine","grapes","avg_wine","se_wine","lavg_wine","avg_yield","se_yield","avg_prod","se_prod","lavg_yield","lavg_prod","avg_itrad","se_trad","avg_imass","se_mass","lavg_itrad","lavg_imass", "transport", "establish", "imp_wine", "imp_grape")
 
+#colnames(states_lo@data)[13:35] <- c("gmean_max","gse_max","wine","grapes","avg_wine","se_wine","lavg_wine","avg_yield","se_yield","avg_prod","se_prod","lavg_yield","lavg_prod","avg_itrad","se_trad","avg_imass","se_mass","lavg_itrad","lavg_imass", "transport", "establish", "imp_wine", "imp_grape")
+colnames(states_lo@data)[13:34] <- c("gmean_max","wine","grapes","avg_wine","se_wine","lavg_wine","avg_yield","se_yield","avg_prod","se_prod","lavg_yield","lavg_prod","avg_itrad","se_trad","avg_imass","se_mass","lavg_itrad","lavg_imass", "transport", "establish", "imp_wine", "imp_grape") 
+
+#countries
+#colnames(countries@data)[5:27] <- c("gmean_max","gse_max","wine","grapes","avg_wine","se_wine","lavg_wine","avg_yield","se_yield","avg_prod","se_prod","lavg_yield","lavg_prod","avg_itrad","se_trad","avg_imass","se_mass","lavg_itrad","lavg_imass", "transport", "establish", "imp_wine", "imp_grape")
+colnames(countries@data)[5:26] <- c("gmean_max","wine","grapes","avg_wine","se_wine","lavg_wine","avg_yield","se_yield","avg_prod","se_prod","lavg_yield","lavg_prod","avg_itrad","se_trad","avg_imass","se_mass","lavg_itrad","lavg_imass", "transport", "establish", "imp_wine", "imp_grape")
+
+#colnames(countries_lo@data)[5:27] <- c("gmean_max","gse_max","wine","grapes","avg_wine","se_wine","lavg_wine","avg_yield","se_yield","avg_prod","se_prod","lavg_yield","lavg_prod","avg_itrad","se_trad","avg_imass","se_mass","lavg_itrad","lavg_imass", "transport", "establish", "imp_wine", "imp_grape")
+colnames(countries_lo@data)[5:26] <- c("gmean_max","wine","grapes","avg_wine","se_wine","lavg_wine","avg_yield","se_yield","avg_prod","se_prod","lavg_yield","lavg_prod","avg_itrad","se_trad","avg_imass","se_mass","lavg_itrad","lavg_imass", "transport", "establish", "imp_wine", "imp_grape") 
 ```
 
 To create a streamlined dataset, we make a version that includes both `countries` and `states` together, called `combined` (for combined data).
 
-```{r merge to a single shapefile, message=FALSE}
+```{r merge to a single shapefile, message=FALSE, eval=TRUE}
 #create the combined data tables
 comb <- countries@data %>%
   mutate(NAME_1 = NAME_0) %>%
@@ -267,14 +422,13 @@ countries_lo@data <- comb %>% filter(NAME_0 != "United States")
 #final merge step
 combined <- rbind(states, countries, makeUniqueIDs = TRUE)
 combined_lo <- rbind(states_lo, countries_lo, makeUniqueIDs = TRUE)
-
 ```
 
 # Save shapefiles for EE
 
 The newly merged shapefiles (`countries`, `states`, and `combined` for regular and `_lo` versions) are written to the shared GoogleDrive directory `./slfRiskMapping/data/slfRisk/geo_shapefiles/gadm36_USA_with_data/` for visualization with EE.
 
-```{r write out the shapefiles, warning=FALSE, message=FALSE}
+```{r write out the shapefiles, warning=FALSE, message=FALSE, eval=FALSE}
 #states
 writeOGR(obj = states, dsn = "/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk/geo_shapefiles/gadm36_USA_with_data/",  driver="ESRI Shapefile", layer = "states", verbose = FALSE, overwrite_layer = TRUE)
 writeOGR(obj = states_lo, dsn = "/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk/geo_shapefiles/gadm36_USA_with_data/",  driver="ESRI Shapefile", layer = "states_lores", verbose = FALSE, overwrite_layer = TRUE)
@@ -292,7 +446,7 @@ writeOGR(obj = combined_lo, dsn = "/Volumes/GoogleDrive/Shared drives/slfRiskMap
 
 Fortify data to test for plotting with `ggplot2`.
 
-```{r maybe test try plotting trade data, warning=FALSE}
+```{r maybe test try plotting trade data, warning=FALSE, eval=TRUE}
 #states_summary_present[match(x = states@data$NAME_1, table = states_summary_present$geopol_unit),]
 #states@data
 
@@ -300,7 +454,7 @@ Fortify data to test for plotting with `ggplot2`.
 
 #fortifying to make points
 states_gg <- fortify(states_lo, region = "NAME_1")
-states_gg <- left_join(states_gg, states_summary_future, by = c("id" = "geopol_unit"))
+states_gg <- left_join(states_gg, states_summary_future_ensemble, by = c("id" = "geopol_unit"))
 
 #try with all
 #combined_gg <- fortify(combined_lo, region = "NAME_1")
@@ -309,7 +463,7 @@ states_gg <- left_join(states_gg, states_summary_future, by = c("id" = "geopol_u
 
 Try to plot data with `ggplot2`.
 
-```{r try to test plot, fig.height=5, fig.width=7}
+```{r try to test plot, fig.height=5, fig.width=7, eval=TRUE}
 ggplot(states_gg[!states_gg$id %in% c("Alaska", "Hawaii"),]) +
   geom_polygon(aes(x = long, y = lat, group = group, fill = transport)) +
   coord_quickmap()
@@ -324,4 +478,4 @@ ggplot(states_gg[!states_gg$id %in% c("Alaska", "Hawaii"),]) +
   coord_quickmap()
 ```
 
-
+# References

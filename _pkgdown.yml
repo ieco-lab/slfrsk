@@ -1,6 +1,7 @@
 ### * home
 
 home:
+  strip_header: true
   links:
     - text: iEco Lab
       href: https://www.iecolab.org
@@ -20,6 +21,8 @@ navbar:
       href: index.html
     - text: "Overview"
       href: articles/vignette-001-overview.html
+    - text: "Terms"
+      href: articles/vignette-002-terms.html
     - text: "Articles"
       menu:
         - text: ----------------
@@ -33,7 +36,7 @@ navbar:
           href: articles/vignette-021-quadrant-plots.html
         - text: "Wine Market Risk of Shock Evaluation"
           href: articles/vignette-041-market-plot.html
-        - text: "Earth Engine Risk Extraction"
+        - text: "Earth Engine Risk App"
           href: articles/vignette-040-ee-data.html
         - text: ----------------
 

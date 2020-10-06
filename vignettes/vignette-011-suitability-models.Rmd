@@ -23,7 +23,7 @@ How to Build, Evaluate, and Save Ecological Niche Models of Suitability for *Ail
 
 ***
 
-This vignette is designed to demonstrate the workflow that lead to the creation of the three suitability models used to assess the risk of *Lycorma* paninvasion. The description will not include actual running of some steps of this workflow, as some are unwieldy. Instead, information to ensure proper replication of those steps is provided. Notably, the MaxEnt runs are not conducted in this vignette, although the means to do so within `R` may be possible.
+This vignette is designed to demonstrate the workflow that lead to the creation of the three suitability models used to assess the risk of **SLF** paninvasion. The description will not include actual running of some steps of this workflow, as some are unwieldy. Instead, information to ensure proper replication of those steps is provided. Notably, the MaxEnt runs are not conducted in this vignette, although the means to do so within `R` may be possible.
 
 The scope of this vignette is as follows:
 
@@ -45,6 +45,7 @@ library(ENMTools) #enviro collinearity analyses
 library(patchwork) #easy combined plots
 library(scales) #rescale the plots easily
 library(rgdal) #load shapefiles
+library(doParallel) #parallized extraction
 ```
 
 # 1. Reading and Visualization of Presence Data
@@ -501,7 +502,13 @@ write_csv(path = file.path(here(),"data-raw/extract_states_slftoh_ensemble_mean.
 
 #countries version
 countries_extracts_ensemble <- extract_enm(enm = enm_ensemble, geoshape = world, id0 = "NAME_0", id = as.character(world$NAME_0))
+
 write_csv(path = file.path(here(),"data-raw/extract_countries_slftoh_ensemble_mean.csv"), x = countries_extracts_ensemble[[1]], col_names = T)
+
+#parallelized version
+countries_extracts_ensemble2 <- extract_enm2(enm = enm_ensemble, geoshape = world, id0 = "NAME_0", id = as.character(world$NAME_0), multipar = TRUE, ncores = 5)
+#write out
+write_csv(path = file.path(here(),"data-raw/extract_countries_slftoh_ensemble_mean2.csv"), x = countries_extracts_ensemble2, col_names = T)
 
 
 #example with s3

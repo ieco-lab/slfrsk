@@ -3,11 +3,12 @@ pkgdown: 1.5.1
 pkgdown_sha: ~
 articles:
   vignette-001-overview: vignette-001-overview.html
+  vignette-002-terms: vignette-002-terms.html
   vignette-010-tidy-data: vignette-010-tidy-data.html
   vignette-011-suitability-models: vignette-011-suitability-models.html
   vignette-021-quadrant-plots: vignette-021-quadrant-plots.html
   vignette-030-risk-maps: vignette-030-risk-maps.html
   vignette-040-ee-data: vignette-040-ee-data.html
   vignette-041-market-plot: vignette-041-market-plot.html
-last_built: 2020-09-23T14:31Z
+last_built: 2020-10-05T21:06Z
 

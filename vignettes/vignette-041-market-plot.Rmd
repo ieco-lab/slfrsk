@@ -31,6 +31,7 @@ library(slfrsk)
 library(tidyverse)
 library(ggrepel)
 library(DHARMa)
+library(plotly)
 ```
 
 # Load and summarize data
@@ -82,16 +83,48 @@ countries_wine_market <- countries_wine_market %>%
 
 ## Risk summary data
 
-To merge the new `market_size` dat with our existing `countries` data, we use `left_join()` to merge the `market` and `summary` data by `ID`. We then remove the countries from the dataset that already have *Lycorma*. Note: we use a modified version of `%in%` and `Negate()` to create `%notin%` for removing countries.
+To merge the new `market_size` dat with our existing `countries` data, we use `left_join()` to merge the `market` and `summary` data by `ID`. We then remove the countries from the dataset that already have **SLF**. Note: we use a modified version of `%in%` and `Negate()` to create `%notin%` for removing countries.
 
-```{r join market to countries_summary_future, eval = TRUE, message=FALSE}
-data("countries_summary_future")
+```{r join market to countries_summary_future_ensemble, eval = TRUE, message=FALSE}
+#data("countries_summary_future")
+data("countries_summary_future_ensemble")
+countries_summary_future_ensemble <- countries_summary_future_ensemble %>%
+    filter(!ID %in% c("Antarctica", "Monaco", "Norfolk Island", "Spratly Islands"))
+
+#remove non-focal countries
+rems <- c("Akrotiri and Dhekelia"
+            ,"?land"
+            ,"American Samoa"
+            ,"Bouvet Island"
+            ,"British Indian Ocean Territory"
+            ,"Caspian Sea"
+            ,"Christmas Island"
+            ,"Clipperton Island"
+            ,"Cocos Islands"
+            ,"Falkland Islands"
+            ,"Faroe Islands"
+            ,"French Southern Territories"
+            ,"Heard Island and McDonald Islands"
+            ,"Mayotte"
+            ,"Northern Mariana Islands"
+            ,"Paracel Islands"
+            ,"Pitcairn Islands"
+            ,"Saint Pierre and Miquelon"
+            ,"Tokelau"
+            ,"United States Minor Outlying Islands"
+            ,"Wallis and Futuna"
+            ,"United States"
+            ,"Philippines")
+
+countries_summary_future_ensemble <- countries_summary_future_ensemble %>% filter(!ID %in% rems)
+
+
 #dim(countries_summary_future)
 `%notin%` <- Negate(`%in%`)
 
 # filter(countries_summary_future, status == "native")
 
-countries_risk_market <- countries_summary_future %>% 
+countries_risk_market <- countries_summary_future_ensemble %>% 
   left_join(countries_wine_market, by = "ID") %>%
   filter(ID %notin% c("United States", 
                       "China", 
@@ -117,7 +150,7 @@ From here, we now can build (or rebuild, technically, `vignette-021-quadrant-plo
 
 We then rescaled the predicted **impact** values to be bounded $[1,10]$ to produce initial `risk` values.
 
-To create the initial *shock model* (`shock_mod`) and ultimately obtain a scaled measure of risk of *Lycorma* to shock the global wine market, we performed linear regression of the `market_size` data on `risk` for countries and conducted diagnostics as for `risk_mod`. We then evaluated the unscaled and scaled correlations between `market_size` and `risk` for countries, resulting in a severity of risk at $8$ based on a scale of $[1,10]$.
+To create the initial *shock model* (`shock_mod`) and ultimately obtain a scaled measure of risk of **SLF** to shock the global wine market, we performed linear regression of the `market_size` data on `risk` for countries and conducted diagnostics as for `risk_mod`. We then evaluated the unscaled and scaled correlations between `market_size` and `risk` for countries, resulting in a severity of risk at $8$ based on a scale of $[1,10]$.
 
 ```{r, fig.height= 7, fig.width=7, message=FALSE}
 risk_mod <- lm(log10_avg_prod ~ log10_avg_infected_mass + grand_mean_max, 
@@ -151,7 +184,9 @@ cor.test(countries_risk_market$market_size, countries_risk_market$risk)
 
 # Plotting risk vs market scatter
 
-With the predicted **risk**, we were able plot the scaled `risk` and `market_size`, resulting in the published risk of *Lycorma* to shock the global wine market plot.
+With the predicted **risk**, we were able plot the scaled `risk` and `market_size`, resulting in the published risk of **SLF** to shock the global wine market plot.
+
+## Static plot
 
 ```{r make scatter, eval = TRUE, fig.height= 12, fig.width=10, message=FALSE, warning=FALSE}
 
@@ -248,11 +283,62 @@ market_scatter <- countries_risk_market %>%
 market_scatter
 ```
 
+## Interactive plot
+
+We also provide an interactive version of the risk plot with `plotly`.
+
+```{r, fig.height= 8, fig.width=8, message=FALSE, warning=FALSE}
+#build ggplot
+p1 <- countries_risk_market %>%
+    ggplot(mapping = aes(x = risk, 
+                       y = market_size, 
+                       size = avg_wine, 
+                       fill = wine,
+                       key = ID)
+         ) + 
+  geom_abline(slope = 1, intercept = 0, lty = 2) +
+  geom_abline(slope = 1, intercept = 5, lty = 2) +
+  geom_abline(slope = 1, intercept = -5, lty = 2) +
+  geom_point(pch = 21) + 
+  scale_fill_manual( 
+         values = c("no" = "#ffffff", "yes" = "#C77CFF"),
+         name = "",
+         labels = c("wine producer", "")
+       ) +
+  theme(
+        panel.grid.major = element_line(colour = "#f0f0f0"),
+        panel.grid.minor = element_blank(),
+        axis.line = element_line(colour = "black"),
+        panel.background = element_blank(),
+        plot.background = element_blank(),
+        axis.text = element_text(size = rel(1)),
+        axis.title.x = element_text(hjust = .4),
+        axis.title.y = element_text(hjust = .35),
+        legend.title = element_text(face = "plain"),
+        legend.key.size = unit(0.2, "cm"),
+        legend.key = element_blank(),
+      )
+
+#execute plotly
+ggplotly(p = p1) %>%
+  layout(xaxis = 
+           list(title = list(text = paste('Spotted Lanternfly',sprintf("(<i>Lycorma delicatula</i>)"),'Invasion Risk'), font = list(size = 11)), showspikes = T),
+         yaxis = 
+           list(title = list(text = "Wine Export Market Size, log10 USD", font = list(size = 11)), showspikes = T),
+         title = 
+           list(text = paste('Spotted Lanternfly Paninvasion Risk Severity =', shock_cor,'of 10 (P<0.005)'),
+                font = list(size = 12),
+                x = 0.1,
+                y = 0.99),
+         showlegend = F
+         )
+```
+
 # Save plot output
 
 Here, you can set to save the scatter plot to `/vignettes` as a `.pdf` file by setting the `if` from `FALSE` to `TRUE`, as in the other vignettes. We also have a version of the data saved for the Google Earth Engine App data cleaning vignette.
 
-```{r, save pdf of image, message=FALSE}
+```{r, save pdf of image, message=FALSE, eval=FALSE}
 if(FALSE){
   pdf(file.path(here::here(),
               "vignettes", 
