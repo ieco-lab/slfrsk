@@ -1,0 +1,51 @@
+---
+title: "Invasion Potential Alignment ALT"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{vignette-025-quadrant-plots-alt}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+Build and Save Risk Correlation Quadrant Plots (Ensemble Extracts, Alternate Extraction Data)
+
+1. Load required packages
+
+```{r load required packages, warning=FALSE, message=FALSE}
+library(slfrsk)
+library(tidyverse)
+```
+
+2. Load the full `suitability extract ensemble` data and the `summary_future` data (`states` and `countries`). Join the two dataframes and resolve conflicts. Use the `summary_future` data to lead the merging with `left_join()`.
+
+  - mean suitability
+  - median suitability
+  
+```{r read in data}
+#suitability data load
+data("states_extracts_ensemble")
+data("countries_extracts_ensemble")
+
+#summary data load
+data("states_summary_future_ensemble")
+data("countries_summary_future_ensemble")
+
+#join the data
+states_summary_future_ensemble <- states_summary_future_ensemble %>%
+  left_join(., states_extracts_ensemble, by = "geopol_unit") %>%
+  #drop grandmeanmax col, it is redundant
+  dplyr::select(-grand_mean_max)
+
+countries_summary_future_ensemble <- countries_summary_future_ensemble %>%
+  left_join(., countries_extracts_ensemble, by = "geopol_unit") %>%
+  #drop grandmeanmax col, it is redundant
+  dplyr::select(-grand_mean_max)
+
+```
