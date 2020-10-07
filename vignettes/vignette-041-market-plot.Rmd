@@ -306,6 +306,7 @@ p1 <- countries_risk_market %>%
          name = "",
          labels = c("wine producer", "")
        ) +
+  lims(x = c(1, 10), y = c(1, 10)) +
   theme(
         panel.grid.major = element_line(colour = "#f0f0f0"),
         panel.grid.minor = element_blank(),
@@ -321,8 +322,8 @@ p1 <- countries_risk_market %>%
       )
 
 #execute plotly
-ggplotly(p = p1, tooltip = c("ID", "risk", "market_size", "wine")) %>%
-  layout(xaxis = 
+ggplotly(p = p1, tooltip = c("ID", "risk", "market_size", "wine"), dynamicTicks = T) %>%
+layout(xaxis = 
            list(title = list(text = paste('Spotted Lanternfly',sprintf("(<i>Lycorma delicatula</i>)"),'Invasion Risk'), font = list(size = 11)), showspikes = T),
          yaxis = 
            list(title = list(text = "Wine Export Market Size, log10 USD", font = list(size = 11)), showspikes = T),
