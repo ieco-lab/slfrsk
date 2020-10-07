@@ -995,6 +995,8 @@ grid.arrange(states_grob, countries_grob, legend_country, nrow = 7, ncol = 6, la
 
 #### Interactive
 
+`Plotly`-based visualization of each alignment plot makes it easier to see individual points.
+
 ```{r make custom transform object with scales::trans_new, echo=FALSE}
 #make custom transform object with scales::trans_new
 logp1_rnd <- trans_new(
