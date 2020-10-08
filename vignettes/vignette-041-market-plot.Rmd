@@ -340,21 +340,20 @@ layout(xaxis =
 
 Here, you can set to save the scatter plot to `/vignettes` as a `.pdf` file by setting the `if` from `FALSE` to `TRUE`, as in the other vignettes. We also have a version of the data saved for the Google Earth Engine App data cleaning vignette.
 
-```{r, save pdf of image, message=FALSE, eval=FALSE}
+```{r, save pdf of image, message=TRUE, eval=FAKSE}
 if(FALSE){
   pdf(file.path(here::here(),
               "vignettes", 
-              paste0("market_scatter_v3_0.pdf")),
+              paste0("market_scatter_v3_2.pdf")),
     width = 8.5*.95, height = 11*.95)
 
 market_scatter
-dev.off()
+invisible(dev.off())
 
 countries_risk <- countries_risk_market %>% 
   dplyr::select(ID, market_size, risk)
 
 save(countries_risk, file = file.path(here::here(), "data", "countries_risk.rda"))
 }
-
 ```
 
