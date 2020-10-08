@@ -46,8 +46,7 @@ native <- TRUE
 # remove USA?
 rem_usa <- TRUE
 
-# NONFUNCTIONAL---Replace this with max mean quantile_0.50 quantile_0.75 quantile_0.90 to edit which metric to plot for establishment
-#to run this, one needs to use different extract data sources further back in the cleaning process (vig01) by selecting a different variable
+# Replace this with max mean quantile_0.50 quantile_0.75 quantile_0.90 to edit which metric to plot for establishment
 #estab_to_plot <- "obs_max" # max was used for the quadrant figures
 estab_to_plot <- "obs_mean"
 #estab_to_plot <- "quantile_0.50" #median
@@ -166,7 +165,9 @@ if(one_zero){
     mutate(avg_infected_mass_scaled = (avg_infected_mass_scaled - min(avg_infected_mass_scaled))) %>%
     mutate(avg_infected_mass_scaled = avg_infected_mass_scaled / max(avg_infected_mass_scaled)) %>%
     # establishment
-    mutate(suitability_scaled = .[[estab_to_plot]])
+    #mutate(suitability_scaled = .[[estab_to_plot]])
+    mutate(suitability_scaled = .[[estab_to_plot]] - min(.[[estab_to_plot]])) %>%
+    mutate(suitability_scaled = (suitability_scaled / max(suitability_scaled)))
 } else {
   states_summary_future <- states_summary_future %>%
     # transport
@@ -185,7 +186,9 @@ if(one_zero){
     mutate(avg_infected_mass_scaled = (avg_infected_mass_scaled - min(avg_infected_mass_scaled))) %>%
     mutate(avg_infected_mass_scaled = avg_infected_mass_scaled / max(avg_infected_mass_scaled)) %>%
     # establishment
-    mutate(suitability_scaled = .[[estab_to_plot]])
+    #mutate(suitability_scaled = .[[estab_to_plot]])
+    mutate(suitability_scaled = .[[estab_to_plot]] - min(.[[estab_to_plot]])) %>%
+    mutate(suitability_scaled = (suitability_scaled / max(suitability_scaled)))
 } else {
   countries_summary_future <- countries_summary_future %>%
     # transport
@@ -775,4 +778,4 @@ We can report the following alignment of potentials:
   - U.S. State Alignment Correlation = `r formatC(states_wine_impact_cor$estimate, format = "f", digits = 3)`, p = `r paste0(gsub('e', ' x 10^', formatC(states_wine_impact_cor$p.value, format = "e", digits = 3)), '^')`
   - Country Alignment Correlation = `r formatC(countries_wine_impact_cor$estimate, format = "f", digits = 3)`, p = `r paste0(gsub('e', ' x 10^', formatC(countries_wine_impact_cor$p.value, format = "e", digits = 3)), '^')`
   
->Note: **`r impact_prod`** is the plotted impact product.
+>Note: **`r impact_prod`** is the plotted impact product and **`r gsub(x = estab_to_plot, pattern = "obs_", replacement = "")`** is the metric of interest.
