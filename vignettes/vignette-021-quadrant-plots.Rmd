@@ -31,6 +31,8 @@ library(here)
 library(ggrepel)
 library(grid)
 library(gridExtra) #only needed if one uses grid.arrange() in plotting
+library(plotly) #interactive corplot
+library(scales) #make custom tranform object for plotly corplots
 ```
 
 ## Toggle data partitions
@@ -970,6 +972,8 @@ We can report the following alignment of potentials:
 
 ### Plot visualization
 
+#### Static
+
 Now that the plotting code has been run, the `states` and `countries` correlation plots can be visualized together:
 
 ```{r combined plot with legend layout}
@@ -987,6 +991,136 @@ Now that the plotting code has been run, the `states` and `countries` correlatio
 ```{r visualization step, fig.height= 12, fig.width=10, message=FALSE}
 #nice version for knitting
 grid.arrange(states_grob, countries_grob, legend_country, nrow = 7, ncol = 6, layout_matrix = lay1, heights = c(2,2,2, 0, 2,2,2), widths = c(1,1,1,0.1,0.6,0.6))
+```
+
+#### Interactive
+
+`Plotly`-based visualization of each alignment plot makes it easier to see individual points.
+
+```{r make custom transform object with scales::trans_new, echo=FALSE}
+#make custom transform object with scales::trans_new
+logp1_rnd <- trans_new(
+  name = "logp1_rnd",
+  transform = function(x) round(x = log10(x + 1), digits = 2),
+  inverse = function(x) round(x = (exp(x) - 1), digits = 2),
+  breaks = log_breaks()
+)
+```
+
+```{r plotly version of states scatter, message=FALSE, warning=FALSE, fig.height= 8, fig.width=8, echo=FALSE}
+#plotly version of states scatter
+states_ggplot <- states_summary_future %>%
+  mutate_if(.predicate = is.numeric, .funs = ~round(x = ., digits = 2)) %>%
+  mutate(`establishment potential` = grand_mean_max_scaled, `transport potential` = avg_infected_mass_scaled, avg_wine = signif(avg_wine, digits = 3)) %>%
+  ggplot(data = ., aes(y = `transport potential`, x = `establishment potential`, size = avg_wine, fill = grapes, color = status)) +
+      geom_hline(yintercept = q_intercepts$establishment, linetype = "dashed") +
+      geom_vline(xintercept = q_intercepts$transport, linetype = "dashed") +
+      geom_point(aes(text = ID), shape = 21, stroke = 1.3, alpha = 0.75, show.legend = F) +
+      scale_fill_manual(
+        values = c("no" = "#ffffff", "yes" = "#C77CFF"),
+        name = "Wine Production",
+        labels = c("high", "low")
+      ) +
+      scale_color_manual(
+        values = c(
+          "established"= "red",
+          "not established" = "black",
+          "native" = "blue"),
+        breaks = c(
+          "established",
+          "not established",
+          "native"),
+        name = "Regional Status",
+        labels = c("invaded","uninvaded", "native")
+      ) +
+      scale_size_continuous(name = "Grape Production",
+                            #trans = "log10",
+                            trans = logp1_rnd, #custom rounding added to log10(x+1)
+                            range = c(1.5, 6),
+                            breaks = c(1.5,2,6),
+                            labels = c("low", "moderate", "high")
+      ) +
+      theme(
+        panel.grid.major = element_line(colour = "#f0f0f0"),
+        panel.grid.minor = element_blank(),
+        axis.line = element_line(colour = "black"),
+        panel.background = element_blank(),
+        plot.background = element_blank(),
+        legend.background = element_blank(),
+        ) +
+      scale_x_continuous(breaks = c(0,.5,1),labels = c("low", "moderate", "high"), lim = c(0,1.1)) +
+      scale_y_continuous(breaks = c(0,.5,1),labels = c("low", "moderate", "high"), lim = c(0,1.1))
+
+ggplotly(states_ggplot, dynamicTicks = F, tooltip = c("ID", "establishment potential", "transport potential", "avg_wine", "grapes", "status")) %>%
+  layout(xaxis = 
+           list(title = list(font = list(size = 11)), showspikes = T),
+         yaxis = 
+           list(title = list(font = list(size = 11)), showspikes = T),
+         title = 
+           list(text = "US States Invasion Potential Alignment",
+                font = list(size = 12),
+                x = 0.1,
+                y = 0.99),
+         showlegend = F
+         )
+```
+
+```{r plotly version of countries scatter, message=FALSE, warning=FALSE, fig.height= 8, fig.width=8, echo=FALSE}
+#plotly version of countries scatter
+countries_ggplot <- countries_summary_future %>%
+  mutate_if(.predicate = is.numeric, .funs = ~round(x = ., digits = 2)) %>%
+  mutate(`establishment potential` = grand_mean_max_scaled, `transport potential` = avg_infected_mass_scaled, avg_wine = signif(avg_wine, digits = 3)) %>%
+  ggplot(data = ., aes(y = `transport potential`, x = `establishment potential`, size = avg_wine, fill = grapes, color = status)) +
+      geom_hline(yintercept = q_intercepts$establishment, linetype = "dashed") +
+      geom_vline(xintercept = q_intercepts$transport, linetype = "dashed") +
+      geom_point(aes(text = ID), shape = 21, stroke = 1.3, alpha = 0.75, show.legend = F) +
+      scale_fill_manual(
+        values = c("no" = "#ffffff", "yes" = "#C77CFF"),
+        name = "Wine Production",
+        labels = c("high", "low")
+      ) +
+      scale_color_manual(
+        values = c(
+          "established"= "red",
+          "not established" = "black",
+          "native" = "blue"),
+        breaks = c(
+          "established",
+          "not established",
+          "native"),
+        name = "Regional Status",
+        labels = c("invaded","uninvaded", "native")
+      ) +
+      scale_size_continuous(name = "Grape Production",
+                            #trans = "log10",
+                            trans = logp1_rnd, #custom rounding added to log10(x+1)
+                            range = c(1.5, 6),
+                            breaks = c(1.5,2,6),
+                            labels = c("low", "moderate", "high")
+      ) +
+      theme(
+        panel.grid.major = element_line(colour = "#f0f0f0"),
+        panel.grid.minor = element_blank(),
+        axis.line = element_line(colour = "black"),
+        panel.background = element_blank(),
+        plot.background = element_blank(),
+        legend.background = element_blank(),
+        ) +
+      scale_x_continuous(breaks = c(0,.5,1),labels = c("low", "moderate", "high"), lim = c(0,1.1)) +
+      scale_y_continuous(breaks = c(0,.5,1),labels = c("low", "moderate", "high"), lim = c(0,1.1))
+
+ggplotly(countries_ggplot, dynamicTicks = F, tooltip = c("ID", "establishment potential", "transport potential", "avg_wine", "grapes", "status")) %>%
+  layout(xaxis = 
+           list(title = list(font = list(size = 11)), showspikes = T),
+         yaxis = 
+           list(title = list(font = list(size = 11)), showspikes = T),
+         title = 
+           list(text = "Countries Invasion Potential Alignment",
+                font = list(size = 12),
+                x = 0.1,
+                y = 0.99),
+         showlegend = F
+         )
 ```
 
 # Save plot output
