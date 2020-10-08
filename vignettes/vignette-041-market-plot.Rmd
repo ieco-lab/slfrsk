@@ -170,7 +170,7 @@ shock_mod <- lm(market_size ~ risk, data = countries_risk_market)
 summary(shock_mod)
 
 ## diagnostics
-# risk estimate model fit is good and no major issues in heteroskedasticity. But I am not certain why you want this model anyways, a correlation is better because it is easily scaled betwee 1-10 
+# risk estimate model fit is good and no major issues in heteroskedasticity. But I am not certain why you want this model anyways, a correlation is better because it is easily scaled between 1-10 
 simulationOutput <- simulateResiduals(fittedModel = shock_mod, plot = T) 
 testDispersion(simulationOutput)
 
