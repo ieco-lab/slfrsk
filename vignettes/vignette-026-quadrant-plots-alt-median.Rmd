@@ -1,8 +1,8 @@
 ---
-title: "Invasion Potential Alignment ALT"
+title: "Invasion Potential Alignment Alternative (Median)"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{vignette-025-quadrant-plots-alt}
+  %\VignetteIndexEntry{vignette-026-quadrant-plots-alt-median}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -47,9 +47,9 @@ native <- TRUE
 rem_usa <- TRUE
 
 # Replace this with max mean quantile_0.50 quantile_0.75 quantile_0.90 to edit which metric to plot for establishment
-estab_to_plot <- "obs_max" # max was used for the quadrant figures
+#estab_to_plot <- "obs_max" # max was used for the quadrant figures
 #estab_to_plot <- "obs_mean"
-#estab_to_plot <- "quantile_0.50" #median
+estab_to_plot <- "quantile_0.50" #median
 ```
 
 # 2. Load the full `suitability extract ensemble` data and the `summary_future` data (`states` and `countries`). 

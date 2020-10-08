@@ -8,8 +8,10 @@ articles:
   vignette-011-suitability-models: vignette-011-suitability-models.html
   vignette-021-quadrant-plots: vignette-021-quadrant-plots.html
   vignette-025-quadrant-plots-alt: vignette-025-quadrant-plots-alt.html
+  vignette-026-quadrant-plots-alt-median: vignette-026-quadrant-plots-alt-median.html
+  vignette-027-quadrant-plots-alt-mean: vignette-027-quadrant-plots-alt-mean.html
   vignette-030-risk-maps: vignette-030-risk-maps.html
   vignette-040-ee-data: vignette-040-ee-data.html
   vignette-041-market-plot: vignette-041-market-plot.html
-last_built: 2020-10-07T00:50Z
+last_built: 2020-10-08T18:40Z
 
