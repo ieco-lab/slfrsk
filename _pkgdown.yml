@@ -33,7 +33,15 @@ navbar:
         - text: "Risk Map Plotting"
           href: articles/vignette-030-risk-maps.html
         - text: "Invasion Potential Alignment"
-          href: articles/vignette-021-quadrant-plots.html
+          menu:
+            - text: ----------------
+            - text: "Primary (Max)"
+              href: articles/vignette-021-quadrant-plots.html
+            - text: "Alternate (Median)"
+              href: articles/vignette-026-quadrant-plots-alt-median.html
+            - text: "Alternate (Mean)"
+              href: articles/vignette-027-quadrant-plots-alt-mean.html
+            - text: ----------------
         - text: "Wine Market Risk of Shock Evaluation"
           href: articles/vignette-041-market-plot.html
         - text: "Earth Engine Risk App"
