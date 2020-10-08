@@ -36,7 +36,7 @@ This page briefly defines commonly used terms in the **Research Compendium** for
 
 \newline
 
-- **invasion risk**---the chance for a potential pest species invasion that an area has a strong likelihood of transportation to it, contains an area of suitable habitat for establishment, and has a large area of impact. 
+- **invasion risk**---for a potential invasion of a given area by a pest species, the chance that the pest has a strong likelihood of transportation to the area, the area contains suitable habitat for establishment, and the area has a proportionally sizable region of impact. 
 
 \newline
 
