@@ -340,7 +340,7 @@ layout(xaxis =
 
 Here, you can set to save the scatter plot to `/vignettes` as a `.pdf` file by setting the `if` from `FALSE` to `TRUE`, as in the other vignettes. We also have a version of the data saved for the Google Earth Engine App data cleaning vignette.
 
-```{r, save pdf of image, message=TRUE, eval=FAKSE}
+```{r, save pdf of image, message=TRUE, eval=FALSE}
 if(FALSE){
   pdf(file.path(here::here(),
               "vignettes", 
