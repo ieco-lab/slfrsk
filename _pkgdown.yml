@@ -23,7 +23,9 @@ navbar:
       href: articles/vignette-001-overview.html
     - text: "Definitions"
       href: articles/vignette-002-terms.html
-    - text: "Articles"
+    - text: "Paninvasion Risk App"
+      href: articles/vignette-040-ee-data.html
+    - text: "Analyses"
       menu:
         - text: ----------------
         - text: "Data Tidying"
@@ -45,8 +47,6 @@ navbar:
         - text: "Wine Market Risk of Shock Evaluation"
           href: articles/vignette-041-market-plot.html
         - text: ----------------
-    - text: "Paninvasion Risk App"
-      href: articles/vignette-040-ee-data.html
 
   right:
     - icon: fa-github fa-lg
