@@ -1129,6 +1129,13 @@ countries_slftoh_extract <- read_csv(file = "./data-raw/extract_world_11_07_18_m
 #ensemble
 countries_extracts_ensemble <- read_csv(file = "./data-raw/extract_countries_slftoh_ensemble_mean.csv", col_names = T)
 
+#clean ensemble names
+countries_extracts_ensemble$geopol_unit[grep(pattern = "Ivoire", x = countries_extracts_ensemble$geopol_unit, value = F)] <- "Ivory Coast"
+countries_extracts_ensemble$geopol_unit[grep(pattern = "ncipe", x = countries_extracts_ensemble$geopol_unit, value = F)] <- "Sao Tome and Principe"
+countries_extracts_ensemble$geopol_unit[grep(pattern = "Cura", countries_extracts_ensemble$geopol_unit, value = F)] <- "Curacao"
+countries_extracts_ensemble$geopol_unit[grep(pattern = "Saint-Bart", x = countries_extracts_ensemble$geopol_unit, value = F)] <- "Saint Barthelemy"
+countries_extracts_ensemble$geopol_unit[grep(pattern = "Saint-Martin", x = countries_extracts_ensemble$geopol_unit, value = F)] <- "Saint Martin"
+
 #add model as a categorical var
 countries_slf_extract <- countries_slf_extract %>%
   mutate(model = "slf")
@@ -1154,6 +1161,7 @@ countries_extracts$geopol_unit[grep(pattern = "Ivoire", x = countries_extracts$g
 countries_extracts$geopol_unit[grep(pattern = "ncipe", x = countries_extracts$geopol_unit, value = F)] <- "Sao Tome and Principe"
 countries_extracts$geopol_unit[grep(pattern = "Cura",countries_extracts$geopol_unit, value = F)] <- "Curacao"
 countries_extracts$geopol_unit[grep(pattern = "Saint Bart", x = countries_extracts$geopol_unit, value = F)] <- "Saint Barthelemy"
+
 
 #############################
 #suitability models rasters

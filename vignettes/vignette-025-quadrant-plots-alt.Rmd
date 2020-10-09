@@ -165,10 +165,10 @@ if(one_zero){
     mutate(avg_infected_mass_scaled = (avg_infected_mass_scaled - min(avg_infected_mass_scaled))) %>%
     mutate(avg_infected_mass_scaled = avg_infected_mass_scaled / max(avg_infected_mass_scaled)) %>%
     # establishment
-    #mutate(suitability_scaled = .[[estab_to_plot]])
+    mutate(suitability_scaled = .[[estab_to_plot]])
     #mutate(suitability_scaled = .[[estab_to_plot]] / max(.[[estab_to_plot]])) 
-    mutate(suitability_scaled = .[[estab_to_plot]] - min(.[[estab_to_plot]])) %>%
-    mutate(suitability_scaled = (suitability_scaled / max(suitability_scaled)))
+    #mutate(suitability_scaled = .[[estab_to_plot]] - min(.[[estab_to_plot]])) %>%
+    #mutate(suitability_scaled = (suitability_scaled / max(suitability_scaled)))
 } else {
   states_summary_future <- states_summary_future %>%
     # transport
@@ -187,10 +187,10 @@ if(one_zero){
     mutate(avg_infected_mass_scaled = (avg_infected_mass_scaled - min(avg_infected_mass_scaled))) %>%
     mutate(avg_infected_mass_scaled = avg_infected_mass_scaled / max(avg_infected_mass_scaled)) %>%
     # establishment
-    #mutate(suitability_scaled = .[[estab_to_plot]])
+    mutate(suitability_scaled = .[[estab_to_plot]])
     #mutate(suitability_scaled = .[[estab_to_plot]] / max(.[[estab_to_plot]]))
-    mutate(suitability_scaled = .[[estab_to_plot]] - min(.[[estab_to_plot]])) %>%
-    mutate(suitability_scaled = (suitability_scaled / max(suitability_scaled)))
+    #mutate(suitability_scaled = .[[estab_to_plot]] - min(.[[estab_to_plot]])) %>%
+    #mutate(suitability_scaled = (suitability_scaled / max(suitability_scaled)))
 } else {
   countries_summary_future <- countries_summary_future %>%
     # transport

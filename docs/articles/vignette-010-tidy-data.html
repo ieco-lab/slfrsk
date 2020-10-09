@@ -54,11 +54,14 @@
   <a href="../articles/vignette-001-overview.html">Overview</a>
 </li>
 <li>
-  <a href="../articles/vignette-002-terms.html">Terms</a>
+  <a href="../articles/vignette-002-terms.html">Definitions</a>
+</li>
+<li>
+  <a href="../articles/vignette-040-ee-data.html">Paninvasion Risk App</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
+    Analyses
      
     <span class="caret"></span>
   </a>
@@ -78,7 +81,7 @@
       <ul class="dropdown-menu" role="menu">
 <li class="divider">
         <li>
-          <a href="../articles/vignette-021-quadrant-plots.html">Primary (Max)</a>
+          <a href="../articles/vignette-021-quadrant-plots.html">Published (Max)</a>
         </li>
         <li>
           <a href="../articles/vignette-026-quadrant-plots-alt-median.html">Alternate (Median)</a>
@@ -91,9 +94,6 @@
 </li>
     <li>
       <a href="../articles/vignette-041-market-plot.html">Wine Market Risk of Shock Evaluation</a>
-    </li>
-    <li>
-      <a href="../articles/vignette-040-ee-data.html">Earth Engine Risk App</a>
     </li>
     <li class="divider">
   </ul>
@@ -880,14 +880,21 @@
 <span class="no">summary_countries_grapes</span> <span class="kw">&lt;-</span> <span class="no">countries_grapes</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="no">geopol_unit</span> <span class="kw">!=</span> <span class="st">"Western Sahara"</span>) <span class="kw">%&gt;%</span>
   <span class="fu">pivot_wider</span>(<span class="kw">names_from</span> <span class="kw">=</span> <span class="no">Item</span>, <span class="kw">values_from</span> <span class="kw">=</span> <span class="no">Value</span>, <span class="kw">id_cols</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="no">geopol_unit</span>, <span class="no">Year</span>)) <span class="kw">%&gt;%</span>
-
   <span class="fu">group_by</span>(<span class="no">geopol_unit</span>) <span class="kw">%&gt;%</span>
   <span class="fu">summarize</span>(<span class="kw">avg_yield</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(<span class="no">grape_yield</span>, <span class="kw">na.rm</span> <span class="kw">=</span> <span class="fl">TRUE</span>),
             <span class="kw">se_yield</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span>(<span class="no">grape_yield</span>) / <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span>(<span class="fu">n_distinct</span>(<span class="no">Year</span>)),
             <span class="kw">avg_prod</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(<span class="no">grape_production</span>, <span class="kw">na.rm</span> <span class="kw">=</span> <span class="no">T</span>), <span class="kw">se_prod</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span>(<span class="no">grape_production</span>) / <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span>(<span class="fu">n_distinct</span>(<span class="no">Year</span>))
             ) <span class="kw">%&gt;%</span>
   <span class="fu">drop_na</span>(<span class="no">.</span>) <span class="kw">%&gt;%</span>
-  <span class="fu">mutate</span>(<span class="kw">log10_avg_yield</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span>(<span class="no">avg_yield</span>+<span class="fl">1</span>), <span class="kw">log10_avg_prod</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span>(<span class="no">avg_prod</span>+<span class="fl">1</span>))</pre></body></html></div>
+  <span class="fu">mutate</span>(<span class="kw">log10_avg_yield</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span>(<span class="no">avg_yield</span>+<span class="fl">1</span>), <span class="kw">log10_avg_prod</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span>(<span class="no">avg_prod</span>+<span class="fl">1</span>))
+
+<span class="co">#fix some problematic names of countries</span>
+<span class="no">summary_countries_grapes</span>$<span class="no">geopol_unit</span>[<span class="fu"><a href="https://rdrr.io/r/base/grep.html">grep</a></span>(<span class="kw">pattern</span> <span class="kw">=</span> <span class="st">"Ivoire"</span>, <span class="kw">x</span> <span class="kw">=</span> <span class="no">summary_countries_grapes</span>$<span class="no">geopol_unit</span>, <span class="kw">value</span> <span class="kw">=</span> <span class="no">F</span>)] <span class="kw">&lt;-</span> <span class="st">"Ivory Coast"</span>
+<span class="no">summary_countries_grapes</span>$<span class="no">geopol_unit</span>[<span class="fu"><a href="https://rdrr.io/r/base/grep.html">grep</a></span>(<span class="kw">pattern</span> <span class="kw">=</span> <span class="st">"Bolivia (Plurinational State of)"</span>, <span class="kw">x</span> <span class="kw">=</span> <span class="no">summary_countries_grapes</span>$<span class="no">geopol_unit</span>, <span class="kw">value</span> <span class="kw">=</span> <span class="no">F</span>)] <span class="kw">&lt;-</span> <span class="st">"Bolivia"</span>
+<span class="no">summary_countries_grapes</span>$<span class="no">geopol_unit</span>[<span class="fu"><a href="https://rdrr.io/r/base/grep.html">grep</a></span>(<span class="kw">pattern</span> <span class="kw">=</span> <span class="st">"China, Taiwan Province of"</span>, <span class="kw">x</span> <span class="kw">=</span> <span class="no">summary_countries_grapes</span>$<span class="no">geopol_unit</span>, <span class="kw">value</span> <span class="kw">=</span> <span class="no">F</span>)] <span class="kw">&lt;-</span> <span class="st">"Taiwan"</span>
+<span class="no">summary_countries_grapes</span>$<span class="no">geopol_unit</span>[<span class="fu"><a href="https://rdrr.io/r/base/grep.html">grep</a></span>(<span class="kw">pattern</span> <span class="kw">=</span> <span class="st">"Iran (Islamic Republic of)"</span>, <span class="kw">x</span> <span class="kw">=</span> <span class="no">summary_countries_grapes</span>$<span class="no">geopol_unit</span>, <span class="kw">value</span> <span class="kw">=</span> <span class="no">F</span>)] <span class="kw">&lt;-</span> <span class="st">"Iran"</span>
+<span class="no">summary_countries_grapes</span>$<span class="no">geopol_unit</span>[<span class="fu"><a href="https://rdrr.io/r/base/grep.html">grep</a></span>(<span class="kw">pattern</span> <span class="kw">=</span> <span class="st">"Venezuela (Bolivarian Republic of)"</span>, <span class="kw">x</span> <span class="kw">=</span> <span class="no">summary_countries_grapes</span>$<span class="no">geopol_unit</span>, <span class="kw">value</span> <span class="kw">=</span> <span class="no">F</span>)] <span class="kw">&lt;-</span> <span class="st">"Venezuela"</span>
+<span class="no">summary_countries_grapes</span>$<span class="no">geopol_unit</span>[<span class="fu"><a href="https://rdrr.io/r/base/grep.html">grep</a></span>(<span class="kw">pattern</span> <span class="kw">=</span> <span class="st">"Viet Nam"</span>, <span class="kw">x</span> <span class="kw">=</span> <span class="no">summary_countries_grapes</span>$<span class="no">geopol_unit</span>, <span class="kw">value</span> <span class="kw">=</span> <span class="no">F</span>)] <span class="kw">&lt;-</span> <span class="st">"Vietnam"</span></pre></body></html></div>
 </div>
 <div id="wine" class="section level2">
 <h2 class="hasAnchor">

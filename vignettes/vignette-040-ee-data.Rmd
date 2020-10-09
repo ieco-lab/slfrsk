@@ -1,5 +1,5 @@
 ---
-title: "Earth Engine Risk App"
+title: "Paninvasion Risk App"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{vignette-040-ee-data}
@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-Google Earth Engine App Companion: <https://ieco.users.earthengine.app/view/ieco-slf-riskmap>
+Google Earth Engine Paninvasion Risk App Companion: <https://ieco.users.earthengine.app/view/ieco-slf-riskmap>
 
 ***
 
@@ -29,11 +29,11 @@ library(dplyr)
 library(ggplot2)
 ```
 
-The `slrsk` EE App is an interactive map that allows for highly customizable visualization. When loaded, it will display a map of the earth with several different data layers already enabled (see image below for example).
+The `slrsk` Paninvasion Risk App is an interactive map that allows for highly customizable visualization. When loaded, it will display a map of the earth with several different data layers already enabled (see image below for example).
 
 <center>
 
-![Landing page and labeled visualization tools for `slfrsk` EE App.](/Volumes/GoogleDrive/My Drive/spotted_lanternfly_ieco_projects/code/FINAL_CODE/R package/nah_work/slfrsk/docs/articles/slfrsk_ee_home_label.png)
+![Landing page and labeled visualization tools for `slfrsk` Paninvasion Risk App.](/Volumes/GoogleDrive/My Drive/spotted_lanternfly_ieco_projects/code/FINAL_CODE/R package/nah_work/slfrsk/docs/articles/slfrsk_ee_home_label.png)
 
 </center>
 
@@ -52,6 +52,7 @@ The image shows several key tools that allow for interactive visualization. They
   - **FRA**: southern France grape-growing view
   - **ESP**: northern Spain grape-growing view
   - **CAL**: norhtern California grape-growing view
+  - **ERA**: Eurasian grape-growing view
 6. Establishment Potential Threshold: manually change the threshold of SLF establishment suitability (scaled [0,1]) such that values closer to 1 plot only the most suitable areas and values close to 0 plot closer to the full range of suitability.
 7. Legend Help link: clicking this link will direct back to this article (<https://ieco-lab.github.io/slfrsk/articles/vignette-040-ee-data.html>)
 
@@ -61,7 +62,7 @@ The layers panel contains several key measures of SLF invasion potential. Each l
 
 <center>
 
-![Default view of Layers Panel for `slfrsk` EE App.](/Volumes/GoogleDrive/My Drive/spotted_lanternfly_ieco_projects/code/FINAL_CODE/R package/nah_work/slfrsk/docs/articles/slfrsk_ee_layers_panel.png)
+![Default view of Layers Panel for `slfrsk` Paninvasion Risk App.](/Volumes/GoogleDrive/My Drive/spotted_lanternfly_ieco_projects/code/FINAL_CODE/R package/nah_work/slfrsk/docs/articles/slfrsk_ee_layers_panel.png)
 
 </center>
 
@@ -171,11 +172,11 @@ scale_fill_manual(
 
 # Data preparation
 
-This vignette is a companion to the interactive `slfrsk` interactive `slfrsk` Google Earth Engine (EE) App <https://ieco.users.earthengine.app/view/ieco-slf-riskmap>. It provides a brief description of the various visualizations (including keys and legends) and demonstrates how the data were treated prior to inclusion in the app. Output data from this vignette are saved in the shared GoogleDrive `./slfRiskMapping/data/slfRisk/` directory. 
+This vignette is a companion to the interactive `slfrsk` Google Earth Engine (EE) Paninvasion Risk App <https://ieco.users.earthengine.app/view/ieco-slf-riskmap>. It provides a brief demonstration of how the data were treated prior to inclusion in the app. Output data from this vignette are saved in the shared GoogleDrive `./slfRiskMapping/data/slfRisk/` directory. 
 
 ## Setup
 
-Here we load the packages that allow us to visualize EE color palettes and reformat shapefile data and merge with the summarized potentials data visualized in `vignette-021-quadrant-plots`.
+Here we load the packages that allow us to visualize color palettes and reformat shapefile data and merge with the summarized potentials data visualized in `vignette-021-quadrant-plots`.
 
 ```{r setup, results='hide', message=FALSE}
 library(slfrsk)
@@ -298,6 +299,7 @@ countries_risk <- countries_risk %>%
 #merge the two datasets
 countries_summary_future_ensemble <- countries_summary_future_ensemble %>%
   left_join(., countries_risk, by = "ID")
+
 ```
 
 ## Shapefiles
@@ -352,12 +354,6 @@ countries_lo <- countries_lo[countries_lo@data$NAME_0 %in% unique(countries_summ
 In the downscaling and filtering process, we needed to make sure that the geometries are intact and cleaned, and so we used the `clgeo_Clean()` function to ensure that the shapefiles work appropriately.
 
 ```{r make sure geometries are  clean, warning=FALSE, message=FALSE, eval=TRUE}
-#check for cleaning needed?
-#clgeo_SummaryReport(clgeo_CollectionReport(states))
-#clgeo_SummaryReport(clgeo_CollectionReport(states_lo))
-#clgeo_SummaryReport(clgeo_CollectionReport(countries))
-#clgeo_SummaryReport(clgeo_CollectionReport(countries_lo))
-
 #might as well clean them all
 states <- clgeo_Clean(states)
 states_lo <- clgeo_Clean(states_lo)

@@ -452,7 +452,6 @@ data("countries_grapes")
 summary_countries_grapes <- countries_grapes %>%
   filter(geopol_unit != "Western Sahara") %>%
   pivot_wider(names_from = Item, values_from = Value, id_cols = c(geopol_unit, Year)) %>%
-  
   group_by(geopol_unit) %>%
   summarize(avg_yield = mean(grape_yield, na.rm = TRUE), 
             se_yield = sd(grape_yield) / sqrt(n_distinct(Year)),
@@ -460,6 +459,14 @@ summary_countries_grapes <- countries_grapes %>%
             ) %>%
   drop_na(.) %>%
   mutate(log10_avg_yield = log10(avg_yield+1), log10_avg_prod = log10(avg_prod+1))
+
+#fix some problematic names of countries
+summary_countries_grapes$geopol_unit[grep(pattern = "Ivoire", x = summary_countries_grapes$geopol_unit, value = F)] <- "Ivory Coast"
+summary_countries_grapes$geopol_unit[grep(pattern = "Bolivia (Plurinational State of)", x = summary_countries_grapes$geopol_unit, value = F)] <- "Bolivia"
+summary_countries_grapes$geopol_unit[grep(pattern = "China, Taiwan Province of", x = summary_countries_grapes$geopol_unit, value = F)] <- "Taiwan"
+summary_countries_grapes$geopol_unit[grep(pattern = "Iran (Islamic Republic of)", x = summary_countries_grapes$geopol_unit, value = F)] <- "Iran"
+summary_countries_grapes$geopol_unit[grep(pattern = "Venezuela (Bolivarian Republic of)", x = summary_countries_grapes$geopol_unit, value = F)] <- "Venezuela"
+summary_countries_grapes$geopol_unit[grep(pattern = "Viet Nam", x = summary_countries_grapes$geopol_unit, value = F)] <- "Vietnam"
 ```
   
 ## Wine

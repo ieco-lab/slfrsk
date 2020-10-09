@@ -21,9 +21,11 @@ navbar:
       href: index.html
     - text: "Overview"
       href: articles/vignette-001-overview.html
-    - text: "Terms"
+    - text: "Definitions"
       href: articles/vignette-002-terms.html
-    - text: "Articles"
+    - text: "Paninvasion Risk App"
+      href: articles/vignette-040-ee-data.html
+    - text: "Analyses"
       menu:
         - text: ----------------
         - text: "Data Tidying"
@@ -35,7 +37,7 @@ navbar:
         - text: "Invasion Potential Alignment"
           menu:
             - text: ----------------
-            - text: "Primary (Max)"
+            - text: "Published (Max)"
               href: articles/vignette-021-quadrant-plots.html
             - text: "Alternate (Median)"
               href: articles/vignette-026-quadrant-plots-alt-median.html
@@ -44,8 +46,6 @@ navbar:
             - text: ----------------
         - text: "Wine Market Risk of Shock Evaluation"
           href: articles/vignette-041-market-plot.html
-        - text: "Earth Engine Risk App"
-          href: articles/vignette-040-ee-data.html
         - text: ----------------
 
   right:
