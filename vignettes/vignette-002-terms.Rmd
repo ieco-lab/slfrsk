@@ -32,7 +32,7 @@ This page briefly defines commonly used terms in the **Research Compendium** for
 
 \newline
 
-- **invasion potential**---the prospect that a pest species will successfully be moved to (transport), develop and maintain populations in (establishment), or negatively affect the production/commerce acitivites of (economic) an as-yet uninvaded region. See @blackburn_proposed_2011.
+- **invasion potential**---the prospect that a pest species will successfully be moved to (transport), develop and maintain populations in (establishment), or negatively affect the production/commerce activities of (economic) an as-yet uninvaded region. See @blackburn_proposed_2011.
 
 \newline
 
