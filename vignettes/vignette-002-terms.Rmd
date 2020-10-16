@@ -44,7 +44,7 @@ This page briefly defines commonly used terms in the **Research Compendium** for
 
 \newline
 
-- **phylloxera**---grapevine phylloxera (*Daktulosphaira vitifoliae* (Fitch 1855)) is a species of insect native to North America that is the grapevine pest responsible for the Great Wine Blight of the late 1800's that destroyed most of the European grape and wine industries. International collaboration lead to the successful recovery of European grape and wine production via the combining of phylloxera-resistant North American grapevines with suisceptible European varieties via grafting or hybridization. See @gale_dying_2011 for further details.
+- **phylloxera**---grapevine phylloxera (*Daktulosphaira vitifoliae* (Fitch 1855)) is a species of insect native to North America that is the grapevine pest responsible for the Great Wine Blight of the late 1800's that destroyed most of the European grape and wine industries. International collaboration lead to the successful recovery of European grape and wine production via the combining of phylloxera-resistant North American grapevines with susceptible European varieties via grafting or hybridization. See @gale_dying_2011 for further details.
 
 \newline
 
