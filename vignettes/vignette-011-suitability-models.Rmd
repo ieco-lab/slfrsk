@@ -6,7 +6,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
-  chunk_output_type: console
+  chunk_output_type: inline
 bibliography: references.bib
 link-citations: yes
 ---
@@ -112,9 +112,8 @@ output.files <- env.short
 output.files <- gsub(pattern = "wc2.0_bio_30s", replacement = "global_bio", x = output.files)
 #change weird ENVIREM prefix
 output.files <- gsub(pattern = "current_30arcsec", replacement = "global_env", x = output.files)
-#change weird ATC prefixes
-output.files <- gsub(pattern = "2008_accessibility_to_cities_50k", replacement = "global_atc1", x = output.files) #2008 version of ATC data
-output.files <- gsub(pattern = "2015_accessibility_to_cities_v1.0", replacement = "global_atc2", x = output.files) #2015 version of ATC data, "improved"
+#change weird ATC prefix
+output.files <- gsub(pattern = "2015_accessibility_to_cities_v1.0", replacement = "global_atc", x = output.files)
 
 #crop one of the BIOCLIM layers to set the bounding box and resolution to have files fixed
 same.extent <- extent(-180, 180, -60, 84)
@@ -181,7 +180,7 @@ env <- raster::stack(env.files)
 env.corr <- ENMTools::raster.cor.matrix(env, method = "pearson")
 
 #write out the correlations as a csv
-write_csv(x = env.corr, path = file.path(here(),"data-raw/env_cor_v1.1_downsampled.csv"), col_names = TRUE)
+write.csv(x = env.corr, file = file.path(here(),"data-raw/env_cor_v1_downsampled.csv"), col.names = TRUE, row.names = TRUE)
 
 } #closes no run if
 
@@ -191,7 +190,7 @@ To visualize the correlations between pairs of environmental covariates easily, 
 
 ```{r visualize env correlations, fig.height=7, fig.width=8}
 #re-read the correlation table in again
-env.cor <- read.csv(file = file.path(here::here(),"data-raw/env_cor_v1.1_downsampled.csv"), row.names = 1)
+env.cor <- read.csv(file = file.path(here::here(),"data-raw/env_cor_v1_downsampled.csv"), row.names = 1)
 
 #here, we make cor's absolute values and make the data tidy to make it easier to plot in ggplot2
 env.cor %>%
