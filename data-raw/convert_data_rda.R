@@ -1288,14 +1288,22 @@ countries_centers <- countries_centers %>%
 ##########################################################
 
 #read in presence records
-slf_points <- read_csv(file = "./data-raw/slf_presence_records.csv") %>%
-  dplyr::rename(species = Species, x = Longitude, y = Latitude) %>%
+#slf_points <- read_csv(file = "./data-raw/slf_presence_records.csv") %>%
+#  dplyr::rename(species = Species, x = Longitude, y = Latitude) %>%
+#  mutate(species = "Lycorma delicatula") %>%
+#  dplyr::select(species, x, y)
+#toh_points <- read_csv(file = "./data-raw/toh_presence_records.csv") %>%
+#  dplyr::rename(species = name, x = decimalLongitude, y = decimalLatitude) %>%
+#  dplyr::select(species, x, y)
+
+slf_points <- read_csv(file = "./data-raw/slf_gbif_cleaned_coords_2020.csv") %>%
+  dplyr::rename(species = name, x = longitude, y = latitude) %>%
   mutate(species = "Lycorma delicatula") %>%
   dplyr::select(species, x, y)
-toh_points <- read_csv(file = "./data-raw/toh_presence_records.csv") %>%
-  dplyr::rename(species = name, x = decimalLongitude, y = decimalLatitude) %>%
+toh_points <- read_csv(file = "./data-raw/toh_gbif_cleaned_coords_2020.csv") %>%
+  dplyr::rename(species = name, x = longitude, y = latitude) %>%
+  mutate(species = "Ailanthus altissima") %>%
   dplyr::select(species, x, y)
-
 
 ####################################################################################################################
 #Write out new RDA files

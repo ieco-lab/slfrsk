@@ -35,7 +35,11 @@ Imports:
     gridExtra,
     DHARMa,
     cleangeo,
-    plotly
+    plotly,
+    spocc,
+    scrubr,
+    humboldt,
+    tcltk
 RoxygenNote: 7.1.1
 Depends: 
     R (>= 3.50)
