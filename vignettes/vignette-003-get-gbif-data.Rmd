@@ -72,12 +72,12 @@ write_csv(x = slf_gbif_final, file = file.path(here(), "data-raw", paste0( "slf_
 write_csv(x = toh_gbif_final, file = file.path(here(), "data-raw", paste0( "toh_gbif_", format(Sys.Date(), "%Y-%d-%m"), ".csv")))
 
 #turn occ data into df
-slf_coords <- occ2df(slf_gbif)
-toh_coords <- occ2df(toh_gbif)
+slf_coords1 <- occ2df(slf_gbif)
+toh_coords1 <- occ2df(toh_gbif)
 
 #save the coords as they are
-write_csv(x = slf_coords, file = file.path(here(), "data-raw", paste0( "slf_gbif_raw_coords_", format(Sys.Date(), "%Y-%d-%m"), ".csv")))
-write_csv(x = toh_coords, file = file.path(here(), "data-raw", paste0( "toh_gbif_raw_coords_", format(Sys.Date(), "%Y-%d-%m"), ".csv")))
+write_csv(x = slf_coords1, file = file.path(here(), "data-raw", paste0( "slf_gbif_raw_coords_", format(Sys.Date(), "%Y-%d-%m"), ".csv")))
+write_csv(x = toh_coords1, file = file.path(here(), "data-raw", paste0( "toh_gbif_raw_coords_", format(Sys.Date(), "%Y-%d-%m"), ".csv")))
 
 }
 ```
@@ -85,8 +85,8 @@ write_csv(x = toh_coords, file = file.path(here(), "data-raw", paste0( "toh_gbif
 Here is where we read in the raw data queried for this study:
 ```{r read in the 2020 query raw data, message=FALSE}
 #read in raw data
-slf_coords <- read_csv(file = file.path(here(), "data-raw", "slf_gbif_raw_coords_2020-20-10.csv"))
-toh_coords <- read_csv(file = file.path(here(), "data-raw", "toh_gbif_raw_coords_2020-20-10.csv"))
+slf_coords1 <- read_csv(file = file.path(here(), "data-raw", "slf_gbif_raw_coords_2020-20-10.csv"))
+toh_coords1 <- read_csv(file = file.path(here(), "data-raw", "toh_gbif_raw_coords_2020-20-10.csv"))
 ```
 
 ## Clean Data
@@ -103,12 +103,12 @@ Firstly, we check for taxonomic consistency in each dataset. *Spoiler*: SLF is f
 
 ```{r check and fix taxonomy}
 #check the taxonomy for only correct queries
-unique(slf_coords$name) #all the same
-unique(toh_coords$name)
+unique(slf_coords1$name) #all the same
+unique(toh_coords1$name)
 
 #toh data contains a bunch of synonyms according to GBIF (https://www.gbif.org/species/3190653)
 #therefore, we are going to make them all the same, the top species designation
-toh_coords$name <- "Ailanthus altissima (Mill.) Swingle"
+toh_coords1$name <- "Ailanthus altissima (Mill.) Swingle"
 ```
 
 ### Coordinate Veracity
@@ -118,14 +118,14 @@ Coordinate veracity has several components that amount to removing coordinates t
 We make good use of the `scrubr` package functions to clean coordinates. Remember that for TOH we will use `scrubr::dedup()` a little later (after rarefaction).
 
 ```{r coordinate cleaning}
-slf_coords <- slf_coords %>%
+slf_coords1 <- slf_coords1 %>%
   coord_incomplete() %>%  #rm incomplete coords, those that lack valid lat and long
   coord_impossible() %>% #rm impossible coords, those that are not possible (e.g., lat > 90)
   coord_unlikely() %>%  #rm unlikely coords, such as those at 0,0
   dedup(how = "one", tolerance = 0.99) #rm duplicate coords
 
 #toh
-toh_coords <- toh_coords %>%
+toh_coords1 <- toh_coords1 %>%
   coord_incomplete() %>%  #rm incomplete coords, those that lack valid lat and long
   coord_impossible() %>% #rm impossible coords, those that are not possible (e.g., lat > 90)
   coord_unlikely()      #rm unlikely coords, such as those at 0,0
@@ -141,8 +141,8 @@ Note that the rarefaction takes a while for TOH especially (it is cleaning 67000
 if(FALSE){
   
 #rarefy points
-slf_coords2 <- humboldt.occ.rarefy(in.pts = slf_coords, colxy = 2:3, rarefy.dist = 10, rarefy.units = "km", run.silent.rar = F)
-toh_coords2 <- humboldt.occ.rarefy(in.pts = toh_coords, colxy = 2:3, rarefy.dist = 10, rarefy.units = "km", run.silent.rar = F)
+slf_coords2 <- humboldt.occ.rarefy(in.pts = slf_coords1, colxy = 2:3, rarefy.dist = 10, rarefy.units = "km", run.silent.rar = F)
+toh_coords2 <- humboldt.occ.rarefy(in.pts = toh_coords1, colxy = 2:3, rarefy.dist = 10, rarefy.units = "km", run.silent.rar = F)
 
 #dedup TOH now
 toh_coords3 <- toh_coords2 %>%
@@ -167,21 +167,33 @@ toh_coords3 <- toh_coords3 %>%
 write_csv(slf_coords3, file = file.path(here(), "data-raw", "slf_gbif_cleaned_coords_2020.csv"))
 write_csv(toh_coords3, file = file.path(here(), "data-raw", "toh_gbif_cleaned_coords_2020.csv"))
 
+#save as .rda files as well
+slf_coords <- slf_coords3
+toh_coords <- toh_coords3
+
+save(slf_coords, file = file.path(here(), "data", "slf_coords.rda"))
+save(toh_coords, file = file.path(here(), "data", "toh_coords.rda"))
+
 }
 ```
+
+#Visualize Data
 
 We can read in the final data for looking at the spatial coverage despite the thinning.
 ```{r read in final data, message=FALSE, fig.height= 10, fig.width=10}
 #read in data for viewing differences
-slf_coords3 <- read_csv(file = file.path(here(), "data-raw", "slf_gbif_cleaned_coords_2020.csv"))
-toh_coords3 <- read_csv(file = file.path(here(), "data-raw", "toh_gbif_cleaned_coords_2020.csv"))
+#slf_coords3 <- read_csv(file = file.path(here(), "data-raw", "slf_gbif_cleaned_coords_2020.csv"))
+#toh_coords3 <- read_csv(file = file.path(here(), "data-raw", "toh_gbif_cleaned_coords_2020.csv"))
+
+data("slf_coords", package = "slfrsk")
+data("toh_coords", package = "slfrsk")
 
 #plot the difference
 #TOH
 map_toh <- ggplot() +
   geom_polygon(data = map_data('world'), aes(x = long, y = lat, group = group), fill = NA, color = "black", lwd = 0.15) +
-  geom_point(data = toh_coords, aes(x = longitude, y = latitude), color = "red", size = 2) +
-  geom_point(data = toh_coords3, aes(x = longitude, y = latitude), color = "blue", shape = 2) +
+  geom_point(data = toh_coords1, aes(x = longitude, y = latitude), color = "red", size = 2) +
+  geom_point(data = toh_coords, aes(x = longitude, y = latitude), color = "blue", shape = 2) +
   coord_quickmap(xlim = c(-164.5, 163.5), ylim = c(-55,85)) +
   ggtitle("TOH") +
   theme(panel.grid.major = element_blank(),
@@ -191,8 +203,8 @@ map_toh <- ggplot() +
 #SLF
 map_slf <- ggplot() +
   geom_polygon(data = map_data('world'), aes(x = long, y = lat, group = group), fill = NA, color = "black", lwd = 0.15) +
-  geom_point(data = slf_coords, aes(x = longitude, y = latitude), color = "red", size = 2) +
-  geom_point(data = slf_coords3, aes(x = longitude, y = latitude), color = "blue", shape = 2) +
+  geom_point(data = slf_coords1, aes(x = longitude, y = latitude), color = "red", size = 2) +
+  geom_point(data = slf_coords, aes(x = longitude, y = latitude), color = "blue", shape = 2) +
   coord_quickmap(xlim = c(-164.5, 163.5), ylim = c(-55,85)) +
   ggtitle("SLF") +
   theme(panel.grid.major = element_blank(),
