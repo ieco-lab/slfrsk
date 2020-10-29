@@ -92,7 +92,10 @@ states <- states %>%
          value_2017 = 1e6*(`Total M$ in 2017`)) %>%
   dplyr::select(origin, destination, SCTG2, value_2012, value_2013, value_2014, value_2015, value_2016, value_2017) %>%
   group_by(origin, destination, SCTG2) %>%
-  mutate(sum = sum(value_2012, value_2013, value_2014, value_2015, value_2016, value_2017, na.rm = T), average = mean(x = c(value_2012, value_2013, value_2014, value_2015, value_2016, value_2017), na.rm = T))
+  mutate(
+    sum = sum(value_2012, value_2013, value_2014, value_2015, value_2016, value_2017, na.rm = T),
+    average = mean(x = c(value_2012, value_2013, value_2014, value_2015, value_2016, value_2017), na.rm = T)
+    )
 
 #note that this step turns the mass units for states_mass to kg (1 kTon = 907184.7 kg)
 states_mass <- states_mass %>%
@@ -106,7 +109,10 @@ states_mass <- states_mass %>%
          mass_2017 = 907184.7*(`Total KTons in 2017`)) %>%
   dplyr::select(origin, destination, SCTG2,mass_2012, mass_2013, mass_2014, mass_2015, mass_2016, mass_2017) %>%
   group_by(origin, destination, SCTG2) %>%
-  mutate(sum = sum(mass_2012, mass_2013, mass_2014, mass_2015, mass_2016, mass_2017, na.rm = T), average = mean(x = c(mass_2012, mass_2013, mass_2014, mass_2015, mass_2016, mass_2017), na.rm = T))
+  mutate(
+    sum = sum(mass_2012, mass_2013, mass_2014, mass_2015, mass_2016, mass_2017, na.rm = T),
+    average = mean(x = c(mass_2012, mass_2013, mass_2014, mass_2015, mass_2016, mass_2017), na.rm = T)
+    )
 
 #now we take the overall commerce and summarize for every pair of origin and destination
 #value
@@ -115,7 +121,10 @@ states_value <- states %>%
   group_by(origin, destination) %>%
   summarise_if(is.numeric, sum, na.rm = TRUE) %>%
   group_by(origin, destination) %>%
-  mutate(sum = sum(value_2012, value_2013, value_2014, value_2015, value_2016, value_2017, na.rm = T), average = mean(x = c(value_2012, value_2013, value_2014, value_2015, value_2016, value_2017), na.rm = T))
+  mutate(
+    sum = sum(value_2012, value_2013, value_2014, value_2015, value_2016, value_2017, na.rm = T),
+    average = mean(x = c(value_2012, value_2013, value_2014, value_2015, value_2016, value_2017), na.rm = T)
+    )
 
 #same for mass
 states_mass <- states_mass %>%
@@ -123,7 +132,10 @@ states_mass <- states_mass %>%
   group_by(origin, destination) %>%
   summarise_if(is.numeric, sum, na.rm = TRUE) %>%
   group_by(origin, destination) %>%
-  mutate(sum = sum(mass_2012, mass_2013, mass_2014, mass_2015, mass_2016, mass_2017, na.rm = T), average = mean(x = c(mass_2012, mass_2013, mass_2014, mass_2015, mass_2016, mass_2017), na.rm = T))
+  mutate(
+    sum = sum(mass_2012, mass_2013, mass_2014, mass_2015, mass_2016, mass_2017, na.rm = T),
+    average = mean(x = c(mass_2012, mass_2013, mass_2014, mass_2015, mass_2016, mass_2017), na.rm = T)
+    )
 
 #filter to remove in state commerce (origin == destination)
 states_value <- states_value %>%
@@ -145,6 +157,21 @@ trade_summary <- states_value %>%
             all_2015 = sum(value_2015, na.rm = T),
             all_2016 = sum(value_2016, na.rm = T),
             all_2017 = sum(value_2017, na.rm = T)
+  )
+
+#Connecticut
+trade_ct <- states_value %>%
+  filter(origin %in% "Connecticut") %>%
+  group_by(destination) %>%
+  arrange(destination) %>%
+  summarize(ct_total = sum(sum, na.rm = T),
+            ct_average = (sum(sum, na.rm = T) / 6),
+            ct_2012 = sum(value_2012, na.rm = T),
+            ct_2013 = sum(value_2013, na.rm = T),
+            ct_2014 = sum(value_2014, na.rm = T),
+            ct_2015 = sum(value_2015, na.rm = T),
+            ct_2016 = sum(value_2016, na.rm = T),
+            ct_2017 = sum(value_2017, na.rm = T)
   )
 
 #Delaware
@@ -192,7 +219,52 @@ trade_nj <- states_value %>%
             nj_2017 = sum(value_2017, na.rm = T)
   )
 
-#pull data for states with PA specifically as the origin
+#New York
+trade_ny <- states_value %>%
+  filter(origin %in% "New York") %>%
+  group_by(destination) %>%
+  arrange(destination) %>%
+  summarize(ny_total = sum(sum, na.rm = T),
+            ny_average = (sum(sum, na.rm = T) / 6),
+            ny_2012 = sum(value_2012, na.rm = T),
+            ny_2013 = sum(value_2013, na.rm = T),
+            ny_2014 = sum(value_2014, na.rm = T),
+            ny_2015 = sum(value_2015, na.rm = T),
+            ny_2016 = sum(value_2016, na.rm = T),
+            ny_2017 = sum(value_2017, na.rm = T)
+  )
+
+#North Carolina
+trade_nc <- states_value %>%
+  filter(origin %in% "North Carolina") %>%
+  group_by(destination) %>%
+  arrange(destination) %>%
+  summarize(nc_total = sum(sum, na.rm = T),
+            nc_average = (sum(sum, na.rm = T) / 6),
+            nc_2012 = sum(value_2012, na.rm = T),
+            nc_2013 = sum(value_2013, na.rm = T),
+            nc_2014 = sum(value_2014, na.rm = T),
+            nc_2015 = sum(value_2015, na.rm = T),
+            nc_2016 = sum(value_2016, na.rm = T),
+            nc_2017 = sum(value_2017, na.rm = T)
+  )
+
+#Ohio
+trade_oh <- states_value %>%
+  filter(origin %in% "Ohio") %>%
+  group_by(destination) %>%
+  arrange(destination) %>%
+  summarize(oh_total = sum(sum, na.rm = T),
+            oh_average = (sum(sum, na.rm = T) / 6),
+            oh_2012 = sum(value_2012, na.rm = T),
+            oh_2013 = sum(value_2013, na.rm = T),
+            oh_2014 = sum(value_2014, na.rm = T),
+            oh_2015 = sum(value_2015, na.rm = T),
+            oh_2016 = sum(value_2016, na.rm = T),
+            oh_2017 = sum(value_2017, na.rm = T)
+  )
+
+#Pennsylvania
 trade_pa <- states_value %>%
   filter(origin %in% "Pennsylvania") %>%
   group_by(destination) %>%
@@ -222,51 +294,6 @@ trade_va <- states_value %>%
             va_2017 = sum(value_2017, na.rm = T)
   )
 
-#North Carolina
-trade_nc <- states_value %>%
-  filter(origin %in% "North Carolina") %>%
-  group_by(destination) %>%
-  arrange(destination) %>%
-  summarize(nc_total = sum(sum, na.rm = T),
-            nc_average = (sum(sum, na.rm = T) / 6),
-            nc_2012 = sum(value_2012, na.rm = T),
-            nc_2013 = sum(value_2013, na.rm = T),
-            nc_2014 = sum(value_2014, na.rm = T),
-            nc_2015 = sum(value_2015, na.rm = T),
-            nc_2016 = sum(value_2016, na.rm = T),
-            nc_2017 = sum(value_2017, na.rm = T)
-  )
-
-#New York
-trade_ny <- states_value %>%
-  filter(origin %in% "New York") %>%
-  group_by(destination) %>%
-  arrange(destination) %>%
-  summarize(ny_total = sum(sum, na.rm = T),
-            ny_average = (sum(sum, na.rm = T) / 6),
-            ny_2012 = sum(value_2012, na.rm = T),
-            ny_2013 = sum(value_2013, na.rm = T),
-            ny_2014 = sum(value_2014, na.rm = T),
-            ny_2015 = sum(value_2015, na.rm = T),
-            ny_2016 = sum(value_2016, na.rm = T),
-            ny_2017 = sum(value_2017, na.rm = T)
-  )
-
-#Ohio
-trade_oh <- states_value %>%
-  filter(origin %in% "Ohio") %>%
-  group_by(destination) %>%
-  arrange(destination) %>%
-  summarize(oh_total = sum(sum, na.rm = T),
-            oh_average = (sum(sum, na.rm = T) / 6),
-            oh_2012 = sum(value_2012, na.rm = T),
-            oh_2013 = sum(value_2013, na.rm = T),
-            oh_2014 = sum(value_2014, na.rm = T),
-            oh_2015 = sum(value_2015, na.rm = T),
-            oh_2016 = sum(value_2016, na.rm = T),
-            oh_2017 = sum(value_2017, na.rm = T)
-  )
-
 #West Virginia
 trade_wv <- states_value %>%
   filter(origin %in% "West Virginia") %>%
@@ -281,29 +308,35 @@ trade_wv <- states_value %>%
             wv_2016 = sum(value_2016, na.rm = T),
             wv_2017 = sum(value_2017, na.rm = T)
   )
+
 }
 
 ###PRESENT TRADE VALUE
-#add all infected state data added to new summary object
+#add all infected state data added to new summary object: CT, DE, MD, NJ, NY, OH, PA, VA, WV
 trade_summary_slf <- left_join(trade_summary, trade_pa, by = "destination") %>%
+  left_join(., trade_ct, by = "destination") %>%
   left_join(., trade_de, by = "destination") %>%
   left_join(., trade_md, by = "destination") %>%
   left_join(., trade_nj, by = "destination") %>%
-  left_join(., trade_va, by = "destination")
+  left_join(., trade_ny, by = "destination") %>%
+  left_join(., trade_oh, by = "destination") %>%
+  left_join(., trade_va, by = "destination") %>%
+  left_join(., trade_wv, by = "destination")
 
 #add info for the total of all infected states
 trade_summary_slf <- trade_summary_slf %>%
   group_by(destination) %>%
   mutate(
-    infected_total = sum(c(pa_total, de_total, md_total, nj_total, va_total), na.rm = T),
-    infected_average = sum(c(pa_total, de_total, md_total, nj_total, va_total), na.rm = T)/30 #30 is 6 years * 5 total infected states, previous average removes NA's, forgetting them in the mean calc
+    infected_total = sum(c(pa_total, ct_total, de_total, md_total, nj_total, ny_total, oh_total, va_total, wv_total), na.rm = T),
+    infected_average = sum(c(pa_total, ct_total, de_total, md_total, nj_total, ny_total, oh_total, va_total, wv_total), na.rm = T)/54 #54 is 6 years * 9 total infected states, previous average removes NA's, forgetting them in the mean calc
   )
 
 
 ###FUTURE TRADE VALUE
 #new version of summarizing that works for new states
-#add all infected state data added to new summary object
+#add all infected state data added to new summary object: CT, DE, MD, NJ, NY, OH, PA, VA, WV + NC
 trade_summary_slf_future <- left_join(trade_summary, trade_pa, by = "destination") %>%
+  left_join(., trade_ct, by = "destination") %>%
   left_join(., trade_de, by = "destination") %>%
   left_join(., trade_md, by = "destination") %>%
   left_join(., trade_nc, by = "destination") %>%
@@ -317,8 +350,8 @@ trade_summary_slf_future <- left_join(trade_summary, trade_pa, by = "destination
 trade_summary_slf_future <- trade_summary_slf_future %>%
   group_by(destination) %>%
   mutate(
-    infected_total = sum(c(de_total, md_total, nc_total, nj_total, ny_total, oh_total, pa_total, va_total, wv_total), na.rm = T),
-    infected_average = sum(c(de_total, md_total, nc_total, nj_total, ny_total, oh_total, pa_total, va_total, wv_total), na.rm = T)/54 #54 is 6 years * 9 total infected states, previous average removes NA's, forgetting them in the mean calc
+    infected_total = sum(c(pa_total, ct_total, de_total, md_total, nj_total, ny_total, oh_total, va_total, wv_total, nc_total), na.rm = T),
+    infected_average = sum(c(pa_total, ct_total, de_total, md_total, nj_total, ny_total, oh_total, va_total, wv_total, nc_total), na.rm = T)/60 #60 is 6 years * 10 total infected states, previous average removes NA's, forgetting them in the mean calc
   )
 
 
@@ -348,6 +381,21 @@ trade_mass_summary <- states_mass %>%
             all_2015 = sum(mass_2015, na.rm = T),
             all_2016 = sum(mass_2016, na.rm = T),
             all_2017 = sum(mass_2017, na.rm = T)
+  )
+
+#Connecticut
+trade_mass_ct <- states_mass %>%
+  filter(origin %in% "Connecticut") %>%
+  group_by(destination) %>%
+  arrange(destination) %>%
+  summarize(ct_total = sum(sum, na.rm = T),
+            ct_average = (sum(sum, na.rm = T) / 6),
+            ct_2012 = sum(mass_2012, na.rm = T),
+            ct_2013 = sum(mass_2013, na.rm = T),
+            ct_2014 = sum(mass_2014, na.rm = T),
+            ct_2015 = sum(mass_2015, na.rm = T),
+            ct_2016 = sum(mass_2016, na.rm = T),
+            ct_2017 = sum(mass_2017, na.rm = T)
   )
 
 #Delaware
@@ -380,51 +428,6 @@ trade_mass_md <- states_mass %>%
             md_2017 = sum(mass_2017, na.rm = T)
   )
 
-#New Jersey
-trade_mass_nj <- states_mass %>%
-  filter(origin %in% "New Jersey") %>%
-  group_by(destination) %>%
-  arrange(destination) %>%
-  summarize(nj_total = sum(sum, na.rm = T),
-            nj_average = (sum(sum, na.rm = T) / 6),
-            nj_2012 = sum(mass_2012, na.rm = T),
-            nj_2013 = sum(mass_2013, na.rm = T),
-            nj_2014 = sum(mass_2014, na.rm = T),
-            nj_2015 = sum(mass_2015, na.rm = T),
-            nj_2016 = sum(mass_2016, na.rm = T),
-            nj_2017 = sum(mass_2017, na.rm = T)
-  )
-
-#pull data for states with PA specifically as the origin
-trade_mass_pa <- states_mass %>%
-  filter(origin %in% "Pennsylvania") %>%
-  group_by(destination) %>%
-  arrange(destination) %>%
-  summarize(pa_total = sum(sum, na.rm = T),
-            pa_average = (sum(sum, na.rm = T) / 6),
-            pa_2012 = sum(mass_2012, na.rm = T),
-            pa_2013 = sum(mass_2013, na.rm = T),
-            pa_2014 = sum(mass_2014, na.rm = T),
-            pa_2015 = sum(mass_2015, na.rm = T),
-            pa_2016 = sum(mass_2016, na.rm = T),
-            pa_2017 = sum(mass_2017, na.rm = T)
-  )
-
-#Virginia
-trade_mass_va <- states_mass %>%
-  filter(origin %in% "Virginia") %>%
-  group_by(destination) %>%
-  arrange(destination) %>%
-  summarize(va_total = sum(sum, na.rm = T),
-            va_average = (sum(sum, na.rm = T) / 6),
-            va_2012 = sum(mass_2012, na.rm = T),
-            va_2013 = sum(mass_2013, na.rm = T),
-            va_2014 = sum(mass_2014, na.rm = T),
-            va_2015 = sum(mass_2015, na.rm = T),
-            va_2016 = sum(mass_2016, na.rm = T),
-            va_2017 = sum(mass_2017, na.rm = T)
-  )
-
 #North Carolina
 trade_mass_nc <- states_mass %>%
   filter(origin %in% "North Carolina") %>%
@@ -438,6 +441,21 @@ trade_mass_nc <- states_mass %>%
             nc_2015 = sum(mass_2015, na.rm = T),
             nc_2016 = sum(mass_2016, na.rm = T),
             nc_2017 = sum(mass_2017, na.rm = T)
+  )
+
+#New Jersey
+trade_mass_nj <- states_mass %>%
+  filter(origin %in% "New Jersey") %>%
+  group_by(destination) %>%
+  arrange(destination) %>%
+  summarize(nj_total = sum(sum, na.rm = T),
+            nj_average = (sum(sum, na.rm = T) / 6),
+            nj_2012 = sum(mass_2012, na.rm = T),
+            nj_2013 = sum(mass_2013, na.rm = T),
+            nj_2014 = sum(mass_2014, na.rm = T),
+            nj_2015 = sum(mass_2015, na.rm = T),
+            nj_2016 = sum(mass_2016, na.rm = T),
+            nj_2017 = sum(mass_2017, na.rm = T)
   )
 
 #New York
@@ -470,6 +488,37 @@ trade_mass_oh <- states_mass %>%
             oh_2017 = sum(mass_2017, na.rm = T)
   )
 
+
+#Pennsylvania
+trade_mass_pa <- states_mass %>%
+  filter(origin %in% "Pennsylvania") %>%
+  group_by(destination) %>%
+  arrange(destination) %>%
+  summarize(pa_total = sum(sum, na.rm = T),
+            pa_average = (sum(sum, na.rm = T) / 6),
+            pa_2012 = sum(mass_2012, na.rm = T),
+            pa_2013 = sum(mass_2013, na.rm = T),
+            pa_2014 = sum(mass_2014, na.rm = T),
+            pa_2015 = sum(mass_2015, na.rm = T),
+            pa_2016 = sum(mass_2016, na.rm = T),
+            pa_2017 = sum(mass_2017, na.rm = T)
+  )
+
+#Virginia
+trade_mass_va <- states_mass %>%
+  filter(origin %in% "Virginia") %>%
+  group_by(destination) %>%
+  arrange(destination) %>%
+  summarize(va_total = sum(sum, na.rm = T),
+            va_average = (sum(sum, na.rm = T) / 6),
+            va_2012 = sum(mass_2012, na.rm = T),
+            va_2013 = sum(mass_2013, na.rm = T),
+            va_2014 = sum(mass_2014, na.rm = T),
+            va_2015 = sum(mass_2015, na.rm = T),
+            va_2016 = sum(mass_2016, na.rm = T),
+            va_2017 = sum(mass_2017, na.rm = T)
+  )
+
 #West Virginia
 trade_mass_wv <- states_mass %>%
   filter(origin %in% "West Virginia") %>%
@@ -487,25 +536,30 @@ trade_mass_wv <- states_mass %>%
 }
 
 ###PRESENT TRADE MASS
-#add all infected state data added to new summary object
+#add all infected state data added to new summary object: CT, DE, MD, NJ, NY, OH, PA, VA, WV
 trade_mass_summary_slf <- left_join(trade_mass_summary, trade_mass_pa, by = "destination") %>%
+  left_join(., trade_mass_ct, by = "destination") %>%
   left_join(., trade_mass_de, by = "destination") %>%
   left_join(., trade_mass_md, by = "destination") %>%
   left_join(., trade_mass_nj, by = "destination") %>%
-  left_join(., trade_mass_va, by = "destination")
+  left_join(., trade_mass_ny, by = "destination") %>%
+  left_join(., trade_mass_oh, by = "destination") %>%
+  left_join(., trade_mass_va, by = "destination") %>%
+  left_join(., trade_mass_wv, by = "destination")
 
 #add info for the total of all infected states
 trade_mass_summary_slf <- trade_mass_summary_slf %>%
   group_by(destination) %>%
   mutate(
-    infected_total = sum(c(pa_total, de_total, md_total, nj_total, va_total), na.rm = T),
-    infected_average = sum(c(pa_total, de_total, md_total, nj_total, va_total), na.rm = T)/30 #30 is 6 years * 5 total infected states, previous average removes NA's, forgetting them in the mean calc
+    infected_total = sum(c(pa_total, ct_total, de_total, md_total, nj_total, ny_total, oh_total, va_total, wv_total), na.rm = T),
+    infected_average = sum(c(pa_total, ct_total, de_total, md_total, nj_total, ny_total, oh_total, va_total, wv_total), na.rm = T)/54 #54 is 6 years * 9 total infected states, previous average removes NA's, forgetting them in the mean calc
   )
 
 ###FUTURE TRADE MASS
 #new version of summarizing that works for new states
-#add all infected state data added to new summary object
+#add all infected state data added to new summary object: CT, DE, MD, NJ, NY, OH, PA, VA, WV + NC
 trade_mass_summary_slf_future <- left_join(trade_mass_summary, trade_mass_pa, by = "destination") %>%
+  left_join(., trade_mass_ct, by = "destination") %>%
   left_join(., trade_mass_de, by = "destination") %>%
   left_join(., trade_mass_md, by = "destination") %>%
   left_join(., trade_mass_nc, by = "destination") %>%
@@ -519,8 +573,8 @@ trade_mass_summary_slf_future <- left_join(trade_mass_summary, trade_mass_pa, by
 trade_mass_summary_slf_future <- trade_mass_summary_slf_future %>%
   group_by(destination) %>%
   mutate(
-    infected_total = sum(c(de_total, md_total, nc_total, nj_total, ny_total, oh_total, pa_total, va_total, wv_total), na.rm = T),
-    infected_average = sum(c(de_total, md_total, nc_total, nj_total, ny_total, oh_total, pa_total, va_total, wv_total), na.rm = T)/54 #54 is 6 years * 9 total infected states, previous average removes NA's, forgetting them in the mean calc
+    infected_total = sum(c(pa_total, ct_total, de_total, md_total, nj_total, ny_total, oh_total, va_total, wv_total, nc_total), na.rm = T),
+    infected_average = sum(c(pa_total, ct_total, de_total, md_total, nj_total, ny_total, oh_total, va_total, wv_total, nc_total), na.rm = T)/60 #60 is 6 years * 10 total infected states, previous average removes NA's, forgetting them in the mean calc
   )
 
 
@@ -562,7 +616,10 @@ colnames(countries_mass) <- gsub(pattern = "201", replacement = "mass_201", x = 
 #get summary stats across years
 countries_mass <- countries_mass %>%
   group_by(origin, destination) %>%
-  mutate(sum = sum(mass_2012, mass_2013, mass_2014, mass_2015, mass_2016, mass_2017, na.rm = T), average = mean(x = c(mass_2012, mass_2013, mass_2014, mass_2015, mass_2016, mass_2017), na.rm = T))
+  mutate(
+    sum = sum(mass_2012, mass_2013, mass_2014, mass_2015, mass_2016, mass_2017, na.rm = T),
+    average = mean(x = c(mass_2012, mass_2013, mass_2014, mass_2015, mass_2016, mass_2017), na.rm = T)
+    )
 
 
 #value
@@ -576,7 +633,10 @@ colnames(countries_value) <- gsub(pattern = "201", replacement = "value_201", x 
 #get summary stats across years
 countries_value <- countries_value %>%
   group_by(origin, destination) %>%
-  mutate(sum = sum(value_2012, value_2013, value_2014, value_2015, value_2016, value_2017, na.rm = T), average = mean(x = c(value_2012, value_2013, value_2014, value_2015, value_2016, value_2017), na.rm = T))
+  mutate(
+    sum = sum(value_2012, value_2013, value_2014, value_2015, value_2016, value_2017, na.rm = T),
+    average = mean(x = c(value_2012, value_2013, value_2014, value_2015, value_2016, value_2017), na.rm = T)
+    )
 
 
 #first all trade by state
@@ -594,6 +654,21 @@ trade_summary <- countries_value %>%
             all_2015 = sum(value_2015, na.rm = T),
             all_2016 = sum(value_2016, na.rm = T),
             all_2017 = sum(value_2017, na.rm = T)
+  )
+
+#Connecticut
+trade_ct <- countries_value %>%
+  filter(origin %in% "Connecticut") %>%
+  group_by(destination) %>%
+  arrange(destination) %>%
+  summarize(ct_total = sum(sum, na.rm = T),
+            ct_average = (sum(sum, na.rm = T) / 6),
+            ct_2012 = sum(value_2012, na.rm = T),
+            ct_2013 = sum(value_2013, na.rm = T),
+            ct_2014 = sum(value_2014, na.rm = T),
+            ct_2015 = sum(value_2015, na.rm = T),
+            ct_2016 = sum(value_2016, na.rm = T),
+            ct_2017 = sum(value_2017, na.rm = T)
   )
 
 #Delaware
@@ -626,51 +701,6 @@ trade_md <- countries_value %>%
             md_2017 = sum(value_2017, na.rm = T)
   )
 
-#New Jersey
-trade_nj <- countries_value %>%
-  filter(origin %in% "New Jersey") %>%
-  group_by(destination) %>%
-  arrange(destination) %>%
-  summarize(nj_total = sum(sum, na.rm = T),
-            nj_average = (sum(sum, na.rm = T) / 6),
-            nj_2012 = sum(value_2012, na.rm = T),
-            nj_2013 = sum(value_2013, na.rm = T),
-            nj_2014 = sum(value_2014, na.rm = T),
-            nj_2015 = sum(value_2015, na.rm = T),
-            nj_2016 = sum(value_2016, na.rm = T),
-            nj_2017 = sum(value_2017, na.rm = T)
-  )
-
-#pull data for states with PA specifically as the origin
-trade_pa <- countries_value %>%
-  filter(origin %in% "Pennsylvania") %>%
-  group_by(destination) %>%
-  arrange(destination) %>%
-  summarize(pa_total = sum(sum, na.rm = T),
-            pa_average = (sum(sum, na.rm = T) / 6),
-            pa_2012 = sum(value_2012, na.rm = T),
-            pa_2013 = sum(value_2013, na.rm = T),
-            pa_2014 = sum(value_2014, na.rm = T),
-            pa_2015 = sum(value_2015, na.rm = T),
-            pa_2016 = sum(value_2016, na.rm = T),
-            pa_2017 = sum(value_2017, na.rm = T)
-  )
-
-#Virginia
-trade_va <- countries_value %>%
-  filter(origin %in% "Virginia") %>%
-  group_by(destination) %>%
-  arrange(destination) %>%
-  summarize(va_total = sum(sum, na.rm = T),
-            va_average = (sum(sum, na.rm = T) / 6),
-            va_2012 = sum(value_2012, na.rm = T),
-            va_2013 = sum(value_2013, na.rm = T),
-            va_2014 = sum(value_2014, na.rm = T),
-            va_2015 = sum(value_2015, na.rm = T),
-            va_2016 = sum(value_2016, na.rm = T),
-            va_2017 = sum(value_2017, na.rm = T)
-  )
-
 #North Carolina
 trade_nc <- countries_value %>%
   filter(origin %in% "North Carolina") %>%
@@ -684,6 +714,21 @@ trade_nc <- countries_value %>%
             nc_2015 = sum(value_2015, na.rm = T),
             nc_2016 = sum(value_2016, na.rm = T),
             nc_2017 = sum(value_2017, na.rm = T)
+  )
+
+#New Jersey
+trade_nj <- countries_value %>%
+  filter(origin %in% "New Jersey") %>%
+  group_by(destination) %>%
+  arrange(destination) %>%
+  summarize(nj_total = sum(sum, na.rm = T),
+            nj_average = (sum(sum, na.rm = T) / 6),
+            nj_2012 = sum(value_2012, na.rm = T),
+            nj_2013 = sum(value_2013, na.rm = T),
+            nj_2014 = sum(value_2014, na.rm = T),
+            nj_2015 = sum(value_2015, na.rm = T),
+            nj_2016 = sum(value_2016, na.rm = T),
+            nj_2017 = sum(value_2017, na.rm = T)
   )
 
 #New York
@@ -716,6 +761,36 @@ trade_oh <- countries_value %>%
             oh_2017 = sum(value_2017, na.rm = T)
   )
 
+#Pennsylvania
+trade_pa <- countries_value %>%
+  filter(origin %in% "Pennsylvania") %>%
+  group_by(destination) %>%
+  arrange(destination) %>%
+  summarize(pa_total = sum(sum, na.rm = T),
+            pa_average = (sum(sum, na.rm = T) / 6),
+            pa_2012 = sum(value_2012, na.rm = T),
+            pa_2013 = sum(value_2013, na.rm = T),
+            pa_2014 = sum(value_2014, na.rm = T),
+            pa_2015 = sum(value_2015, na.rm = T),
+            pa_2016 = sum(value_2016, na.rm = T),
+            pa_2017 = sum(value_2017, na.rm = T)
+  )
+
+#Virginia
+trade_va <- countries_value %>%
+  filter(origin %in% "Virginia") %>%
+  group_by(destination) %>%
+  arrange(destination) %>%
+  summarize(va_total = sum(sum, na.rm = T),
+            va_average = (sum(sum, na.rm = T) / 6),
+            va_2012 = sum(value_2012, na.rm = T),
+            va_2013 = sum(value_2013, na.rm = T),
+            va_2014 = sum(value_2014, na.rm = T),
+            va_2015 = sum(value_2015, na.rm = T),
+            va_2016 = sum(value_2016, na.rm = T),
+            va_2017 = sum(value_2017, na.rm = T)
+  )
+
 #West Virginia
 trade_wv <- countries_value %>%
   filter(origin %in% "West Virginia") %>%
@@ -733,25 +808,30 @@ trade_wv <- countries_value %>%
 }
 
 ###PRESENT TRADE VALUE
-#add all infected state data added to new summary object
+#add all infected state data added to new summary object: CT, DE, MD, NJ, NY, OH, PA, VA, WV
 countries_trade_summary_slf <- left_join(trade_summary, trade_pa, by = "destination") %>%
+  left_join(., trade_ct, by = "destination") %>%
   left_join(., trade_de, by = "destination") %>%
   left_join(., trade_md, by = "destination") %>%
   left_join(., trade_nj, by = "destination") %>%
-  left_join(., trade_va, by = "destination")
+  left_join(., trade_ny, by = "destination") %>%
+  left_join(., trade_oh, by = "destination") %>%
+  left_join(., trade_va, by = "destination") %>%
+  left_join(., trade_wv, by = "destination")
 
 #add info for the total of all infected states
 countries_trade_summary_slf <- countries_trade_summary_slf %>%
   group_by(destination) %>%
   mutate(
-    infected_total = sum(c(pa_total, de_total, md_total, nj_total, va_total), na.rm = T),
-    infected_average = sum(c(pa_total, de_total, md_total, nj_total, va_total), na.rm = T)/30 #30 is 6 years * 5 total infected states, previous average removes NA's, forgetting them in the mean calc
+    infected_total = sum(c(ct_total, de_total, md_total, nj_total, ny_total, oh_total, pa_total, va_total, wv_total), na.rm = T),
+    infected_average = sum(c(ct_total, de_total, md_total, nj_total, ny_total, oh_total, pa_total, va_total, wv_total), na.rm = T)/54 #54 is 6 years * 9 total infected states, previous average removes NA's, forgetting them in the mean calc
   )
 
 ###FUTURE TRADE VALUE
 #new version of summarizing that works for new states
-#add all infected state data added to new summary object
+#add all infected state data added to new summary object: CT, DE, MD, NJ, NY, OH, PA, VA, WV + NC
 countries_trade_summary_slf_future <- left_join(trade_summary, trade_pa, by = "destination") %>%
+  left_join(., trade_ct, by = "destination") %>%
   left_join(., trade_de, by = "destination") %>%
   left_join(., trade_md, by = "destination") %>%
   left_join(., trade_nc, by = "destination") %>%
@@ -765,8 +845,8 @@ countries_trade_summary_slf_future <- left_join(trade_summary, trade_pa, by = "d
 countries_trade_summary_slf_future <- countries_trade_summary_slf_future %>%
   group_by(destination) %>%
   mutate(
-    infected_total = sum(c(de_total, md_total, nc_total, nj_total, ny_total, oh_total, pa_total, va_total, wv_total), na.rm = T),
-    infected_average = sum(c(de_total, md_total, nc_total, nj_total, ny_total, oh_total, pa_total, va_total, wv_total), na.rm = T)/54 #54 is 6 years * 9 total infected states, previous average removes NA's, forgetting them in the mean calc
+    infected_total = sum(c(ct_total, de_total, md_total, nj_total, ny_total, oh_total, pa_total, va_total, wv_total, nc_total), na.rm = T),
+    infected_average = sum(c(ct_total, de_total, md_total, nj_total, ny_total, oh_total, pa_total, va_total, wv_total, nc_total), na.rm = T)/60 #60 is 6 years * 10 total infected states, previous average removes NA's, forgetting them in the mean calc
   )
 
 
@@ -802,6 +882,21 @@ countries_trade_summary_slf_future <- countries_trade_summary_slf_future %>%
               all_2017 = sum(mass_2017, na.rm = T)
     )
 
+  #Connecticut
+  trade_mass_ct <- countries_mass %>%
+    filter(origin %in% "Connecticut") %>%
+    group_by(destination) %>%
+    arrange(destination) %>%
+    summarize(ct_total = sum(sum, na.rm = T),
+              ct_average = (sum(sum, na.rm = T) / 6),
+              ct_2012 = sum(mass_2012, na.rm = T),
+              ct_2013 = sum(mass_2013, na.rm = T),
+              ct_2014 = sum(mass_2014, na.rm = T),
+              ct_2015 = sum(mass_2015, na.rm = T),
+              ct_2016 = sum(mass_2016, na.rm = T),
+              ct_2017 = sum(mass_2017, na.rm = T)
+    )
+
   #Delaware
   trade_mass_de <- countries_mass %>%
     filter(origin %in% "Delaware") %>%
@@ -832,51 +927,6 @@ countries_trade_summary_slf_future <- countries_trade_summary_slf_future %>%
               md_2017 = sum(mass_2017, na.rm = T)
     )
 
-  #New Jersey
-  trade_mass_nj <- countries_mass %>%
-    filter(origin %in% "New Jersey") %>%
-    group_by(destination) %>%
-    arrange(destination) %>%
-    summarize(nj_total = sum(sum, na.rm = T),
-              nj_average = (sum(sum, na.rm = T) / 6),
-              nj_2012 = sum(mass_2012, na.rm = T),
-              nj_2013 = sum(mass_2013, na.rm = T),
-              nj_2014 = sum(mass_2014, na.rm = T),
-              nj_2015 = sum(mass_2015, na.rm = T),
-              nj_2016 = sum(mass_2016, na.rm = T),
-              nj_2017 = sum(mass_2017, na.rm = T)
-    )
-
-  #pull data for countries with PA specifically as the origin
-  trade_mass_pa <- countries_mass %>%
-    filter(origin %in% "Pennsylvania") %>%
-    group_by(destination) %>%
-    arrange(destination) %>%
-    summarize(pa_total = sum(sum, na.rm = T),
-              pa_average = (sum(sum, na.rm = T) / 6),
-              pa_2012 = sum(mass_2012, na.rm = T),
-              pa_2013 = sum(mass_2013, na.rm = T),
-              pa_2014 = sum(mass_2014, na.rm = T),
-              pa_2015 = sum(mass_2015, na.rm = T),
-              pa_2016 = sum(mass_2016, na.rm = T),
-              pa_2017 = sum(mass_2017, na.rm = T)
-    )
-
-  #Virginia
-  trade_mass_va <- countries_mass %>%
-    filter(origin %in% "Virginia") %>%
-    group_by(destination) %>%
-    arrange(destination) %>%
-    summarize(va_total = sum(sum, na.rm = T),
-              va_average = (sum(sum, na.rm = T) / 6),
-              va_2012 = sum(mass_2012, na.rm = T),
-              va_2013 = sum(mass_2013, na.rm = T),
-              va_2014 = sum(mass_2014, na.rm = T),
-              va_2015 = sum(mass_2015, na.rm = T),
-              va_2016 = sum(mass_2016, na.rm = T),
-              va_2017 = sum(mass_2017, na.rm = T)
-    )
-
   #North Carolina
   trade_mass_nc <- countries_mass %>%
     filter(origin %in% "North Carolina") %>%
@@ -890,6 +940,21 @@ countries_trade_summary_slf_future <- countries_trade_summary_slf_future %>%
               nc_2015 = sum(mass_2015, na.rm = T),
               nc_2016 = sum(mass_2016, na.rm = T),
               nc_2017 = sum(mass_2017, na.rm = T)
+    )
+
+  #New Jersey
+  trade_mass_nj <- countries_mass %>%
+    filter(origin %in% "New Jersey") %>%
+    group_by(destination) %>%
+    arrange(destination) %>%
+    summarize(nj_total = sum(sum, na.rm = T),
+              nj_average = (sum(sum, na.rm = T) / 6),
+              nj_2012 = sum(mass_2012, na.rm = T),
+              nj_2013 = sum(mass_2013, na.rm = T),
+              nj_2014 = sum(mass_2014, na.rm = T),
+              nj_2015 = sum(mass_2015, na.rm = T),
+              nj_2016 = sum(mass_2016, na.rm = T),
+              nj_2017 = sum(mass_2017, na.rm = T)
     )
 
   #New York
@@ -922,6 +987,36 @@ countries_trade_summary_slf_future <- countries_trade_summary_slf_future %>%
               oh_2017 = sum(mass_2017, na.rm = T)
     )
 
+  #Pennsylvania
+  trade_mass_pa <- countries_mass %>%
+    filter(origin %in% "Pennsylvania") %>%
+    group_by(destination) %>%
+    arrange(destination) %>%
+    summarize(pa_total = sum(sum, na.rm = T),
+              pa_average = (sum(sum, na.rm = T) / 6),
+              pa_2012 = sum(mass_2012, na.rm = T),
+              pa_2013 = sum(mass_2013, na.rm = T),
+              pa_2014 = sum(mass_2014, na.rm = T),
+              pa_2015 = sum(mass_2015, na.rm = T),
+              pa_2016 = sum(mass_2016, na.rm = T),
+              pa_2017 = sum(mass_2017, na.rm = T)
+    )
+
+  #Virginia
+  trade_mass_va <- countries_mass %>%
+    filter(origin %in% "Virginia") %>%
+    group_by(destination) %>%
+    arrange(destination) %>%
+    summarize(va_total = sum(sum, na.rm = T),
+              va_average = (sum(sum, na.rm = T) / 6),
+              va_2012 = sum(mass_2012, na.rm = T),
+              va_2013 = sum(mass_2013, na.rm = T),
+              va_2014 = sum(mass_2014, na.rm = T),
+              va_2015 = sum(mass_2015, na.rm = T),
+              va_2016 = sum(mass_2016, na.rm = T),
+              va_2017 = sum(mass_2017, na.rm = T)
+    )
+
   #West Virginia
   trade_mass_wv <- countries_mass %>%
     filter(origin %in% "West Virginia") %>%
@@ -940,23 +1035,28 @@ countries_trade_summary_slf_future <- countries_trade_summary_slf_future %>%
 
 
 #PRESENT TRADE MASS
-#add all infected state data added to new summary object
+#add all infected state data added to new summary object: CT, DE, MD, NJ, NY, OH, PA, VA, WV
 countries_trade_mass_summary_slf <- left_join(trade_mass_summary, trade_mass_pa, by = "destination") %>%
+  left_join(., trade_mass_ct, by = "destination") %>%
   left_join(., trade_mass_de, by = "destination") %>%
   left_join(., trade_mass_md, by = "destination") %>%
   left_join(., trade_mass_nj, by = "destination") %>%
-  left_join(., trade_mass_va, by = "destination")
+  left_join(., trade_mass_ny, by = "destination") %>%
+  left_join(., trade_mass_oh, by = "destination") %>%
+  left_join(., trade_mass_va, by = "destination") %>%
+  left_join(., trade_mass_wv, by = "destination")
 
 #add info for the total of all infected states
 countries_trade_mass_summary_slf <- countries_trade_mass_summary_slf %>%
   group_by(destination) %>%
   mutate(
-    infected_total = sum(c(pa_total, de_total, md_total, nj_total, va_total), na.rm = T),
-    infected_average = sum(c(pa_total, de_total, md_total, nj_total, va_total), na.rm = T)/30 #30 is 6 years * 5 total infected states, previous average removes NA's, forgetting them in the mean calc
+    infected_total = sum(c(ct_total, de_total, md_total, nj_total, ny_total, oh_total, pa_total, va_total, wv_total), na.rm = T),
+    infected_average = sum(c(ct_total, de_total, md_total, nj_total, ny_total, oh_total, pa_total, va_total, wv_total), na.rm = T)/54 #54 is 6 years * 9 total infected states, previous average removes NA's, forgetting them in the mean calc
   )
 
-#FUTURE TRADE MASS
+#FUTURE TRADE MASS: CT, DE, MD, NJ, NY, OH, PA, VA, WV + NC
 countries_trade_mass_summary_slf_future <- left_join(trade_mass_summary, trade_mass_pa, by = "destination") %>%
+  left_join(., trade_mass_ct, by = "destination") %>%
   left_join(., trade_mass_de, by = "destination") %>%
   left_join(., trade_mass_md, by = "destination") %>%
   left_join(., trade_mass_nc, by = "destination") %>%
@@ -970,8 +1070,8 @@ countries_trade_mass_summary_slf_future <- left_join(trade_mass_summary, trade_m
 countries_trade_mass_summary_slf_future <- countries_trade_mass_summary_slf_future %>%
   group_by(destination) %>%
   mutate(
-    infected_total = sum(c(de_total, md_total, nc_total, nj_total, ny_total, oh_total, pa_total, va_total, wv_total), na.rm = T),
-    infected_average = sum(c(de_total, md_total, nc_total, nj_total, ny_total, oh_total, pa_total, va_total, wv_total), na.rm = T)/54 #54 is 6 years * 9 total infected states, previous average removes NA's, forgetting them in the mean calc
+    infected_total = sum(c(ct_total, de_total, md_total, nj_total, ny_total, oh_total, pa_total, va_total, wv_total, nc_total), na.rm = T),
+    infected_average = sum(c(ct_total, de_total, md_total, nj_total, ny_total, oh_total, pa_total, va_total, wv_total, nc_total), na.rm = T)/60 #60 is 6 years * 10 total infected states, previous average removes NA's, forgetting them in the mean calc
   )
 
 #replace the Na's with zeros
