@@ -167,13 +167,6 @@ toh_coords3 <- toh_coords3 %>%
 write_csv(slf_coords3, file = file.path(here(), "data-raw", "slf_gbif_cleaned_coords_2020.csv"))
 write_csv(toh_coords3, file = file.path(here(), "data-raw", "toh_gbif_cleaned_coords_2020.csv"))
 
-#save as .rda files as well
-slf_coords <- slf_coords3
-toh_coords <- toh_coords3
-
-save(slf_coords, file = file.path(here(), "data", "slf_coords.rda"))
-save(toh_coords, file = file.path(here(), "data", "toh_coords.rda"))
-
 }
 ```
 
@@ -185,15 +178,16 @@ We can read in the final data for looking at the spatial coverage despite the th
 #slf_coords3 <- read_csv(file = file.path(here(), "data-raw", "slf_gbif_cleaned_coords_2020.csv"))
 #toh_coords3 <- read_csv(file = file.path(here(), "data-raw", "toh_gbif_cleaned_coords_2020.csv"))
 
-data("slf_coords", package = "slfrsk")
-data("toh_coords", package = "slfrsk")
+#note: we read in slightly modified versions of the same coords. lat/lon were changed to y/x respectively and the species names were cleaned up. see corresponding section in data-raw/convert_data_rda.R for details
+data("slf_points", package = "slfrsk")
+data("toh_points", package = "slfrsk")
 
 #plot the difference
 #TOH
 map_toh <- ggplot() +
   geom_polygon(data = map_data('world'), aes(x = long, y = lat, group = group), fill = NA, color = "black", lwd = 0.15) +
   geom_point(data = toh_coords1, aes(x = longitude, y = latitude), color = "red", size = 2) +
-  geom_point(data = toh_coords, aes(x = longitude, y = latitude), color = "blue", shape = 2) +
+  geom_point(data = toh_points, aes(x = x, y = y), color = "blue", shape = 2) +
   coord_quickmap(xlim = c(-164.5, 163.5), ylim = c(-55,85)) +
   ggtitle("TOH") +
   theme(panel.grid.major = element_blank(),
@@ -204,7 +198,7 @@ map_toh <- ggplot() +
 map_slf <- ggplot() +
   geom_polygon(data = map_data('world'), aes(x = long, y = lat, group = group), fill = NA, color = "black", lwd = 0.15) +
   geom_point(data = slf_coords1, aes(x = longitude, y = latitude), color = "red", size = 2) +
-  geom_point(data = slf_coords, aes(x = longitude, y = latitude), color = "blue", shape = 2) +
+  geom_point(data = slf_points, aes(x = x, y = y), color = "blue", shape = 2) +
   coord_quickmap(xlim = c(-164.5, 163.5), ylim = c(-55,85)) +
   ggtitle("SLF") +
   theme(panel.grid.major = element_blank(),
