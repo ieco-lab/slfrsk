@@ -3,9 +3,10 @@ title: "Data Tidying"
 output: rmarkdown::html_notebook
 vignette: >
   %\VignetteIndexEntry{vignette-010-tidy-data}
-  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
-
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: inline
 ---
 
 ```{r, include = FALSE}
@@ -119,7 +120,7 @@ colnames(stateid) <- c("ID", "geopol_unit")
 
 #add in the infection status of each state while adding the abbreviations
  states_trade_summary_slf <-  left_join(states_trade_summary_slf, stateid, by = c("destination" = "geopol_unit")) %>%
-    mutate(status = ifelse(ID %in% c("DE", "MD", "NJ","PA", "VA"), "established", "not established")) %>%
+    mutate(status = ifelse(ID %in% c("CT", "DE", "MD", "NJ", "NY", "OH", "PA", "VA", "WV"), "established", "not established")) %>%
     dplyr::select(destination, ID, status, everything())
   
   #tidying of data
@@ -131,7 +132,16 @@ colnames(stateid) <- c("ID", "geopol_unit")
   summary_states_trade_value <- states_trade_summary_slf %>%
     group_by(destination) %>%
     #filter to be just trade with infected states present
-    filter(str_detect(infected_state, "pa_") | str_detect(infected_state, "de_") | str_detect(infected_state, "va_") | str_detect(infected_state, "nj_") | str_detect(infected_state, "md_")) %>%
+    filter(str_detect(infected_state, "pa_") | 
+             str_detect(infected_state, "de_") | 
+             str_detect(infected_state, "va_") | 
+             str_detect(infected_state, "nj_") | 
+             str_detect(infected_state, "md_") | 
+             str_detect(infected_state, "ct_") | 
+             str_detect(infected_state, "ny_") | 
+             str_detect(infected_state, "oh_") | 
+             str_detect(infected_state, "wv_")
+           ) %>%
     #remove the all state trade from consideration
     filter(str_detect(infected_state, "201") & !str_detect(infected_state, "all")) %>%  
     #make a temporary col
@@ -146,7 +156,17 @@ colnames(stateid) <- c("ID", "geopol_unit")
     #filter out the intrastate trade for infected states to avoid extra low averages by creating a hybrid string (DestinationState+abbreviated_infected state)
     group_by(destination, year, status) %>% 
     mutate(clear_intra = paste0(destination, source)) %>%
-    filter(!clear_intra %in% c("Delawarede", "Marylandmd", "New Jerseynj", "Pennsylvaniapa", "Virginiava")) %>%
+    filter(!clear_intra %in% 
+             c("Connecticutct", 
+               "Delawarede", 
+               "Marylandmd", 
+               "New Jerseynj", 
+               "New Yorkny", 
+               "Ohiooh", 
+               "Pennsylvaniapa", 
+               "Virginiava", 
+               "West Virginiawv")
+           ) %>%
     #remove workaround infected intrastate column
     dplyr::select(-clear_intra) %>%
     #add up the trade with infected states for each destination state and year (THIS IS NOT AVG INFECTED TRADE YET)
@@ -159,7 +179,7 @@ colnames(stateid) <- c("ID", "geopol_unit")
   
 #FUTURE
     states_trade_summary_slf_future <-  left_join(states_trade_summary_slf_future, stateid, by = c("destination" = "geopol_unit")) %>%
-    mutate(status = ifelse(ID %in% c("DE", "MD", "NC", "NJ", "NY", "OH", "PA", "VA", "WV"), "established", "not established")) %>%
+    mutate(status = ifelse(ID %in% c("CT", "DE", "MD", "NC", "NJ", "NY", "OH", "PA", "VA", "WV"), "established", "not established")) %>%
     dplyr::select(destination, ID, status, everything())
   
   #tidying of data
@@ -170,7 +190,17 @@ colnames(stateid) <- c("ID", "geopol_unit")
   #total infected states trade, average/SE
   summary_states_trade_value_future <- states_trade_summary_slf_future %>%
     group_by(destination) %>%
-    filter(str_detect(infected_state, "pa_") | str_detect(infected_state, "de_") | str_detect(infected_state, "va_") | str_detect(infected_state, "nj_") | str_detect(infected_state, "md_") | str_detect(infected_state, "nc_")  | str_detect(infected_state, "ny_")  | str_detect(infected_state, "oh_")  | str_detect(infected_state, "wv_")) %>%
+    filter(str_detect(infected_state, "pa_") | 
+             str_detect(infected_state, "de_") | 
+             str_detect(infected_state, "va_") | 
+             str_detect(infected_state, "nj_") | 
+             str_detect(infected_state, "md_") | 
+             str_detect(infected_state, "nc_") | 
+             str_detect(infected_state, "ny_") | 
+             str_detect(infected_state, "oh_") | 
+             str_detect(infected_state, "wv_") | 
+             str_detect(infected_state, "ct_")
+           ) %>%
     filter(str_detect(infected_state, "201") & !str_detect(infected_state, "all")) %>%
     mutate(tempcol = str_split(infected_state, "_")) %>%
     rowwise() %>%
@@ -179,7 +209,19 @@ colnames(stateid) <- c("ID", "geopol_unit")
     group_by(destination, year, status) %>%
     #filter out the intrastate trade for infected states to avoid extra low averages
     mutate(clear_intra = paste0(destination, source)) %>%
-    filter(!clear_intra %in% c("Delawarede", "Marylandmd", "New Jerseynj", "Pennsylvaniapa", "Virginiava", "North Carolinanc", "New Yorkny", "Ohiooh", "West Virginiawv")) %>%
+    filter(!clear_intra %in% 
+             c("Connecticutct", 
+               "Delawarede", 
+               "Marylandmd", 
+               "North Carolinanc", 
+               "New Jerseynj", 
+               "New Yorkny", 
+               "Ohiooh", 
+               "Pennsylvaniapa", 
+               "Virginiava", 
+               "West Virginiawv"
+               )
+           ) %>%
     #remove workaround infected intrastate column
     dplyr::select(-clear_intra) %>%
     summarize(avg_infected_trade = sum(trade)) %>%
@@ -198,7 +240,7 @@ data("states_trade_mass_summary_slf_future")
 #PRESENT
   #add in the infection status of each state while adding the abbreviations
    states_trade_mass_summary_slf <- left_join(states_trade_mass_summary_slf, stateid, by = c("destination" = "geopol_unit")) %>%
-    mutate(status = ifelse(ID %in% c("DE", "MD", "NJ","PA", "VA"), "established", "not established")) %>%
+    mutate(status = ifelse(ID %in% c("CT", "DE", "MD", "NJ", "NY", "OH", "PA", "VA", "WV"), "established", "not established")) %>%
     dplyr::select(destination, ID, status, everything())
 
      #tidying of data and dividing by 1000 to convert from kg to metric tons
@@ -210,7 +252,17 @@ data("states_trade_mass_summary_slf_future")
   #mass
   summary_states_trade_mass <- states_trade_mass_summary_slf %>%
     group_by(destination) %>%
-    filter(str_detect(infected_state, "pa_") | str_detect(infected_state, "de_") | str_detect(infected_state, "va_") | str_detect(infected_state, "nj_") | str_detect(infected_state, "md_")) %>%
+    #filter to be just trade with infected states present
+    filter(str_detect(infected_state, "pa_") | 
+             str_detect(infected_state, "de_") | 
+             str_detect(infected_state, "va_") | 
+             str_detect(infected_state, "nj_") | 
+             str_detect(infected_state, "md_") | 
+             str_detect(infected_state, "ct_") | 
+             str_detect(infected_state, "ny_") | 
+             str_detect(infected_state, "oh_") | 
+             str_detect(infected_state, "wv_")
+           ) %>%
     filter(str_detect(infected_state, "201") & !str_detect(infected_state, "all")) %>%
     mutate(tempcol = str_split(infected_state, "_")) %>%
     rowwise() %>%
@@ -219,7 +271,17 @@ data("states_trade_mass_summary_slf_future")
     group_by(destination, year, status) %>%
     #filter out the intrastate trade for infected states to avoid extra low averages
     mutate(clear_intra = paste0(destination, source)) %>%
-    filter(!clear_intra %in% c("Delawarede", "Marylandmd", "New Jerseynj", "Pennsylvaniapa", "Virginiava")) %>%
+    filter(!clear_intra %in% 
+             c("Connecticutct", 
+               "Delawarede", 
+               "Marylandmd", 
+               "New Jerseynj", 
+               "New Yorkny", 
+               "Ohiooh", 
+               "Pennsylvaniapa", 
+               "Virginiava", 
+               "West Virginiawv")
+           ) %>%
     #remove workaround infected intrastate column
     dplyr::select(-clear_intra) %>%
     summarize(avg_infected_mass = sum(mass)) %>%
@@ -230,7 +292,7 @@ data("states_trade_mass_summary_slf_future")
 #FUTURE
    #add col to identify infected states
   states_trade_mass_summary_slf_future <-  left_join(states_trade_mass_summary_slf_future, stateid, by = c("destination" = "geopol_unit")) %>%
-    mutate(status = ifelse(ID %in% c("DE", "MD", "NC", "NJ", "NY", "OH", "PA", "VA", "WV"), "established", "not established")) %>%
+    mutate(status = ifelse(ID %in% c("CT", "DE", "MD", "NC", "NJ", "NY", "OH", "PA", "VA", "WV"), "established", "not established")) %>%
     dplyr::select(destination, ID, status, everything())
   
   #tidying of data and dividing by 1000 to convert from kg to metric tons
@@ -242,7 +304,17 @@ data("states_trade_mass_summary_slf_future")
   #mass
   summary_states_trade_mass_future <- states_trade_mass_summary_slf_future %>%
     group_by(destination) %>%
-    filter(str_detect(infected_state, "pa_") | str_detect(infected_state, "de_") | str_detect(infected_state, "va_") | str_detect(infected_state, "nj_") | str_detect(infected_state, "md_") | str_detect(infected_state, "nc_")  | str_detect(infected_state, "ny_")  | str_detect(infected_state, "oh_")  | str_detect(infected_state, "wv_")) %>%
+    filter(str_detect(infected_state, "pa_") | 
+             str_detect(infected_state, "de_") | 
+             str_detect(infected_state, "va_") | 
+             str_detect(infected_state, "nj_") | 
+             str_detect(infected_state, "md_") | 
+             str_detect(infected_state, "nc_") | 
+             str_detect(infected_state, "ny_") | 
+             str_detect(infected_state, "oh_") | 
+             str_detect(infected_state, "wv_") | 
+             str_detect(infected_state, "ct_")
+           ) %>%    
     filter(str_detect(infected_state, "201") & !str_detect(infected_state, "all")) %>%
     mutate(tempcol = str_split(infected_state, "_")) %>%
     rowwise() %>%
@@ -251,7 +323,19 @@ data("states_trade_mass_summary_slf_future")
     group_by(destination, year, status) %>%
     #filter out the intrastate trade for infected states to avoid extra low averages
     mutate(clear_intra = paste0(destination, source)) %>%
-    filter(!clear_intra %in% c("Delawarede", "Marylandmd", "New Jerseynj", "Pennsylvaniapa", "Virginiava", "North Carolinanc", "New Yorkny", "Ohiooh", "West Virginiawv")) %>%
+    filter(!clear_intra %in% 
+             c("Connecticutct", 
+               "Delawarede", 
+               "Marylandmd", 
+               "North Carolinanc", 
+               "New Jerseynj", 
+               "New Yorkny", 
+               "Ohiooh", 
+               "Pennsylvaniapa", 
+               "Virginiava", 
+               "West Virginiawv"
+               )
+           ) %>%
     #remove workaround infected intrastate column
     dplyr::select(-clear_intra) %>%
     summarize(avg_infected_mass = sum(mass)) %>%
@@ -288,7 +372,16 @@ countries_trade_summary_slf <- countries_trade_summary_slf %>%
   #value
   summary_countries_trade_value <- countries_trade_summary_slf %>%
     group_by(destination) %>%
-    filter(str_detect(infected_state, "pa_") | str_detect(infected_state, "de_") | str_detect(infected_state, "va_") | str_detect(infected_state, "nj_") | str_detect(infected_state, "md_")) %>%
+    filter(str_detect(infected_state, "pa_") | 
+             str_detect(infected_state, "de_") | 
+             str_detect(infected_state, "va_") | 
+             str_detect(infected_state, "nj_") | 
+             str_detect(infected_state, "md_") | 
+             str_detect(infected_state, "ct_") | 
+             str_detect(infected_state, "ny_") | 
+             str_detect(infected_state, "oh_") | 
+             str_detect(infected_state, "wv_")
+           ) %>%
     filter(str_detect(infected_state, "201") & !str_detect(infected_state, "all")) %>%
     mutate(tempcol = str_split(infected_state, "_")) %>%
     rowwise() %>%
@@ -310,7 +403,17 @@ countries_trade_summary_slf_future <- countries_trade_summary_slf_future %>%
   #value
   summary_countries_trade_value_future <- countries_trade_summary_slf_future %>%
     group_by(destination) %>%
-    filter(str_detect(infected_state, "pa_") | str_detect(infected_state, "de_") | str_detect(infected_state, "va_") | str_detect(infected_state, "nj_") | str_detect(infected_state, "md_") | str_detect(infected_state, "nc_")  | str_detect(infected_state, "ny_")  | str_detect(infected_state, "oh_")  | str_detect(infected_state, "wv_")) %>%
+    filter(str_detect(infected_state, "pa_") | 
+             str_detect(infected_state, "de_") | 
+             str_detect(infected_state, "va_") | 
+             str_detect(infected_state, "nj_") | 
+             str_detect(infected_state, "md_") | 
+             str_detect(infected_state, "nc_") | 
+             str_detect(infected_state, "ny_") | 
+             str_detect(infected_state, "oh_") | 
+             str_detect(infected_state, "wv_") | 
+             str_detect(infected_state, "ct_")
+           ) %>%    
     filter(str_detect(infected_state, "201") & !str_detect(infected_state, "all")) %>%
     mutate(tempcol = str_split(infected_state, "_")) %>%
     rowwise() %>%
@@ -338,7 +441,16 @@ countries_trade_mass_summary_slf <- countries_trade_mass_summary_slf %>%
   #mass
   summary_countries_trade_mass <- countries_trade_mass_summary_slf %>%
     group_by(destination) %>%
-    filter(str_detect(infected_state, "pa_") | str_detect(infected_state, "de_") | str_detect(infected_state, "va_") | str_detect(infected_state, "nj_") | str_detect(infected_state, "md_")) %>%
+    filter(str_detect(infected_state, "pa_") | 
+             str_detect(infected_state, "de_") | 
+             str_detect(infected_state, "va_") | 
+             str_detect(infected_state, "nj_") | 
+             str_detect(infected_state, "md_") | 
+             str_detect(infected_state, "ct_") | 
+             str_detect(infected_state, "ny_") | 
+             str_detect(infected_state, "oh_") | 
+             str_detect(infected_state, "wv_")
+           ) %>%
     filter(str_detect(infected_state, "201") & !str_detect(infected_state, "all")) %>%
     mutate(tempcol = str_split(infected_state, "_")) %>%
     rowwise() %>%
@@ -361,7 +473,17 @@ countries_trade_mass_summary_slf_future <- countries_trade_mass_summary_slf_futu
   #mass
   summary_countries_trade_mass_future <- countries_trade_mass_summary_slf_future %>%
     group_by(destination) %>%
-    filter(str_detect(infected_state, "pa_") | str_detect(infected_state, "de_") | str_detect(infected_state, "va_") | str_detect(infected_state, "nj_") | str_detect(infected_state, "md_") | str_detect(infected_state, "nc_")  | str_detect(infected_state, "ny_")  | str_detect(infected_state, "oh_")  | str_detect(infected_state, "wv_")) %>%
+    filter(str_detect(infected_state, "pa_") | 
+             str_detect(infected_state, "de_") | 
+             str_detect(infected_state, "va_") | 
+             str_detect(infected_state, "nj_") | 
+             str_detect(infected_state, "md_") | 
+             str_detect(infected_state, "nc_") | 
+             str_detect(infected_state, "ny_") | 
+             str_detect(infected_state, "oh_") | 
+             str_detect(infected_state, "wv_") | 
+             str_detect(infected_state, "ct_")
+           ) %>%    
     filter(str_detect(infected_state, "201") & !str_detect(infected_state, "all")) %>%
     mutate(tempcol = str_split(infected_state, "_")) %>%
     rowwise() %>%
