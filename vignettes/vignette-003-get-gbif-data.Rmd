@@ -113,16 +113,15 @@ toh_coords1$name <- "Ailanthus altissima (Mill.) Swingle"
 
 ### Coordinate Veracity
 
-Coordinate veracity has several components that amount to removing coordinates that do not make sense. Given the difference in raw records for both species, SLF is easily cleaned of dubious records while TOH has too many records and breaks at least one function (`scrubr::dedup()`) if run through the same cleaning steps in the same order. We break that order slightly to make cleaning possible, but these steps have been turned off for the vignette to avoid increased run time.
+Coordinate veracity has several components that amount to removing coordinates that do not make sense. Given the difference in raw records for both species, SLF is easily cleaned of dubious records while TOH has too many records and breaks at least one function (`scrubr::dedup()`) if run through the cleaning steps with removal of duplicates before rarefication. To account for this, both datasets run `scrubr::dedup()` after rarefication.
 
-We make good use of the `scrubr` package functions to clean coordinates. Remember that for TOH we will use `scrubr::dedup()` a little later (after rarefaction).
+We make good use of the `scrubr` package functions to clean coordinates.
 
 ```{r coordinate cleaning}
 slf_coords1 <- slf_coords1 %>%
   coord_incomplete() %>%  #rm incomplete coords, those that lack valid lat and long
   coord_impossible() %>% #rm impossible coords, those that are not possible (e.g., lat > 90)
-  coord_unlikely() %>%  #rm unlikely coords, such as those at 0,0
-  dedup(how = "one", tolerance = 0.99) #rm duplicate coords
+  coord_unlikely()  #rm unlikely coords, such as those at 0,0
 
 #toh
 toh_coords1 <- toh_coords1 %>%
@@ -133,7 +132,7 @@ toh_coords1 <- toh_coords1 %>%
 
 ### Coordinate Rarefication
 
-We now use the `humboldt` package rarefaction function `humboldt::humboldt.occ.rarefy()` to trime points that are $<10 km$ from each other. This cleaning step reduces spatial autocorrelation in our data, which is a good thing! After this, we run the TOH data through `scrubr::dedup`.
+We now use the `humboldt` package rarefaction function `humboldt::humboldt.occ.rarefy()` to trime points that are $<10 km$ from each other. This cleaning step reduces spatial autocorrelation in our data, which is a good thing! After this, we run the data through `scrubr::dedup`.
 
 Note that the rarefaction takes a while for TOH especially (it is cleaning 67000+ records after all). We also manually remove some points from SLF that are clearly incorrect as of Fall 2020 (after consulting colleagues).
 
@@ -144,7 +143,9 @@ if(FALSE){
 slf_coords2 <- humboldt.occ.rarefy(in.pts = slf_coords1, colxy = 2:3, rarefy.dist = 10, rarefy.units = "km", run.silent.rar = F)
 toh_coords2 <- humboldt.occ.rarefy(in.pts = toh_coords1, colxy = 2:3, rarefy.dist = 10, rarefy.units = "km", run.silent.rar = F)
 
-#dedup TOH now
+#dedup now
+slf_coords3 <- slf_coords2 %>%
+  dedup(how = "one", tolerance = 0.99)
 toh_coords3 <- toh_coords2 %>%
   dedup(how = "one", tolerance = 0.99)
 
