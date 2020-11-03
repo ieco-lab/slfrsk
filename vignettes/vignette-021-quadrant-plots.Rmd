@@ -254,7 +254,7 @@ if(one_zero){
 
 **Additional Note:** Below is code that can be used to make a version of the `country` data that removes all countries that have a no `trade` with infected states (*we leave the zeroes in for the current figures*):
 ```{r rm zeros, eval=FALSE}
-if(false){
+if(FALSE){
 #rm the trade mass zero countries
 countries_summary_nozeros_present <- countries_summary_present %>% filter(log10_avg_infected_mass != 0)
 countries_summary_nozeros_future <- countries_summary_future %>% filter(log10_avg_infected_mass != 0)
@@ -296,12 +296,12 @@ label.states.est <- TRUE   #PRESENT: adding DE, MD, NJ  FUTURE: adding DE, MD, N
 # labeling aesthetics for label.countries.est and label.states.est
 nudge_countries.est.x <- c(-.05,0) 
 nudge_countries.est.y <- c(.07,.1)
-nudge_countries.est_future.x <- c(.05,-0.03)  #jpn and kor
-nudge_countries.est_future.y <- c(.14,.05)
-nudge_states.est_present.x <- c(0.00, -0.02,-0.04)  #PRESENT: adding DE, MD, NJ  
-nudge_states.est_present.y <- c(0.10,-0.10,-0.10)
-nudge_states.est_future.x <- c( 0.00,-0.10, 0.02,-0.04,0.00)  #FUTURE: adding OH, DE, MD, NJ, WV
-nudge_states.est_future.y <- c(-0.10, 0.10,-0.17, 0.08,0.15)
+nudge_countries.est_future.x <- c(.05,0.05)  #jpn and kor
+nudge_countries.est_future.y <- c(.12,0.11)
+#nudge_states.est_present.x <- c(0.00, -0.02,-0.04)  #PRESENT: adding DE, MD, NJ  
+#nudge_states.est_present.y <- c(0.10,-0.10,-0.10)
+nudge_states.est.x <- c( 0.00, 0.00, -0.10,  0.02, 0.01, 0.00)  #adding OH, CT, DE, MD, NJ, WV
+nudge_states.est.y <- c(-0.10, -0.10, 0.10, -0.17,-0.15,-0.10)
 
 
 # Choose quadrant intercepts
@@ -469,13 +469,13 @@ for (i in 1:length(plots_which)) {
       if(label.states.est){
         if(present_transport){  #PRESENT
           data_to_label_states.est <- data_to_plot %>%
-          filter(geopol_unit %in% c("Delaware", "Maryland", "New Jersey")) %>%
+          filter(geopol_unit %in% c("Connecticut","Delaware", "Maryland", "New Jersey")) %>%
           arrange(desc(size_to_plot))
         data_to_label <- bind_rows(data_to_label,data_to_label_states.est)
         
         } else if(present_transport == FALSE){  #FUTURE
           data_to_label_states.est <- data_to_plot %>%
-          filter(geopol_unit %in% c("Delaware", "Maryland", "New Jersey", "Ohio", "West Virginia")) %>%
+          filter(geopol_unit %in% c("Connecticut","Delaware", "Maryland", "New Jersey", "Ohio", "West Virginia")) %>%
           arrange(desc(size_to_plot))
         data_to_label <- bind_rows(data_to_label,data_to_label_states.est)
         }
@@ -558,8 +558,8 @@ if(present_transport == FALSE){
       nudge.x <- c(-.1,-.1,-.1,-.05,-.1,-0.05,-.1,.06,-.01,.05)
       nudge.y <- c(.2,.10,.10,.10,.07,.15,.15,-.07,-.12,-.12)    #CA, WA, NY, PA, OR, GA, OH, MI, VA, NC
       if(label.states.est){
-        nudge.x <- c(nudge.x, nudge_states.est_future.x)
-        nudge.y <- c(nudge.y, nudge_states.est_future.y)
+        nudge.x <- c(nudge.x, nudge_states.est.x)
+        nudge.y <- c(nudge.y, nudge_states.est.y)
       }
       ytitle <- "Establishment Potential"
     } else {  #COUNTRIES FUTURE WINE
@@ -574,18 +574,18 @@ if(present_transport == FALSE){
   } else if(impact_prod == "grapes"){
     #nudging
     if(statez) { #STATES FUTURE GRAPES
-      nudge.x <- c(-.00,-.05,-.10,-.02, .10,-.05, .10, .00,-.05,-.025)   #yield: #CA, PA, WA, MI, NY, MO, OH, OR, GA, NC
-      nudge.y <- c(-.10, .10, .08, .08,-.05, .09,-.05,-.10,-.15, .10)   #production: CA, WA, NY, PA, MI, OR, TX, VA, NC, MO
+      nudge.x <- c(-.00,-.05,-.06,-.02, .10,-.05,-.01,-.01,-.05,-.03)   #yield: #CA, PA, WA, MI, NY, MO, OH, OR, GA, NC
+      nudge.y <- c(-.10, .10, .08, .08,-.05, .09,-.10,-.10, .09, .10)   #production: CA, WA, NY, PA, MI, OR, TX, VA, NC, MO
       if(label.states.est){
-        nudge.x <- c(nudge.x, nudge_states.est_future.x)
-        nudge.y <- c(nudge.y, nudge_states.est_future.y)
+        nudge.x <- c(nudge.x, nudge_states.est.x)
+        nudge.y <- c(nudge.y, nudge_states.est.y)
       }
       ytitle <- "Establishment Potential"
     } else {  #COUNTRIES FUTURE GRAPES
       #ensemble version
       # grape prod: CHN, ITA, ESP, FRA, TUR, IND, CHL, ARG, ZAF, AUS
-      nudge.x <- c(-0.00, 0.01,-0.02, 0.00,-0.02, 0.03,-0.02, 0.08,-0.02, 0.06)
-      nudge.y <- c(-0.10, 0.10, 0.15, 0.09,-0.24, 0.05, 0.13,-0.23, 0.29, -0.23)
+      nudge.x <- c(-0.00,-0.00,-0.01,-0.02,-0.00, 0.03,-0.02, 0.03,-0.02,-0.00)
+      nudge.y <- c(-0.10, 0.085, 0.15, 0.07,-0.10, 0.05, 0.13,-0.15, 0.29,-0.12)
       #old version
       # grape production: CHN, ITA, ESP, FRA, TUR, IND, CHL, ARG, ZAF, AUS
       #nudge.x <- c(-0.01,-0.00,-0.00,-0.04, 0.02,0.03,-0.04, 0.05,-0.03, 0.04)
@@ -603,8 +603,8 @@ if(present_transport == FALSE){
       nudge.x <- c(.09,-.1,-.04,-.05,-.10,-0.12,-.1,.04,-.01,.05)
       nudge.y <- c(-.10,.10,.10,.10,.07,.10,.12,-.07,-.12,-.12)    #CA, WA, NY, PA, OR, GA, OH, MI, VA, NC
       if(label.states.est){
-        nudge.x <- c(nudge.x, nudge_states.est_present.x)
-        nudge.y <- c(nudge.y, nudge_states.est_present.y)
+        nudge.x <- c(nudge.x, nudge_states.est.x)
+        nudge.y <- c(nudge.y, nudge_states.est.y)
       }
       ytitle <- "Establishment Potential"
     } else { #COUNTRIES PRESENT WINE
@@ -621,8 +621,8 @@ if(present_transport == FALSE){
       nudge.y <- c(-0.05, 0.095, -0.10, 0.09, -0.05, 0.085, -0.02, 0.12, -0.10, 0.13)  #CA, WA, NY, PA, MI, OR, TX, VA, NC, MO  
       nudge.x <- c( 0.10, 0.00, -0.02,  0.00, -0.05, 0.00,  0.10, 0.00,  0.02, 0.01)
       if(label.states.est){
-        nudge.x <- c(nudge.x, nudge_states.est_present.x)
-        nudge.y <- c(nudge.y, nudge_states.est_present.y)
+        nudge.x <- c(nudge.x, nudge_states.est.x)
+        nudge.y <- c(nudge.y, nudge_states.est.y)
       }
       ytitle <- "Establishment Potential"
     } else { #COUNTRIES PRESENT GRAPES
