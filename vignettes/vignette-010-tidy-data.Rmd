@@ -773,12 +773,17 @@ save(countries_summary_future, file = file.path(here(), "data", "countries_summa
 }
 ```
 
-```{r save correlation plot  data for ensemble future only, eval=FALSE, message=FALSE}
+```{r save correlation plot  data for ensemble only, eval=FALSE, message=FALSE}
 if(FALSE){
 states_summary_future_ensemble <- states_summary_future
+states_summary_present_ensemble <- states_summary_present
 countries_summary_future_ensemble <- countries_summary_future
+countries_summary_present_ensemble <- countries_summary_present
   
 save(states_summary_future_ensemble, file = file.path(here(), "data", "states_summary_future_ensemble.rda"))
+save(states_summary_present_ensemble, file = file.path(here(), "data", "states_summary_present_ensemble.rda"))
 save(countries_summary_future_ensemble, file = file.path(here(), "data", "countries_summary_future_ensemble.rda"))
+save(countries_summary_present_ensemble, file = file.path(here(), "data", "countries_summary_present_ensemble.rda"))
+
 }
 ```

@@ -1271,7 +1271,8 @@ countries_extracts$geopol_unit[grep(pattern = "Saint Bart", x = countries_extrac
 models_summary <- read_csv(file = "./data-raw/models_summary.csv")
 
 #load USA
-suitability_usa <- raster("/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk/maxent_models/slftoh_ensemble_usa_downsampled_x4_mean.tif")
+suitability_usa <- raster("/Volumes/GoogleDrive/Shared drives/slfData/data/slfRisk/maxent_models/slftoh_ensemble_mean_downsampled_x4_usa.tif")
+
 
 #fortify (dataframe-fy) the global model
 suitability_usa_df <- fortify(suitability_usa, maxpixels = 1e10)
@@ -1287,9 +1288,9 @@ states_centers <- read_csv(file = "./data-raw/us_capitals.csv")
 colnames(states_centers)[1] <- "geopol_unit"
 
 #individual models
-slf_usa <- raster("/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk/maxent_models/slf_usa_downsampled_x4.tif")
-slftoh_usa <- raster("/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk/maxent_models/slftoh_usa_downsampled_x4.tif")
-toh_usa <- raster("/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk/maxent_models/toh_usa_downsampled_x4.tif")
+slf_usa <- raster("/Volumes/GoogleDrive/Shared drives/slfData/data/slfRisk/maxent_models/slf_downsampled_x4_usa.tif")
+slftoh_usa <- raster("/Volumes/GoogleDrive/Shared drives/slfData/data/slfRisk/maxent_models/slftoh_downsampled_x4_usa.tif")
+toh_usa <- raster("/Volumes/GoogleDrive/Shared drives/slfData/data/slfRisk/maxent_models/toh_downsampled_x4_usa.tif")
 
 
 #fortify (dataframe-fy) the global model
@@ -1313,7 +1314,7 @@ slf_usa_df$value <- round(slf_usa_df$value, digits = 2)
 
 
 #COUNTRIES
-suitability_countries <- raster("/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk/maxent_models/slftoh_ensemble_downsampled_x4_mean.tif")
+suitability_countries <- raster("/Volumes/GoogleDrive/Shared drives/slfData/data/slfRisk/maxent_models/slftoh_ensemble_mean_downsampled_x4.tif")
 
 #fortify (dataframe-fy) the global model
 suitability_countries_df <- fortify(suitability_countries, maxpixels = 1e10)
@@ -1325,9 +1326,9 @@ suitability_countries_df <- suitability_countries_df[!is.na(suitability_countrie
 suitability_countries_df$value <- round(suitability_countries_df$value, digits = 2)
 
 #individual models
-slf <- raster("/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk/maxent_models/slf_downsampled_x10.tif")
-slftoh <- raster("/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk/maxent_models/slftoh_downsampled_x10.tif")
-toh <- raster("/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk/maxent_models/toh_downsampled_x10.tif")
+slf <- raster("/Volumes/GoogleDrive/Shared drives/slfData/data/slfRisk/maxent_models/slf_downsampled_x10.tif")
+slftoh <- raster("/Volumes/GoogleDrive/Shared drives/slfData/data/slfRisk/maxent_models/slftoh_downsampled_x10.tif")
+toh <- raster("/Volumes/GoogleDrive/Shared drives/slfData/data/slfRisk/maxent_models/toh_downsampled_x10.tif")
 
 
 #fortify (dataframe-fy) the global model

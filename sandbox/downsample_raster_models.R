@@ -85,6 +85,7 @@ writeRaster(x = usa_enm_slf, filename = file.path(mypath, "maxent_models", "slf_
 enm_data_slftoh_usa <- raster("./data/geotiff_enms/slftoh_usa.tif")
 enm_data_toh_usa <- raster("./data/geotiff_enms/toh_usa.tif")
 enm_data_slf_usa <- raster("./data/geotiff_enms/slf_usa.tif")
+usa_enm_mean <- raster(file.path(mypath, "maxent_models", "slftoh_ensemble_mean_usa.tif"))
 
 
 #downsample by a factor of 4
