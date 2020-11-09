@@ -85,10 +85,10 @@ countries_wine_market <- countries_wine_market %>%
 
 To merge the new `market_size` dat with our existing `countries` data, we use `left_join()` to merge the `market` and `summary` data by `ID`. We then remove the countries from the dataset that already have **SLF**. Note: we use a modified version of `%in%` and `Negate()` to create `%notin%` for removing countries.
 
-```{r join market to countries_summary_future_ensemble, eval = TRUE, message=FALSE}
-#data("countries_summary_future")
-data("countries_summary_future_ensemble")
-countries_summary_future_ensemble <- countries_summary_future_ensemble %>%
+```{r join market to countries_summary_present_ensemble, eval = TRUE, message=FALSE}
+#data("countries_summary_present")
+data("countries_summary_present_ensemble")
+countries_summary_present_ensemble <- countries_summary_present_ensemble %>%
     filter(!ID %in% c("Antarctica", "Monaco", "Norfolk Island", "Spratly Islands"))
 
 #remove non-focal countries
@@ -116,7 +116,7 @@ rems <- c("Akrotiri and Dhekelia"
             ,"United States"
             ,"Philippines")
 
-countries_summary_future_ensemble <- countries_summary_future_ensemble %>% filter(!ID %in% rems)
+countries_summary_present_ensemble <- countries_summary_present_ensemble %>% filter(!ID %in% rems)
 
 
 #dim(countries_summary_future)
@@ -124,7 +124,7 @@ countries_summary_future_ensemble <- countries_summary_future_ensemble %>% filte
 
 # filter(countries_summary_future, status == "native")
 
-countries_risk_market <- countries_summary_future_ensemble %>% 
+countries_risk_market <- countries_summary_present_ensemble %>% 
   left_join(countries_wine_market, by = "ID") %>%
   filter(ID %notin% c("United States", 
                       "China", 
