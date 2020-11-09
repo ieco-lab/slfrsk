@@ -290,10 +290,8 @@ The following plotting parameters are set to produce the published figures but c
       - default is `TRUE`
   2. label.states.est: Label the U.S. states that *Lycorma* has previously become established according to `present` or `future` scenarios in the `states` plot?
       - default is `TRUE`
-      - `present` adds DE, MD, NJ (all others already labeled)
-      - `future` adds DE, MD, NJ, OH, WV (all others already labeled)
+      - adds CT, DE, MD, NJ, OH, WV (all others already labeled)
   3. all nudge_* objects: custom settings for `geom_text_repel` starting positions of labels for the added countries or states. Within the major plotting chunk, one can change the nudging of the main plotted labels.
-
 
 ```{r params for plotting}
 # label both of the countries (or states) with established SLF?
@@ -915,20 +913,20 @@ if(present_transport){
 
 ```
 
-We also tag on a quick piece of code that will calculate the correlations for both versions of the `impact_prod` for the `future` case. We remove `countries` with established *Lycorma* populations.
+We also tag on a quick piece of code that will calculate the correlations for both versions of the `impact_prod` for the `present` case. We remove `countries` with established *Lycorma* populations.
 
 ```{r calculate correlations, warning=FALSE, message=FALSE}
 #grapes
 #STATES
 
 #build model
-states_grapes_impact_model <- lm(formula = log10_avg_prod ~ avg_infected_mass_scaled + grand_mean_max_scaled, data = states_summary_future)
+states_grapes_impact_model <- lm(formula = log10_avg_prod ~ avg_infected_mass_scaled + grand_mean_max_scaled, data = states_summary_present)
 #do cor
 states_grapes_impact_cor <- cor.test(states_grapes_impact_model$model$log10_avg_prod, states_grapes_impact_model$fitted.values, method = method_cor)
 
 #COUNTRIES
 #build model
-countries_grapes_impact_model <- lm(formula = log10_avg_prod ~ avg_infected_mass_scaled + grand_mean_max_scaled, data = countries_summary_future %>%
+countries_grapes_impact_model <- lm(formula = log10_avg_prod ~ avg_infected_mass_scaled + grand_mean_max_scaled, data = countries_summary_present %>%
   filter(!ID %in% c("United States", 
                       "China", 
                       "India", 
@@ -942,13 +940,13 @@ countries_grapes_impact_cor <- cor.test(countries_grapes_impact_model$model$log1
 #wine
 #STATES
 #model
-states_wine_impact_model <- lm(formula = log10_avg_wine ~ avg_infected_mass_scaled + grand_mean_max_scaled, data = states_summary_future)
+states_wine_impact_model <- lm(formula = log10_avg_wine ~ avg_infected_mass_scaled + grand_mean_max_scaled, data = states_summary_present)
 #cor
 states_wine_impact_cor <- cor.test(states_wine_impact_model$model$log10_avg_wine, states_wine_impact_model$fitted.values, method = method_cor)
 
 #COUNTRIES
 #model
-countries_wine_impact_model <- lm(formula = log10_avg_wine ~ avg_infected_mass_scaled + grand_mean_max_scaled, data = countries_summary_future %>%
+countries_wine_impact_model <- lm(formula = log10_avg_wine ~ avg_infected_mass_scaled + grand_mean_max_scaled, data = countries_summary_present %>%
   filter(!ID %in% c("United States", 
                       "China", 
                       "India", 
@@ -1135,8 +1133,8 @@ ggplotly(countries_ggplot, dynamicTicks = F, tooltip = c("ID", "establishment po
 
 We can also save the plots to `/vignettes` as a `.pdf`. Note that the saving chunks can be run by setting the top `if` from `FALSE` to `TRUE`!
 
-```{r optional write to pdf step, message=FALSE, eval=FALSE, fig.height= 12, fig.width=10}
-if(FALSE){
+```{r optional write to pdf step, message=FALSE, eval=TRUE, fig.height= 12, fig.width=10}
+if(TRUE){
   #optional save as pdf code
 if(present_transport){
     pdf(file.path(here::here(),"vignettes", paste0("combined_present_max_",impact_prod,".pdf")),width = 10, height = 12)
@@ -1153,8 +1151,8 @@ if(present_transport){
 
 We also save a version of the combined plots with the legend as a separate file to `/vignettes`. 
 
-```{r combined plot with separate legend pdf, eval=FALSE}
-if(FALSE){
+```{r combined plot with separate legend pdf, eval=TRUE}
+if(TRUE){
   #save the plots w/o legend
 #set up a layout grid
   lay2 <- rbind(c( 1, 1, 1, 1, 1,NA),
