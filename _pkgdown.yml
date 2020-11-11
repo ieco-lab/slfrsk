@@ -33,7 +33,7 @@ navbar:
         - text: "Suitability Modeling & Evaluation"
           href: articles/vignette-011-suitability-models.html
         - text: "Risk Map Plotting"
-          href: articles/vignette-030-risk-maps.html
+          href: articles/vignette-030-potentials-maps.html
         - text: "Invasion Potential Alignment"
           menu:
             - text: ----------------

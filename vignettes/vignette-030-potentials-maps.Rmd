@@ -1,8 +1,8 @@
 ---
-title: "Risk Map Plotting"
+title: "Invasion Potentials Maps"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{vignette-030-risk-maps}
+  %\VignetteIndexEntry{vignette-030-potentials-maps}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -80,7 +80,7 @@ if(present_transport == TRUE){
   data("states_summary_present")
   states_centers <- states_centers %>%
     #remove the invaded states
-    filter(!geopol_unit %in% c("Delaware", "Maryland", "New Jersey", "Pennsylvania", "Virginia")) %>%
+    filter(!geopol_unit %in% c("Connecticut","Delaware", "Maryland", "New Jersey", "New York", "Ohio", "Pennsylvania", "Virginia", "West Virginia")) %>%
     #remove the others in the dataset
     filter(!is.na(x), !is.na(y)) %>%
     rbind(c("SLF", NA, 40.400189, -75.917622)) %>%
@@ -112,7 +112,7 @@ states_trade_final <- states_centers %>%
   
     states_centers <- states_centers %>%
     #remove the invaded states
-    filter(!geopol_unit %in% c("Delaware", "Maryland", "New Jersey", "New York", "North Carolina", "Ohio", "Pennsylvania", "Virginia", "West Virginia")) %>%
+    filter(!geopol_unit %in% c("Connecticut","Delaware", "Maryland", "New Jersey", "New York", "North Carolina", "Ohio", "Pennsylvania", "Virginia", "West Virginia")) %>%
     #remove the others in the dataset
     filter(!is.na(x), !is.na(y)) %>%
     rbind(c("SLF", NA, 40.400189, -75.917622)) %>%
@@ -236,11 +236,11 @@ map_plot <- ggplot() +
 #add in lines for the infected states
 if(present_transport == TRUE){
   map_plot <- map_plot +
-    geom_polygon(data = map_data('state', c("Delaware", "Maryland", "New Jersey", "Pennsylvania", "Virginia")), aes(x = long, y = lat, group = group), fill = NA, color = "#e31a1c", lwd = 0.75)
+    geom_polygon(data = map_data('state', c("Connecticut","Delaware", "Maryland", "New Jersey", "New York", "Ohio", "Pennsylvania", "Virginia", "West Virginia")), aes(x = long, y = lat, group = group), fill = NA, color = "#e31a1c", lwd = 0.75)
   
 } else{
   map_plot <- map_plot +
-    geom_polygon(data = map_data('state', c("Delaware", "Maryland", "New Jersey", "New York", "North Carolina", "Ohio", "Pennsylvania", "Virginia", "West Virginia")), aes(x = long, y = lat, group = group), fill = NA, color = "#e31a1c", lwd = 0.75)
+    geom_polygon(data = map_data('state', c("Connecticut","Delaware", "Maryland", "New Jersey", "New York", "North Carolina", "Ohio", "Pennsylvania", "Virginia", "West Virginia")), aes(x = long, y = lat, group = group), fill = NA, color = "#e31a1c", lwd = 0.75)
 }
 
 #add in the wine AVA data
@@ -276,10 +276,10 @@ map_plot_countries <- ggplot() +
 #add in lines for the infected states
 if(present_transport == TRUE){
   map_plot_countries <- map_plot_countries +
-    geom_polygon(data = map_data('state', c("Delaware", "Maryland", "New Jersey", "Pennsylvania", "Virginia")), aes(x = long, y = lat, group = group), fill = NA, color = "red", lwd = 0.5)
+    geom_polygon(data = map_data('state', c("Connecticut","Delaware", "Maryland", "New Jersey", "New York", "Ohio", "Pennsylvania", "Virginia", "West Virginia")), aes(x = long, y = lat, group = group), fill = NA, color = "red", lwd = 0.5)
 } else{
   map_plot_countries <- map_plot_countries +
-    geom_polygon(data = map_data('state', c("Delaware", "Maryland", "New Jersey", "New York", "North Carolina", "Ohio", "Pennsylvania", "Virginia", "West Virginia")), aes(x = long, y = lat, group = group), fill = NA, color = "#e31a1c", lwd = 0.75)
+    geom_polygon(data = map_data('state', c("Connecticut","Delaware", "Maryland", "New Jersey", "New York", "North Carolina", "Ohio", "Pennsylvania", "Virginia", "West Virginia")), aes(x = long, y = lat, group = group), fill = NA, color = "#e31a1c", lwd = 0.75)
 }
   
 
