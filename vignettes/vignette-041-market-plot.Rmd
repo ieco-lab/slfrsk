@@ -1,5 +1,5 @@
 ---
-title: "Wine Market Risk of Shock Evaluation"
+title: "Wine Market Shock Severity Evaluation"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{vignette-041-market-plot}
@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-Build and Save Paninvasion Risk to Wine Market Plots
+Build and Save Paninvasion Shock to Wine Market Plots
 
 ***
 
@@ -197,7 +197,7 @@ With the predicted **risk**, we were able plot the scaled `risk` and `market_siz
 #                       y = market_size_scale, fill = wine), color = "black") +
 #  geom_point(pch = 21)
 
-remove(market_scatter)
+#remove(market_scatter)
 
 market_scatter <- countries_risk_market %>%
   
@@ -210,11 +210,11 @@ market_scatter <- countries_risk_market %>%
   geom_abline(slope = 1, intercept = 5, lty = 2) +
   geom_abline(slope = 1, intercept = -5, lty = 2) +
 
-  ggtitle(label = paste('Spotted Lanternfly Paninvasion Risk Severity =',
+  ggtitle(label = paste('Spotted Lanternfly Paninvasion Severity =',
                         shock_cor,'of 10 (P<0.001)')) +
   geom_point(pch = 21) + 
      scale_x_continuous(
-    name =  substitute(expr = paste('Spotted Lanternfly (',italic("Lycorma delicatula"),') Invasion Risk')), 
+    name =  substitute(expr = paste('Spotted Lanternfly (',italic("Lycorma delicatula"),') Invasion Severity')), 
     breaks = 1:10, 
     limits = c(1,10)
     ) +
@@ -324,11 +324,11 @@ p1 <- countries_risk_market %>%
 #execute plotly
 ggplotly(p = p1, tooltip = c("ID", "risk", "market_size", "wine"), dynamicTicks = T) %>%
 layout(xaxis = 
-           list(title = list(text = paste('Spotted Lanternfly',sprintf("(<i>Lycorma delicatula</i>)"),'Invasion Risk'), font = list(size = 11)), showspikes = T),
+           list(title = list(text = paste('Spotted Lanternfly',sprintf("(<i>Lycorma delicatula</i>)"),'Invasion Severity'), font = list(size = 11)), showspikes = T),
          yaxis = 
            list(title = list(text = "Wine Export Market Size, log10 USD", font = list(size = 11)), showspikes = T),
          title = 
-           list(text = paste('Spotted Lanternfly Paninvasion Risk Severity =', shock_cor,'of 10 (P<0.001)'),
+           list(text = paste('Spotted Lanternfly Paninvasion Severity =', shock_cor,'of 10 (P<0.001)'),
                 font = list(size = 12),
                 x = 0.1,
                 y = 0.99),
@@ -340,11 +340,11 @@ layout(xaxis =
 
 Here, you can set to save the scatter plot to `/vignettes` as a `.pdf` file by setting the `if` from `FALSE` to `TRUE`, as in the other vignettes. We also have a version of the data saved for the Google Earth Engine App data cleaning vignette.
 
-```{r, save pdf of image, message=TRUE, eval=FALSE}
+```{r, save pdf of image, message=TRUE, eval=TRUE}
 if(FALSE){
   pdf(file.path(here::here(),
               "vignettes", 
-              paste0("market_scatter_v4_0.pdf")),
+              paste0("market_scatter_v4_1.pdf")),
     width = 8.5*.95, height = 11*.95)
 
 market_scatter
