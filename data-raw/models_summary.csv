@@ -1,6 +1,4 @@
 ﻿model,avg_test_auc,avg_omission_error
-m1,0.7720,0.0001
-full_toh,0.7720,0.0001
-full_slf,0.9897,0.0069
-m2,0.9907,0.0138
-s3,0.9732,0.0138
+sdm_toh,0.7779,0.0003
+sdm_slf1,0.9828,0.0064
+sdm_slf2,0.9675,0.0032

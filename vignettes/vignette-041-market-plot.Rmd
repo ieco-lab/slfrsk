@@ -85,10 +85,10 @@ countries_wine_market <- countries_wine_market %>%
 
 To merge the new `market_size` dat with our existing `countries` data, we use `left_join()` to merge the `market` and `summary` data by `ID`. We then remove the countries from the dataset that already have **SLF**. Note: we use a modified version of `%in%` and `Negate()` to create `%notin%` for removing countries.
 
-```{r join market to countries_summary_future_ensemble, eval = TRUE, message=FALSE}
-#data("countries_summary_future")
-data("countries_summary_future_ensemble")
-countries_summary_future_ensemble <- countries_summary_future_ensemble %>%
+```{r join market to countries_summary_present_ensemble, eval = TRUE, message=FALSE}
+#data("countries_summary_present")
+data("countries_summary_present_ensemble")
+countries_summary_present_ensemble <- countries_summary_present_ensemble %>%
     filter(!ID %in% c("Antarctica", "Monaco", "Norfolk Island", "Spratly Islands"))
 
 #remove non-focal countries
@@ -116,7 +116,7 @@ rems <- c("Akrotiri and Dhekelia"
             ,"United States"
             ,"Philippines")
 
-countries_summary_future_ensemble <- countries_summary_future_ensemble %>% filter(!ID %in% rems)
+countries_summary_present_ensemble <- countries_summary_present_ensemble %>% filter(!ID %in% rems)
 
 
 #dim(countries_summary_future)
@@ -124,7 +124,7 @@ countries_summary_future_ensemble <- countries_summary_future_ensemble %>% filte
 
 # filter(countries_summary_future, status == "native")
 
-countries_risk_market <- countries_summary_future_ensemble %>% 
+countries_risk_market <- countries_summary_present_ensemble %>% 
   left_join(countries_wine_market, by = "ID") %>%
   filter(ID %notin% c("United States", 
                       "China", 
@@ -211,7 +211,7 @@ market_scatter <- countries_risk_market %>%
   geom_abline(slope = 1, intercept = -5, lty = 2) +
 
   ggtitle(label = paste('Spotted Lanternfly Paninvasion Risk Severity =',
-                        shock_cor,'of 10 (P<0.005)')) +
+                        shock_cor,'of 10 (P<0.001)')) +
   geom_point(pch = 21) + 
      scale_x_continuous(
     name =  substitute(expr = paste('Spotted Lanternfly (',italic("Lycorma delicatula"),') Invasion Risk')), 
@@ -328,7 +328,7 @@ layout(xaxis =
          yaxis = 
            list(title = list(text = "Wine Export Market Size, log10 USD", font = list(size = 11)), showspikes = T),
          title = 
-           list(text = paste('Spotted Lanternfly Paninvasion Risk Severity =', shock_cor,'of 10 (P<0.005)'),
+           list(text = paste('Spotted Lanternfly Paninvasion Risk Severity =', shock_cor,'of 10 (P<0.001)'),
                 font = list(size = 12),
                 x = 0.1,
                 y = 0.99),
@@ -344,7 +344,7 @@ Here, you can set to save the scatter plot to `/vignettes` as a `.pdf` file by s
 if(FALSE){
   pdf(file.path(here::here(),
               "vignettes", 
-              paste0("market_scatter_v3_2.pdf")),
+              paste0("market_scatter_v4_0.pdf")),
     width = 8.5*.95, height = 11*.95)
 
 market_scatter

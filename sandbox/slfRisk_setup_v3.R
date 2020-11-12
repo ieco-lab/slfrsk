@@ -38,6 +38,11 @@ use_package("gridExtra", type = "Imports") #added by NAH
 use_package("DHARMa", type = "Imports") #added by NAH
 use_package("cleangeo", type = "Imports") #added by NAH
 use_package("plotly", type = "Imports") #added by NAH
+use_package("spocc", type = "Imports") #added by NAH
+use_package("scrubr", type = "Imports") #added by NAH
+use_package("humboldt", type = "Imports") #added by NAH
+use_package("tcltk", type = "Imports") #added by NAH
+
 
 #----
 # Data
