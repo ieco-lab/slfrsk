@@ -1,5 +1,5 @@
 ---
-title: "Get GBIF Data"
+title: "Get GBIF Records"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{vignette-003-get-gbif-data}

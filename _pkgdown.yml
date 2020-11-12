@@ -23,16 +23,18 @@ navbar:
       href: articles/vignette-001-overview.html
     - text: "Definitions"
       href: articles/vignette-002-terms.html
-    - text: "Paninvasion Risk App"
+    - text: "Paninvasion Severity App"
       href: articles/vignette-040-ee-data.html
     - text: "Analyses"
       menu:
         - text: ----------------
+        - text: "Get GBIF Records"
+          href:  articles/vignette-003-get-gbif-data.html
         - text: "Data Tidying"
           href:  articles/vignette-010-tidy-data.html
         - text: "Suitability Modeling & Evaluation"
           href: articles/vignette-011-suitability-models.html
-        - text: "Risk Map Plotting"
+        - text: "Invasion Potentials Maps"
           href: articles/vignette-030-potentials-maps.html
         - text: "Invasion Potential Alignment"
           menu:
@@ -44,7 +46,7 @@ navbar:
             - text: "Alternate (Mean)"
               href: articles/vignette-027-quadrant-plots-alt-mean.html
             - text: ----------------
-        - text: "Wine Market Risk of Shock Evaluation"
+        - text: "Wine Market Shock Severity Evaluation"
           href: articles/vignette-041-market-plot.html
         - text: ----------------
 
