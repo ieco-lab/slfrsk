@@ -46,7 +46,7 @@ The research compendium is organized into several **Articles** (or vignettes) th
   2. **Data Tidying**---Demonstration of how we cleaned the data obtained to conduct this study
   3. **Suitability Modeling & Evaluation**---Step-by-step process of modeling SLF suitability and extracting suitability for **Establishment** potential
   4. **Invasion Potentials Maps**---Reproduction of the risk map figure(s) in the main text
-  5. **Invasion Potential Alignment Calculation**---Presentation of the evaluation of alignment for **Transport**, **Establishment**, and **Impact** potentials and reproduction of the invasion alignment plots in the main text with optional modifications to evaluate different data partitions
+  5. **Invasion Potential Alignment**---Presentation of the evaluation of alignment for **Transport**, **Establishment**, and **Impact** potentials and reproduction of the invasion alignment plots in the main text with optional modifications to evaluate different data partitions
   6. **Wine Market Shock Severity Evaluation**---Reproduction of the wine market shock figure in the main text with additional model diagnostics
   7. **Paninvasion Severity App**---Guide for Google Earth Engine app and conversion of the alignment and severity data for implementation in the app.
   
