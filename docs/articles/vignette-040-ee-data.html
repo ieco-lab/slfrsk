@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Paninvasion Risk App • slfrsk</title>
+<title>Paninvasion Severity App • slfrsk</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
@@ -17,7 +17,7 @@
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Paninvasion Risk App">
+<script src="../pkgdown.js"></script><meta property="og:title" content="Paninvasion Severity App">
 <meta property="og:description" content="slfrsk">
 <meta property="og:image" content="/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -57,7 +57,7 @@
   <a href="../articles/vignette-002-terms.html">Definitions</a>
 </li>
 <li>
-  <a href="../articles/vignette-040-ee-data.html">Paninvasion Risk App</a>
+  <a href="../articles/vignette-040-ee-data.html">Paninvasion Severity App</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -68,13 +68,16 @@
   <ul class="dropdown-menu" role="menu">
 <li class="divider">
     <li>
+      <a href="../articles/vignette-003-get-gbif-data.html">Get GBIF Records</a>
+    </li>
+    <li>
       <a href="../articles/vignette-010-tidy-data.html">Data Tidying</a>
     </li>
     <li>
       <a href="../articles/vignette-011-suitability-models.html">Suitability Modeling &amp; Evaluation</a>
     </li>
     <li>
-      <a href="../articles/vignette-030-risk-maps.html">Risk Map Plotting</a>
+      <a href="../articles/vignette-030-potentials-maps.html">Invasion Potentials Maps</a>
     </li>
     <li class="dropdown-submenu">
       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Invasion Potential Alignment</a>
@@ -93,7 +96,7 @@
       </ul>
 </li>
     <li>
-      <a href="../articles/vignette-041-market-plot.html">Wine Market Risk of Shock Evaluation</a>
+      <a href="../articles/vignette-041-market-plot.html">Wine Market Shock Severity Evaluation</a>
     </li>
     <li class="divider">
   </ul>
@@ -119,7 +122,7 @@
       </header><script src="vignette-040-ee-data_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>Paninvasion Risk App</h1>
+      <h1 data-toc-skip>Paninvasion Severity App</h1>
             
       
       
@@ -129,15 +132,15 @@
 
     
     
-<p>Google Earth Engine Paninvasion Risk App Companion: <a href="https://ieco.users.earthengine.app/view/ieco-slf-riskmap" class="uri">https://ieco.users.earthengine.app/view/ieco-slf-riskmap</a></p>
+<p>Google Earth Engine Paninvasion Severity App Companion: <a href="https://ieco.users.earthengine.app/view/ieco-slf-riskmap" class="uri">https://ieco.users.earthengine.app/view/ieco-slf-riskmap</a></p>
 <hr>
 <div id="map-legend" class="section level1">
 <h1 class="hasAnchor">
 <a href="#map-legend" class="anchor"></a>Map Legend</h1>
-<p>The <code>slrsk</code> Paninvasion Risk App is an interactive map that allows for highly customizable visualization. When loaded, it will display a map of the earth with several different data layers already enabled (see image below for example).</p>
+<p>The <code>slrsk</code> Paninvasion Severity App is an interactive map that allows for highly customizable visualization. When loaded, it will display a map of the earth with several different data layers already enabled (see image below for example).</p>
 <center>
 <div class="figure">
-<img src="slfrsk_ee_home_label.png" alt=""><p class="caption">Landing page and labeled visualization tools for <code>slfrsk</code> Paninvasion Risk App.</p>
+<img src="slfrsk_ee_home_label.png" alt=""><p class="caption">Landing page and labeled visualization tools for <code>slfrsk</code> Paninvasion Severity App.</p>
 </div>
 </center>
 <div id="map-widgets" class="section level2">
@@ -178,7 +181,7 @@
 <p>The layers panel contains several key measures of SLF invasion potential. Each layer can be turned on or off via the checkbox to the left of its name. Additionally, the opacity of each layer can be changed via the slider bar to the right of its name. Below, we present a detailed account of each layer and its source data, as well as its color scale and geometry.</p>
 <center>
 <div class="figure">
-<img src="slfrsk_ee_layers_panel.png" alt=""><p class="caption">Default view of Layers Panel for <code>slfrsk</code> Paninvasion Risk App.</p>
+<img src="slfrsk_ee_layers_panel.png" alt=""><p class="caption">Default view of Layers Panel for <code>slfrsk</code> Paninvasion Severity App.</p>
 </div>
 </center>
 <ol style="list-style-type: decimal">
@@ -210,16 +213,16 @@
 
 <ol start="6" style="list-style-type: decimal">
 <li>
-<strong>invasion risk</strong>: the risk of shock to the wine market as determined by the relationship between predicted values of average annual grape production based on SLF transport and establishment potential and average annual wine market size (scaled <span class="math inline">\([1,10]\)</span>). This scaling ranges from a completely negative relationship at 1 to a completely positive relationship at 10 (thus explaining the change from the <span class="math inline">\([0,10]\)</span> scale seen for other layers) This layer is a shaded fill for <em>only</em> <code>countries</code> that <strong>do not already have established SLF populations</strong>.</li>
+<strong>invasion severity</strong>: the severity of shock to the wine market as determined by the relationship between predicted values of average annual grape production based on SLF transport and establishment potential and average annual wine market size (scaled <span class="math inline">\([1,10]\)</span>). This scaling ranges from a completely negative relationship at 1 to a completely positive relationship at 10 (thus explaining the change from the <span class="math inline">\([0,10]\)</span> scale seen for other layers) This layer is a shaded fill for <em>only</em> <code>countries</code> that <strong>do not already have established SLF populations</strong>.</li>
 </ol>
-<p><img src="vignette-040-ee-data_files/figure-html/risk%20key-1.png" width="480" style="display: block; margin: auto;"></p>
+<p><img src="vignette-040-ee-data_files/figure-html/severity%20key-1.png" width="480" style="display: block; margin: auto;"></p>
 
 </div>
 </div>
 <div id="data-preparation" class="section level1">
 <h1 class="hasAnchor">
 <a href="#data-preparation" class="anchor"></a>Data preparation</h1>
-<p>This vignette is a companion to the interactive <code>slfrsk</code> Google Earth Engine (EE) Paninvasion Risk App <a href="https://ieco.users.earthengine.app/view/ieco-slf-riskmap" class="uri">https://ieco.users.earthengine.app/view/ieco-slf-riskmap</a>. It provides a brief demonstration of how the data were treated prior to inclusion in the app. Output data from this vignette are saved in the shared GoogleDrive <code>./slfRiskMapping/data/slfRisk/</code> directory.</p>
+<p>This vignette is a companion to the interactive <code>slfrsk</code> Google Earth Engine (EE) Paninvasion Severity App <a href="https://ieco.users.earthengine.app/view/ieco-slf-riskmap" class="uri">https://ieco.users.earthengine.app/view/ieco-slf-riskmap</a>. It provides a brief demonstration of how the data were treated prior to inclusion in the app. Output data from this vignette are saved in the shared GoogleDrive <code>./slfRiskMapping/data/slfRisk/</code> directory.</p>
 <div id="setup" class="section level2">
 <h2 class="hasAnchor">
 <a href="#setup" class="anchor"></a>Setup</h2>
@@ -234,11 +237,16 @@
 <h2 class="hasAnchor">
 <a href="#summary-data" class="anchor"></a>Summary data</h2>
 <p>We then read in the summary data for both <code>states</code> and <code>countries</code> from <code>vignette-010-tidy-data</code> to eventually merge with shapfiles. We also remove any <code>countries</code> with <code>establishment</code> potential that are <code>-Inf</code> values.</p>
-<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"states_summary_future_ensemble"</span>)
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"countries_summary_future_ensemble"</span>)
+<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="co">#data("states_summary_future_ensemble")</span>
+<span class="co">#data("countries_summary_future_ensemble")</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"states_summary_present_ensemble"</span>)
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"countries_summary_present_ensemble"</span>)
+
 
 <span class="co">#rm the -Inf countries</span>
-<span class="no">countries_summary_future_ensemble</span> <span class="kw">&lt;-</span> <span class="no">countries_summary_future_ensemble</span> <span class="kw">%&gt;%</span>
+<span class="co">#countries_summary_future_ensemble &lt;- countries_summary_future_ensemble %&gt;%</span>
+<span class="co">#      filter(!ID %in% c("Antarctica", "Monaco", "Norfolk Island", "Spratly Islands"))</span>
+<span class="no">countries_summary_present_ensemble</span> <span class="kw">&lt;-</span> <span class="no">countries_summary_present_ensemble</span> <span class="kw">%&gt;%</span>
       <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(!<span class="no">ID</span> <span class="kw">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Antarctica"</span>, <span class="st">"Monaco"</span>, <span class="st">"Norfolk Island"</span>, <span class="st">"Spratly Islands"</span>))</pre></body></html></div>
 <p>We now transform the <code>summary</code> data to represent scaled versions of the three potentials (<strong>transport</strong>, <strong>establishment</strong>, and <strong>impact</strong>). Each of these potentials are saved in new columns: <code>transport</code>, <code>establishment</code>, and two for <strong>impact</strong> (<code>impact_wine</code> and <code>impact_grape</code>), which include values for the corresponding potential that are <span class="math inline">\(\log_{10}(value+1)\)</span> transformed and then bounded <span class="math inline">\([0,10]\)</span>.</p>
 <p>To bound these values, each <span class="math inline">\(\log\)</span>-transformed value undergoes the following, based on the existing input data and round to a single digit for visualization:</p>
@@ -249,7 +257,7 @@
 </ul>
 <p>After these transformations, we go ahead and round the raw data for reducing file size to <em>5 significant digits</em>.</p>
 <div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="co">#states</span>
-<span class="no">states_summary_future_ensemble</span> <span class="kw">&lt;-</span> <span class="no">states_summary_future_ensemble</span> <span class="kw">%&gt;%</span>
+<span class="no">states_summary_present_ensemble</span> <span class="kw">&lt;-</span> <span class="no">states_summary_present_ensemble</span> <span class="kw">%&gt;%</span>
   <span class="co">#transport in 2 mutate steps</span>
   <span class="fu">mutate</span>(<span class="kw">transport</span> <span class="kw">=</span> <span class="no">log10_avg_infected_mass</span> - <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span>(<span class="no">log10_avg_infected_mass</span>)) <span class="kw">%&gt;%</span>
   <span class="fu">mutate</span>(<span class="kw">transport</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">transport</span> / <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span>(<span class="no">transport</span>), <span class="kw">digits</span> <span class="kw">=</span> <span class="fl">1</span>)*<span class="fl">10</span>) <span class="kw">%&gt;%</span>
@@ -261,7 +269,7 @@
   <span class="fu">mutate</span>(<span class="kw">impact_grape</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">log10_avg_prod</span> / <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span>(<span class="no">log10_avg_prod</span>), <span class="kw">digits</span> <span class="kw">=</span> <span class="fl">1</span>)*<span class="fl">10</span>)
 
 <span class="co">#rounding</span>
-<span class="no">states_summary_future_ensemble</span> <span class="kw">&lt;-</span> <span class="no">states_summary_future_ensemble</span> <span class="kw">%&gt;%</span>
+<span class="no">states_summary_present_ensemble</span> <span class="kw">&lt;-</span> <span class="no">states_summary_present_ensemble</span> <span class="kw">%&gt;%</span>
   <span class="fu">mutate</span>(<span class="kw">grand_mean_max</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">signif</a></span>(<span class="no">grand_mean_max</span>, <span class="kw">digits</span> <span class="kw">=</span> <span class="fl">5</span>),
          <span class="co">#grand_se_max = signif(grand_se_max, digits = 5),</span>
          <span class="kw">avg_wine</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">signif</a></span>(<span class="no">avg_wine</span>, <span class="kw">digits</span> <span class="kw">=</span> <span class="fl">5</span>),
@@ -282,7 +290,7 @@
          )
 
 <span class="co">#countries</span>
-<span class="no">countries_summary_future_ensemble</span> <span class="kw">&lt;-</span> <span class="no">countries_summary_future_ensemble</span> <span class="kw">%&gt;%</span>
+<span class="no">countries_summary_present_ensemble</span> <span class="kw">&lt;-</span> <span class="no">countries_summary_present_ensemble</span> <span class="kw">%&gt;%</span>
   <span class="co">#transport in 2 mutate steps</span>
   <span class="fu">mutate</span>(<span class="kw">transport</span> <span class="kw">=</span> <span class="no">log10_avg_infected_mass</span> - <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span>(<span class="no">log10_avg_infected_mass</span>)) <span class="kw">%&gt;%</span>
   <span class="fu">mutate</span>(<span class="kw">transport</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">transport</span> / <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span>(<span class="no">transport</span>), <span class="kw">digits</span> <span class="kw">=</span> <span class="fl">1</span>)*<span class="fl">10</span>) <span class="kw">%&gt;%</span>
@@ -294,7 +302,7 @@
   <span class="fu">mutate</span>(<span class="kw">impact_grape</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">log10_avg_prod</span> / <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span>(<span class="no">log10_avg_prod</span>), <span class="kw">digits</span> <span class="kw">=</span> <span class="fl">1</span>)*<span class="fl">10</span>)
 
 <span class="co">#rounding</span>
-<span class="no">countries_summary_future_ensemble</span> <span class="kw">&lt;-</span> <span class="no">countries_summary_future_ensemble</span> <span class="kw">%&gt;%</span>
+<span class="no">countries_summary_present_ensemble</span> <span class="kw">&lt;-</span> <span class="no">countries_summary_present_ensemble</span> <span class="kw">%&gt;%</span>
   <span class="fu">mutate</span>(<span class="kw">grand_mean_max</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">signif</a></span>(<span class="no">grand_mean_max</span>, <span class="kw">digits</span> <span class="kw">=</span> <span class="fl">5</span>),
          <span class="co">#grand_se_max = signif(grand_se_max, digits = 5),</span>
          <span class="kw">avg_wine</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">signif</a></span>(<span class="no">avg_wine</span>, <span class="kw">digits</span> <span class="kw">=</span> <span class="fl">5</span>),
@@ -313,32 +321,32 @@
          <span class="kw">log10_avg_infected_trade</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">signif</a></span>(<span class="no">log10_avg_infected_trade</span>, <span class="kw">digits</span> <span class="kw">=</span> <span class="fl">5</span>),
          <span class="kw">log10_avg_infected_mass</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">signif</a></span>(<span class="no">log10_avg_infected_mass</span>, <span class="kw">digits</span> <span class="kw">=</span> <span class="fl">5</span>)
          )</pre></body></html></div>
-<p>We also need to obtain the predicted invasion risk from <code>vignette-041-market-plot</code>. We have conveniently saved those data as <code>data/countries_risk_market.rda</code>, which actually is a modified version of <code>countries_summary_future</code>. We will load these data, round the new columns, and <code>join</code> by <code>ID</code> (note that<code>states</code> do not have values for these fields, as they were not evaluated this way).</p>
-<p>For reference, please see <code>vignette-041-market-plot</code> for methods to produce <code>market_size</code> (<span class="math inline">\(log_{10}(value+1)\)</span> transformed average wine exports) and <code>risk</code> (scaled invasion risk <span class="math inline">\([1,10]\)</span>).</p>
+<p>We also need to obtain the predicted invasion severity from <code>vignette-041-market-plot</code>. We have conveniently saved those data as <code>data/countries_severity.rda</code>, which actually is a modified version of <code>countries_summary_present</code>. We will load these data, round the new columns, and <code>join</code> by <code>ID</code> (note that<code>states</code> do not have values for these fields, as they were not evaluated this way).</p>
+<p>For reference, please see <code>vignette-041-market-plot</code> for methods to produce <code>market_size</code> (<span class="math inline">\(log_{10}(value+1)\)</span> transformed average wine exports) and <code>sev</code> (scaled invasion severity <span class="math inline">\([1,10]\)</span>).</p>
 <p>We also rename <code>market_size</code> to <code>mkt_size</code> to meet the ESRI shapefile column name requirements.</p>
-<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="co">#read in market risk data</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"countries_risk"</span>)
+<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="co">#read in market severity data</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"countries_sev"</span>)
 
 <span class="co">#round similarly and rename market_size</span>
-<span class="no">countries_risk</span> <span class="kw">&lt;-</span> <span class="no">countries_risk</span> <span class="kw">%&gt;%</span>
+<span class="no">countries_sev</span> <span class="kw">&lt;-</span> <span class="no">countries_sev</span> <span class="kw">%&gt;%</span>
   <span class="fu">mutate</span>(<span class="kw">mkt_size</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">signif</a></span>(<span class="no">market_size</span>, <span class="kw">digits</span> <span class="kw">=</span> <span class="fl">5</span>),
-         <span class="kw">risk</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">signif</a></span>(<span class="no">risk</span>, <span class="kw">digits</span> <span class="kw">=</span> <span class="fl">5</span>)
+         <span class="kw">sev</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">signif</a></span>(<span class="no">sev</span>, <span class="kw">digits</span> <span class="kw">=</span> <span class="fl">5</span>)
          ) <span class="kw">%&gt;%</span>
   <span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(-<span class="no">market_size</span>)
 
 <span class="co">#merge the two datasets</span>
-<span class="no">countries_summary_future_ensemble</span> <span class="kw">&lt;-</span> <span class="no">countries_summary_future_ensemble</span> <span class="kw">%&gt;%</span>
-  <span class="fu">left_join</span>(<span class="no">.</span>, <span class="no">countries_risk</span>, <span class="kw">by</span> <span class="kw">=</span> <span class="st">"ID"</span>)</pre></body></html></div>
+<span class="no">countries_summary_present_ensemble</span> <span class="kw">&lt;-</span> <span class="no">countries_summary_present_ensemble</span> <span class="kw">%&gt;%</span>
+  <span class="fu">left_join</span>(<span class="no">.</span>, <span class="no">countries_sev</span>, <span class="kw">by</span> <span class="kw">=</span> <span class="st">"ID"</span>)</pre></body></html></div>
 </div>
 <div id="shapefiles" class="section level2">
 <h2 class="hasAnchor">
 <a href="#shapefiles" class="anchor"></a>Shapefiles</h2>
 <p>We use the shared GoogleDrive file that contains downloaded GADM shapefiles (<a href="https://gadm.org/download_world.html" class="uri">https://gadm.org/download_world.html</a>) for both <code>countries</code> and <code>states</code> geopolitical borders.</p>
 <div class="sourceCode" id="cb5"><html><body><pre class="r">  <span class="co">#shapefile of USA: data obtained from GADM: https://gadm.org/download_world.html</span>
-<span class="no">states</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rgdal/man/readOGR.html">readOGR</a></span>(<span class="kw">dsn</span> <span class="kw">=</span> <span class="st">"/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk/geo_shapefiles/gadm36_USA_shp/gadm36_USA_1.shp"</span>, <span class="kw">verbose</span> <span class="kw">=</span> <span class="no">F</span>, <span class="kw">p4s</span> <span class="kw">=</span> <span class="st">'+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0'</span>)
+<span class="no">states</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rgdal/man/readOGR.html">readOGR</a></span>(<span class="kw">dsn</span> <span class="kw">=</span> <span class="st">"/Volumes/GoogleDrive/Shared drives/slfData/data/slfRisk/geo_shapefiles/gadm36_USA_shp/gadm36_USA_1.shp"</span>, <span class="kw">verbose</span> <span class="kw">=</span> <span class="no">F</span>, <span class="kw">p4s</span> <span class="kw">=</span> <span class="st">'+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0'</span>)
 
   <span class="co">#shapefile of world by countries</span>
-<span class="no">countries</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rgdal/man/readOGR.html">readOGR</a></span>(<span class="st">"/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk/geo_shapefiles/gadm36_levels_shp/gadm36_0.shp"</span>, <span class="kw">verbose</span> <span class="kw">=</span> <span class="no">F</span>, <span class="kw">p4s</span> <span class="kw">=</span> <span class="st">'+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0'</span>)</pre></body></html></div>
+<span class="no">countries</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rgdal/man/readOGR.html">readOGR</a></span>(<span class="st">"/Volumes/GoogleDrive/Shared drives/slfData/data/slfRisk/geo_shapefiles/gadm36_levels_shp/gadm36_0.shp"</span>, <span class="kw">verbose</span> <span class="kw">=</span> <span class="no">F</span>, <span class="kw">p4s</span> <span class="kw">=</span> <span class="st">'+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0'</span>)</pre></body></html></div>
 <p>There are a few shapefile data entries that need to be cleaned, so we alter the names. We also removed the US from <code>countries</code>, as in other analyses.</p>
 <div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="co">#STATES</span>
 <span class="co">#change DC name</span>
@@ -359,11 +367,11 @@
 <span class="no">countries_lo</span> <span class="kw">&lt;-</span> <span class="fu">SpatialPolygonsDataFrame</span>(<span class="kw">Sr</span> <span class="kw">=</span> <span class="kw pkg">rgeos</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/rgeos/man/topo-unary-gSimplify.html">gSimplify</a></span>(<span class="kw">spgeom</span> <span class="kw">=</span> <span class="no">countries</span>, <span class="kw">topologyPreserve</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">tol</span> <span class="kw">=</span> <span class="fl">0.01</span>), <span class="kw">data</span> <span class="kw">=</span> <span class="no">countries</span>@<span class="kw">data</span>)</pre></body></html></div>
 <p>Following this, the shapefiles were filtered to only geopolitical entities that are in the corresponding <code>countries</code> and <code>states</code> data.</p>
 <div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="co">#states</span>
-<span class="no">states</span> <span class="kw">&lt;-</span> <span class="no">states</span>[<span class="no">states</span>@<span class="kw">data</span>$<span class="no">NAME_1</span> <span class="kw">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span>(<span class="no">states_summary_future_ensemble</span>$<span class="no">geopol_unit</span>),]
-<span class="no">states_lo</span> <span class="kw">&lt;-</span> <span class="no">states_lo</span>[<span class="no">states_lo</span>@<span class="kw">data</span>$<span class="no">NAME_1</span> <span class="kw">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span>(<span class="no">states_summary_future_ensemble</span>$<span class="no">geopol_unit</span>),]
+<span class="no">states</span> <span class="kw">&lt;-</span> <span class="no">states</span>[<span class="no">states</span>@<span class="kw">data</span>$<span class="no">NAME_1</span> <span class="kw">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span>(<span class="no">states_summary_present_ensemble</span>$<span class="no">geopol_unit</span>),]
+<span class="no">states_lo</span> <span class="kw">&lt;-</span> <span class="no">states_lo</span>[<span class="no">states_lo</span>@<span class="kw">data</span>$<span class="no">NAME_1</span> <span class="kw">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span>(<span class="no">states_summary_present_ensemble</span>$<span class="no">geopol_unit</span>),]
 <span class="co">#countries</span>
-<span class="no">countries</span> <span class="kw">&lt;-</span> <span class="no">countries</span>[<span class="no">countries</span>@<span class="kw">data</span>$<span class="no">NAME_0</span> <span class="kw">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span>(<span class="no">countries_summary_future_ensemble</span>$<span class="no">geopol_unit</span>),]
-<span class="no">countries_lo</span> <span class="kw">&lt;-</span> <span class="no">countries_lo</span>[<span class="no">countries_lo</span>@<span class="kw">data</span>$<span class="no">NAME_0</span> <span class="kw">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span>(<span class="no">countries_summary_future_ensemble</span>$<span class="no">geopol_unit</span>),]</pre></body></html></div>
+<span class="no">countries</span> <span class="kw">&lt;-</span> <span class="no">countries</span>[<span class="no">countries</span>@<span class="kw">data</span>$<span class="no">NAME_0</span> <span class="kw">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span>(<span class="no">countries_summary_present_ensemble</span>$<span class="no">geopol_unit</span>),]
+<span class="no">countries_lo</span> <span class="kw">&lt;-</span> <span class="no">countries_lo</span>[<span class="no">countries_lo</span>@<span class="kw">data</span>$<span class="no">NAME_0</span> <span class="kw">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span>(<span class="no">countries_summary_present_ensemble</span>$<span class="no">geopol_unit</span>),]</pre></body></html></div>
 <p>In the downscaling and filtering process, we needed to make sure that the geometries are intact and cleaned, and so we used the <code><a href="https://rdrr.io/pkg/cleangeo/man/clgeo_Clean.html">clgeo_Clean()</a></code> function to ensure that the shapefiles work appropriately.</p>
 <div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="co">#might as well clean them all</span>
 <span class="no">states</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/cleangeo/man/clgeo_Clean.html">clgeo_Clean</a></span>(<span class="no">states</span>)
@@ -377,12 +385,12 @@
 <a href="#data-merging" class="anchor"></a>Data merging</h1>
 <p>Now, we use <code>left_join()</code> to join the <code>shapefile@data</code> table to the corresponding <code>summary</code> data.</p>
 <div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="co">#states</span>
-<span class="no">states</span>@<span class="kw">data</span> <span class="kw">&lt;-</span> <span class="fu">left_join</span>(<span class="no">states</span>@<span class="kw">data</span>, <span class="no">states_summary_future_ensemble</span>, <span class="kw">by</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"NAME_1"</span> <span class="kw">=</span> <span class="st">"geopol_unit"</span>))
-<span class="no">states_lo</span>@<span class="kw">data</span> <span class="kw">&lt;-</span> <span class="fu">left_join</span>(<span class="no">states_lo</span>@<span class="kw">data</span>, <span class="no">states_summary_future_ensemble</span>, <span class="kw">by</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"NAME_1"</span> <span class="kw">=</span> <span class="st">"geopol_unit"</span>))
+<span class="no">states</span>@<span class="kw">data</span> <span class="kw">&lt;-</span> <span class="fu">left_join</span>(<span class="no">states</span>@<span class="kw">data</span>, <span class="no">states_summary_present_ensemble</span>, <span class="kw">by</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"NAME_1"</span> <span class="kw">=</span> <span class="st">"geopol_unit"</span>))
+<span class="no">states_lo</span>@<span class="kw">data</span> <span class="kw">&lt;-</span> <span class="fu">left_join</span>(<span class="no">states_lo</span>@<span class="kw">data</span>, <span class="no">states_summary_present_ensemble</span>, <span class="kw">by</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"NAME_1"</span> <span class="kw">=</span> <span class="st">"geopol_unit"</span>))
 <span class="co">#countries</span>
-<span class="no">countries</span>@<span class="kw">data</span> <span class="kw">&lt;-</span> <span class="fu">left_join</span>(<span class="no">countries</span>@<span class="kw">data</span>, <span class="no">countries_summary_future_ensemble</span>, <span class="kw">by</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"NAME_0"</span> <span class="kw">=</span> <span class="st">"geopol_unit"</span>))
-<span class="no">countries_lo</span>@<span class="kw">data</span> <span class="kw">&lt;-</span> <span class="fu">left_join</span>(<span class="no">countries_lo</span>@<span class="kw">data</span>, <span class="no">countries_summary_future_ensemble</span>, <span class="kw">by</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"NAME_0"</span> <span class="kw">=</span> <span class="st">"geopol_unit"</span>))</pre></body></html></div>
-<p>We also rename the column fields to accommodate for ESRI shapefile column name character limits. A README file exists in the GoogleDrive <code>./slfRiskMapping/data/slfRisk/</code> that outlines the keys for the old names and the shorter names used here.</p>
+<span class="no">countries</span>@<span class="kw">data</span> <span class="kw">&lt;-</span> <span class="fu">left_join</span>(<span class="no">countries</span>@<span class="kw">data</span>, <span class="no">countries_summary_present_ensemble</span>, <span class="kw">by</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"NAME_0"</span> <span class="kw">=</span> <span class="st">"geopol_unit"</span>))
+<span class="no">countries_lo</span>@<span class="kw">data</span> <span class="kw">&lt;-</span> <span class="fu">left_join</span>(<span class="no">countries_lo</span>@<span class="kw">data</span>, <span class="no">countries_summary_present_ensemble</span>, <span class="kw">by</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"NAME_0"</span> <span class="kw">=</span> <span class="st">"geopol_unit"</span>))</pre></body></html></div>
+<p>We also rename the column fields to accommodate for ESRI shapefile column name character limits. A README file exists in the GoogleDrive <code>./slfData/data/slfRisk/</code> that outlines the keys for the old names and the shorter names used here.</p>
 <div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="co">#states</span>
 <span class="co">#colnames(states@data)[13:35] &lt;- c("gmean_max","gse_max","wine","grapes","avg_wine","se_wine","lavg_wine","avg_yield","se_yield","avg_prod","se_prod","lavg_yield","lavg_prod","avg_itrad","se_trad","avg_imass","se_mass","lavg_itrad","lavg_imass", "transport", "establish", "imp_wine", "imp_grape")</span>
 <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(<span class="no">states</span>@<span class="kw">data</span>)[<span class="fl">13</span>:<span class="fl">34</span>] <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"gmean_max"</span>,<span class="st">"wine"</span>,<span class="st">"grapes"</span>,<span class="st">"avg_wine"</span>,<span class="st">"se_wine"</span>,<span class="st">"lavg_wine"</span>,<span class="st">"avg_yield"</span>,<span class="st">"se_yield"</span>,<span class="st">"avg_prod"</span>,<span class="st">"se_prod"</span>,<span class="st">"lavg_yield"</span>,<span class="st">"lavg_prod"</span>,<span class="st">"avg_itrad"</span>,<span class="st">"se_trad"</span>,<span class="st">"avg_imass"</span>,<span class="st">"se_mass"</span>,<span class="st">"lavg_itrad"</span>,<span class="st">"lavg_imass"</span>, <span class="st">"transport"</span>, <span class="st">"establish"</span>, <span class="st">"imp_wine"</span>, <span class="st">"imp_grape"</span>)
@@ -422,18 +430,18 @@
 <div id="save-shapefiles-for-ee" class="section level1">
 <h1 class="hasAnchor">
 <a href="#save-shapefiles-for-ee" class="anchor"></a>Save shapefiles for EE</h1>
-<p>The newly merged shapefiles (<code>countries</code>, <code>states</code>, and <code>combined</code> for regular and <code>_lo</code> versions) are written to the shared GoogleDrive directory <code>./slfRiskMapping/data/slfRisk/geo_shapefiles/gadm36_USA_with_data/</code> for visualization with EE.</p>
+<p>The newly merged shapefiles (<code>countries</code>, <code>states</code>, and <code>combined</code> for regular and <code>_lo</code> versions) are written to the shared GoogleDrive directory <code>./slfData/data/slfRisk/geo_shapefiles/gadm36_USA_with_data/</code>for visualization with EE.</p>
 <div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="co">#states</span>
-<span class="fu"><a href="https://rdrr.io/pkg/rgdal/man/writeOGR.html">writeOGR</a></span>(<span class="kw">obj</span> <span class="kw">=</span> <span class="no">states</span>, <span class="kw">dsn</span> <span class="kw">=</span> <span class="st">"/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk/geo_shapefiles/gadm36_USA_with_data/"</span>,  <span class="kw">driver</span><span class="kw">=</span><span class="st">"ESRI Shapefile"</span>, <span class="kw">layer</span> <span class="kw">=</span> <span class="st">"states"</span>, <span class="kw">verbose</span> <span class="kw">=</span> <span class="fl">FALSE</span>, <span class="kw">overwrite_layer</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
-<span class="fu"><a href="https://rdrr.io/pkg/rgdal/man/writeOGR.html">writeOGR</a></span>(<span class="kw">obj</span> <span class="kw">=</span> <span class="no">states_lo</span>, <span class="kw">dsn</span> <span class="kw">=</span> <span class="st">"/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk/geo_shapefiles/gadm36_USA_with_data/"</span>,  <span class="kw">driver</span><span class="kw">=</span><span class="st">"ESRI Shapefile"</span>, <span class="kw">layer</span> <span class="kw">=</span> <span class="st">"states_lores"</span>, <span class="kw">verbose</span> <span class="kw">=</span> <span class="fl">FALSE</span>, <span class="kw">overwrite_layer</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
+<span class="fu"><a href="https://rdrr.io/pkg/rgdal/man/writeOGR.html">writeOGR</a></span>(<span class="kw">obj</span> <span class="kw">=</span> <span class="no">states</span>, <span class="kw">dsn</span> <span class="kw">=</span> <span class="st">"/Volumes/GoogleDrive/Shared drives/slfData/data/slfRisk/geo_shapefiles/gadm36_USA_with_data/"</span>,  <span class="kw">driver</span><span class="kw">=</span><span class="st">"ESRI Shapefile"</span>, <span class="kw">layer</span> <span class="kw">=</span> <span class="st">"states"</span>, <span class="kw">verbose</span> <span class="kw">=</span> <span class="fl">FALSE</span>, <span class="kw">overwrite_layer</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
+<span class="fu"><a href="https://rdrr.io/pkg/rgdal/man/writeOGR.html">writeOGR</a></span>(<span class="kw">obj</span> <span class="kw">=</span> <span class="no">states_lo</span>, <span class="kw">dsn</span> <span class="kw">=</span> <span class="st">"/Volumes/GoogleDrive/Shared drives/slfData/data/slfRisk/geo_shapefiles/gadm36_USA_with_data/"</span>,  <span class="kw">driver</span><span class="kw">=</span><span class="st">"ESRI Shapefile"</span>, <span class="kw">layer</span> <span class="kw">=</span> <span class="st">"states_lores"</span>, <span class="kw">verbose</span> <span class="kw">=</span> <span class="fl">FALSE</span>, <span class="kw">overwrite_layer</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
 
 <span class="co">#countries</span>
-<span class="fu"><a href="https://rdrr.io/pkg/rgdal/man/writeOGR.html">writeOGR</a></span>(<span class="kw">obj</span> <span class="kw">=</span> <span class="no">countries</span>, <span class="kw">dsn</span> <span class="kw">=</span> <span class="st">"/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk/geo_shapefiles/gadm36_levels_with_data/"</span>,  <span class="kw">driver</span><span class="kw">=</span><span class="st">"ESRI Shapefile"</span>, <span class="kw">layer</span> <span class="kw">=</span> <span class="st">"countries"</span>, <span class="kw">verbose</span> <span class="kw">=</span> <span class="fl">FALSE</span>, <span class="kw">overwrite_layer</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
-<span class="fu"><a href="https://rdrr.io/pkg/rgdal/man/writeOGR.html">writeOGR</a></span>(<span class="kw">obj</span> <span class="kw">=</span> <span class="no">countries_lo</span>, <span class="kw">dsn</span> <span class="kw">=</span> <span class="st">"/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk/geo_shapefiles/gadm36_levels_with_data/"</span>,  <span class="kw">driver</span><span class="kw">=</span><span class="st">"ESRI Shapefile"</span>, <span class="kw">layer</span> <span class="kw">=</span> <span class="st">"countries_lores"</span>, <span class="kw">verbose</span> <span class="kw">=</span> <span class="fl">FALSE</span>, <span class="kw">overwrite_layer</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
+<span class="fu"><a href="https://rdrr.io/pkg/rgdal/man/writeOGR.html">writeOGR</a></span>(<span class="kw">obj</span> <span class="kw">=</span> <span class="no">countries</span>, <span class="kw">dsn</span> <span class="kw">=</span> <span class="st">"/Volumes/GoogleDrive/Shared drives/slfData/data/slfRisk/geo_shapefiles/gadm36_levels_with_data/"</span>,  <span class="kw">driver</span><span class="kw">=</span><span class="st">"ESRI Shapefile"</span>, <span class="kw">layer</span> <span class="kw">=</span> <span class="st">"countries"</span>, <span class="kw">verbose</span> <span class="kw">=</span> <span class="fl">FALSE</span>, <span class="kw">overwrite_layer</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
+<span class="fu"><a href="https://rdrr.io/pkg/rgdal/man/writeOGR.html">writeOGR</a></span>(<span class="kw">obj</span> <span class="kw">=</span> <span class="no">countries_lo</span>, <span class="kw">dsn</span> <span class="kw">=</span> <span class="st">"/Volumes/GoogleDrive/Shared drives/slfData/data/slfRisk/geo_shapefiles/gadm36_levels_with_data/"</span>,  <span class="kw">driver</span><span class="kw">=</span><span class="st">"ESRI Shapefile"</span>, <span class="kw">layer</span> <span class="kw">=</span> <span class="st">"countries_lores"</span>, <span class="kw">verbose</span> <span class="kw">=</span> <span class="fl">FALSE</span>, <span class="kw">overwrite_layer</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
 
 <span class="co">#combined</span>
-<span class="fu"><a href="https://rdrr.io/pkg/rgdal/man/writeOGR.html">writeOGR</a></span>(<span class="kw">obj</span> <span class="kw">=</span> <span class="no">combined</span>, <span class="kw">dsn</span> <span class="kw">=</span> <span class="st">"/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk/geo_shapefiles/combined/"</span>,  <span class="kw">driver</span><span class="kw">=</span><span class="st">"ESRI Shapefile"</span>, <span class="kw">layer</span> <span class="kw">=</span> <span class="st">"combined"</span>, <span class="kw">verbose</span> <span class="kw">=</span> <span class="fl">FALSE</span>, <span class="kw">overwrite_layer</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
-<span class="fu"><a href="https://rdrr.io/pkg/rgdal/man/writeOGR.html">writeOGR</a></span>(<span class="kw">obj</span> <span class="kw">=</span> <span class="no">combined_lo</span>, <span class="kw">dsn</span> <span class="kw">=</span> <span class="st">"/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk/geo_shapefiles/combined/"</span>,  <span class="kw">driver</span><span class="kw">=</span><span class="st">"ESRI Shapefile"</span>, <span class="kw">layer</span> <span class="kw">=</span> <span class="st">"combined_lores"</span>, <span class="kw">verbose</span> <span class="kw">=</span> <span class="fl">FALSE</span>, <span class="kw">overwrite_layer</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
+<span class="fu"><a href="https://rdrr.io/pkg/rgdal/man/writeOGR.html">writeOGR</a></span>(<span class="kw">obj</span> <span class="kw">=</span> <span class="no">combined</span>, <span class="kw">dsn</span> <span class="kw">=</span> <span class="st">"/Volumes/GoogleDrive/Shared drives/slfData/data/slfRisk/geo_shapefiles/combined/"</span>,  <span class="kw">driver</span><span class="kw">=</span><span class="st">"ESRI Shapefile"</span>, <span class="kw">layer</span> <span class="kw">=</span> <span class="st">"combined"</span>, <span class="kw">verbose</span> <span class="kw">=</span> <span class="fl">FALSE</span>, <span class="kw">overwrite_layer</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
+<span class="fu"><a href="https://rdrr.io/pkg/rgdal/man/writeOGR.html">writeOGR</a></span>(<span class="kw">obj</span> <span class="kw">=</span> <span class="no">combined_lo</span>, <span class="kw">dsn</span> <span class="kw">=</span> <span class="st">"/Volumes/GoogleDrive/Shared drives/slfData/data/slfRisk/geo_shapefiles/combined/"</span>,  <span class="kw">driver</span><span class="kw">=</span><span class="st">"ESRI Shapefile"</span>, <span class="kw">layer</span> <span class="kw">=</span> <span class="st">"combined_lores"</span>, <span class="kw">verbose</span> <span class="kw">=</span> <span class="fl">FALSE</span>, <span class="kw">overwrite_layer</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
 </div>
 <div id="supplemental-check-of-shapefiles" class="section level1">
 <h1 class="hasAnchor">
@@ -447,7 +455,7 @@
 <span class="co">#fortifying to make points</span>
 <span class="no">states_gg</span> <span class="kw">&lt;-</span> <span class="fu">fortify</span>(<span class="no">states_lo</span>, <span class="kw">region</span> <span class="kw">=</span> <span class="st">"NAME_1"</span>)
 <span class="co">#&gt; SpP is invalid</span>
-<span class="no">states_gg</span> <span class="kw">&lt;-</span> <span class="fu">left_join</span>(<span class="no">states_gg</span>, <span class="no">states_summary_future_ensemble</span>, <span class="kw">by</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"id"</span> <span class="kw">=</span> <span class="st">"geopol_unit"</span>))
+<span class="no">states_gg</span> <span class="kw">&lt;-</span> <span class="fu">left_join</span>(<span class="no">states_gg</span>, <span class="no">states_summary_present_ensemble</span>, <span class="kw">by</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"id"</span> <span class="kw">=</span> <span class="st">"geopol_unit"</span>))
 
 <span class="co">#try with all</span>
 <span class="co">#combined_gg &lt;- fortify(combined_lo, region = "NAME_1")</span>

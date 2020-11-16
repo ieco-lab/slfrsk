@@ -4,15 +4,15 @@ pkgdown_sha: ~
 articles:
   vignette-001-overview: vignette-001-overview.html
   vignette-002-terms: vignette-002-terms.html
+  vignette-003-get-gbif-data: vignette-003-get-gbif-data.html
   vignette-010-tidy-data: vignette-010-tidy-data.html
   vignette-011-suitability-models: vignette-011-suitability-models.html
   vignette-021-quadrant-plots: vignette-021-quadrant-plots.html
   vignette-025-quadrant-plots-alt: vignette-025-quadrant-plots-alt.html
   vignette-026-quadrant-plots-alt-median: vignette-026-quadrant-plots-alt-median.html
   vignette-027-quadrant-plots-alt-mean: vignette-027-quadrant-plots-alt-mean.html
-  vignette-030-risk-maps: vignette-030-risk-maps.html
+  vignette-030-potentials-maps: vignette-030-potentials-maps.html
   vignette-040-ee-data: vignette-040-ee-data.html
   vignette-041-market-plot: vignette-041-market-plot.html
-  vignette-060-hops: vignette-060-hops.html
-last_built: 2020-10-16T18:21Z
+last_built: 2020-11-16T19:59Z
 
