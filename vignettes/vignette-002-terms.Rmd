@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-Terms Used in the Spotted Lanternfly Paninvasion Risk Research Compendium
+Terms Used in the Spotted Lanternfly Paninvasion Severity Research Compendium
 
 ***
 
@@ -28,42 +28,59 @@ This page briefly defines commonly used terms in the **Research Compendium** for
 
 # Definitions
 
-- **alignment**---the strong joint relationship among all three components of invasion potential.
+- **spotted lanternfly (SLF)**---*Lycorma delicatula* is a planthopper native to China, Vietnam, and India. It invaded South Korea and Japan in the early 2000's and the northeastern US ca. 2014. It is known to feed on $>100$ different host species, including grapes (@urban_perspective:_2019, @barringer_worldwide_2020).
 
 \newline
 
-- **invasion potential**---the prospect that a pest species will successfully be moved to (transport), develop and maintain populations in (establishment), or negatively affect the production/commerce activities of (economic) an as-yet uninvaded region. See @blackburn_proposed_2011.
+- **invasion potentials**---likelihoods of a species to move through stages in an invasion process across regions (@blackburn_proposed_2011). We focus on the main stages: transport, establishment, impact.
 
 \newline
 
-- **invasion risk**---for a potential invasion of a given area by a pest species, the chance that the pest has a strong likelihood of transportation to the area, the area contains suitable habitat for establishment, and the area has a proportionally sizable region of impact. 
+- **transport potential**---likelihood of a region to have an introduction of an alien species.
 
 \newline
 
-- **paninvasion**---invasion of a pest species at a global scale.
+- **establishment potential**---likelihood of a region to contain suitable habitat for transported individuals of an alien species to form a spreading population.
 
 \newline
 
-- **phylloxera**---grapevine phylloxera (*Daktulosphaira vitifoliae* (Fitch 1855)) is a species of insect native to North America that is the grapevine pest responsible for the Great Wine Blight of the late 1800's that destroyed most of the European grape and wine industries. International collaboration lead to the successful recovery of European grape and wine production via the combining of phylloxera-resistant North American grapevines with susceptible European varieties via grafting or hybridization. See @gale_dying_2011 for further details.
+- **impact potential**---likelihood of a region to experience negative economic effects from an established alien species.
 
 \newline
 
-- **risk severity**---the degree to which a paninvasion will lead to catastrophic economic shock, should the paninvasion occur.
+- **alignment correlation**---multivariate relationship among invasion potentials.
 
 \newline
 
-- **SDM**---Species Distribution Models (plural: SDMs, also called environmental/ecological niche models, ENMs) characterize the relationship between one or more species and covariates (usually environmental variables) that likely explain the distribution of the species. Most SDMs use observed presence records for species and spatially explicit environmental data layers.
+- **economic shock**---an unexpected event that affects an economic market (@wikipedia_shock_2020). Economic shocks caused by environmental problems like invasive species are negative and reduce economic growth and destabilize socioeconomic systems (@bretschger_best_2019).
 
 \newline
 
-- **shock** (economic)---an unforeseen or unexpected substantial change to an economic system. Here, we consider supply shock, whereby the sudden change in available raw materials/commodities is likely to greatly alter the production and price of those materials and commodities, as well as affect related industries.
+- **paninvasive species**---globally invasive species that may shock a global economic market.
 
 \newline
 
-- **SLF**---*Lycorma delicatula* (White, 1845), the Spotted Lanternfly, is a planthopper native to China, Vietnam, India, and eastern Asia that has spread to South Korea and Japan in the early 2000's and now to the northeastern US c. 2014. As currently observed, SLF has a life cycle that includes the laying of drab, inconspicuous eggs on objects in the late summer/early fall, followed by the death of adults as the eggs overwinter. Nymphs emerge in the spring and undergo several instars before reaching sexual maturity (5 stages) as early as mid-summer. SLF feeds on plant hosts via piercing mouthparts that are used to consume phloem fluids and is known to feed on $>100$ different host species, including grapes (@urban_perspective:_2019, @barringer_worldwide_2020).
+- **paninvasion**---invasion of a species at the global scale that shocks a global economic market.
 
 \newline
 
-- **TOH**---*Ailanthus altissima* (Mill.) Swingle 1916, Tree of Heaven, is a medium-sized deciduous tree that is native to China, Taiwan, and northern Korea and has also spread and established on all major continents except Antarctica. This plant is the preferred host of SLF where both species can be found (@barringer_worldwide_2020).
+- **phylloxera**---*Daktulosphaira vitifoliae* is grapevine root pest native to North America that was responsible for the Great Wine Blight of the late 1800's, which was the largest economic shock to the global wine market ever recorded. The shock was mitigated by widespread planting of European vines that were grafted to North American grapevine root stocks. The paninvasion of phylloxera continues to this day (@ordish_great_1972, @gale_dying_2011).
+
+\newline
+
+-	**paninvasion severity**---the likelihood of a regional invasive species to become a globally invasive species and cause economic shock.
+
+\newline
+
+-	**species distribution model (SDM)**---spatial model used to predict the environmental niche, habitat suitability and establishment potential of a species.
+
+\newline
+
+-	**MaxEnt**---acronym for maximum entropy, which is a presence-only SDM methodology that uses machine-learning to estimate the probability distribution of maximum entropy based on environmental variables and species occurrence records (@phillips_maximum_2006, @phillips_steven_j._opening_2017).
+
+
+\newline
+
+- **tree of heaven (TOH)**---*Ailanthus altissima* is a paninvasive deciduous tree that is native to China, Taiwan, and northern Korea, but has been spread globally. It is a highly preferred host for SLF and determines SLF establishment potential.
 
 # References

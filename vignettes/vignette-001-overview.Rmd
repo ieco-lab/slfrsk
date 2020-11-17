@@ -24,7 +24,7 @@ Overview of the Spotted Lanternfly Paninvasion Severity Research Compendium
 
 # Purpose
 
-Welcome to the **Research Compendium** Overview for "Spotted lanternfly paninvasion severity: Assessing likelihood of a US grapevine pest to shock the global wine market" [INSERT STABLE BIORXIV LINK]. This overview aims to outline the contents of the compendium to ensure that the study is transparent and reproducible.
+Welcome to the **Research Compendium** Overview for "High risk of a spotted lanternfly paninvasion to shock the global wine market" [INSERT STABLE BIORXIV LINK]. This overview aims to outline the contents of the compendium to ensure that the study is transparent and reproducible.
 
 # About the Compendium
 
