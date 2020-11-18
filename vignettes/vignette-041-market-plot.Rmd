@@ -1,5 +1,5 @@
 ---
-title: "Wine Market Shock Severity Evaluation"
+title: "Paninvasion Severity"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{vignette-041-market-plot}
@@ -16,11 +16,11 @@ knitr::opts_chunk$set(
 )
 ```
 
-Build and Save Paninvasion Shock to Wine Market Plots
+Quantify Paninvasion Severity to Shock Wine Market
 
 ***
 
-This vignette aims to reproduce the published figure(s) of the relationship between the predicted production of **grapes** from a severity model built from the alignment of the three risk potentials (**impact** potential regressed on **transport** and **establishment**) to the **wine market share** by country.
+This vignette aims to reproduce the published figure(s) of the relationship between the predicted production of **grapes** from a severity model built from the alignment of the three invasion potentials (**impact** potential regressed on **transport** and **establishment**) to the **wine market share** by country.
 
 # Setup
 

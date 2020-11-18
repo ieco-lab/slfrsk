@@ -1,5 +1,5 @@
 ---
-title: "Suitability Modeling & Evaluation"
+title: "Species Distribution Modeling"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{vignette-011-suitability-models}
@@ -19,11 +19,11 @@ knitr::opts_chunk$set(
 )
 ```
 
-How to Build, Evaluate, and Save Ecological Niche Models of Suitability for *Ailanthus altissima* (TOH) and *Lycorma delicatula* (SLF)
+How to Build, Evaluate, and Save Species Distribution Models for *Ailanthus altissima* (TOH) and *Lycorma delicatula* (SLF)
 
 ***
 
-This vignette is designed to demonstrate the workflow that lead to the creation of the three suitability models used to assess the risk of **SLF** paninvasion. The description will not include actual running of some steps of this workflow, as some are unwieldy. Instead, information to ensure proper replication of those steps is provided. Notably, the MaxEnt runs are not conducted in this vignette, although the means to do so within `R` may be possible.
+This vignette is designed to demonstrate the workflow that lead to the creation of the three species distribution models (SDMs) used to assess the severity of **SLF** paninvasion. The description will not include actual running of some steps of this workflow, as some are unwieldy. Instead, information to ensure proper replication of those steps is provided. Notably, the MaxEnt runs are not conducted in this vignette, although the means to do so within `R` may be possible.
 
 The scope of this vignette is as follows:
 

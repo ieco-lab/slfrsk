@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Suitability Modeling &amp; Evaluation • slfrsk</title>
+<title>Species Distribution Modeling • slfrsk</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
@@ -17,7 +17,7 @@
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Suitability Modeling &amp; Evaluation">
+<script src="../pkgdown.js"></script><meta property="og:title" content="Species Distribution Modeling">
 <meta property="og:description" content="slfrsk">
 <meta property="og:image" content="/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -67,37 +67,58 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li class="divider">
-    <li>
-      <a href="../articles/vignette-003-get-gbif-data.html">Get GBIF Records</a>
-    </li>
-    <li>
-      <a href="../articles/vignette-010-tidy-data.html">Data Tidying</a>
-    </li>
-    <li>
-      <a href="../articles/vignette-011-suitability-models.html">Suitability Modeling &amp; Evaluation</a>
-    </li>
-    <li>
-      <a href="../articles/vignette-030-potentials-maps.html">Invasion Potentials Maps</a>
-    </li>
     <li class="dropdown-submenu">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Invasion Potential Alignment</a>
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Step 1: Estimate Invasion Potentials</a>
       <ul class="dropdown-menu" role="menu">
 <li class="divider">
         <li>
-          <a href="../articles/vignette-021-quadrant-plots.html">Published (Max)</a>
+          <a href="../articles/vignette-003-get-gbif-data.html">Get GBIF Records</a>
         </li>
         <li>
-          <a href="../articles/vignette-026-quadrant-plots-alt-median.html">Alternate (Median)</a>
+          <a href="../articles/vignette-010-tidy-data.html">Data Tidying</a>
         </li>
         <li>
-          <a href="../articles/vignette-027-quadrant-plots-alt-mean.html">Alternate (Mean)</a>
+          <a href="../articles/vignette-011-suitability-models.html">Species Distribution Modeling</a>
         </li>
         <li class="divider">
       </ul>
 </li>
-    <li>
-      <a href="../articles/vignette-041-market-plot.html">Wine Market Shock Severity Evaluation</a>
-    </li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Step 2: Calculate Alignment Correlations</a>
+      <ul class="dropdown-menu" role="menu">
+<li class="divider">
+        <li>
+          <a href="../articles/vignette-030-potentials-maps.html">Invasion Potential Maps</a>
+        </li>
+        <li class="dropdown-submenu">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Invasion Potential Alignment</a>
+          <ul class="dropdown-menu" role="menu">
+<li class="divider">
+            <li>
+              <a href="../articles/vignette-021-quadrant-plots.html">Published (Max)</a>
+            </li>
+            <li>
+              <a href="../articles/vignette-026-quadrant-plots-alt-median.html">Alternate (Median)</a>
+            </li>
+            <li>
+              <a href="../articles/vignette-027-quadrant-plots-alt-mean.html">Alternate (Mean)</a>
+            </li>
+            <li class="divider">
+          </ul>
+</li>
+        <li class="divider">
+      </ul>
+</li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Step 3: Quantify Paninvasion Severity</a>
+      <ul class="dropdown-menu" role="menu">
+<li class="divider">
+        <li>
+          <a href="../articles/vignette-041-market-plot.html">Paninvasion Severity</a>
+        </li>
+        <li class="divider">
+      </ul>
+</li>
     <li class="divider">
   </ul>
 </li>
@@ -122,7 +143,7 @@
       </header><script src="vignette-011-suitability-models_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>Suitability Modeling &amp; Evaluation</h1>
+      <h1 data-toc-skip>Species Distribution Modeling</h1>
             
       
       
@@ -132,9 +153,9 @@
 
     
     
-<p>How to Build, Evaluate, and Save Ecological Niche Models of Suitability for <em>Ailanthus altissima</em> (TOH) and <em>Lycorma delicatula</em> (SLF)</p>
+<p>How to Build, Evaluate, and Save Species Distribution Models for <em>Ailanthus altissima</em> (TOH) and <em>Lycorma delicatula</em> (SLF)</p>
 <hr>
-<p>This vignette is designed to demonstrate the workflow that lead to the creation of the three suitability models used to assess the risk of <strong>SLF</strong> paninvasion. The description will not include actual running of some steps of this workflow, as some are unwieldy. Instead, information to ensure proper replication of those steps is provided. Notably, the MaxEnt runs are not conducted in this vignette, although the means to do so within <code>R</code> may be possible.</p>
+<p>This vignette is designed to demonstrate the workflow that lead to the creation of the three species distribution models (SDMs) used to assess the severity of <strong>SLF</strong> paninvasion. The description will not include actual running of some steps of this workflow, as some are unwieldy. Instead, information to ensure proper replication of those steps is provided. Notably, the MaxEnt runs are not conducted in this vignette, although the means to do so within <code>R</code> may be possible.</p>
 <p>The scope of this vignette is as follows:</p>
 <ol style="list-style-type: decimal">
 <li>Reading and Visualization of Presence Data</li>

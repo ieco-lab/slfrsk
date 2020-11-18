@@ -1,5 +1,5 @@
 ---
-title: "Invasion Potentials Maps"
+title: "Invasion Potential Maps"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{vignette-030-potentials-maps}
