@@ -1,5 +1,5 @@
 ---
-title: "Wine Market Risk of Shock Evaluation"
+title: "Paninvasion Severity"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{vignette-041-market-plot}
@@ -16,11 +16,11 @@ knitr::opts_chunk$set(
 )
 ```
 
-Build and Save Paninvasion Risk to Wine Market Plots
+Quantify Paninvasion Severity to Shock Wine Market
 
 ***
 
-This vignette aims to reproduce the published figure(s) of the relationship between the predicted production of **grapes** from a risk model built from the alignment of the three risk potentials (**impact** potential regressed on **transport** and **establishment**) to the **wine market share** by country.
+This vignette aims to reproduce the published figure(s) of the relationship between the predicted production of **grapes** from a severity model built from the alignment of the three invasion potentials (**impact** potential regressed on **transport** and **establishment**) to the **wine market share** by country.
 
 # Setup
 
@@ -72,7 +72,7 @@ countries_wine_market$market_size[countries_wine_market$market_size==0] <- NA
 qplot((countries_wine_market$market_size))
 ```
 
-From here, we add an `ID` column that matches the other use of this label in other `slfrsk` vignettes. Then, we isolate `ID` and `market_size` for risk analyses.
+From here, we add an `ID` column that matches the other use of this label in the other package vignettes. Then, we isolate `ID` and `market_size` for severity analyses.
 
 ```{r add the ID column for joining to summary data, eval = TRUE}
 #add the ID column for joining and plotting later
@@ -81,7 +81,7 @@ countries_wine_market <- countries_wine_market %>%
   dplyr::select(ID, market_size) 
 ```
 
-## Risk summary data
+## Market summary data
 
 To merge the new `market_size` dat with our existing `countries` data, we use `left_join()` to merge the `market` and `summary` data by `ID`. We then remove the countries from the dataset that already have **SLF**. Note: we use a modified version of `%in%` and `Negate()` to create `%notin%` for removing countries.
 
@@ -124,7 +124,7 @@ countries_summary_present_ensemble <- countries_summary_present_ensemble %>% fil
 
 # filter(countries_summary_future, status == "native")
 
-countries_risk_market <- countries_summary_present_ensemble %>% 
+countries_sev_market <- countries_summary_present_ensemble %>% 
   left_join(countries_wine_market, by = "ID") %>%
   filter(ID %notin% c("United States", 
                       "China", 
@@ -136,72 +136,62 @@ countries_risk_market <- countries_summary_present_ensemble %>%
 
 #########
 # - Use this code to check to make sure that each country only has one row
-# dim(countries_risk_market)
-# setdiff(countries_risk_market$ID,countries_summary_future$ID)
-# setdiff(countries_summary_future$ID,countries_risk_market$ID)
-# table(countries_risk_market$ID)[table(countries_risk_market$ID)>1]
+# dim(countries_sev_market)
+# setdiff(countries_sev_market$ID,countries_summary_future$ID)
+# setdiff(countries_summary_future$ID,countries_sev_market$ID)
+# table(countries_sev_market$ID)[table(countries_sev_market$ID)>1]
 # table(countries_summary_future$ID)[table(countries_summary_future$ID)>1]
 
 ```
 
 # Build and check model
 
-From here, we now can build (or rebuild, technically, `vignette-021-quadrant-plots` does this first part as well) the risk model (`risk_mod`). This model is a linear regression model of log-transformed **impact** potential on the log-transformed **transport** and normal **establishment** potentials. We then evaluated the strength of the correlation between the empirical and predicted **impact** potential before conducting some diagnostics.
+From here, we now can build (or rebuild, technically, `vignette-021-quadrant-plots` does this first part as well) the severity model (`sev_mod`). This model is a linear regression model of log-transformed **impact** potential on the log-transformed **transport** and normal **establishment** potentials. We then evaluated the strength of the correlation between the empirical and predicted **impact** potential before conducting some diagnostics.
 
-We then rescaled the predicted **impact** values to be bounded $[1,10]$ to produce initial `risk` values.
+We then rescaled the predicted **impact** values to be bounded $[1,10]$ to produce initial `sev` values.
 
-To create the initial *shock model* (`shock_mod`) and ultimately obtain a scaled measure of risk of **SLF** to shock the global wine market, we performed linear regression of the `market_size` data on `risk` for countries and conducted diagnostics as for `risk_mod`. We then evaluated the unscaled and scaled correlations between `market_size` and `risk` for countries, resulting in a severity of risk at $8$ based on a scale of $[1,10]$.
+To create the initial *shock model* (`shock_mod`) and ultimately obtain a scaled measure of severity of **SLF** to shock the global wine market, we performed linear regression of the `market_size` data on `sev` for countries and conducted diagnostics as for `sev_mod`. We then evaluated the unscaled and scaled correlations between `market_size` and `sev` for countries, resulting in a severity of $8$ based on a scale of $[1,10]$.
 
 ```{r, fig.height= 7, fig.width=7, message=FALSE}
-risk_mod <- lm(log10_avg_prod ~ log10_avg_infected_mass + grand_mean_max, 
-               data = countries_risk_market)
-cor.test(countries_risk_market$log10_avg_prod, predict(risk_mod), method = "spearman")
+sev_mod <- lm(log10_avg_prod ~ log10_avg_infected_mass + grand_mean_max, 
+               data = countries_sev_market)
+cor.test(countries_sev_market$log10_avg_prod, predict(sev_mod), method = "spearman")
 
 ## diagnostics
 # fit is good for the multivariate correlation because there is no dispersion, but do not use this model for prediction (which I do not know why you would)
-simulationOutput_r <- simulateResiduals(fittedModel = risk_mod, plot = T) 
+simulationOutput_r <- simulateResiduals(fittedModel = sev_mod, plot = T) 
 testDispersion(simulationOutput_r) 
-summary(risk_mod)
+summary(sev_mod)
 
-countries_risk_market <- countries_risk_market %>%
-  mutate(risk = scales::rescale(predict(risk_mod), to = c(1,10)))
+countries_sev_market <- countries_sev_market %>%
+  mutate(sev = scales::rescale(predict(sev_mod), to = c(1,10)))
 
-shock_mod <- lm(market_size ~ risk, data = countries_risk_market)
+shock_mod <- lm(market_size ~ sev, data = countries_sev_market)
 summary(shock_mod)
 
 ## diagnostics
-# risk estimate model fit is good and no major issues in heteroskedasticity. But I am not certain why you want this model anyways, a correlation is better because it is easily scaled between 1-10 
+# severity estimate model fit is good and no major issues in heteroskedasticity. But I am not certain why you want this model anyways, a correlation is better because it is easily scaled between 1-10 
 simulationOutput <- simulateResiduals(fittedModel = shock_mod, plot = T) 
 testDispersion(simulationOutput)
 
-cor.test(countries_risk_market$market_size, countries_risk_market$risk)
-(shock_cor <- cor(countries_risk_market$market_size, 
-                 countries_risk_market$risk,
+cor.test(countries_sev_market$market_size, countries_sev_market$sev)
+(shock_cor <- cor(countries_sev_market$market_size, 
+                 countries_sev_market$sev,
                  use = "complete.obs") %>% 
   scales::rescale(to = c(1,10), from = c(-1,1)) %>%
   round())
 ```
 
-# Plotting risk vs market scatter
+# Plotting severity vs market scatter
 
-With the predicted **risk**, we were able plot the scaled `risk` and `market_size`, resulting in the published risk of **SLF** to shock the global wine market plot.
+With the predicted **severity**, we were able plot the scaled `sev` and `market_size`, resulting in the published severity of **SLF** to shock the global wine market plot.
 
 ## Static plot
 
 ```{r make scatter, eval = TRUE, fig.height= 12, fig.width=10, message=FALSE, warning=FALSE}
-
-#countries_risk_market %>%
-#  mutate(risk_scale = scale(risk), market_size_scale = scale(market_size)) %>%
-  #mutate(risk_scale_ticks = )
-#  ggplot(mapping = aes(x = risk_scale, 
-#                       y = market_size_scale, fill = wine), color = "black") +
-#  geom_point(pch = 21)
-
-remove(market_scatter)
-
-market_scatter <- countries_risk_market %>%
+market_scatter <- countries_sev_market %>%
   
-  ggplot(mapping = aes(x = (risk), 
+  ggplot(mapping = aes(x = (sev), 
                        y = (market_size), 
                        size = avg_wine, 
                        fill = wine)
@@ -210,11 +200,11 @@ market_scatter <- countries_risk_market %>%
   geom_abline(slope = 1, intercept = 5, lty = 2) +
   geom_abline(slope = 1, intercept = -5, lty = 2) +
 
-  ggtitle(label = paste('Spotted Lanternfly Paninvasion Risk Severity =',
+  ggtitle(label = paste('Spotted Lanternfly Paninvasion Severity =',
                         shock_cor,'of 10 (P<0.001)')) +
   geom_point(pch = 21) + 
      scale_x_continuous(
-    name =  substitute(expr = paste('Spotted Lanternfly (',italic("Lycorma delicatula"),') Invasion Risk')), 
+    name =  substitute(expr = paste('Spotted Lanternfly (',italic("Lycorma delicatula"),') Invasion Severity')), 
     breaks = 1:10, 
     limits = c(1,10)
     ) +
@@ -257,11 +247,11 @@ market_scatter <- countries_risk_market %>%
         #plot.margin = unit(c(hh, -5, hh, hh), units = "line"),
         #axis.title = element_text(size = rel(1.3))
       ) +
-  geom_text_repel(#data = select(countries_risk_market,
+  geom_text_repel(#data = select(countries_sev_market,
                       aes(#x = x_to_plot, 
                           #y = y_to_plot, 
                           label = ID),
-                      #label = countries_risk_market$ID,
+                      #label = countries_sev_market$ID,
                       min.segment.length = 0,
                       #direction = "x",
                       #nudge_y = nudge.y,
@@ -289,9 +279,9 @@ We also provide an interactive version of the risk plot with `plotly`.
 
 ```{r, fig.height= 8, fig.width=8, message=FALSE, warning=FALSE}
 #build ggplot
-p1 <- countries_risk_market %>%
+p1 <- countries_sev_market %>%
   mutate_if(.predicate = is.numeric, .funs = ~round(x = ., digits = 2)) %>%
-    ggplot(mapping = aes(x = risk, 
+    ggplot(mapping = aes(x = sev, 
                        y = market_size, 
                        size = avg_wine, 
                        fill = wine
@@ -322,13 +312,13 @@ p1 <- countries_risk_market %>%
       )
 
 #execute plotly
-ggplotly(p = p1, tooltip = c("ID", "risk", "market_size", "wine"), dynamicTicks = T) %>%
+ggplotly(p = p1, tooltip = c("ID", "sev", "market_size", "wine"), dynamicTicks = T) %>%
 layout(xaxis = 
-           list(title = list(text = paste('Spotted Lanternfly',sprintf("(<i>Lycorma delicatula</i>)"),'Invasion Risk'), font = list(size = 11)), showspikes = T),
+           list(title = list(text = paste('Spotted Lanternfly',sprintf("(<i>Lycorma delicatula</i>)"),'Invasion Severity'), font = list(size = 11)), showspikes = T),
          yaxis = 
            list(title = list(text = "Wine Export Market Size, log10 USD", font = list(size = 11)), showspikes = T),
          title = 
-           list(text = paste('Spotted Lanternfly Paninvasion Risk Severity =', shock_cor,'of 10 (P<0.001)'),
+           list(text = paste('Spotted Lanternfly Paninvasion Severity =', shock_cor,'of 10 (P<0.001)'),
                 font = list(size = 12),
                 x = 0.1,
                 y = 0.99),
@@ -340,20 +330,20 @@ layout(xaxis =
 
 Here, you can set to save the scatter plot to `/vignettes` as a `.pdf` file by setting the `if` from `FALSE` to `TRUE`, as in the other vignettes. We also have a version of the data saved for the Google Earth Engine App data cleaning vignette.
 
-```{r, save pdf of image, message=TRUE, eval=FALSE}
+```{r, save pdf of image, message=TRUE, eval=TRUE}
 if(FALSE){
   pdf(file.path(here::here(),
               "vignettes", 
-              paste0("market_scatter_v4_0.pdf")),
+              paste0("market_scatter_v4_1.pdf")),
     width = 8.5*.95, height = 11*.95)
 
 market_scatter
 invisible(dev.off())
 
-countries_risk <- countries_risk_market %>% 
-  dplyr::select(ID, market_size, risk)
+countries_sev <- countries_sev_market %>% 
+  dplyr::select(ID, market_size, sev)
 
-save(countries_risk, file = file.path(here::here(), "data", "countries_risk.rda"))
+save(countries_sev, file = file.path(here::here(), "data", "countries_sev.rda"))
 }
 ```
 

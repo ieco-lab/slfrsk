@@ -57,7 +57,7 @@
   <a href="../articles/vignette-002-terms.html">Definitions</a>
 </li>
 <li>
-  <a href="../articles/vignette-040-ee-data.html">Paninvasion Risk App</a>
+  <a href="../articles/vignette-040-ee-data.html">Paninvasion Severity App</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -67,34 +67,58 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li class="divider">
-    <li>
-      <a href="../articles/vignette-010-tidy-data.html">Data Tidying</a>
-    </li>
-    <li>
-      <a href="../articles/vignette-011-suitability-models.html">Suitability Modeling &amp; Evaluation</a>
-    </li>
-    <li>
-      <a href="../articles/vignette-030-risk-maps.html">Risk Map Plotting</a>
-    </li>
     <li class="dropdown-submenu">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Invasion Potential Alignment</a>
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Step 1: Estimate Invasion Potentials</a>
       <ul class="dropdown-menu" role="menu">
 <li class="divider">
         <li>
-          <a href="../articles/vignette-021-quadrant-plots.html">Published (Max)</a>
+          <a href="../articles/vignette-003-get-gbif-data.html">Get GBIF Records</a>
         </li>
         <li>
-          <a href="../articles/vignette-026-quadrant-plots-alt-median.html">Alternate (Median)</a>
+          <a href="../articles/vignette-010-tidy-data.html">Data Tidying</a>
         </li>
         <li>
-          <a href="../articles/vignette-027-quadrant-plots-alt-mean.html">Alternate (Mean)</a>
+          <a href="../articles/vignette-011-suitability-models.html">Species Distribution Modeling</a>
         </li>
         <li class="divider">
       </ul>
 </li>
-    <li>
-      <a href="../articles/vignette-041-market-plot.html">Wine Market Risk of Shock Evaluation</a>
-    </li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Step 2: Calculate Alignment Correlations</a>
+      <ul class="dropdown-menu" role="menu">
+<li class="divider">
+        <li>
+          <a href="../articles/vignette-030-potentials-maps.html">Invasion Potential Maps</a>
+        </li>
+        <li class="dropdown-submenu">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Invasion Potential Alignment</a>
+          <ul class="dropdown-menu" role="menu">
+<li class="divider">
+            <li>
+              <a href="../articles/vignette-021-quadrant-plots.html">Published (Max)</a>
+            </li>
+            <li>
+              <a href="../articles/vignette-026-quadrant-plots-alt-median.html">Alternate (Median)</a>
+            </li>
+            <li>
+              <a href="../articles/vignette-027-quadrant-plots-alt-mean.html">Alternate (Mean)</a>
+            </li>
+            <li class="divider">
+          </ul>
+</li>
+        <li class="divider">
+      </ul>
+</li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Step 3: Quantify Paninvasion Severity</a>
+      <ul class="dropdown-menu" role="menu">
+<li class="divider">
+        <li>
+          <a href="../articles/vignette-041-market-plot.html">Paninvasion Severity</a>
+        </li>
+        <li class="divider">
+      </ul>
+</li>
     <li class="divider">
   </ul>
 </li>
@@ -142,7 +166,7 @@
 <span class="no">one_zero</span> <span class="kw">&lt;-</span> <span class="fl">TRUE</span>
 
 <span class="co"># switch between present or future transport</span>
-<span class="no">present_transport</span> <span class="kw">&lt;-</span> <span class="fl">FALSE</span>
+<span class="no">present_transport</span> <span class="kw">&lt;-</span> <span class="fl">TRUE</span>
 
 <span class="co"># Set what type of multiple correlation to calculate</span>
 <span class="no">method_cor</span> <span class="kw">&lt;-</span> <span class="st">"spearman"</span>
@@ -175,29 +199,29 @@
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"countries_extracts_ensemble"</span>)
 
 <span class="co">#summary data load</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"states_summary_future_ensemble"</span>)
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"countries_summary_future_ensemble"</span>)
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"states_summary_present_ensemble"</span>)
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"countries_summary_present_ensemble"</span>)
 
 <span class="co">#join the data</span>
-<span class="no">states_summary_future_ensemble</span> <span class="kw">&lt;-</span> <span class="no">states_summary_future_ensemble</span> <span class="kw">%&gt;%</span>
+<span class="no">states_summary_present_ensemble</span> <span class="kw">&lt;-</span> <span class="no">states_summary_present_ensemble</span> <span class="kw">%&gt;%</span>
   <span class="fu">left_join</span>(<span class="no">.</span>, <span class="no">states_extracts_ensemble</span>, <span class="kw">by</span> <span class="kw">=</span> <span class="st">"geopol_unit"</span>) <span class="kw">%&gt;%</span>
   <span class="co">#drop grandmeanmax col, it is redundant</span>
   <span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(-<span class="no">grand_mean_max</span>)
 
-<span class="no">countries_summary_future_ensemble</span> <span class="kw">&lt;-</span> <span class="no">countries_summary_future_ensemble</span> <span class="kw">%&gt;%</span>
+<span class="no">countries_summary_present_ensemble</span> <span class="kw">&lt;-</span> <span class="no">countries_summary_present_ensemble</span> <span class="kw">%&gt;%</span>
   <span class="fu">left_join</span>(<span class="no">.</span>, <span class="no">countries_extracts_ensemble</span>, <span class="kw">by</span> <span class="kw">=</span> <span class="st">"geopol_unit"</span>) <span class="kw">%&gt;%</span>
   <span class="co">#drop grandmeanmax col, it is redundant</span>
   <span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(-<span class="no">grand_mean_max</span>)
 
 <span class="co">#make it easier to port over parts of the vig-021 code by changing the names</span>
-<span class="no">states_summary_future</span> <span class="kw">&lt;-</span>  <span class="no">states_summary_future_ensemble</span>
-<span class="no">countries_summary_future</span> <span class="kw">&lt;-</span> <span class="no">countries_summary_future_ensemble</span></pre></body></html></div>
+<span class="no">states_summary_present</span> <span class="kw">&lt;-</span>  <span class="no">states_summary_present_ensemble</span>
+<span class="no">countries_summary_present</span> <span class="kw">&lt;-</span> <span class="no">countries_summary_present_ensemble</span></pre></body></html></div>
 </div>
 <div id="drop-the-same-states-and-countries-that-we-dropped-in-the-regular-correlation-plot-" class="section level1">
 <h1 class="hasAnchor">
 <a href="#drop-the-same-states-and-countries-that-we-dropped-in-the-regular-correlation-plot-" class="anchor"></a>3. Drop the same <code>states</code> and <code>countries</code> that we dropped in the regular correlation plot.</h1>
 <div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="co">#filter out some No Data for ensemble model</span>
-<span class="no">countries_summary_future</span> <span class="kw">&lt;-</span> <span class="no">countries_summary_future</span> <span class="kw">%&gt;%</span>
+<span class="no">countries_summary_present</span> <span class="kw">&lt;-</span> <span class="no">countries_summary_present</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(!<span class="no">ID</span> <span class="kw">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Antarctica"</span>, <span class="st">"Monaco"</span>, <span class="st">"Norfolk Island"</span>, <span class="st">"Spratly Islands"</span>))
 
 <span class="kw">if</span>(<span class="no">rem_usa</span>){ <span class="co"># TRUE if you want to remove the USA</span>
@@ -251,13 +275,13 @@
 }
 
 <span class="co">#do the rm now</span>
-<span class="no">countries_summary_future</span> <span class="kw">&lt;-</span> <span class="no">countries_summary_future</span> <span class="kw">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(!<span class="no">ID</span> <span class="kw">%in%</span> <span class="no">rems</span>)
+<span class="no">countries_summary_present</span> <span class="kw">&lt;-</span> <span class="no">countries_summary_present</span> <span class="kw">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(!<span class="no">ID</span> <span class="kw">%in%</span> <span class="no">rems</span>)
 
 <span class="co">#set the native countries</span>
 <span class="kw">if</span>(<span class="no">native</span>){
-  <span class="no">countries_summary_future</span>$<span class="no">status</span>[<span class="no">countries_summary_future</span>$<span class="no">geopol_unit</span> <span class="kw">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"China"</span>, <span class="st">"India"</span>, <span class="st">"Taiwan"</span>, <span class="st">"Vietnam"</span>)] <span class="kw">&lt;-</span> <span class="st">"native"</span>
+  <span class="no">countries_summary_present</span>$<span class="no">status</span>[<span class="no">countries_summary_present</span>$<span class="no">geopol_unit</span> <span class="kw">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"China"</span>, <span class="st">"India"</span>, <span class="st">"Taiwan"</span>, <span class="st">"Vietnam"</span>)] <span class="kw">&lt;-</span> <span class="st">"native"</span>
 } <span class="kw">else</span> {
-  <span class="no">countries_summary_future</span>$<span class="no">status</span>[<span class="no">countries_summary_future</span>$<span class="no">geopol_unit</span> <span class="kw">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"China"</span>, <span class="st">"India"</span>, <span class="st">"Taiwan"</span>, <span class="st">"Vietnam"</span>)] <span class="kw">&lt;-</span> <span class="st">"not established"</span>
+  <span class="no">countries_summary_present</span>$<span class="no">status</span>[<span class="no">countries_summary_present</span>$<span class="no">geopol_unit</span> <span class="kw">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"China"</span>, <span class="st">"India"</span>, <span class="st">"Taiwan"</span>, <span class="st">"Vietnam"</span>)] <span class="kw">&lt;-</span> <span class="st">"not established"</span>
   }</pre></body></html></div>
 </div>
 <div id="rescale-the-data-the-same-way-but-also-select-the-metric-to-look-at-" class="section level1">
@@ -265,7 +289,7 @@
 <a href="#rescale-the-data-the-same-way-but-also-select-the-metric-to-look-at-" class="anchor"></a>4. Rescale the data the same way but also select the metric to look at.</h1>
 <div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="co"># scale the import data</span>
 <span class="kw">if</span>(<span class="no">one_zero</span>){
-  <span class="no">states_summary_future</span> <span class="kw">&lt;-</span> <span class="no">states_summary_future</span> <span class="kw">%&gt;%</span>
+  <span class="no">states_summary_present</span> <span class="kw">&lt;-</span> <span class="no">states_summary_present</span> <span class="kw">%&gt;%</span>
     <span class="co"># transport</span>
     <span class="fu">mutate</span>(<span class="kw">avg_infected_mass_scaled</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span>(<span class="no">avg_infected_mass</span>+<span class="fl">1</span>)) <span class="kw">%&gt;%</span>
     <span class="fu">mutate</span>(<span class="kw">avg_infected_mass_scaled</span> <span class="kw">=</span> (<span class="no">avg_infected_mass_scaled</span> - <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span>(<span class="no">avg_infected_mass_scaled</span>))) <span class="kw">%&gt;%</span>
@@ -276,7 +300,7 @@
     <span class="fu">mutate</span>(<span class="kw">suitability_scaled</span> <span class="kw">=</span> <span class="no">.</span><span class="kw">[[</span><span class="no">estab_to_plot</span>]] - <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span>(<span class="no">.</span><span class="kw">[[</span><span class="no">estab_to_plot</span>]])) <span class="kw">%&gt;%</span>
     <span class="fu">mutate</span>(<span class="kw">suitability_scaled</span> <span class="kw">=</span> (<span class="no">suitability_scaled</span> / <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span>(<span class="no">suitability_scaled</span>)))
 } <span class="kw">else</span> {
-  <span class="no">states_summary_future</span> <span class="kw">&lt;-</span> <span class="no">states_summary_future</span> <span class="kw">%&gt;%</span>
+  <span class="no">states_summary_present</span> <span class="kw">&lt;-</span> <span class="no">states_summary_present</span> <span class="kw">%&gt;%</span>
     <span class="co"># transport</span>
     <span class="fu">mutate</span>(<span class="kw">avg_infected_mass_scaled</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span>(<span class="no">avg_infected_mass</span>+<span class="fl">1</span>)) <span class="kw">%&gt;%</span>
     <span class="co"># establishment</span>
@@ -287,7 +311,7 @@
 
 
 <span class="kw">if</span>(<span class="no">one_zero</span>){
-  <span class="no">countries_summary_future</span> <span class="kw">&lt;-</span> <span class="no">countries_summary_future</span> <span class="kw">%&gt;%</span>
+  <span class="no">countries_summary_present</span> <span class="kw">&lt;-</span> <span class="no">countries_summary_present</span> <span class="kw">%&gt;%</span>
     <span class="co"># transport</span>
     <span class="fu">mutate</span>(<span class="kw">avg_infected_mass_scaled</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span>(<span class="no">avg_infected_mass</span>+<span class="fl">1</span>)) <span class="kw">%&gt;%</span>
     <span class="fu">mutate</span>(<span class="kw">avg_infected_mass_scaled</span> <span class="kw">=</span> (<span class="no">avg_infected_mass_scaled</span> - <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span>(<span class="no">avg_infected_mass_scaled</span>))) <span class="kw">%&gt;%</span>
@@ -298,7 +322,7 @@
     <span class="fu">mutate</span>(<span class="kw">suitability_scaled</span> <span class="kw">=</span> <span class="no">.</span><span class="kw">[[</span><span class="no">estab_to_plot</span>]] - <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span>(<span class="no">.</span><span class="kw">[[</span><span class="no">estab_to_plot</span>]])) <span class="kw">%&gt;%</span>
     <span class="fu">mutate</span>(<span class="kw">suitability_scaled</span> <span class="kw">=</span> (<span class="no">suitability_scaled</span> / <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span>(<span class="no">suitability_scaled</span>)))
 } <span class="kw">else</span> {
-  <span class="no">countries_summary_future</span> <span class="kw">&lt;-</span> <span class="no">countries_summary_future</span> <span class="kw">%&gt;%</span>
+  <span class="no">countries_summary_present</span> <span class="kw">&lt;-</span> <span class="no">countries_summary_present</span> <span class="kw">%&gt;%</span>
     <span class="co"># transport</span>
     <span class="fu">mutate</span>(<span class="kw">avg_infected_mass_scaled</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span>(<span class="no">avg_infected_mass</span>+<span class="fl">1</span>)) <span class="kw">%&gt;%</span>
     <span class="co"># establishment</span>
@@ -310,16 +334,14 @@
 <a href="#plotting-settings" class="anchor"></a>5. Plotting settings</h1>
 <div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="co"># label both of the countries (or states) with established SLF?</span>
 <span class="no">label.countries.est</span> <span class="kw">&lt;-</span> <span class="fl">TRUE</span>
-<span class="no">label.states.est</span> <span class="kw">&lt;-</span> <span class="fl">TRUE</span>   <span class="co">#PRESENT: adding DE, MD, NJ  FUTURE: adding DE, MD, NJ, OH, WV</span>
+<span class="no">label.states.est</span> <span class="kw">&lt;-</span> <span class="fl">TRUE</span>   <span class="co">#same for both present/future: CT, DE, MD, NJ, OH, WV</span>
 <span class="co"># labeling aesthetics for label.countries.est and label.states.est</span>
-<span class="no">nudge_countries.est.x</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(-<span class="fl">.05</span>,<span class="fl">0</span>)
-<span class="no">nudge_countries.est.y</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">.07</span>,<span class="fl">.1</span>)
-<span class="no">nudge_countries.est_future.x</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">.05</span>,-<span class="fl">0.03</span>)  <span class="co">#jpn and kor</span>
-<span class="no">nudge_countries.est_future.y</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">.14</span>,<span class="fl">.05</span>)
-<span class="no">nudge_states.est_present.x</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0.00</span>, -<span class="fl">0.02</span>,-<span class="fl">0.04</span>)  <span class="co">#PRESENT: adding DE, MD, NJ  </span>
-<span class="no">nudge_states.est_present.y</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0.10</span>,-<span class="fl">0.10</span>,-<span class="fl">0.10</span>)
-<span class="no">nudge_states.est_future.x</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>( <span class="fl">0.00</span>,-<span class="fl">0.10</span>, <span class="fl">0.02</span>,-<span class="fl">0.04</span>,<span class="fl">0.00</span>)  <span class="co">#FUTURE: adding OH, DE, MD, NJ, WV</span>
-<span class="no">nudge_states.est_future.y</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(-<span class="fl">0.10</span>, <span class="fl">0.10</span>,-<span class="fl">0.17</span>, <span class="fl">0.08</span>,<span class="fl">0.15</span>)
+<span class="no">nudge_countries.est.x</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">.05</span>,<span class="fl">0.05</span>)
+<span class="no">nudge_countries.est.y</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">.12</span>,<span class="fl">0.11</span>)
+<span class="no">nudge_countries.est_future.x</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">.05</span>,<span class="fl">0.05</span>)  <span class="co">#jpn and kor</span>
+<span class="no">nudge_countries.est_future.y</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">.12</span>,<span class="fl">0.11</span>)
+<span class="no">nudge_states.est.x</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>( <span class="fl">0.00</span>, <span class="fl">0.00</span>, -<span class="fl">0.10</span>,  <span class="fl">0.02</span>, <span class="fl">0.01</span>, <span class="fl">0.00</span>)  <span class="co">#adding OH, CT, DE, MD, NJ, WV</span>
+<span class="no">nudge_states.est.y</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(-<span class="fl">0.10</span>, -<span class="fl">0.10</span>, <span class="fl">0.10</span>, -<span class="fl">0.17</span>,-<span class="fl">0.15</span>,-<span class="fl">0.10</span>)
 
 
 <span class="co"># Choose quadrant intercepts</span>
@@ -333,6 +355,18 @@
 <span class="co">#color aesthetics</span>
 <span class="no">risk_color</span> <span class="kw">&lt;-</span> <span class="st">"gray40"</span>
 <span class="no">risk_size</span> <span class="kw">&lt;-</span> <span class="fl">5</span>
+
+
+<span class="co">#lx &lt;- 0.22</span>
+<span class="co">#ly &lt;- 0.25</span>
+<span class="co">#hy &lt;- 0.77</span>
+<span class="co">#hx &lt;- 0.78</span>
+<span class="co">#</span>
+<span class="co">#risk_labels &lt;-data.frame(label = c("low\nrisk","moderate\nrisk","moderate\nrisk","high\nrisk"),</span>
+<span class="co">#                        x = c(lx,lx,hx,hx),</span>
+<span class="co">#                        y = c(ly,hy,ly,hy),</span>
+<span class="co">#                        hjust = c(0,0,0,0),</span>
+<span class="co">#                        vjust = c(0,0,0,0))</span>
 
 <span class="co">#constant looping var</span>
 <span class="no">i</span> <span class="kw">&lt;-</span> <span class="fl">1</span></pre></body></html></div>
@@ -352,7 +386,7 @@
   <span class="co">#checks whether to use wine or grapes as the impact product to consider</span>
   <span class="kw">if</span>(<span class="no">impact_prod</span> <span class="kw">==</span> <span class="st">"wine"</span>){
     <span class="kw">if</span> (<span class="no">statez</span>) {
-        <span class="no">data_to_plot</span> <span class="kw">&lt;-</span> <span class="no">states_summary_future</span>
+        <span class="no">data_to_plot</span> <span class="kw">&lt;-</span> <span class="no">states_summary_present</span>
 
       <span class="co">#calls the exact variables to plot</span>
       <span class="no">data_to_plot</span> <span class="kw">&lt;-</span> <span class="no">data_to_plot</span> <span class="kw">%&gt;%</span>
@@ -368,21 +402,21 @@
       <span class="co">#order the data that gets labeled based on top_to_plot</span>
       <span class="no">data_to_label</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">tail</a></span>(<span class="no">data_to_plot</span>, <span class="no">top_to_plot</span>)  <span class="kw">%&gt;%</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(<span class="no">size_to_plot</span>))
       <span class="co">#do welch t.test to assess if transport and establishment have the same relationship with grapes</span>
-      <span class="no">state_grape_t.test</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">transport</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span>(<span class="no">avg_infected_mass_scaled</span>~<span class="no">grapes</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="no">data_to_plot</span>),
-                                 <span class="kw">establishment</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span>(<span class="no">suitability_scaled</span>~<span class="no">grapes</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="no">data_to_plot</span>))
+      <span class="co">#state_grape_t.test &lt;- list(transport = t.test(avg_infected_mass_scaled~grapes, data = data_to_plot),</span>
+      <span class="co">#                           establishment = t.test(suitability_scaled~grapes, data = data_to_plot))</span>
 
       <span class="co">#add infected state labeling if turned on</span>
       <span class="kw">if</span>(<span class="no">label.states.est</span>){
-        <span class="co">#FUTURE</span>
-          <span class="no">data_to_label_states.est</span> <span class="kw">&lt;-</span> <span class="no">data_to_plot</span> <span class="kw">%&gt;%</span>
-          <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="no">geopol_unit</span> <span class="kw">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Delaware"</span>, <span class="st">"Maryland"</span>, <span class="st">"New Jersey"</span>, <span class="st">"Ohio"</span>, <span class="st">"West Virginia"</span>)) <span class="kw">%&gt;%</span>
+        <span class="co">#PRESENT</span>
+         <span class="no">data_to_label_states.est</span> <span class="kw">&lt;-</span> <span class="no">data_to_plot</span> <span class="kw">%&gt;%</span>
+          <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="no">geopol_unit</span> <span class="kw">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Connecticut"</span>, <span class="st">"Delaware"</span>, <span class="st">"Maryland"</span>, <span class="st">"New Jersey"</span>, <span class="st">"Ohio"</span>, <span class="st">"West Virginia"</span>)) <span class="kw">%&gt;%</span>
           <span class="fu">arrange</span>(<span class="fu">desc</span>(<span class="no">size_to_plot</span>))
         <span class="no">data_to_label</span> <span class="kw">&lt;-</span> <span class="fu">bind_rows</span>(<span class="no">data_to_label</span>,<span class="no">data_to_label_states.est</span>)
       } <span class="co">#end of labeling for infected states</span>
 
     } <span class="kw">else</span> {
       <span class="co">#selects the data to modify for plotting: COUNTRIES and selects the timing</span>
-        <span class="no">data_to_plot</span> <span class="kw">&lt;-</span> <span class="no">countries_summary_future</span>
+        <span class="no">data_to_plot</span> <span class="kw">&lt;-</span> <span class="no">countries_summary_present</span>
 
       <span class="no">data_to_plot</span> <span class="kw">&lt;-</span> <span class="no">data_to_plot</span> <span class="kw">%&gt;%</span>
         <span class="fu">mutate</span>(
@@ -413,8 +447,8 @@
         )
 
       <span class="co">#do welch t.test to assess if transport and establishment have the same relationship with grapes</span>
-      <span class="no">country_grape_t.test</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">transport</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span>(<span class="no">avg_infected_mass_scaled</span>~<span class="no">grapes</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="no">data_to_plot</span>),
-                                   <span class="kw">establishment</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span>(<span class="no">suitability_scaled</span>~<span class="no">grapes</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="no">data_to_plot</span>))
+      <span class="co">#country_grape_t.test &lt;- list(transport = t.test(avg_infected_mass_scaled~grapes, data = data_to_plot),</span>
+      <span class="co">#                             establishment = t.test(suitability_scaled~grapes, data = data_to_plot))</span>
       <span class="kw">if</span>(<span class="no">label.countries.est</span>){
         <span class="no">data_to_label_countries.est</span> <span class="kw">&lt;-</span> <span class="no">data_to_plot</span> <span class="kw">%&gt;%</span>
           <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="no">geopol_unit</span> <span class="kw">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Japan"</span>, <span class="st">"South Korea"</span>)) <span class="kw">%&gt;%</span>
@@ -428,7 +462,7 @@
   } <span class="kw">else</span> <span class="kw">if</span>(<span class="no">impact_prod</span> <span class="kw">==</span> <span class="st">"grapes"</span>){
     <span class="kw">if</span> (<span class="no">statez</span>) {
       <span class="co">#selects the data to modify for plotting: STATES and chooses the timing</span>
-        <span class="no">data_to_plot</span> <span class="kw">&lt;-</span> <span class="no">states_summary_future</span>
+        <span class="no">data_to_plot</span> <span class="kw">&lt;-</span> <span class="no">states_summary_present</span>
 
       <span class="no">data_to_plot</span> <span class="kw">&lt;-</span> <span class="no">data_to_plot</span> <span class="kw">%&gt;%</span>
         <span class="fu">mutate</span>(
@@ -444,21 +478,21 @@
 
       <span class="no">data_to_label</span> <span class="kw">&lt;-</span>
         <span class="fu"><a href="https://rdrr.io/r/utils/head.html">tail</a></span>(<span class="no">data_to_plot</span>, <span class="no">top_to_plot</span>)  <span class="kw">%&gt;%</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(<span class="no">size_to_plot</span>))
-      <span class="no">state_grape_t.test</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">transport</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span>(<span class="no">avg_infected_mass_scaled</span>~<span class="no">grapes</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="no">data_to_plot</span>),
-                                 <span class="kw">establishment</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span>(<span class="no">suitability_scaled</span>~<span class="no">grapes</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="no">data_to_plot</span>))
+      <span class="co">#state_grape_t.test &lt;- list(transport = t.test(avg_infected_mass_scaled~grapes, data = data_to_plot),</span>
+       <span class="co">#                          establishment = t.test(suitability_scaled~grapes, data = data_to_plot))</span>
 
             <span class="co">#add infected state labeling if turned on</span>
       <span class="kw">if</span>(<span class="no">label.states.est</span>){
-       <span class="co">#FUTURE</span>
+       <span class="co">#PRESENT</span>
           <span class="no">data_to_label_states.est</span> <span class="kw">&lt;-</span> <span class="no">data_to_plot</span> <span class="kw">%&gt;%</span>
-          <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="no">geopol_unit</span> <span class="kw">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Delaware"</span>, <span class="st">"Maryland"</span>, <span class="st">"New Jersey"</span>, <span class="st">"Ohio"</span>, <span class="st">"West Virginia"</span>)) <span class="kw">%&gt;%</span>
+          <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="no">geopol_unit</span> <span class="kw">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Connecticut"</span>, <span class="st">"Delaware"</span>, <span class="st">"Maryland"</span>, <span class="st">"New Jersey"</span>, <span class="st">"Ohio"</span>, <span class="st">"West Virginia"</span>)) <span class="kw">%&gt;%</span>
           <span class="fu">arrange</span>(<span class="fu">desc</span>(<span class="no">size_to_plot</span>))
         <span class="no">data_to_label</span> <span class="kw">&lt;-</span> <span class="fu">bind_rows</span>(<span class="no">data_to_label</span>,<span class="no">data_to_label_states.est</span>)
       } <span class="co">#end of labeling for infected states</span>
 
     } <span class="kw">else</span> {
       <span class="co">#selects the data to modify for plotting: COUNTRIES and selects the timing</span>
-        <span class="no">data_to_plot</span> <span class="kw">&lt;-</span> <span class="no">countries_summary_future</span>
+        <span class="no">data_to_plot</span> <span class="kw">&lt;-</span> <span class="no">countries_summary_present</span>
 
       <span class="no">data_to_plot</span> <span class="kw">&lt;-</span> <span class="no">data_to_plot</span> <span class="kw">%&gt;%</span>
         <span class="fu">mutate</span>(
@@ -501,8 +535,8 @@
           )
         )
 
-      <span class="no">country_grape_t.test</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">transport</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span>(<span class="no">avg_infected_mass_scaled</span>~<span class="no">grapes</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="no">data_to_plot</span>),
-                                   <span class="kw">establishment</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span>(<span class="no">suitability_scaled</span>~<span class="no">grapes</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="no">data_to_plot</span>))
+     <span class="co"># country_grape_t.test &lt;- list(transport = t.test(avg_infected_mass_scaled~grapes, data = data_to_plot),</span>
+      <span class="co">#                             establishment = t.test(suitability_scaled~grapes, data = data_to_plot))</span>
       <span class="kw">if</span>(<span class="no">label.countries.est</span>){
         <span class="no">data_to_label_countries.est</span> <span class="kw">&lt;-</span> <span class="no">data_to_plot</span> <span class="kw">%&gt;%</span>
           <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="no">geopol_unit</span> <span class="kw">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Japan"</span>, <span class="st">"South Korea"</span>)) <span class="kw">%&gt;%</span>
@@ -529,8 +563,8 @@
       <span class="no">nudge.x</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(-<span class="fl">.1</span>,-<span class="fl">.1</span>,-<span class="fl">.1</span>,-<span class="fl">.05</span>,-<span class="fl">.1</span>,-<span class="fl">0.05</span>,-<span class="fl">.1</span>,<span class="fl">.06</span>,-<span class="fl">.01</span>,<span class="fl">.05</span>)
       <span class="no">nudge.y</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">.2</span>,<span class="fl">.10</span>,<span class="fl">.10</span>,<span class="fl">.10</span>,<span class="fl">.07</span>,<span class="fl">.15</span>,<span class="fl">.15</span>,-<span class="fl">.07</span>,-<span class="fl">.12</span>,-<span class="fl">.12</span>)    <span class="co">#CA, WA, NY, PA, OR, GA, OH, MI, VA, NC</span>
       <span class="kw">if</span>(<span class="no">label.states.est</span>){
-        <span class="no">nudge.x</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="no">nudge.x</span>, <span class="no">nudge_states.est_future.x</span>)
-        <span class="no">nudge.y</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="no">nudge.y</span>, <span class="no">nudge_states.est_future.y</span>)
+        <span class="no">nudge.x</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="no">nudge.x</span>, <span class="no">nudge_states.est.x</span>)
+        <span class="no">nudge.y</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="no">nudge.y</span>, <span class="no">nudge_states.est.y</span>)
       }
       <span class="no">ytitle</span> <span class="kw">&lt;-</span> <span class="st">"Establishment Potential"</span>
     } <span class="kw">else</span> {  <span class="co">#COUNTRIES FUTURE WINE</span>
@@ -545,18 +579,18 @@
   } <span class="kw">else</span> <span class="kw">if</span>(<span class="no">impact_prod</span> <span class="kw">==</span> <span class="st">"grapes"</span>){
     <span class="co">#nudging</span>
     <span class="kw">if</span>(<span class="no">statez</span>) { <span class="co">#STATES FUTURE GRAPES</span>
-      <span class="no">nudge.x</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(-<span class="fl">.00</span>,-<span class="fl">.05</span>,-<span class="fl">.10</span>,-<span class="fl">.02</span>, <span class="fl">.10</span>,-<span class="fl">.05</span>, <span class="fl">.10</span>, <span class="fl">.00</span>,-<span class="fl">.05</span>,-<span class="fl">.025</span>)   <span class="co">#yield: #CA, PA, WA, MI, NY, MO, OH, OR, GA, NC</span>
-      <span class="no">nudge.y</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(-<span class="fl">.10</span>, <span class="fl">.10</span>, <span class="fl">.08</span>, <span class="fl">.08</span>,-<span class="fl">.05</span>, <span class="fl">.09</span>,-<span class="fl">.05</span>,-<span class="fl">.10</span>,-<span class="fl">.15</span>, <span class="fl">.10</span>)   <span class="co">#production: CA, WA, NY, PA, MI, OR, TX, VA, NC, MO</span>
+      <span class="no">nudge.x</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(-<span class="fl">.00</span>,-<span class="fl">.05</span>,-<span class="fl">.06</span>,-<span class="fl">.02</span>, <span class="fl">.10</span>,-<span class="fl">.05</span>,-<span class="fl">.01</span>,-<span class="fl">.01</span>,-<span class="fl">.05</span>,-<span class="fl">.03</span>)   <span class="co">#yield: #CA, PA, WA, MI, NY, MO, OH, OR, GA, NC</span>
+      <span class="no">nudge.y</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(-<span class="fl">.10</span>, <span class="fl">.10</span>, <span class="fl">.08</span>, <span class="fl">.08</span>,-<span class="fl">.05</span>, <span class="fl">.09</span>,-<span class="fl">.10</span>,-<span class="fl">.10</span>, <span class="fl">.09</span>, <span class="fl">.10</span>)   <span class="co">#production: CA, WA, NY, PA, MI, OR, TX, VA, NC, MO</span>
       <span class="kw">if</span>(<span class="no">label.states.est</span>){
-        <span class="no">nudge.x</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="no">nudge.x</span>, <span class="no">nudge_states.est_future.x</span>)
-        <span class="no">nudge.y</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="no">nudge.y</span>, <span class="no">nudge_states.est_future.y</span>)
+        <span class="no">nudge.x</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="no">nudge.x</span>, <span class="no">nudge_states.est.x</span>)
+        <span class="no">nudge.y</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="no">nudge.y</span>, <span class="no">nudge_states.est.y</span>)
       }
       <span class="no">ytitle</span> <span class="kw">&lt;-</span> <span class="st">"Establishment Potential"</span>
     } <span class="kw">else</span> {  <span class="co">#COUNTRIES FUTURE GRAPES</span>
       <span class="co">#ensemble version</span>
       <span class="co"># grape prod: CHN, ITA, ESP, FRA, TUR, IND, CHL, ARG, ZAF, AUS</span>
-      <span class="no">nudge.x</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(-<span class="fl">0.00</span>, <span class="fl">0.01</span>,-<span class="fl">0.02</span>, <span class="fl">0.00</span>,-<span class="fl">0.02</span>, <span class="fl">0.03</span>,-<span class="fl">0.02</span>, <span class="fl">0.08</span>,-<span class="fl">0.02</span>, <span class="fl">0.06</span>)
-      <span class="no">nudge.y</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(-<span class="fl">0.10</span>, <span class="fl">0.10</span>, <span class="fl">0.15</span>, <span class="fl">0.09</span>,-<span class="fl">0.24</span>, <span class="fl">0.05</span>, <span class="fl">0.13</span>,-<span class="fl">0.23</span>, <span class="fl">0.29</span>, -<span class="fl">0.23</span>)
+      <span class="no">nudge.x</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(-<span class="fl">0.00</span>,-<span class="fl">0.00</span>,-<span class="fl">0.01</span>,-<span class="fl">0.02</span>,-<span class="fl">0.00</span>, <span class="fl">0.03</span>,-<span class="fl">0.02</span>, <span class="fl">0.03</span>,-<span class="fl">0.02</span>,-<span class="fl">0.00</span>)
+      <span class="no">nudge.y</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(-<span class="fl">0.10</span>, <span class="fl">0.085</span>, <span class="fl">0.15</span>, <span class="fl">0.07</span>,-<span class="fl">0.10</span>, <span class="fl">0.05</span>, <span class="fl">0.13</span>,-<span class="fl">0.15</span>, <span class="fl">0.29</span>,-<span class="fl">0.12</span>)
       <span class="co">#old version</span>
       <span class="co"># grape production: CHN, ITA, ESP, FRA, TUR, IND, CHL, ARG, ZAF, AUS</span>
       <span class="co">#nudge.x &lt;- c(-0.01,-0.00,-0.00,-0.04, 0.02,0.03,-0.04, 0.05,-0.03, 0.04)</span>
@@ -568,8 +602,50 @@
       <span class="no">ytitle</span> <span class="kw">&lt;-</span> <span class="st">"Establishment Potential"</span>
     }
   }
-}
+} <span class="kw">else</span> { <span class="co"># grapes above wine below NOTE may not work with labeling JPN and KOR</span>
+  <span class="kw">if</span>(<span class="no">impact_prod</span> <span class="kw">==</span> <span class="st">"wine"</span>){
+    <span class="kw">if</span>(<span class="no">statez</span>) { <span class="co">#STATES PRESENT WINE</span>
+      <span class="no">nudge.x</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">.09</span>,-<span class="fl">.1</span>,-<span class="fl">.04</span>,-<span class="fl">.05</span>,-<span class="fl">.10</span>,-<span class="fl">0.12</span>,-<span class="fl">.1</span>,<span class="fl">.04</span>,-<span class="fl">.01</span>,<span class="fl">.05</span>)
+      <span class="no">nudge.y</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(-<span class="fl">.10</span>,<span class="fl">.10</span>,<span class="fl">.10</span>,<span class="fl">.10</span>,<span class="fl">.07</span>,<span class="fl">.10</span>,<span class="fl">.12</span>,-<span class="fl">.07</span>,-<span class="fl">.12</span>,-<span class="fl">.12</span>)    <span class="co">#CA, WA, NY, PA, OR, GA, OH, MI, VA, NC</span>
+      <span class="kw">if</span>(<span class="no">label.states.est</span>){
+        <span class="no">nudge.x</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="no">nudge.x</span>, <span class="no">nudge_states.est.x</span>)
+        <span class="no">nudge.y</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="no">nudge.y</span>, <span class="no">nudge_states.est.y</span>)
+      }
+      <span class="no">ytitle</span> <span class="kw">&lt;-</span> <span class="st">"Establishment Potential"</span>
+    } <span class="kw">else</span> { <span class="co">#COUNTRIES PRESENT WINE</span>
+      <span class="no">nudge.x</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(-<span class="fl">.03</span>,-<span class="fl">.10</span>,-<span class="fl">.02</span>,-<span class="fl">.03</span>,<span class="fl">.14</span>,-<span class="fl">.1</span>,-<span class="fl">.23</span>,-<span class="fl">.21</span>,<span class="fl">.08</span>,<span class="fl">.2</span>)
+      <span class="no">nudge.y</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">.13</span>, <span class="fl">.09</span>, <span class="fl">.155</span>, <span class="fl">.09</span>, -<span class="fl">.11</span>, <span class="fl">.13</span>, <span class="fl">.15</span>,<span class="fl">.09</span>,-<span class="fl">.08</span>,-<span class="fl">.15</span>)  <span class="co">#ITA, FRA, ESP, CHN, ARG, CHL, AUS, ZAF, DEU, PRT</span>
+      <span class="kw">if</span>(<span class="no">label.countries.est</span>) {
+        <span class="no">nudge.x</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="no">nudge.x</span>, <span class="no">nudge_countries.est.x</span>) <span class="co">#JPN KOR</span>
+        <span class="no">nudge.y</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="no">nudge.y</span>, <span class="no">nudge_countries.est.y</span>) <span class="co">#JPN KOR</span>
+      }
+      <span class="no">ytitle</span> <span class="kw">&lt;-</span> <span class="st">"Establishment Potential"</span>
+    }
+  } <span class="kw">else</span> <span class="kw">if</span>(<span class="no">impact_prod</span> <span class="kw">==</span> <span class="st">"grapes"</span>){
+    <span class="kw">if</span>(<span class="no">statez</span>) { <span class="co">#STATES PRESENT GRAPES</span>
+      <span class="no">nudge.x</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(-<span class="fl">.00</span>,-<span class="fl">.05</span>,-<span class="fl">.06</span>,-<span class="fl">.02</span>, <span class="fl">.10</span>,-<span class="fl">.05</span>,-<span class="fl">.01</span>,-<span class="fl">.01</span>,-<span class="fl">.05</span>,-<span class="fl">.03</span>)   <span class="co">#yield: #CA, PA, WA, MI, NY, MO, OH, OR, GA, NC</span>
+      <span class="no">nudge.y</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(-<span class="fl">.10</span>, <span class="fl">.10</span>, <span class="fl">.08</span>, <span class="fl">.08</span>,-<span class="fl">.05</span>, <span class="fl">.09</span>,-<span class="fl">.10</span>,-<span class="fl">.10</span>, <span class="fl">.09</span>, <span class="fl">.10</span>)   <span class="co">#production: CA, WA, NY, PA, MI, OR, TX, VA, NC, MO</span>
 
+      <span class="kw">if</span>(<span class="no">label.states.est</span>){
+        <span class="no">nudge.x</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="no">nudge.x</span>, <span class="no">nudge_states.est.x</span>)
+        <span class="no">nudge.y</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="no">nudge.y</span>, <span class="no">nudge_states.est.y</span>)
+      }
+      <span class="no">ytitle</span> <span class="kw">&lt;-</span> <span class="st">"Establishment Potential"</span>
+    } <span class="kw">else</span> { <span class="co">#COUNTRIES PRESENT GRAPES</span>
+            <span class="co">#ensemble version</span>
+      <span class="co"># grape prod: CHN, ITA, ESP, FRA, TUR, IND, CHL, ARG, ZAF, AUS</span>
+      <span class="no">nudge.x</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(-<span class="fl">0.00</span>,-<span class="fl">0.00</span>,-<span class="fl">0.01</span>,-<span class="fl">0.02</span>,-<span class="fl">0.00</span>, <span class="fl">0.03</span>,-<span class="fl">0.02</span>, <span class="fl">0.05</span>,-<span class="fl">0.02</span>, <span class="fl">0.01</span>)
+      <span class="no">nudge.y</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(-<span class="fl">0.10</span>, <span class="fl">0.08</span>, <span class="fl">0.15</span>, <span class="fl">0.07</span>,-<span class="fl">0.10</span>, <span class="fl">0.05</span>, <span class="fl">0.13</span>,-<span class="fl">0.12</span>, <span class="fl">0.29</span>,-<span class="fl">0.09</span>)
+      <span class="co">#nudge.x &lt;- c(-0.01, 0.02, 0.10,-0.04, 0.06,-0.02,-0.07, 0.05,-0.20, 0.11)   #CHN, ITA, ESP, FRA, TUR, IND, CHL, ARG, ZAF, AUS</span>
+      <span class="co">#nudge.y &lt;- c( 0.08,-0.08,-0.20, 0.07,-0.02, 0.10, 0.12,-0.09,-0.07,-0.25)</span>
+      <span class="kw">if</span>(<span class="no">label.countries.est</span>) {
+        <span class="no">nudge.x</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="no">nudge.x</span>, <span class="no">nudge_countries.est.x</span>) <span class="co">#JPN KOR</span>
+        <span class="no">nudge.y</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="no">nudge.y</span>, <span class="no">nudge_countries.est.y</span>) <span class="co">#JPN KOR</span>
+      }
+      <span class="no">ytitle</span> <span class="kw">&lt;-</span> <span class="st">"Establishment Potential"</span>
+    }
+  }
+}
 
   <span class="co">#CREATE THE STATES PLOT</span>
   (<span class="no">states_plot</span> <span class="kw">&lt;-</span> <span class="fu">ggplot</span>(<span class="kw">data</span> <span class="kw">=</span> <span class="no">data_to_plot</span>) +
@@ -832,13 +908,13 @@
 <span class="co">#STATES</span>
 
 <span class="co">#build model</span>
-<span class="no">states_grapes_impact_model</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(<span class="kw">formula</span> <span class="kw">=</span> <span class="no">log10_avg_prod</span> ~ <span class="no">avg_infected_mass_scaled</span> + <span class="no">suitability_scaled</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="no">states_summary_future</span>)
+<span class="no">states_grapes_impact_model</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(<span class="kw">formula</span> <span class="kw">=</span> <span class="no">log10_avg_prod</span> ~ <span class="no">avg_infected_mass_scaled</span> + <span class="no">suitability_scaled</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="no">states_summary_present</span>)
 <span class="co">#do cor</span>
 <span class="no">states_grapes_impact_cor</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/cor.test.html">cor.test</a></span>(<span class="no">states_grapes_impact_model</span>$<span class="no">model</span>$<span class="no">log10_avg_prod</span>, <span class="no">states_grapes_impact_model</span>$<span class="no">fitted.values</span>, <span class="kw">method</span> <span class="kw">=</span> <span class="no">method_cor</span>)
 
 <span class="co">#COUNTRIES</span>
 <span class="co">#build model</span>
-<span class="no">countries_grapes_impact_model</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(<span class="kw">formula</span> <span class="kw">=</span> <span class="no">log10_avg_prod</span> ~ <span class="no">avg_infected_mass_scaled</span> + <span class="no">suitability_scaled</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="no">countries_summary_future</span> <span class="kw">%&gt;%</span>
+<span class="no">countries_grapes_impact_model</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(<span class="kw">formula</span> <span class="kw">=</span> <span class="no">log10_avg_prod</span> ~ <span class="no">avg_infected_mass_scaled</span> + <span class="no">suitability_scaled</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="no">countries_summary_present</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(!<span class="no">ID</span> <span class="kw">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"United States"</span>,
                       <span class="st">"China"</span>,
                       <span class="st">"India"</span>,
@@ -852,13 +928,13 @@
 <span class="co">#wine</span>
 <span class="co">#STATES</span>
 <span class="co">#model</span>
-<span class="no">states_wine_impact_model</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(<span class="kw">formula</span> <span class="kw">=</span> <span class="no">log10_avg_wine</span> ~ <span class="no">avg_infected_mass_scaled</span> + <span class="no">suitability_scaled</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="no">states_summary_future</span>)
+<span class="no">states_wine_impact_model</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(<span class="kw">formula</span> <span class="kw">=</span> <span class="no">log10_avg_wine</span> ~ <span class="no">avg_infected_mass_scaled</span> + <span class="no">suitability_scaled</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="no">states_summary_present</span>)
 <span class="co">#cor</span>
 <span class="no">states_wine_impact_cor</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/cor.test.html">cor.test</a></span>(<span class="no">states_wine_impact_model</span>$<span class="no">model</span>$<span class="no">log10_avg_wine</span>, <span class="no">states_wine_impact_model</span>$<span class="no">fitted.values</span>, <span class="kw">method</span> <span class="kw">=</span> <span class="no">method_cor</span>)
 
 <span class="co">#COUNTRIES</span>
 <span class="co">#model</span>
-<span class="no">countries_wine_impact_model</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(<span class="kw">formula</span> <span class="kw">=</span> <span class="no">log10_avg_wine</span> ~ <span class="no">avg_infected_mass_scaled</span> + <span class="no">suitability_scaled</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="no">countries_summary_future</span> <span class="kw">%&gt;%</span>
+<span class="no">countries_wine_impact_model</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(<span class="kw">formula</span> <span class="kw">=</span> <span class="no">log10_avg_wine</span> ~ <span class="no">avg_infected_mass_scaled</span> + <span class="no">suitability_scaled</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="no">countries_summary_present</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(!<span class="no">ID</span> <span class="kw">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"United States"</span>,
                       <span class="st">"China"</span>,
                       <span class="st">"India"</span>,
@@ -873,18 +949,18 @@
 <li><strong>GRAPES</strong></li>
 </ol>
 <ul>
-<li>U.S. State Alignment Correlation = 0.439, p = 1.285 x 10<sup>-03</sup>
+<li>U.S. State Alignment Correlation = 0.446, p = 1.031 x 10<sup>-03</sup>
 </li>
-<li>Country Alignment Correlation = 0.582, p = 1.195 x 10<sup>-21</sup>
+<li>Country Alignment Correlation = 0.584, p = 9.622 x 10<sup>-22</sup>
 </li>
 </ul>
 <ol start="2" style="list-style-type: decimal">
 <li><strong>WINE</strong></li>
 </ol>
 <ul>
-<li>U.S. State Alignment Correlation = 0.586, p = 6.236 x 10<sup>-06</sup>
+<li>U.S. State Alignment Correlation = 0.613, p = 1.780 x 10<sup>-06</sup>
 </li>
-<li>Country Alignment Correlation = 0.545, p = 1.175 x 10<sup>-18</sup>
+<li>Country Alignment Correlation = 0.551, p = 4.201 x 10<sup>-19</sup>
 </li>
 </ul>
 <blockquote>

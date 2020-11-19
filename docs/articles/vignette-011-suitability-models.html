@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Suitability Modeling &amp; Evaluation • slfrsk</title>
+<title>Species Distribution Modeling • slfrsk</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
@@ -17,7 +17,7 @@
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Suitability Modeling &amp; Evaluation">
+<script src="../pkgdown.js"></script><meta property="og:title" content="Species Distribution Modeling">
 <meta property="og:description" content="slfrsk">
 <meta property="og:image" content="/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -57,7 +57,7 @@
   <a href="../articles/vignette-002-terms.html">Definitions</a>
 </li>
 <li>
-  <a href="../articles/vignette-040-ee-data.html">Paninvasion Risk App</a>
+  <a href="../articles/vignette-040-ee-data.html">Paninvasion Severity App</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -67,34 +67,58 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li class="divider">
-    <li>
-      <a href="../articles/vignette-010-tidy-data.html">Data Tidying</a>
-    </li>
-    <li>
-      <a href="../articles/vignette-011-suitability-models.html">Suitability Modeling &amp; Evaluation</a>
-    </li>
-    <li>
-      <a href="../articles/vignette-030-risk-maps.html">Risk Map Plotting</a>
-    </li>
     <li class="dropdown-submenu">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Invasion Potential Alignment</a>
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Step 1: Estimate Invasion Potentials</a>
       <ul class="dropdown-menu" role="menu">
 <li class="divider">
         <li>
-          <a href="../articles/vignette-021-quadrant-plots.html">Published (Max)</a>
+          <a href="../articles/vignette-003-get-gbif-data.html">Get GBIF Records</a>
         </li>
         <li>
-          <a href="../articles/vignette-026-quadrant-plots-alt-median.html">Alternate (Median)</a>
+          <a href="../articles/vignette-010-tidy-data.html">Data Tidying</a>
         </li>
         <li>
-          <a href="../articles/vignette-027-quadrant-plots-alt-mean.html">Alternate (Mean)</a>
+          <a href="../articles/vignette-011-suitability-models.html">Species Distribution Modeling</a>
         </li>
         <li class="divider">
       </ul>
 </li>
-    <li>
-      <a href="../articles/vignette-041-market-plot.html">Wine Market Risk of Shock Evaluation</a>
-    </li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Step 2: Calculate Alignment Correlations</a>
+      <ul class="dropdown-menu" role="menu">
+<li class="divider">
+        <li>
+          <a href="../articles/vignette-030-potentials-maps.html">Invasion Potential Maps</a>
+        </li>
+        <li class="dropdown-submenu">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Invasion Potential Alignment</a>
+          <ul class="dropdown-menu" role="menu">
+<li class="divider">
+            <li>
+              <a href="../articles/vignette-021-quadrant-plots.html">Published (Max)</a>
+            </li>
+            <li>
+              <a href="../articles/vignette-026-quadrant-plots-alt-median.html">Alternate (Median)</a>
+            </li>
+            <li>
+              <a href="../articles/vignette-027-quadrant-plots-alt-mean.html">Alternate (Mean)</a>
+            </li>
+            <li class="divider">
+          </ul>
+</li>
+        <li class="divider">
+      </ul>
+</li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Step 3: Quantify Paninvasion Severity</a>
+      <ul class="dropdown-menu" role="menu">
+<li class="divider">
+        <li>
+          <a href="../articles/vignette-041-market-plot.html">Paninvasion Severity</a>
+        </li>
+        <li class="divider">
+      </ul>
+</li>
     <li class="divider">
   </ul>
 </li>
@@ -119,7 +143,7 @@
       </header><script src="vignette-011-suitability-models_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>Suitability Modeling &amp; Evaluation</h1>
+      <h1 data-toc-skip>Species Distribution Modeling</h1>
             
       
       
@@ -129,9 +153,9 @@
 
     
     
-<p>How to Build, Evaluate, and Save Ecological Niche Models of Suitability for <em>Ailanthus altissima</em> (TOH) and <em>Lycorma delicatula</em> (SLF)</p>
+<p>How to Build, Evaluate, and Save Species Distribution Models for <em>Ailanthus altissima</em> (TOH) and <em>Lycorma delicatula</em> (SLF)</p>
 <hr>
-<p>This vignette is designed to demonstrate the workflow that lead to the creation of the three suitability models used to assess the risk of <strong>SLF</strong> paninvasion. The description will not include actual running of some steps of this workflow, as some are unwieldy. Instead, information to ensure proper replication of those steps is provided. Notably, the MaxEnt runs are not conducted in this vignette, although the means to do so within <code>R</code> may be possible.</p>
+<p>This vignette is designed to demonstrate the workflow that lead to the creation of the three species distribution models (SDMs) used to assess the severity of <strong>SLF</strong> paninvasion. The description will not include actual running of some steps of this workflow, as some are unwieldy. Instead, information to ensure proper replication of those steps is provided. Notably, the MaxEnt runs are not conducted in this vignette, although the means to do so within <code>R</code> may be possible.</p>
 <p>The scope of this vignette is as follows:</p>
 <ol style="list-style-type: decimal">
 <li>Reading and Visualization of Presence Data</li>
@@ -156,7 +180,7 @@
 <div id="reading-and-visualization-of-presence-data" class="section level1">
 <h1 class="hasAnchor">
 <a href="#reading-and-visualization-of-presence-data" class="anchor"></a>1. Reading and Visualization of Presence Data</h1>
-<p>We built models of both SLF and TOH from presence records obtained from public and collaborator databases (queried 24-09-2018 and 26-09-2018, respectively; <span class="citation">Kim et al. (<a href="#ref-kim_molecular_2013" role="doc-biblioref">2013</a>)</span>, <span class="citation">GBIF (<a href="#ref-gbif_gbif:_2019" role="doc-biblioref">2019</a>)</span>). As is standard practice, we checked all records for quality, removed duplicate and imprecise records, and obtained 8,578 TOH and 145 SLF unique and cleaned presence records.</p>
+<p>We built models of both SLF and TOH from presence records obtained from public databases (as seen in the <strong>“GBIF Records” vignette</strong>). As is standard practice, we checked all records for quality, removed duplicate and imprecise records, and obtained 8,022 TOH and 325 SLF unique and cleaned presence records.</p>
 <div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="co">#load data</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"slf_points"</span>)
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"toh_points"</span>)
@@ -169,8 +193,8 @@
   <span class="fu">labs</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="st">""</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="st">""</span>) +
   <span class="fu">theme</span>(<span class="kw">panel.grid.major</span> <span class="kw">=</span> <span class="fu">element_blank</span>(),
         <span class="kw">panel.grid.minor</span> <span class="kw">=</span> <span class="fu">element_blank</span>(),
-        <span class="co">#panel.background = element_rect(fill = "#6699cc")) +</span>
         <span class="kw">panel.background</span> <span class="kw">=</span> <span class="fu">element_blank</span>()) +
+  <span class="fu">theme_bw</span>() +
   <span class="fu">coord_quickmap</span>(<span class="kw">xlim</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(-<span class="fl">164.5</span>, <span class="fl">163.5</span>), <span class="kw">ylim</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(-<span class="fl">55</span>,<span class="fl">85</span>)) +
   <span class="fu">ggtitle</span>(<span class="kw">label</span> <span class="kw">=</span> <span class="st">"TOH Presence"</span>)
 
@@ -182,8 +206,8 @@
   <span class="fu">labs</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="st">""</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="st">""</span>) +
   <span class="fu">theme</span>(<span class="kw">panel.grid.major</span> <span class="kw">=</span> <span class="fu">element_blank</span>(),
         <span class="kw">panel.grid.minor</span> <span class="kw">=</span> <span class="fu">element_blank</span>(),
-        <span class="co">#panel.background = element_rect(fill = "#6699cc")) +</span>
         <span class="kw">panel.background</span> <span class="kw">=</span> <span class="fu">element_blank</span>()) +
+  <span class="fu">theme_bw</span>() +
   <span class="fu">coord_quickmap</span>(<span class="kw">xlim</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(-<span class="fl">164.5</span>, <span class="fl">163.5</span>), <span class="kw">ylim</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(-<span class="fl">55</span>,<span class="fl">85</span>)) +
   <span class="fu">ggtitle</span>(<span class="kw">label</span> <span class="kw">=</span> <span class="st">"SLF Presence"</span>)
 
@@ -199,7 +223,7 @@
 <div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="kw">if</span>(<span class="fl">FALSE</span>){  <span class="co">#open no run if</span>
 
 <span class="co">#my path to the GoogleDrive shared directory</span>
-<span class="no">mypath</span> <span class="kw">&lt;-</span> <span class="st">"/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk/raw_env"</span>
+<span class="no">mypath</span> <span class="kw">&lt;-</span> <span class="st">"/Volumes/GoogleDrive/Shared drives/slfData/data/slfRisk/raw_env"</span>
 
 <span class="co">#ensure that extent is identical</span>
 <span class="co">#get file names</span>
@@ -239,7 +263,7 @@
 <div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="kw">if</span>(<span class="fl">FALSE</span>){  <span class="co">#open no run if</span>
 
 <span class="co">#my path to the GoogleDrive shared directory</span>
-<span class="no">mypath</span> <span class="kw">&lt;-</span> <span class="st">"/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk/raw_env"</span>
+<span class="no">mypath</span> <span class="kw">&lt;-</span> <span class="st">"/Volumes/GoogleDrive/Shared drives/slfData/data/slfRisk/raw_env"</span>
 
 <span class="co">#list the enviro layers to load sequentially</span>
 <span class="no">env.files</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span>(<span class="kw">path</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="no">mypath</span>,<span class="st">"v1"</span>), <span class="kw">pattern</span> <span class="kw">=</span> <span class="st">".tif"</span>, <span class="kw">full.names</span> <span class="kw">=</span> <span class="no">T</span>)
@@ -260,7 +284,7 @@
 <div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="kw">if</span>(<span class="fl">FALSE</span>){  <span class="co">#open no run if</span>
 
 <span class="co">#my path to the GoogleDrive shared directory</span>
-<span class="no">mypath</span> <span class="kw">&lt;-</span> <span class="st">"/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk/raw_env"</span>
+<span class="no">mypath</span> <span class="kw">&lt;-</span> <span class="st">"/Volumes/GoogleDrive/Shared drives/slfData/data/slfRisk/raw_env"</span>
 
 <span class="co">#load the downsampled layers and stack for raster.cor.matrix command</span>
 
@@ -275,7 +299,7 @@
 <span class="no">env.corr</span> <span class="kw">&lt;-</span> <span class="kw pkg">ENMTools</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/ENMTools/man/raster.cor.matrix.html">raster.cor.matrix</a></span>(<span class="no">env</span>, <span class="kw">method</span> <span class="kw">=</span> <span class="st">"pearson"</span>)
 
 <span class="co">#write out the correlations as a csv</span>
-<span class="fu">write_csv</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">env.corr</span>, <span class="kw">path</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="fu"><a href="https://rdrr.io/pkg/here/man/here.html">here</a></span>(),<span class="st">"data-raw/env_cor_v1_downsampled.csv"</span>), <span class="kw">col_names</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
+<span class="fu"><a href="https://rdrr.io/r/utils/write.table.html">write.csv</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">env.corr</span>, <span class="kw">file</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="fu"><a href="https://rdrr.io/pkg/here/man/here.html">here</a></span>(),<span class="st">"data-raw/env_cor_v1_downsampled.csv"</span>), <span class="kw">col.names</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">row.names</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
 
 } <span class="co">#closes no run if</span></pre></body></html></div>
 <p>To visualize the correlations between pairs of environmental covariates easily, we take the absolute value of all correlations and present the strength of relationships as a heatmap.</p>
@@ -301,7 +325,7 @@
 <div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="kw">if</span>(<span class="fl">FALSE</span>){  <span class="co">#open no run if</span>
 
 <span class="co">#my path to the GoogleDrive shared directory</span>
-<span class="no">mypath</span> <span class="kw">&lt;-</span> <span class="st">"/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk/raw_env"</span>
+<span class="no">mypath</span> <span class="kw">&lt;-</span> <span class="st">"/Volumes/GoogleDrive/Shared drives/slfData/data/slfRisk/raw_env"</span>
 
 <span class="co">#get and set file names  </span>
 <span class="no">env.files</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span>(<span class="kw">path</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="no">mypath</span>,<span class="st">"v1"</span>), <span class="kw">pattern</span> <span class="kw">=</span> <span class="st">"[.]tif"</span>, <span class="kw">full.names</span> <span class="kw">=</span> <span class="no">T</span>)
@@ -340,19 +364,19 @@
 <li>
 <code>Threads</code> set to the available number of processor threads available</li>
 </ul>
-<p>After fitting individual models, we fit these 6 covariates combined to SLF and TOH presences, but <strong>BIO02</strong> and <strong>ELEV</strong> explained &lt;1.0% of the variation, so we removed them and refit the remaining covariates under the settings above, except that the number of <code>Replicates = 10</code> for <strong>TOH</strong>, rather than <code>Replicates = 5</code>. The resultant two models are:</p>
+<p>After fitting individual models, we fit these 6 covariates combined to SLF and TOH presences, except that the number of <code>Replicates = 10</code> for <strong>TOH</strong>, rather than <code>Replicates = 5</code>. The resultant two models are:</p>
 <ol style="list-style-type: decimal">
 <li>
-<em>m1</em>—a multivariate SDM of TOH</li>
+<em>sdm_toh</em>—a multivariate SDM of TOH</li>
 <li>
-<em>m2</em>—a multivariate SDM of SLF</li>
+<em>sdm_slf1</em>—a multivariate SDM of SLF</li>
 </ol>
-<p>A third model was created from <em>m1</em> suitability and <strong>SLF</strong> presence records, based on evidence supporting the strong affinity of SLF for TOH as a preferred host (<span class="citation">Parra, Moylett, and Bulluck (<a href="#ref-parra_usda-aphis-ppq-cphst_2018" role="doc-biblioref">2018</a>)</span>, <span class="citation">Urban (<a href="#ref-urban_perspective:_2019" role="doc-biblioref">2019</a>)</span>):</p>
+<p>A third model was created from <em>sdm_toh</em> suitability and <strong>SLF</strong> presence records, based on evidence supporting the strong affinity of SLF for TOH as a preferred host (<span class="citation">Parra, Moylett, and Bulluck (<a href="#ref-parra_usda-aphis-ppq-cphst_2018" role="doc-biblioref">2018</a>)</span>, <span class="citation">Urban (<a href="#ref-urban_perspective:_2019" role="doc-biblioref">2019</a>)</span>):</p>
 <ol start="3" style="list-style-type: decimal">
 <li>
-<em>s3</em>—a single variate SDM of SLF</li>
+<em>sdm_slf2</em>—a single variate SDM of SLF</li>
 </ol>
-<p>Here, we report in a simple table the metrics used to evaluate the various models that were considered. Model validation was conducted with <em>k</em>-fold cross-validation (<em>k</em> partitions discussed above) via evaluation of the receiver operating characteristic of the AUC and omission error (<span class="citation">Fielding and Bell (<a href="#ref-fielding_review_1997" role="doc-biblioref">1997</a>)</span>, <span class="citation">Phillips, Anderson, and Schapire (<a href="#ref-phillips_maximum_2006" role="doc-biblioref">2006</a>)</span>, <span class="citation">Pearson et al. (<a href="#ref-pearson_predicting_2007" role="doc-biblioref">2007</a>)</span>, <span class="citation">Anderson and Gonzalez (<a href="#ref-anderson_species-specific_2011" role="doc-biblioref">2011</a>)</span>).</p>
+<p>Here, we report in a simple table the metrics used to evaluate the various models that were considered as well as the percent contribution of each variable to each model (where applicable). Model validation was conducted with <em>k</em>-fold cross-validation (<em>k</em> partitions discussed above) via evaluation of the receiver operating characteristic of the AUC and omission error (<span class="citation">Fielding and Bell (<a href="#ref-fielding_review_1997" role="doc-biblioref">1997</a>)</span>, <span class="citation">Phillips, Anderson, and Schapire (<a href="#ref-phillips_maximum_2006" role="doc-biblioref">2006</a>)</span>, <span class="citation">Pearson et al. (<a href="#ref-pearson_predicting_2007" role="doc-biblioref">2007</a>)</span>, <span class="citation">Anderson and Gonzalez (<a href="#ref-anderson_species-specific_2011" role="doc-biblioref">2011</a>)</span>).</p>
 <p>For AUC, the fraction of true positives relative to type I error (positive background points) is compared at all possible thresholds for each model (<span class="citation">Fielding and Bell (<a href="#ref-fielding_review_1997" role="doc-biblioref">1997</a>)</span>, <span class="citation">Phillips, Anderson, and Schapire (<a href="#ref-phillips_maximum_2006" role="doc-biblioref">2006</a>)</span>). The resultant plot’s area under the curve is assessed relative to a random model (<span class="math inline">\(AUC = 0.50\)</span>), such that values close to <span class="math inline">\(1.00\)</span> indicate strong model performance and those <span class="math inline">\(\leq 0.50\)</span> suggest poor performance (<span class="citation">Fielding and Bell (<a href="#ref-fielding_review_1997" role="doc-biblioref">1997</a>)</span>). Given presence only data, measured AUC cannot reach <span class="math inline">\(1.00\)</span>, but model AUCs that approach <span class="math inline">\(1.00\)</span> are considered to perform well (<span class="citation">Wiley et al. (<a href="#ref-wiley_niche_2003" role="doc-biblioref">2003</a>)</span>, <span class="citation">Phillips, Anderson, and Schapire (<a href="#ref-phillips_maximum_2006" role="doc-biblioref">2006</a>)</span>).</p>
 <p>Given recent concerns with model evaluation with AUC (<span class="citation">Peterson, Papeş, and Soberón (<a href="#ref-peterson_rethinking_2008" role="doc-biblioref">2008</a>)</span>, <span class="citation">Lobo, Jiménez-Valverde, and Real (<a href="#ref-lobo_auc:_2008" role="doc-biblioref">2008</a>)</span>, <span class="citation">Jiménez-Valverde (<a href="#ref-jimenez-valverde_insights_2012" role="doc-biblioref">2012</a>)</span>), we confirmed model performance with average omission error, which measures the proportion of presence point(s) predicted with suitability less than the minimum training presence threshold (<span class="citation">Pearson et al. (<a href="#ref-pearson_predicting_2007" role="doc-biblioref">2007</a>)</span>, <span class="citation">Anderson and Gonzalez (<a href="#ref-anderson_species-specific_2011" role="doc-biblioref">2011</a>)</span>).</p>
 <div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="co">#read in summary table and view</span>
@@ -361,40 +385,65 @@
 <span class="co">#print results</span>
 <span class="kw pkg">knitr</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span>(<span class="no">models_summary</span>)</pre></body></html></div>
 <table class="table">
+<colgroup>
+<col width="5%">
+<col width="8%">
+<col width="12%">
+<col width="11%">
+<col width="12%">
+<col width="12%">
+<col width="12%">
+<col width="12%">
+<col width="11%">
+</colgroup>
 <thead><tr class="header">
 <th align="left">model</th>
 <th align="right">avg_test_auc</th>
 <th align="right">avg_omission_error</th>
+<th align="right">atc_contribution</th>
+<th align="right">bio01_contribution</th>
+<th align="right">bio02_contribution</th>
+<th align="right">bio12_contribution</th>
+<th align="right">bio15_contribution</th>
+<th align="right">elev_contribution</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">m1</td>
-<td align="right">0.7720</td>
-<td align="right">0.0001</td>
+<td align="left">sdm_toh</td>
+<td align="right">0.7779</td>
+<td align="right">0.0003</td>
+<td align="right">61.03</td>
+<td align="right">36.74</td>
+<td align="right">0.06</td>
+<td align="right">1.08</td>
+<td align="right">0.81</td>
+<td align="right">0.28</td>
 </tr>
 <tr class="even">
-<td align="left">full_toh</td>
-<td align="right">0.7720</td>
-<td align="right">0.0001</td>
+<td align="left">sdm_slf1</td>
+<td align="right">0.9828</td>
+<td align="right">0.0064</td>
+<td align="right">57.16</td>
+<td align="right">22.97</td>
+<td align="right">1.95</td>
+<td align="right">11.63</td>
+<td align="right">5.96</td>
+<td align="right">0.32</td>
 </tr>
 <tr class="odd">
-<td align="left">full_slf</td>
-<td align="right">0.9897</td>
-<td align="right">0.0069</td>
-</tr>
-<tr class="even">
-<td align="left">m2</td>
-<td align="right">0.9907</td>
-<td align="right">0.0138</td>
-</tr>
-<tr class="odd">
-<td align="left">s3</td>
-<td align="right">0.9732</td>
-<td align="right">0.0138</td>
+<td align="left">sdm_slf2</td>
+<td align="right">0.9675</td>
+<td align="right">0.0032</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
 </tr>
 </tbody>
 </table>
-<p>The three models performed similarly (notably without much difference between the versions of <em>m1</em> and <em>m2</em> that included <strong>BIO02</strong> and <strong>ELEV</strong>, see above for more detail), albeit with small differences across model performance metrics. Thus, we created a consensus output map by averaging the three models as an ensemble.</p>
+<p>The three models performed similarly, albeit with small differences across model performance metrics. Notably, the variables that contributed most the <em>sdm_toh</em> also contributed most to <em>sdm_slf1</em>, albeit at differing amounts. Thus, we created a consensus output map by averaging the three models as an ensemble.</p>
 <p>To visualize the models and produce the ensemble model image, we first had to convert the mean model for each set of replicates (<code>species_name_avg.asc</code>) and convert it to a GeoTIFF (<code>.tif</code>), which is more easily visualized and stored (example code below).</p>
 <div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="kw">if</span>(<span class="fl">FALSE</span>){  <span class="co">#open no run if</span>
 
@@ -402,7 +451,7 @@
 <span class="no">mypath</span> <span class="kw">&lt;-</span> <span class="st">"/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk"</span>
 
 <span class="co">#read in file as ASCII raster</span>
-<span class="no">enm_data_slf</span> <span class="kw">&lt;-</span> <span class="fu">raster</span>(<span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="no">mypath</span>, <span class="st">"maxent_models/02_15_19_maxent_slf+atc-bio02/lycorma_delicatula_avg.asc"</span>))
+<span class="no">enm_data_slf</span> <span class="kw">&lt;-</span> <span class="fu">raster</span>(<span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="no">mypath</span>, <span class="st">"maxent_models/10_21_20_maxent_slf_full/Lycorma_delicatula__White,_1845__avg.asc"</span>))
 
 <span class="co">#make sure CRS is WGS84</span>
 <span class="fu">crs</span>(<span class="no">enm_data_slf</span>) <span class="kw">&lt;-</span> <span class="st">"+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"</span>
@@ -454,7 +503,7 @@ writeRaster(x = enm_ensemble, filename = file.path(mypath, "maxent_models/slftoh
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"toh_usa_df"</span>)
 
 <span class="co">#plot just the states and suitability first</span>
-<span class="no">m1_usa</span> <span class="kw">&lt;-</span> <span class="fu">ggplot</span>() +
+<span class="no">sdm_toh_usa</span> <span class="kw">&lt;-</span> <span class="fu">ggplot</span>() +
   <span class="fu">geom_raster</span>(<span class="kw">data</span> <span class="kw">=</span> <span class="no">toh_usa_df</span>, <span class="fu">aes</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">x</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">y</span>, <span class="kw">fill</span> <span class="kw">=</span> <span class="fu"><a href="https://scales.r-lib.org//reference/rescale.html">rescale</a></span>(<span class="no">value</span>)), <span class="kw">alpha</span><span class="kw">=</span><span class="fl">0.9</span>, <span class="kw">show.legend</span> <span class="kw">=</span> <span class="no">F</span>) +
   <span class="fu">scale_fill_gradientn</span>(<span class="kw">limits</span><span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0</span>,<span class="fl">1</span>), <span class="kw">name</span> <span class="kw">=</span> <span class="st">"Suitability"</span>, <span class="kw">colors</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rev.html">rev</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"#e31a1c"</span>,<span class="st">"#fd8d3c"</span>, <span class="st">"#fecc5c"</span>, <span class="st">"#FFFFFF"</span>))) +
   <span class="fu">geom_polygon</span>(<span class="kw">data</span> <span class="kw">=</span> <span class="fu">map_data</span>(<span class="st">'state'</span>), <span class="fu">aes</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">long</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">lat</span>, <span class="kw">group</span> <span class="kw">=</span> <span class="no">group</span>), <span class="kw">fill</span> <span class="kw">=</span> <span class="fl">NA</span>, <span class="kw">color</span> <span class="kw">=</span> <span class="st">"black"</span>, <span class="kw">lwd</span> <span class="kw">=</span> <span class="fl">0.10</span>) +
@@ -464,8 +513,8 @@ writeRaster(x = enm_ensemble, filename = file.path(mypath, "maxent_models/slftoh
         <span class="kw">panel.grid.minor</span> <span class="kw">=</span> <span class="fu">element_blank</span>(),
         <span class="kw">panel.background</span> <span class="kw">=</span> <span class="fu">element_blank</span>()) +
   <span class="fu">coord_quickmap</span>(<span class="kw">xlim</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(-<span class="fl">124.7628</span>, -<span class="fl">66.94889</span>), <span class="kw">ylim</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">24.52042</span>, <span class="fl">49.3833</span>)) +
-  <span class="fu">ggtitle</span>(<span class="kw">label</span> <span class="kw">=</span> <span class="st">"m1 USA"</span>)
-<span class="no">m2_usa</span> <span class="kw">&lt;-</span> <span class="fu">ggplot</span>() +
+  <span class="fu">ggtitle</span>(<span class="kw">label</span> <span class="kw">=</span> <span class="st">"sdm_toh USA"</span>)
+<span class="no">sdm_slf1_usa</span> <span class="kw">&lt;-</span> <span class="fu">ggplot</span>() +
   <span class="fu">geom_raster</span>(<span class="kw">data</span> <span class="kw">=</span> <span class="no">slf_usa_df</span>, <span class="fu">aes</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">x</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">y</span>, <span class="kw">fill</span> <span class="kw">=</span> <span class="fu"><a href="https://scales.r-lib.org//reference/rescale.html">rescale</a></span>(<span class="no">value</span>)), <span class="kw">alpha</span><span class="kw">=</span><span class="fl">0.9</span>, <span class="kw">show.legend</span> <span class="kw">=</span> <span class="no">F</span>) +
   <span class="fu">scale_fill_gradientn</span>(<span class="kw">limits</span><span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0</span>,<span class="fl">1</span>), <span class="kw">name</span> <span class="kw">=</span> <span class="st">"Suitability"</span>, <span class="kw">colors</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rev.html">rev</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"#e31a1c"</span>,<span class="st">"#fd8d3c"</span>, <span class="st">"#fecc5c"</span>, <span class="st">"#FFFFFF"</span>))) +
   <span class="fu">geom_polygon</span>(<span class="kw">data</span> <span class="kw">=</span> <span class="fu">map_data</span>(<span class="st">'state'</span>), <span class="fu">aes</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">long</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">lat</span>, <span class="kw">group</span> <span class="kw">=</span> <span class="no">group</span>), <span class="kw">fill</span> <span class="kw">=</span> <span class="fl">NA</span>, <span class="kw">color</span> <span class="kw">=</span> <span class="st">"black"</span>, <span class="kw">lwd</span> <span class="kw">=</span> <span class="fl">0.10</span>) +
@@ -475,8 +524,8 @@ writeRaster(x = enm_ensemble, filename = file.path(mypath, "maxent_models/slftoh
         <span class="kw">panel.grid.minor</span> <span class="kw">=</span> <span class="fu">element_blank</span>(),
         <span class="kw">panel.background</span> <span class="kw">=</span> <span class="fu">element_blank</span>()) +
   <span class="fu">coord_quickmap</span>(<span class="kw">xlim</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(-<span class="fl">124.7628</span>, -<span class="fl">66.94889</span>), <span class="kw">ylim</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">24.52042</span>, <span class="fl">49.3833</span>)) +
-  <span class="fu">ggtitle</span>(<span class="kw">label</span> <span class="kw">=</span> <span class="st">"m2 USA"</span>)
-<span class="no">s3_usa</span> <span class="kw">&lt;-</span> <span class="fu">ggplot</span>() +
+  <span class="fu">ggtitle</span>(<span class="kw">label</span> <span class="kw">=</span> <span class="st">"sdm_slf1 USA"</span>)
+<span class="no">sdm_slf2_usa</span> <span class="kw">&lt;-</span> <span class="fu">ggplot</span>() +
   <span class="fu">geom_raster</span>(<span class="kw">data</span> <span class="kw">=</span> <span class="no">slftoh_usa_df</span>, <span class="fu">aes</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">x</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">y</span>, <span class="kw">fill</span> <span class="kw">=</span> <span class="fu"><a href="https://scales.r-lib.org//reference/rescale.html">rescale</a></span>(<span class="no">value</span>)), <span class="kw">alpha</span><span class="kw">=</span><span class="fl">0.9</span>, <span class="kw">show.legend</span> <span class="kw">=</span> <span class="no">T</span>) +
   <span class="fu">scale_fill_gradientn</span>(<span class="kw">limits</span><span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0</span>,<span class="fl">1</span>), <span class="kw">name</span> <span class="kw">=</span> <span class="st">"Suitability"</span>, <span class="kw">colors</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rev.html">rev</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"#e31a1c"</span>,<span class="st">"#fd8d3c"</span>, <span class="st">"#fecc5c"</span>, <span class="st">"#FFFFFF"</span>))) +
   <span class="fu">geom_polygon</span>(<span class="kw">data</span> <span class="kw">=</span> <span class="fu">map_data</span>(<span class="st">'state'</span>), <span class="fu">aes</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">long</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">lat</span>, <span class="kw">group</span> <span class="kw">=</span> <span class="no">group</span>), <span class="kw">fill</span> <span class="kw">=</span> <span class="fl">NA</span>, <span class="kw">color</span> <span class="kw">=</span> <span class="st">"black"</span>, <span class="kw">lwd</span> <span class="kw">=</span> <span class="fl">0.10</span>) +
@@ -486,10 +535,10 @@ writeRaster(x = enm_ensemble, filename = file.path(mypath, "maxent_models/slftoh
         <span class="kw">panel.grid.minor</span> <span class="kw">=</span> <span class="fu">element_blank</span>(),
         <span class="kw">panel.background</span> <span class="kw">=</span> <span class="fu">element_blank</span>()) +
   <span class="fu">coord_quickmap</span>(<span class="kw">xlim</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(-<span class="fl">124.7628</span>, -<span class="fl">66.94889</span>), <span class="kw">ylim</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">24.52042</span>, <span class="fl">49.3833</span>)) +
-  <span class="fu">ggtitle</span>(<span class="kw">label</span> <span class="kw">=</span> <span class="st">"s3 USA"</span>)
+  <span class="fu">ggtitle</span>(<span class="kw">label</span> <span class="kw">=</span> <span class="st">"sdm_slf2 USA"</span>)
 
 <span class="co">#visualize together</span>
-<span class="no">m1_usa</span> / <span class="no">m2_usa</span> / <span class="no">s3_usa</span></pre></body></html></div>
+<span class="no">sdm_toh_usa</span> / <span class="no">sdm_slf1_usa</span> / <span class="no">sdm_slf2_usa</span></pre></body></html></div>
 <p><img src="vignette-011-suitability-models_files/figure-html/visualize%20models%20at%20us-1.png" width="960" style="display: block; margin: auto auto auto 0;"></p>
 </div>
 <div id="world-maps" class="section level3">
@@ -502,7 +551,7 @@ writeRaster(x = enm_ensemble, filename = file.path(mypath, "maxent_models/slftoh
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"toh_df"</span>)
 
 <span class="co">#plot just the states and suitability first</span>
-<span class="no">m1</span> <span class="kw">&lt;-</span> <span class="fu">ggplot</span>() +
+<span class="no">sdm_toh</span> <span class="kw">&lt;-</span> <span class="fu">ggplot</span>() +
   <span class="fu">geom_raster</span>(<span class="kw">data</span> <span class="kw">=</span> <span class="no">toh_df</span>, <span class="fu">aes</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">x</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">y</span>, <span class="kw">fill</span> <span class="kw">=</span> <span class="fu"><a href="https://scales.r-lib.org//reference/rescale.html">rescale</a></span>(<span class="no">value</span>)), <span class="kw">alpha</span><span class="kw">=</span><span class="fl">0.8</span>, <span class="kw">show.legend</span> <span class="kw">=</span> <span class="no">F</span>) +
   <span class="fu">scale_fill_gradientn</span>(<span class="kw">limits</span><span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0</span>,<span class="fl">1</span>), <span class="kw">name</span> <span class="kw">=</span> <span class="st">"Suitability"</span>, <span class="kw">colors</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rev.html">rev</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"#e31a1c"</span>,<span class="st">"#fd8d3c"</span>, <span class="st">"#fecc5c"</span>, <span class="st">"#FFFFFF"</span>))) +
   <span class="fu">geom_polygon</span>(<span class="kw">data</span> <span class="kw">=</span> <span class="fu">map_data</span>(<span class="st">'world'</span>), <span class="fu">aes</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">long</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">lat</span>, <span class="kw">group</span> <span class="kw">=</span> <span class="no">group</span>), <span class="kw">fill</span> <span class="kw">=</span> <span class="fl">NA</span>, <span class="kw">color</span> <span class="kw">=</span> <span class="st">"black"</span>, <span class="kw">lwd</span> <span class="kw">=</span> <span class="fl">0.15</span>) +
@@ -512,8 +561,8 @@ writeRaster(x = enm_ensemble, filename = file.path(mypath, "maxent_models/slftoh
         <span class="kw">panel.grid.minor</span> <span class="kw">=</span> <span class="fu">element_blank</span>(),
         <span class="kw">panel.background</span> <span class="kw">=</span> <span class="fu">element_blank</span>()) +
   <span class="fu">coord_quickmap</span>(<span class="kw">xlim</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(-<span class="fl">164.5</span>, <span class="fl">163.5</span>), <span class="kw">ylim</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(-<span class="fl">55</span>,<span class="fl">85</span>)) +
-  <span class="fu">ggtitle</span>(<span class="kw">label</span> <span class="kw">=</span> <span class="st">"m1"</span>)
-<span class="no">m2</span> <span class="kw">&lt;-</span> <span class="fu">ggplot</span>() +
+  <span class="fu">ggtitle</span>(<span class="kw">label</span> <span class="kw">=</span> <span class="st">"sdm_toh"</span>)
+<span class="no">sdm_slf1</span> <span class="kw">&lt;-</span> <span class="fu">ggplot</span>() +
   <span class="fu">geom_raster</span>(<span class="kw">data</span> <span class="kw">=</span> <span class="no">slf_df</span>, <span class="fu">aes</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">x</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">y</span>, <span class="kw">fill</span> <span class="kw">=</span> <span class="fu"><a href="https://scales.r-lib.org//reference/rescale.html">rescale</a></span>(<span class="no">value</span>)), <span class="kw">alpha</span><span class="kw">=</span><span class="fl">0.8</span>, <span class="kw">show.legend</span> <span class="kw">=</span> <span class="no">F</span>) +
   <span class="fu">scale_fill_gradientn</span>(<span class="kw">limits</span><span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0</span>,<span class="fl">1</span>), <span class="kw">name</span> <span class="kw">=</span> <span class="st">"Suitability"</span>, <span class="kw">colors</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rev.html">rev</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"#e31a1c"</span>,<span class="st">"#fd8d3c"</span>, <span class="st">"#fecc5c"</span>, <span class="st">"#FFFFFF"</span>))) +
   <span class="fu">geom_polygon</span>(<span class="kw">data</span> <span class="kw">=</span> <span class="fu">map_data</span>(<span class="st">'world'</span>), <span class="fu">aes</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">long</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">lat</span>, <span class="kw">group</span> <span class="kw">=</span> <span class="no">group</span>), <span class="kw">fill</span> <span class="kw">=</span> <span class="fl">NA</span>, <span class="kw">color</span> <span class="kw">=</span> <span class="st">"black"</span>, <span class="kw">lwd</span> <span class="kw">=</span> <span class="fl">0.15</span>) +
@@ -523,8 +572,8 @@ writeRaster(x = enm_ensemble, filename = file.path(mypath, "maxent_models/slftoh
         <span class="kw">panel.grid.minor</span> <span class="kw">=</span> <span class="fu">element_blank</span>(),
         <span class="kw">panel.background</span> <span class="kw">=</span> <span class="fu">element_blank</span>()) +
   <span class="fu">coord_quickmap</span>(<span class="kw">xlim</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(-<span class="fl">164.5</span>, <span class="fl">163.5</span>), <span class="kw">ylim</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(-<span class="fl">55</span>,<span class="fl">85</span>)) +
-  <span class="fu">ggtitle</span>(<span class="kw">label</span> <span class="kw">=</span> <span class="st">"m2"</span>)
-<span class="no">s3</span> <span class="kw">&lt;-</span> <span class="fu">ggplot</span>() +
+  <span class="fu">ggtitle</span>(<span class="kw">label</span> <span class="kw">=</span> <span class="st">"sdm_slf1"</span>)
+<span class="no">sdm_slf2</span> <span class="kw">&lt;-</span> <span class="fu">ggplot</span>() +
   <span class="fu">geom_raster</span>(<span class="kw">data</span> <span class="kw">=</span> <span class="no">slftoh_df</span>, <span class="fu">aes</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">x</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">y</span>, <span class="kw">fill</span> <span class="kw">=</span> <span class="fu"><a href="https://scales.r-lib.org//reference/rescale.html">rescale</a></span>(<span class="no">value</span>)), <span class="kw">alpha</span><span class="kw">=</span><span class="fl">0.8</span>, <span class="kw">show.legend</span> <span class="kw">=</span> <span class="no">T</span>) +
   <span class="fu">scale_fill_gradientn</span>(<span class="kw">limits</span><span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0</span>,<span class="fl">1</span>), <span class="kw">name</span> <span class="kw">=</span> <span class="st">"Suitability"</span>, <span class="kw">colors</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rev.html">rev</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"#e31a1c"</span>,<span class="st">"#fd8d3c"</span>, <span class="st">"#fecc5c"</span>, <span class="st">"#FFFFFF"</span>))) +
   <span class="fu">geom_polygon</span>(<span class="kw">data</span> <span class="kw">=</span> <span class="fu">map_data</span>(<span class="st">'world'</span>), <span class="fu">aes</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">long</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">lat</span>, <span class="kw">group</span> <span class="kw">=</span> <span class="no">group</span>), <span class="kw">fill</span> <span class="kw">=</span> <span class="fl">NA</span>, <span class="kw">color</span> <span class="kw">=</span> <span class="st">"black"</span>, <span class="kw">lwd</span> <span class="kw">=</span> <span class="fl">0.15</span>) +
@@ -534,10 +583,10 @@ writeRaster(x = enm_ensemble, filename = file.path(mypath, "maxent_models/slftoh
         <span class="kw">panel.grid.minor</span> <span class="kw">=</span> <span class="fu">element_blank</span>(),
         <span class="kw">panel.background</span> <span class="kw">=</span> <span class="fu">element_blank</span>()) +
   <span class="fu">coord_quickmap</span>(<span class="kw">xlim</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(-<span class="fl">164.5</span>, <span class="fl">163.5</span>), <span class="kw">ylim</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(-<span class="fl">55</span>,<span class="fl">85</span>)) +
-  <span class="fu">ggtitle</span>(<span class="kw">label</span> <span class="kw">=</span> <span class="st">"s3"</span>)
+  <span class="fu">ggtitle</span>(<span class="kw">label</span> <span class="kw">=</span> <span class="st">"sdm_slf2"</span>)
 
 <span class="co">#visualize together</span>
-<span class="no">m1</span> / <span class="no">m2</span> / <span class="no">s3</span></pre></body></html></div>
+<span class="no">sdm_toh</span> / <span class="no">sdm_slf1</span> / <span class="no">sdm_slf2</span></pre></body></html></div>
 <p><img src="vignette-011-suitability-models_files/figure-html/visualize%20models%20at%20world-1.png" width="960" style="display: block; margin: auto auto auto 0;"></p>
 </div>
 <div id="ensemble-maps" class="section level3">
@@ -618,7 +667,7 @@ writeRaster(x = enm_ensemble, filename = file.path(mypath, "maxent_models/slftoh
 <span class="fu">write_csv</span>(<span class="kw">path</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="fu"><a href="https://rdrr.io/pkg/here/man/here.html">here</a></span>(),<span class="st">"data-raw/extract_countries_slftoh_ensemble_mean.csv"</span>), <span class="kw">x</span> <span class="kw">=</span> <span class="no">countries_extracts_ensemble</span><span class="kw">[[</span><span class="fl">1</span>]], <span class="kw">col_names</span> <span class="kw">=</span> <span class="no">T</span>)
 
 <span class="co">#parallelized version</span>
-<span class="no">countries_extracts_ensemble2</span> <span class="kw">&lt;-</span> <span class="fu">extract_enm2</span>(<span class="kw">enm</span> <span class="kw">=</span> <span class="no">enm_ensemble</span>, <span class="kw">geoshape</span> <span class="kw">=</span> <span class="no">world</span>, <span class="kw">id0</span> <span class="kw">=</span> <span class="st">"NAME_0"</span>, <span class="kw">id</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span>(<span class="no">world</span>$<span class="no">NAME_0</span>), <span class="kw">multipar</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">ncores</span> <span class="kw">=</span> <span class="fl">5</span>)
+<span class="no">countries_extracts_ensemble2</span> <span class="kw">&lt;-</span> <span class="fu">extract_enm2</span>(<span class="kw">enm</span> <span class="kw">=</span> <span class="no">enm_ensemble</span>, <span class="kw">geoshape</span> <span class="kw">=</span> <span class="no">world</span>, <span class="kw">id0</span> <span class="kw">=</span> <span class="st">"NAME_0"</span>, <span class="kw">id</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span>(<span class="no">world</span>$<span class="no">NAME_0</span>), <span class="kw">multipar</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">ncores</span> <span class="kw">=</span> <span class="fl">4</span>)
 <span class="co">#write out</span>
 <span class="fu">write_csv</span>(<span class="kw">path</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="fu"><a href="https://rdrr.io/pkg/here/man/here.html">here</a></span>(),<span class="st">"data-raw/extract_countries_slftoh_ensemble_mean2.csv"</span>), <span class="kw">x</span> <span class="kw">=</span> <span class="no">countries_extracts_ensemble2</span>, <span class="kw">col_names</span> <span class="kw">=</span> <span class="no">T</span>)
 
@@ -648,17 +697,11 @@ writeRaster(x = enm_ensemble, filename = file.path(mypath, "maxent_models/slftoh
 <div id="ref-fielding_review_1997">
 <p>Fielding, Alan H., and John F. Bell. 1997. “A Review of Methods for the Assessment of Prediction Errors in Conservation Presence/Absence Models.” <em>Environmental Conservation</em> 24 (1): 38–49. <a href="https://doi.org/10.1017/S0376892997000088">https://doi.org/10.1017/S0376892997000088</a>.</p>
 </div>
-<div id="ref-gbif_gbif:_2019">
-<p>GBIF. 2019. “GBIF: The Global Biodiversity Information Facility.” Public Database. <a href="https://www.gbif.org/">https://www.gbif.org/</a>.</p>
-</div>
 <div id="ref-hijmans_very_2005">
 <p>Hijmans, Robert J., Susan E. Cameron, Juan L. Parra, Peter G. Jones, and Andy Jarvis. 2005. “Very High Resolution Interpolated Climate Surfaces for Global Land Areas.” <em>International Journal of Climatology</em> 25 (15): 1965–78. <a href="https://doi.org/10.1002/joc.1276">https://doi.org/10.1002/joc.1276</a>.</p>
 </div>
 <div id="ref-jimenez-valverde_insights_2012">
 <p>Jiménez-Valverde, Alberto. 2012. “Insights into the Area Under the Receiver Operating Characteristic Curve (AUC) as a Discrimination Measure in Species Distribution Modelling: Insights into the AUC.” <em>Global Ecology and Biogeography</em> 21 (4): 498–507. <a href="https://doi.org/10.1111/j.1466-8238.2011.00683.x">https://doi.org/10.1111/j.1466-8238.2011.00683.x</a>.</p>
-</div>
-<div id="ref-kim_molecular_2013">
-<p>Kim, Hyojoong, Min-Young Kim, Deok Ho Kwon, Sangwook Park, Yerim Lee, Junhao Huang, Shi Kai, et al. 2013. “Molecular Comparison of Lycorma Delicatula (Hemiptera: Fulgoridae) Isolates in Korea, China, and Japan.” <em>Journal of Asia-Pacific Entomology</em> 16 (4): 503–6.</p>
 </div>
 <div id="ref-lobo_auc:_2008">
 <p>Lobo, Jorge M., Alberto Jiménez-Valverde, and Raimundo Real. 2008. “AUC: A Misleading Measure of the Performance of Predictive Distribution Models.” <em>Global Ecology and Biogeography</em> 17 (2): 145–51. <a href="https://doi.org/10.1111/j.1466-8238.2007.00358.x">https://doi.org/10.1111/j.1466-8238.2007.00358.x</a>.</p>

@@ -1,5 +1,5 @@
 ---
-title: "Get GBIF Data"
+title: "Get GBIF Records"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{vignette-003-get-gbif-data}
@@ -171,7 +171,7 @@ write_csv(toh_coords3, file = file.path(here(), "data-raw", "toh_gbif_cleaned_co
 }
 ```
 
-#Visualize Data
+# Visualize Data
 
 We can read in the final data for looking at the spatial coverage despite the thinning.
 ```{r read in final data, message=FALSE, fig.height= 10, fig.width=10}

@@ -23,29 +23,43 @@ navbar:
       href: articles/vignette-001-overview.html
     - text: "Definitions"
       href: articles/vignette-002-terms.html
-    - text: "Paninvasion Risk App"
+    - text: "Paninvasion Severity App"
       href: articles/vignette-040-ee-data.html
     - text: "Analyses"
       menu:
         - text: ----------------
-        - text: "Data Tidying"
-          href:  articles/vignette-010-tidy-data.html
-        - text: "Suitability Modeling & Evaluation"
-          href: articles/vignette-011-suitability-models.html
-        - text: "Risk Map Plotting"
-          href: articles/vignette-030-potentials-maps.html
-        - text: "Invasion Potential Alignment"
+        - text: "Step 1: Estimate Invasion Potentials"
           menu:
             - text: ----------------
-            - text: "Published (Max)"
-              href: articles/vignette-021-quadrant-plots.html
-            - text: "Alternate (Median)"
-              href: articles/vignette-026-quadrant-plots-alt-median.html
-            - text: "Alternate (Mean)"
-              href: articles/vignette-027-quadrant-plots-alt-mean.html
+            - text: "Get GBIF Records"
+              href:  articles/vignette-003-get-gbif-data.html
+            - text: "Data Tidying"
+              href:  articles/vignette-010-tidy-data.html
+            - text: "Species Distribution Modeling"
+              href: articles/vignette-011-suitability-models.html
             - text: ----------------
-        - text: "Wine Market Risk of Shock Evaluation"
-          href: articles/vignette-041-market-plot.html
+        - text: "Step 2: Calculate Alignment Correlations"
+          menu:
+            - text: ----------------
+            - text: "Invasion Potential Maps"
+              href: articles/vignette-030-potentials-maps.html
+            - text: "Invasion Potential Alignment"
+              menu:
+                - text: ----------------
+                - text: "Published (Max)"
+                  href: articles/vignette-021-quadrant-plots.html
+                - text: "Alternate (Median)"
+                  href: articles/vignette-026-quadrant-plots-alt-median.html
+                - text: "Alternate (Mean)"
+                  href: articles/vignette-027-quadrant-plots-alt-mean.html
+                - text: ----------------
+            - text: ----------------
+        - text: "Step 3: Quantify Paninvasion Severity"
+          menu:
+            - text: ----------------
+            - text: "Paninvasion Severity"
+              href: articles/vignette-041-market-plot.html
+            - text: ----------------
         - text: ----------------
 
   right:
