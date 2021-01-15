@@ -1,0 +1,326 @@
+---
+title: "West Coast AVAs: SLF Development Temperature Thresholds"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{vignette-050-ava-temp}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: inline
+bibliography: references.bib
+link-citations: yes
+---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.align='left'
+)
+```
+
+A Quick Evauation of West Coast AVAs for SLF Development Temperature Thresholds
+
+***
+
+This vignette serves as a quick check to ensure that the viticultural areas (AVAs) on the west coast of the United States have regions that have temperatures that can support populations of **SLF**. Based on @keena_comparison_2021, we plot temperature data interpolated from the SCDNA
+
+```{r setup, warning=FALSE, results='hide', message=FALSE}
+library(slfrsk) #this package, has extract_enm()
+library(tidyverse)  #data manipulation
+library(here) #making directory pathways easier on different instances
+library(rgdal) #load shapefiles
+library(patchwork) #easy combined plots
+library(doParallel) #parallized extraction
+library(raster) #raster geo stuffs
+library(ggfortify) #fortify rasters
+```
+
+read in presence points for SLF
+
+```{r}
+#load data
+data("slf_points")
+
+#plot points on map: SLF
+map_slf <- ggplot() +
+  geom_polygon(data = map_data('world'), aes(x = long, y = lat, group = group), fill = "#778899", color = "black", lwd = 0.15) + #world map
+  geom_point(data = slf_points, aes(x = x, y = y), color = "red") +
+  theme_bw() +
+  labs(x = "", y = "") +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank()) +
+  theme_bw() +
+  coord_quickmap(xlim = c(-164.5, 163.5), ylim = c(-55,85)) +
+  ggtitle(label = "SLF Presence")
+
+map_slf
+```
+
+Read in the environmental layers (pick which ones we actually want)
+
+  - **BIO1 = Annual Mean Temperature**
+  - BIO2 = Mean Diurnal Range (Mean of monthly (max temp - min temp))
+  - BIO3 = Isothermality (BIO2/BIO7) (×100)
+  - BIO4 = Temperature Seasonality (standard deviation ×100)
+  - **BIO5 = Max Temperature of Warmest Month**
+  - **BIO6 = Min Temperature of Coldest Month**
+  - BIO7 = Temperature Annual Range (BIO5-BIO6)
+  - BIO8 = Mean Temperature of Wettest Quarter
+  - BIO9 = Mean Temperature of Driest Quarter
+  - **BIO10 = Mean Temperature of Warmest Quarter**
+  - **BIO11 = Mean Temperature of Coldest Quarter**
+  - BIO12 = Annual Precipitation
+  - BIO13 = Precipitation of Wettest Month
+  - BIO14 = Precipitation of Driest Month
+  - BIO15 = Precipitation Seasonality (Coefficient of Variation)
+  - BIO16 = Precipitation of Wettest Quarter
+  - BIO17 = Precipitation of Driest Quarter
+  - BIO18 = Precipitation of Warmest Quarter
+  - BIO19 = Precipitation of Coldest Quarter
+
+```{r}
+#my path to the GoogleDrive shared directory
+mypath <- "/Volumes/GoogleDrive/Shared drives/slfData/data/slfRisk/raw_env"
+  
+
+#get and set file names  
+env.files <- list.files(path = file.path(mypath,"v1"), pattern = "[.]tif", full.names = T)
+env.short <- list.files(path = file.path(mypath,"v1"), pattern = "[.]tif", full.names = F)
+
+#pick the ones we want that are actually related to 
+env <- raster::stack(env.files[c(2,6,7,11,12)])
+
+```
+
+Extract the environmental data and save to a new object
+
+```{r}
+if(FALSE){
+  
+slf_extract <- raster::extract(x = env, y = slf_points[,-1], df = TRUE)
+
+colnames(slf_extract) <- paste0(colnames(slf_extract), "_slf")
+}
+```
+
+read in a shapefile for AVAs in CA, OR, and WA. We will sample the same number of points in a particular shapefile to match with the slf points. Let's try napa first and see how that goes.
+
+```{r}
+ca_ava <- readOGR(dsn = "/Volumes/GoogleDrive/My Drive/spotted_lanternfly_ieco_projects/data/wineries/CA_avas_shapefile", layer = "CA_avas", verbose = F)
+or_ava <- readOGR(dsn = "/Volumes/GoogleDrive/My Drive/spotted_lanternfly_ieco_projects/data/wineries/OR_avas_shapefile", layer = "OR_avas", verbose = F)
+wa_ava <- readOGR(dsn = "/Volumes/GoogleDrive/My Drive/spotted_lanternfly_ieco_projects/data/wineries/WA_avas_shapefile", layer = "WA_avas", verbose = F)
+
+#clean some weird polygons for OR shapefiles
+or_ava <- or_ava[!or_ava$ava_id %in% c("tualatin_hills", "laurelwood_district"),]
+
+#make an all version
+wc_ava <- bind(ca_ava, or_ava, wa_ava)
+
+#plot(raster::mask(raster::crop(env[[3]], ca_ava[ca_ava$ava_id =="napa_valley",]), mask = ca_ava[ca_ava$ava_id =="napa_valley",]))
+
+#random_points <- env %>%
+#  crop(., ca_ava[ca_ava$ava_id =="napa_valley",]) %>%
+#  mask(., ca_ava[ca_ava$ava_id =="napa_valley",]) %>%
+#  sampleRandom(x = ., size = nrow(slf_points), cells = T, rowcol = T, xy = T) %>%
+#  cbind(., slf_extract)
+
+#random_points <- random_points[!is.na(random_points$global_bio_06_slf),]
+
+```
+
+It makes more sense to figure out some diapause related questions:
+
+1. Will SLF undergo diapause in the Napa AVA?
+2. Are there enough chilly days in the Napa AVA to pull SLF eggs out of diapause? (days < 5C or < 10C)
+
+group up and raster the data
+
+```{r, message=FALSE}
+#read in the grid gps points
+#temp_points <- read_csv("/Volumes/GoogleDrive/My Drive/spotted_lanternfly_c2m2_projects/code/data_to_model/age_time_gridded_data_3193.csv") #the 0.5 degrees spatial extent data
+temp_points <- read_csv("/Volumes/GoogleDrive/My Drive/spotted_lanternfly_c2m2_projects/code/data_to_model/age_time_gridded_data_12888.csv") #the 0.25 degrees spatial extent data
+
+
+#summarize data for days < 10C, < 5C, and between 10 and 20C
+cold_days <- temp_points %>%
+  group_by(latitude, longitude) %>%
+  summarize(days = n(), 
+            dlt10 = sum(temperature < 10), 
+            dlt5 = sum(temperature < 5), 
+            dbtwn1020 = sum(temperature < 20 & temperature > 10), 
+            dbtwn1420 = sum(temperature < 20 & temperature > 14)) %>%
+  dplyr::select(longitude, latitude, everything()) %>%
+  ungroup() %>%
+   data.frame(.)
+
+#make it a spdf
+#cold_days <-   SpatialPointsDataFrame(coords = cold_days[,1:2], data = cold_days[,3:4], proj4string = crs(env)) 
+#rasterize the crap out of this
+cold_days_ras <- rasterFromXYZ(xyz = cold_days[,-3], crs = crs(env))
+```
+
+Now plot the days < 10C
+
+```{r, message=FALSE}
+wc_plot <- ggplot() +
+  geom_raster(data = fortify(cold_days_ras[[1]]), aes(x = long, y = lat, fill = dlt10)) +
+  geom_polygon(data = map_data('state'), aes(x = long, y = lat, group = group), fill = NA, color = "black", lwd = 0.20) +
+  geom_path(data = fortify(ca_ava), aes(x = long, y = lat, group = group), color = "#ffca7b", lwd = 0.25) +
+  geom_path(data = fortify(or_ava), aes(x = long, y = lat, group = group), color = "#ff7251", lwd = 0.25) +
+  geom_path(data = fortify(wa_ava), aes(x = long, y = lat, group = group), color = "#9b2948", lwd = 0.25) +
+  #geom_path(data = fortify(ca_ava[ca_ava$ava_id =="napa_valley",]), aes(x = long, y = lat, group = group), color = "red") +
+  geom_path(data = fortify(wc_ava[wc_ava$ava_id %in% c("puget_sound","yakima_valley","willamette_valley","rogue_valley","mendocino","russian_river_valley","napa_valley" ,"sierra_foothills" ,"santa_clara_valley","monterey","paso_robles","santa_maria_valley","sta__rita_hills","south_coast"), ]), aes(x = long, y = lat, group = group), color = "red") +
+  #coord_quickmap(xlim = c(-123, -121), ylim = c(38, 39)) + #napa
+  coord_quickmap(xlim = c(-124, -112), ylim = c(33, 48.5)) +
+  scale_fill_viridis_b(breaks = c(30,60,180,270))
+
+napa_plot <- ggplot() +
+  geom_raster(data = fortify(cold_days_ras[[1]]), aes(x = long, y = lat, fill = dlt10)) +
+  geom_polygon(data = map_data('state'), aes(x = long, y = lat, group = group), fill = NA, color = "black", lwd = 0.20) +
+  #geom_path(data = fortify(ca_ava), aes(x = long, y = lat, group = group), color = "#ffca7b", lwd = 0.25) +
+  geom_path(data = fortify(ca_ava[ca_ava$ava_id =="napa_valley",]), aes(x = long, y = lat, group = group), color = "red") +
+  coord_quickmap(xlim = c(-123.5, -121.5), ylim = c(38, 39)) + #napa
+  scale_fill_viridis_b(breaks = c(30,60,180,270))
+
+wc_plot + (plot_spacer() / napa_plot)
+
+```
+
+do a version of this with 10--20C and see how many days (looking at table 1 from keena and nielsen, it looks like 95ish days at 15C works)
+```{r, message=FALSE}
+
+wc_ndp_plot1 <- ggplot() +
+  geom_raster(data = fortify(cold_days_ras[[3]]), aes(x = long, y = lat, fill = dbtwn1020)) +
+  geom_polygon(data = map_data('state'), aes(x = long, y = lat, group = group), fill = NA, color = "black", lwd = 0.20) +
+  geom_path(data = fortify(ca_ava), aes(x = long, y = lat, group = group), color = "#ffca7b", lwd = 0.25) +
+  geom_path(data = fortify(or_ava), aes(x = long, y = lat, group = group), color = "#ff7251", lwd = 0.25) +
+  geom_path(data = fortify(wa_ava), aes(x = long, y = lat, group = group), color = "#9b2948", lwd = 0.25) +
+  #geom_path(data = fortify(ca_ava[ca_ava$ava_id =="napa_valley",]), aes(x = long, y = lat, group = group), color = "red") +
+  geom_path(data = fortify(wc_ava[wc_ava$ava_id %in% c("puget_sound","yakima_valley","willamette_valley","rogue_valley","mendocino","russian_river_valley","napa_valley" ,"sierra_foothills" ,"santa_clara_valley","monterey","paso_robles","santa_maria_valley","sta__rita_hills","south_coast"), ]), aes(x = long, y = lat, group = group), color = "red") +
+  #coord_quickmap(xlim = c(-123, -121), ylim = c(38, 39)) + #napa
+  coord_quickmap(xlim = c(-124, -112), ylim = c(33, 48.5)) +
+  scale_fill_viridis_b(breaks = c(70,95))
+
+
+wc_ndp_plot2 <-ggplot() +
+  geom_raster(data = fortify(cold_days_ras[[4]]), aes(x = long, y = lat, fill = dbtwn1420)) +
+  geom_polygon(data = map_data('state'), aes(x = long, y = lat, group = group), fill = NA, color = "black", lwd = 0.20) +
+  #geom_path(data = fortify(ca_ava), aes(x = long, y = lat, group = group), color = "#ffca7b", lwd = 0.25) +
+  geom_path(data = fortify(or_ava), aes(x = long, y = lat, group = group), color = "#ff7251", lwd = 0.25) +
+  geom_path(data = fortify(wa_ava), aes(x = long, y = lat, group = group), color = "#9b2948", lwd = 0.25) +
+  geom_path(data = fortify(ca_ava[ca_ava$ava_id =="napa_valley",]), aes(x = long, y = lat, group = group), color = "red") +
+  #coord_quickmap(xlim = c(-123, -121), ylim = c(38, 39)) + #napa
+  coord_quickmap(xlim = c(-124, -112), ylim = c(33, 48.5)) +
+  scale_fill_viridis_b(breaks = c(70,95))
+
+wc_ndp_plot1 + wc_ndp_plot2
+
+```
+
+Now we are going to create a dataframe that can be a table for showing alongside everything else. This table contains Y/N for if an AVA has at least one pixel with >95 days that are < 20C and > 10C (**no_chill**) and Y/N for >60 days that are <10C (**chill_dia**).
+
+```{r, warning=F}
+#create a dummy df with all the names of the AVAs and the states they belong to and the cols of interest
+ava_results <- tibble(
+  ava = c(ca_ava$ava_id, or_ava$ava_id, wa_ava$ava_id),
+  state = c(rep("CA", times = length(ca_ava$ava_id)), rep("OR", times = length(or_ava$ava_id)), rep("WA", times = length(wa_ava$ava_id))),
+  chill_dia = NA,
+  no_chill = NA
+)
+
+#run through a loop of each ava shapefile dataset
+#for each AVA ID,
+  #extract all pixels from the AVA for cold_days_ras
+    #evaluate if any pixels in dlt10 > 60 -- > add in 1/0
+    #evaluate if any pixels in dbtwn1020 > 95 -- > add in 1/0
+
+#CA AVAs
+for(a in ca_ava$ava_id){
+  #extract pixels as a df
+  hold_extract <- extract(cold_days_ras, ca_ava[ca_ava$ava_id == a,], df = T)
+  #rm NA rows
+  hold_extract <- na.omit(hold_extract)
+  
+  #evaluate dlt10 and populate ava_results
+  if(any(hold_extract$dlt10 > 60) == TRUE){
+    ava_results$chill_dia[ava_results$ava == a] <- 1
+  } else if(any(hold_extract$dlt10 > 60) == FALSE){
+    ava_results$chill_dia[ava_results$ava == a] <- 0
+  }
+  #evaluate dbtwn1020 and populate
+  if(any(hold_extract$dbtwn1020 > 95) == TRUE){
+    ava_results$no_chill[ava_results$ava == a] <- 1
+  } else if(any(hold_extract$dbtwn1020 > 95) == FALSE){
+    ava_results$no_chill[ava_results$ava == a] <- 0
+  }
+  
+}
+
+#OR AVAs
+for(a in or_ava$ava_id){
+  #extract pixels as a df
+  hold_extract <- extract(cold_days_ras, or_ava[or_ava$ava_id == a,], df = T)
+  #rm NA rows
+  hold_extract <- na.omit(hold_extract)
+  
+  #evaluate dlt10 and populate ava_results
+  if(any(hold_extract$dlt10 > 60) == TRUE){
+    ava_results$chill_dia[ava_results$ava == a] <- 1
+  } else if(any(hold_extract$dlt10 > 60) == FALSE){
+    ava_results$chill_dia[ava_results$ava == a] <- 0
+  }
+  #evaluate dbtwn1020 and populate
+  if(any(hold_extract$dbtwn1020 > 95) == TRUE){
+    ava_results$no_chill[ava_results$ava == a] <- 1
+  } else if(any(hold_extract$dbtwn1020 > 95) == FALSE){
+    ava_results$no_chill[ava_results$ava == a] <- 0
+  }
+  
+}
+
+#WA AVAs
+for(a in wa_ava$ava_id){
+  #extract pixels as a df
+  hold_extract <- extract(cold_days_ras, wa_ava[wa_ava$ava_id == a,], df = T)
+  #rm NA rows
+  hold_extract <- na.omit(hold_extract)
+  
+  #evaluate dlt10 and populate ava_results
+  if(any(hold_extract$dlt10 > 60) == TRUE){
+    ava_results$chill_dia[ava_results$ava == a] <- 1
+  } else if(any(hold_extract$dlt10 > 60) == FALSE){
+    ava_results$chill_dia[ava_results$ava == a] <- 0
+  }
+  #evaluate dbtwn1020 and populate
+  if(any(hold_extract$dbtwn1020 > 95) == TRUE){
+    ava_results$no_chill[ava_results$ava == a] <- 1
+  } else if(any(hold_extract$dbtwn1020 > 95) == FALSE){
+    ava_results$no_chill[ava_results$ava == a] <- 0
+  }
+  
+}
+```
+
+
+
+```{r, message=FALSE}
+#clean up the table with ordering
+ava_results <- ava_results %>%
+  arrange(match(ava, c("puget_sound","yakima_valley","willamette_valley","rogue_valley","mendocino","russian_river_valley","napa_valley" ,"sierra_foothills" ,"santa_clara_valley","monterey","paso_robles","santa_maria_valley","sta__rita_hills","south_coast"))
+, state, ava)
+
+
+knitr::kable(ava_results)
+
+```
+
+
+Now let's combine them
+
+```{r, fig.height=10, fig.width=12}
+(wc_plot + (gridExtra::tableGrob(ava_results[1:14, c("ava", "state","chill_dia")]))) / (wc_ndp_plot1 + (gridExtra::tableGrob(ava_results[1:14, c("ava", "state","no_chill")])))
+
+```
+
