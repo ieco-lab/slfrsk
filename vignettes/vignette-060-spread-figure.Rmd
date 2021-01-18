@@ -1,0 +1,279 @@
+---
+title: "slf spread"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{vignette-xxx-misc}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: inline
+bibliography: references.bib
+link-citations: yes
+---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.align='left'
+)
+```
+
+Figure 1: SLF Spread
+
+***
+
+```{r setup, warning=FALSE, results='hide', message=FALSE}
+library(slfrsk) #this package, has extract_enm()
+library(lycormap) #package to get tinyslf dataset from
+library(tidyverse)  #data manipulation
+library(here) #making directory pathways easier on different instances
+library(rgdal) #load shapefiles
+library(patchwork) #easy combined plots
+library(raster) #raster geo stuffs
+library(ggfortify) #fortify rasters
+library(tigris) #county level shapefiles
+library(sf) #simple features for easy shapefile manipulation
+library(sp) #convert sf shapefiles to sp
+library(magrittr) #fast pipe assign
+library(lubridate) #extract years
+```
+
+now try to read in the seba SLF records data
+
+```{r read in records data for map figure}
+data("tinyslf", package = "lycormap")
+
+# reading manually added data (for a later step)
+man_county_data <- read_csv(file.path("/Volumes/GoogleDrive/My Drive/spotted_lanternfly_ieco_projects/code/FINAL_CODE/R package/lycordata/", "data-raw", "additional",
+                                      "slf_county_record_timeline.csv"),
+                            col_types = cols(.default = "c", FIPS = "d", 
+                                          RT_check = "l", ST_check = "l", RS_match = "l"))
+```
+
+generate the shapefile for the counties (~3mb download)
+```{r counties shapefile, message=FALSE}
+counties <- counties(cb = T, resolution = "5m")
+
+#alternate version of counties from GADM
+counties2 <- st_read(dsn = "/Volumes/GoogleDrive/Shared drives/slfData/data/slfRisk/geo_shapefiles/gadm36_USA_shp/", layer = "gadm36_USA_2") %>%
+  rename(GEOID = GID_2, NAME = NAME_2)
+```
+
+match coordinates to counties
+```{r}
+#adapted from SDB code in lycordata
+factor_order <- c("Unpopulated", "Low", "Medium", "High")
+
+tinyslf %<>% 
+  add_column(row_ID = 1:nrow(.)) %>% 
+  mutate(slf_density = factor(slf_density, levels = factor_order))
+
+tinyslf %<>%
+  # reducing data to coordinates only, and ID for future merging
+  dplyr::select(latitude, longitude, row_ID) %>%
+  # transforming into sf object
+  sf::st_as_sf(coords = c("longitude", "latitude"),
+           crs = sf::st_crs(counties)) %>% 
+  # intersecting state polygons with coordinate points in data, 
+  # to find in which US state the coordinates are
+  sf::st_join(., counties, join = sf::st_intersects) %>% 
+  as_tibble() %>% 
+  # simplifying to row ID, county name and county identity
+  dplyr::select(row_ID, county = NAME, GEOID) %>% 
+  # then joining this into main dataset
+  left_join(tinyslf, ., by = "row_ID") %>% 
+  # removing unnecessary ID column
+  dplyr::select(-c(row_ID))
+
+tinyslf %<>%
+  filter(!is.na(county))
+
+```
+
+```{r}
+# defining the year of establishment
+by_county <- tinyslf %>% 
+  group_by(GEOID) %>% 
+  arrange(year) %>% 
+  filter(slf_established) %>% 
+  summarize(YearOfEstablishment = min(year)) %>% 
+  ungroup() %>% 
+  left_join(counties, ., by = "GEOID")
+
+# and adding the first record
+by_county <- tinyslf %>% 
+  group_by(GEOID) %>% 
+  arrange(year) %>% 
+  filter(slf_present) %>% 
+  summarize(FirstRecord = min(year)) %>% 
+  ungroup() %>% 
+  left_join(by_county, ., by = "GEOID")
+
+# providing correct projections
+by_county %<>% 
+  st_transform('+proj=longlat +datum=WGS84')
+
+```
+
+now to do the seba check of the data with some manual entry  data
+```{r}
+
+# we can use the FIPS code to merge to the main data
+# now let's extract the status and the year of record/establishment
+# Let's check the promising "Status" columns
+table(man_county_data$Status)
+# we can use this column to define establishment vs record
+
+# there are three date columns that hopefully can be collapsed into 1
+# first, let's check if all counties occur only once
+stopifnot(
+  man_county_data %>% 
+    group_by(FIPS) %>% 
+    tally() %>% 
+    filter(n > 1) %>% 
+    nrow(.) == 0
+)
+
+# now we check whether any row has more than one date entry
+# first transforming to date
+man_county_data %<>% 
+  mutate_at(vars(starts_with("Date")), .funs = ~parsedate::parse_date(.))
+
+# now we check for overlaps in dates
+man_county_data %>% 
+  dplyr::select(starts_with("Date") & !ends_with("Descriptions")) %>% 
+  mutate_all(~!is.na(.)) %>% 
+  mutate(how_many_dates = apply(., MARGIN = 1, FUN = sum, na.rm = T)) %>% 
+  filter(how_many_dates > 1) %>% 
+  nrow(.) == 0
+
+# according to the previous check, data can have multiple dates associated to it
+# this means a county can have info on when the first record was scored separately from
+# the establishment date. We need to keep this in mind
+
+# let's now check whether all infestations have an establishment date associated to it
+man_county_data %>% 
+  filter(Status == "Infestation") %>% 
+  head()
+
+# It is immediately clear that the date is not always available.
+# When not, we'll attribute to that datapoint 2020 as the latest 
+# year establishement could have happened (given today is Jan 11 2021)
+# for Date_Alive/Date_Morbound, we'll take the smallest, if both are present
+man_county_data %<>% 
+  mutate(Year_Alive = year(Date_Alive),
+         Year_Morbund = year(Date_Morbund),
+         Year_FirstRecord = ifelse(!(is.na(Year_Alive) & is.na(Year_Morbund)),
+                                   pmin(Year_Alive, Year_Morbund, na.rm = T),
+                                   NA)
+         ) %>% 
+  dplyr::select(-c(Year_Alive, Year_Morbund))
+
+# we here create two variables that echo those in the by_county
+man_county_data %<>% 
+  filter(!is.na(Status)) %>% 
+  # first grabbing the date (if present) from the Date_Establish or Date_Alive/Morbound columns
+  # Then attributing 2020 to all other established records without date
+  # doing this with nested ifelse statements
+  mutate(YearOfEstablishment_man = ifelse(
+    Status == "Infestation" & !is.na(Date_Establish),
+    year(Date_Establish),
+    ifelse(Status == "Infestation" & is.na(Date_Establish), 2020, NA)),
+    FirstRecord_man = ifelse(
+    Status != "Infestation" & !is.na(Year_FirstRecord),
+    Year_FirstRecord,
+    ifelse(Status == "Infestation" & is.na(Year_FirstRecord), 2020, NA))) %>% 
+  dplyr::select(-Year_FirstRecord)
+
+# for appropriate merging, we create a FIPS columns in the shapefiles
+# then select only relevant columns from manual data
+# then merge
+by_county %<>%
+  mutate(FIPS = as.numeric(paste0(STATEFP, COUNTYFP)))
+
+# merging
+by_county <- man_county_data %>% 
+  dplyr::select(FIPS, YearOfEstablishment_man, FirstRecord_man) %>% 
+  left_join(by_county, ., by = "FIPS")
+
+# resolving conflict by picking the earliest year (between 
+# the records mined from the data and the manually compiled records)
+by_county %<>% 
+  mutate(YearOfEstablishment = pmin(YearOfEstablishment, YearOfEstablishment_man, na.rm = T),
+         FirstRecord = pmin(FirstRecord, FirstRecord_man, na.rm = T))
+
+# transforming records and establishment
+# (this will make coloring the leaflet map easier)
+by_county %<>% 
+  mutate(YearOfEstablishment = as.factor(YearOfEstablishment),
+         FirstRecord = as.factor(FirstRecord))
+```
+
+plot check
+```{r}
+#get the focal counties to outline
+focal_counties <- by_county %>%
+  filter(!is.na(FirstRecord)) %>%
+  as.data.frame(.) %>%
+  dplyr::select(GEOID) %>%
+  unlist()
+
+
+ggplot() +
+  geom_sf(data = by_county %>% filter(!GEOID %in% focal_counties), fill = "#FFFFFF") +
+  geom_sf(data = by_county %>% filter(GEOID %in% focal_counties), aes(color = FirstRecord, fill = YearOfEstablishment), show.legend = F) +
+  coord_sf(xlim = c(-124.7628, -66.94889), ylim = c(24.52042, 49.3833), expand = FALSE) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_rect(fill = "aliceblue")) +
+  ggtitle(label = "")
+
+
+
+
+#other way of trying it
+ggplot() +
+  geom_polygon(data = broom::tidy(as_Spatial(by_county), region = "NAME") %>% left_join(., as_Spatial(by_county)@data, by = c("id" = "NAME")), aes(x=long,y=lat, group = group, color = FirstRecord, fill = YearOfEstablishment)) +
+#    geom_polygon(data = broom::tidy(as_Spatial(by_county), region = "NAME") %>% left_join(., as_Spatial(by_county)@data, by = c("id" = "NAME")), aes(x=long,y=lat, group = group, color = NA, fill = YearOfEstablishment)) +
+  coord_quickmap(xlim = c(-124.7628, -66.94889), ylim = c(24.52042, 49.3833), expand = FALSE) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank()) +
+  ggtitle(label = "")
+
+
+
+library(leaflet)
+library(RColorBrewer)
+
+colpal <- colorFactor(c(brewer.pal(7, "YlOrRd")),
+                   by_county$YearOfEstablishment,
+                   na.color = "transparent")
+fillpal <- colorFactor(c(brewer.pal(7, "YlOrRd")),
+                   by_county$FirstRecord,
+                   na.color = "transparent")
+
+leaflet(data = by_county, 
+        options = leafletOptions(minZoom = 4, maxZoom = 18)) %>% 
+  addProviderTiles(providers$CartoDB.Positron) %>% 
+  addPolygons(label = ~NAME,
+              color = ~colpal(FirstRecord),
+              weight = 2,
+              smoothFactor = 0.5,
+              opacity = 0.5,
+              fillOpacity = 0.5,
+              fillColor = ~fillpal(YearOfEstablishment)) %>% 
+  setView(lat = 40.80, lng = -100, zoom = 4) %>% 
+  addLegend("bottomleft", pal = fillpal,
+    title = "Invaded since",
+    values = ~YearOfEstablishment,
+    opacity = 1
+  )
+
+```
+
+
+
