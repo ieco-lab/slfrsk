@@ -28,9 +28,6 @@ library(slfrsk) #this package, has extract_enm()
 library(lycormap) #package to get tinyslf dataset from
 library(tidyverse)  #data manipulation
 library(here) #making directory pathways easier on different instances
-library(rgdal) #load shapefiles
-library(patchwork) #easy combined plots
-library(raster) #raster geo stuffs
 library(ggfortify) #fortify rasters
 library(tigris) #county level shapefiles
 library(sf) #simple features for easy shapefile manipulation
@@ -230,15 +227,11 @@ map_plot <- ggplot() +
   ggtitle(label = "")
 
 map_plot
-
-#na.translate = FALSE
-
 ```
 
 
-```{r, eval=FALSE}
+```{r optional leaflet plotting, eval=FALSE}
 library(leaflet)
-library(RColorBrewer)
 
 colpal <- colorFactor(c(brewer.pal(7, "YlOrRd")),
                    by_county$YearOfEstablishment,

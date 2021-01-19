@@ -39,7 +39,14 @@ Imports:
     spocc,
     scrubr,
     humboldt,
-    tcltk
+    tcltk,
+    ggfortify,
+    lycormap,
+    RColorBrewer,
+    tigris,
+    sf,
+    magrittr,
+    lubridate
 RoxygenNote: 7.1.1
 Depends: 
     R (>= 3.50)
