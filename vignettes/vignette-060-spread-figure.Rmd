@@ -34,9 +34,9 @@ library(raster) #raster geo stuffs
 library(ggfortify) #fortify rasters
 library(tigris) #county level shapefiles
 library(sf) #simple features for easy shapefile manipulation
-library(sp) #convert sf shapefiles to sp
 library(magrittr) #fast pipe assign
 library(lubridate) #extract years
+library(RColorBrewer) #palette
 ```
 
 now try to read in the seba SLF records data
@@ -54,10 +54,6 @@ man_county_data <- read_csv(file.path("/Volumes/GoogleDrive/My Drive/spotted_lan
 generate the shapefile for the counties (~3mb download)
 ```{r counties shapefile, message=FALSE}
 counties <- counties(cb = T, resolution = "5m")
-
-#alternate version of counties from GADM
-counties2 <- st_read(dsn = "/Volumes/GoogleDrive/Shared drives/slfData/data/slfRisk/geo_shapefiles/gadm36_USA_shp/", layer = "gadm36_USA_2") %>%
-  rename(GEOID = GID_2, NAME = NAME_2)
 ```
 
 match coordinates to counties
@@ -219,33 +215,28 @@ focal_counties <- by_county %>%
   dplyr::select(GEOID) %>%
   unlist()
 
-
-ggplot() +
-  geom_sf(data = by_county %>% filter(!GEOID %in% focal_counties), fill = "#FFFFFF") +
-  geom_sf(data = by_county %>% filter(GEOID %in% focal_counties), aes(color = FirstRecord, fill = YearOfEstablishment), show.legend = F) +
+map_plot <- ggplot() +
+  #geom_sf(data = by_county %>% filter(!GEOID %in% focal_counties), fill = "#FFFFFF", size = 0.5) +
+    geom_polygon(data = map_data('state'), aes(x = long, y = lat, group = group), fill = "#FFFFFF", color = "black", lwd = 0.10) +
+  geom_sf(data = by_county %>% filter(GEOID %in% focal_counties), aes(color = FirstRecord, fill = YearOfEstablishment), show.legend = T) +
   coord_sf(xlim = c(-124.7628, -66.94889), ylim = c(24.52042, 49.3833), expand = FALSE) +
+  labs(x = "", y = "") +
   theme_bw() +
   theme(panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
         panel.background = element_rect(fill = "aliceblue")) +
+  scale_color_brewer(palette = "YlOrRd", direction = 1, name = "Regulatory Incident", guide = guide_legend(override.aes = list(fill = "#808080"))) +
+  scale_fill_brewer(palette = "YlOrRd", direction = 1, name = "Establishment", na.value = "#808080", breaks = c(2014,2015,2016,2017,2018,2019,2020)) +
   ggtitle(label = "")
 
+map_plot
+
+#na.translate = FALSE
+
+```
 
 
-
-#other way of trying it
-ggplot() +
-  geom_polygon(data = broom::tidy(as_Spatial(by_county), region = "NAME") %>% left_join(., as_Spatial(by_county)@data, by = c("id" = "NAME")), aes(x=long,y=lat, group = group, color = FirstRecord, fill = YearOfEstablishment)) +
-#    geom_polygon(data = broom::tidy(as_Spatial(by_county), region = "NAME") %>% left_join(., as_Spatial(by_county)@data, by = c("id" = "NAME")), aes(x=long,y=lat, group = group, color = NA, fill = YearOfEstablishment)) +
-  coord_quickmap(xlim = c(-124.7628, -66.94889), ylim = c(24.52042, 49.3833), expand = FALSE) +
-  theme_bw() +
-  theme(panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank(),
-        panel.background = element_blank()) +
-  ggtitle(label = "")
-
-
-
+```{r, eval=FALSE}
 library(leaflet)
 library(RColorBrewer)
 
