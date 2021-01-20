@@ -46,7 +46,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -116,6 +116,9 @@
         <li>
           <a href="../articles/vignette-041-market-plot.html">Paninvasion Severity</a>
         </li>
+        <li>
+          <a href="../articles/vignette-050-ava-temp.html">West Coast AVAs vs Temperature</a>
+        </li>
         <li class="divider">
       </ul>
 </li>
@@ -126,7 +129,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/ieco-lab/slfrsk">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fas fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -140,7 +143,7 @@
 
       
 
-      </header><script src="vignette-003-get-gbif-data_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><script src="vignette-003-get-gbif-data_files/header-attrs-2.6/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Get GBIF Records</h1>
@@ -160,14 +163,15 @@
 <h1 class="hasAnchor">
 <a href="#setup" class="anchor"></a>Setup</h1>
 <p>We first loaded the full suite of required libraries. The most critical for this particular vignette is <code>spocc</code>, which is the package that allows us to query <code>GBIF</code> (Global Biodiversity Information Facility).</p>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">slfrsk</span>) <span class="co">#this package, has extract_enm()</span>
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">tidyverse</span>)  <span class="co">#data manipulation</span>
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">here</span>) <span class="co">#making directory pathways easier on different instances</span>
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">spocc</span>) <span class="co">#query gbif and format as a dataframe</span>
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">scrubr</span>) <span class="co">#clean records for gbif data</span>
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">humboldt</span>) <span class="co">#rarefy points</span>
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">tcltk</span>) <span class="co">#humboldt progress bar</span>
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">patchwork</span>) <span class="co">#easy combined plots</span></pre></body></html></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">slfrsk</span><span class="op">)</span> <span class="co">#this package, has extract_enm()</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>  <span class="co">#data manipulation</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://here.r-lib.org/">here</a></span><span class="op">)</span> <span class="co">#making directory pathways easier on different instances</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/spocc">spocc</a></span><span class="op">)</span> <span class="co">#query gbif and format as a dataframe</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/scrubr">scrubr</a></span><span class="op">)</span> <span class="co">#clean records for gbif data</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">humboldt</span><span class="op">)</span> <span class="co">#rarefy points</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">tcltk</span><span class="op">)</span> <span class="co">#humboldt progress bar</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://patchwork.data-imaginist.com">patchwork</a></span><span class="op">)</span> <span class="co">#easy combined plots</span></code></pre></div>
 </div>
 <div id="acquire-and-clean-data" class="section level1">
 <h1 class="hasAnchor">
@@ -177,41 +181,44 @@
 <a href="#acquire-data" class="anchor"></a>Acquire Data</h2>
 <p>We perform initial queries from GBIF for both SLF and TOH. We set the limit on records to be <span class="math inline">\(10^5\)</span> to capture all TOH records (after an initial test query). Notably, we also limit records to those with coordinates, given our purpose for these data. Our queries use the accepted latin binomial nomenclature for both species.</p>
 <p>It bears warning that the TOH query takes a considerable amount of time (<span class="math inline">\(&gt;120s\)</span>). We have it turned off by default (See below for more infomation).</p>
-<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="kw">if</span>(<span class="fl">FALSE</span>){
-
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw">if</span><span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span><span class="op">{</span>
+  
 <span class="co">#query for both species from gbif with limit of queries to 10^5</span>
-<span class="no">slf_gbif</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://docs.ropensci.org/spocc/reference/occ.html">occ</a></span>(<span class="kw">query</span> <span class="kw">=</span> <span class="st">'Lycorma delicatula'</span>, <span class="kw">from</span> <span class="kw">=</span> <span class="st">'gbif'</span>, <span class="kw">limit</span> <span class="kw">=</span> <span class="fl">1e5</span>, <span class="kw">has_coords</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">throw_warnings</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
-<span class="no">toh_gbif</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://docs.ropensci.org/spocc/reference/occ.html">occ</a></span>(<span class="kw">query</span> <span class="kw">=</span> <span class="st">'Ailanthus altissima'</span>, <span class="kw">from</span> <span class="kw">=</span> <span class="st">'gbif'</span>, <span class="kw">limit</span> <span class="kw">=</span> <span class="fl">1e5</span>, <span class="kw">has_coords</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">throw_warnings</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
+<span class="va">slf_gbif</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://docs.ropensci.org/spocc/reference/occ.html">occ</a></span><span class="op">(</span>query <span class="op">=</span> <span class="st">'Lycorma delicatula'</span>, from <span class="op">=</span> <span class="st">'gbif'</span>, limit <span class="op">=</span> <span class="fl">1e5</span>, has_coords <span class="op">=</span> <span class="cn">TRUE</span>, throw_warnings <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="va">toh_gbif</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://docs.ropensci.org/spocc/reference/occ.html">occ</a></span><span class="op">(</span>query <span class="op">=</span> <span class="st">'Ailanthus altissima'</span>, from <span class="op">=</span> <span class="st">'gbif'</span>, limit <span class="op">=</span> <span class="fl">1e5</span>, has_coords <span class="op">=</span> <span class="cn">TRUE</span>, throw_warnings <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 
-}</pre></body></html></div>
+<span class="op">}</span></code></pre></div>
 <p>We then turn the raw output into dataframes via <code>as_tibble()</code>. Oddly, this function fails to strip list items from the TOH data, so we set that particular subset to <code>NULL</code> afterwards to fully flatten the TOH dataset. These results could then be saved for reference/reproducibility and are ultimately called by this vignette to save run time.</p>
 <p>We end up also saving a copy of the coordinate results that have been transformed with <code><a href="https://docs.ropensci.org/spocc/reference/occ2df.html">spocc::occ2df()</a></code> as well. The output of this function is a cleaner dataframe that we manipulate for the rest of the vignette.</p>
-<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="kw">if</span>(<span class="fl">FALSE</span>){
-
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw">if</span><span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span><span class="op">{</span>
+  
 <span class="co">#tibble the raw queries for saving</span>
-<span class="no">slf_gbif_final</span> <span class="kw">&lt;-</span> <span class="fu">as_tibble</span>(<span class="no">slf_gbif</span>$<span class="no">gbif</span>$<span class="no">data</span>$<span class="no">Lycorma_delicatula</span>)
-<span class="no">toh_gbif_final</span> <span class="kw">&lt;-</span> <span class="fu">as_tibble</span>(<span class="no">toh_gbif</span>$<span class="no">gbif</span>$<span class="no">data</span>$<span class="no">Ailanthus_altissima</span>)
+<span class="va">slf_gbif_final</span> <span class="op">&lt;-</span> <span class="fu">as_tibble</span><span class="op">(</span><span class="va">slf_gbif</span><span class="op">$</span><span class="va">gbif</span><span class="op">$</span><span class="va">data</span><span class="op">$</span><span class="va">Lycorma_delicatula</span><span class="op">)</span>
+<span class="va">toh_gbif_final</span> <span class="op">&lt;-</span> <span class="fu">as_tibble</span><span class="op">(</span><span class="va">toh_gbif</span><span class="op">$</span><span class="va">gbif</span><span class="op">$</span><span class="va">data</span><span class="op">$</span><span class="va">Ailanthus_altissima</span><span class="op">)</span>
 
 <span class="co">#de-listify TOH</span>
-<span class="no">toh_gbif_final</span>$<span class="no">networkKeys</span> <span class="kw">&lt;-</span> <span class="kw">NULL</span>
+<span class="va">toh_gbif_final</span><span class="op">$</span><span class="va">networkKeys</span> <span class="op">&lt;-</span> <span class="cn">NULL</span>
 
 <span class="co">#save the raw queries with the date stamp for current date</span>
-<span class="fu">write_csv</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">slf_gbif_final</span>, <span class="kw">file</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="fu"><a href="https://rdrr.io/pkg/here/man/here.html">here</a></span>(), <span class="st">"data-raw"</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>( <span class="st">"slf_gbif_"</span>, <span class="fu"><a href="https://rdrr.io/r/base/format.html">format</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span>(), <span class="st">"%Y-%d-%m"</span>), <span class="st">".csv"</span>)))
-<span class="fu">write_csv</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">toh_gbif_final</span>, <span class="kw">file</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="fu"><a href="https://rdrr.io/pkg/here/man/here.html">here</a></span>(), <span class="st">"data-raw"</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>( <span class="st">"toh_gbif_"</span>, <span class="fu"><a href="https://rdrr.io/r/base/format.html">format</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span>(), <span class="st">"%Y-%d-%m"</span>), <span class="st">".csv"</span>)))
+<span class="fu">write_csv</span><span class="op">(</span>x <span class="op">=</span> <span class="va">slf_gbif_final</span>, file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"data-raw"</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span> <span class="st">"slf_gbif_"</span>, <span class="fu"><a href="https://rdrr.io/r/base/format.html">format</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"%Y-%d-%m"</span><span class="op">)</span>, <span class="st">".csv"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<span class="fu">write_csv</span><span class="op">(</span>x <span class="op">=</span> <span class="va">toh_gbif_final</span>, file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"data-raw"</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span> <span class="st">"toh_gbif_"</span>, <span class="fu"><a href="https://rdrr.io/r/base/format.html">format</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"%Y-%d-%m"</span><span class="op">)</span>, <span class="st">".csv"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co">#turn occ data into df</span>
-<span class="no">slf_coords1</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://docs.ropensci.org/spocc/reference/occ2df.html">occ2df</a></span>(<span class="no">slf_gbif</span>)
-<span class="no">toh_coords1</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://docs.ropensci.org/spocc/reference/occ2df.html">occ2df</a></span>(<span class="no">toh_gbif</span>)
+<span class="va">slf_coords1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://docs.ropensci.org/spocc/reference/occ2df.html">occ2df</a></span><span class="op">(</span><span class="va">slf_gbif</span><span class="op">)</span>
+<span class="va">toh_coords1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://docs.ropensci.org/spocc/reference/occ2df.html">occ2df</a></span><span class="op">(</span><span class="va">toh_gbif</span><span class="op">)</span>
 
 <span class="co">#save the coords as they are</span>
-<span class="fu">write_csv</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">slf_coords1</span>, <span class="kw">file</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="fu"><a href="https://rdrr.io/pkg/here/man/here.html">here</a></span>(), <span class="st">"data-raw"</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>( <span class="st">"slf_gbif_raw_coords_"</span>, <span class="fu"><a href="https://rdrr.io/r/base/format.html">format</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span>(), <span class="st">"%Y-%d-%m"</span>), <span class="st">".csv"</span>)))
-<span class="fu">write_csv</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">toh_coords1</span>, <span class="kw">file</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="fu"><a href="https://rdrr.io/pkg/here/man/here.html">here</a></span>(), <span class="st">"data-raw"</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>( <span class="st">"toh_gbif_raw_coords_"</span>, <span class="fu"><a href="https://rdrr.io/r/base/format.html">format</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span>(), <span class="st">"%Y-%d-%m"</span>), <span class="st">".csv"</span>)))
+<span class="fu">write_csv</span><span class="op">(</span>x <span class="op">=</span> <span class="va">slf_coords1</span>, file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"data-raw"</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span> <span class="st">"slf_gbif_raw_coords_"</span>, <span class="fu"><a href="https://rdrr.io/r/base/format.html">format</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"%Y-%d-%m"</span><span class="op">)</span>, <span class="st">".csv"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<span class="fu">write_csv</span><span class="op">(</span>x <span class="op">=</span> <span class="va">toh_coords1</span>, file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"data-raw"</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span> <span class="st">"toh_gbif_raw_coords_"</span>, <span class="fu"><a href="https://rdrr.io/r/base/format.html">format</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"%Y-%d-%m"</span><span class="op">)</span>, <span class="st">".csv"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 
-}</pre></body></html></div>
+<span class="op">}</span></code></pre></div>
 <p>Here is where we read in the raw data queried for this study:</p>
-<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="co">#read in raw data</span>
-<span class="no">slf_coords1</span> <span class="kw">&lt;-</span> <span class="fu">read_csv</span>(<span class="kw">file</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="fu"><a href="https://rdrr.io/pkg/here/man/here.html">here</a></span>(), <span class="st">"data-raw"</span>, <span class="st">"slf_gbif_raw_coords_2020-20-10.csv"</span>))
-<span class="no">toh_coords1</span> <span class="kw">&lt;-</span> <span class="fu">read_csv</span>(<span class="kw">file</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="fu"><a href="https://rdrr.io/pkg/here/man/here.html">here</a></span>(), <span class="st">"data-raw"</span>, <span class="st">"toh_gbif_raw_coords_2020-20-10.csv"</span>))</pre></body></html></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">#read in raw data</span>
+<span class="va">slf_coords1</span> <span class="op">&lt;-</span> <span class="fu">read_csv</span><span class="op">(</span>file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"data-raw"</span>, <span class="st">"slf_gbif_raw_coords_2020-20-10.csv"</span><span class="op">)</span><span class="op">)</span>
+<span class="va">toh_coords1</span> <span class="op">&lt;-</span> <span class="fu">read_csv</span><span class="op">(</span>file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"data-raw"</span>, <span class="st">"toh_gbif_raw_coords_2020-20-10.csv"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="clean-data" class="section level2">
 <h2 class="hasAnchor">
@@ -226,10 +233,11 @@
 <h3 class="hasAnchor">
 <a href="#consistent-taxonomy" class="anchor"></a>Consistent Taxonomy</h3>
 <p>Firstly, we check for taxonomic consistency in each dataset. <em>Spoiler</em>: SLF is fine and TOH needs to be homogenized. Thankfully, a check of the GBIF page for TOH (<a href="https://www.gbif.org/species/3190653" class="uri">https://www.gbif.org/species/3190653</a>) shows that all of the other names are just junior synonyms. Therefore, we change all of them to the same taxonomy.</p>
-<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="co">#check the taxonomy for only correct queries</span>
-<span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span>(<span class="no">slf_coords1</span>$<span class="no">name</span>) <span class="co">#all the same</span>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">#check the taxonomy for only correct queries</span>
+<span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">slf_coords1</span><span class="op">$</span><span class="va">name</span><span class="op">)</span> <span class="co">#all the same</span>
 <span class="co">#&gt; [1] "Lycorma delicatula (White, 1845)"</span>
-<span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span>(<span class="no">toh_coords1</span>$<span class="no">name</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">toh_coords1</span><span class="op">$</span><span class="va">name</span><span class="op">)</span>
 <span class="co">#&gt; [1] "Ailanthus altissima (Mill.) Swingle"                              </span>
 <span class="co">#&gt; [2] "Ailanthus altissima var. altissima"                               </span>
 <span class="co">#&gt; [3] "Ailanthus altissima var. tanakai (Hayata) Kanehira &amp; Sasaki"      </span>
@@ -242,65 +250,67 @@
 
 <span class="co">#toh data contains a bunch of synonyms according to GBIF (https://www.gbif.org/species/3190653)</span>
 <span class="co">#therefore, we are going to make them all the same, the top species designation</span>
-<span class="no">toh_coords1</span>$<span class="no">name</span> <span class="kw">&lt;-</span> <span class="st">"Ailanthus altissima (Mill.) Swingle"</span></pre></body></html></div>
+<span class="va">toh_coords1</span><span class="op">$</span><span class="va">name</span> <span class="op">&lt;-</span> <span class="st">"Ailanthus altissima (Mill.) Swingle"</span></code></pre></div>
 </div>
 <div id="coordinate-veracity" class="section level3">
 <h3 class="hasAnchor">
 <a href="#coordinate-veracity" class="anchor"></a>Coordinate Veracity</h3>
 <p>Coordinate veracity has several components that amount to removing coordinates that do not make sense. Given the difference in raw records for both species, SLF is easily cleaned of dubious records while TOH has too many records and breaks at least one function (<code><a href="https://docs.ropensci.org/scrubr/reference/dedup.html">scrubr::dedup()</a></code>) if run through the cleaning steps with removal of duplicates before rarefication. To account for this, both datasets run <code><a href="https://docs.ropensci.org/scrubr/reference/dedup.html">scrubr::dedup()</a></code> after rarefication.</p>
 <p>We make good use of the <code>scrubr</code> package functions to clean coordinates.</p>
-<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="no">slf_coords1</span> <span class="kw">&lt;-</span> <span class="no">slf_coords1</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://docs.ropensci.org/scrubr/reference/coords.html">coord_incomplete</a></span>() <span class="kw">%&gt;%</span>  <span class="co">#rm incomplete coords, those that lack valid lat and long</span>
-  <span class="fu"><a href="https://docs.ropensci.org/scrubr/reference/coords.html">coord_impossible</a></span>() <span class="kw">%&gt;%</span> <span class="co">#rm impossible coords, those that are not possible (e.g., lat &gt; 90)</span>
-  <span class="fu"><a href="https://docs.ropensci.org/scrubr/reference/coords.html">coord_unlikely</a></span>()  <span class="co">#rm unlikely coords, such as those at 0,0</span>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">slf_coords1</span> <span class="op">&lt;-</span> <span class="va">slf_coords1</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://docs.ropensci.org/scrubr/reference/coords.html">coord_incomplete</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>  <span class="co">#rm incomplete coords, those that lack valid lat and long</span>
+  <span class="fu"><a href="https://docs.ropensci.org/scrubr/reference/coords.html">coord_impossible</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="co">#rm impossible coords, those that are not possible (e.g., lat &gt; 90)</span>
+  <span class="fu"><a href="https://docs.ropensci.org/scrubr/reference/coords.html">coord_unlikely</a></span><span class="op">(</span><span class="op">)</span>  <span class="co">#rm unlikely coords, such as those at 0,0</span>
 <span class="co">#&gt; Assuming 'latitude' is latitude</span>
 <span class="co">#&gt; Assuming 'longitude' is longitude</span>
 
 <span class="co">#toh</span>
-<span class="no">toh_coords1</span> <span class="kw">&lt;-</span> <span class="no">toh_coords1</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://docs.ropensci.org/scrubr/reference/coords.html">coord_incomplete</a></span>() <span class="kw">%&gt;%</span>  <span class="co">#rm incomplete coords, those that lack valid lat and long</span>
-  <span class="fu"><a href="https://docs.ropensci.org/scrubr/reference/coords.html">coord_impossible</a></span>() <span class="kw">%&gt;%</span> <span class="co">#rm impossible coords, those that are not possible (e.g., lat &gt; 90)</span>
-  <span class="fu"><a href="https://docs.ropensci.org/scrubr/reference/coords.html">coord_unlikely</a></span>()      <span class="co">#rm unlikely coords, such as those at 0,0</span>
+<span class="va">toh_coords1</span> <span class="op">&lt;-</span> <span class="va">toh_coords1</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://docs.ropensci.org/scrubr/reference/coords.html">coord_incomplete</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>  <span class="co">#rm incomplete coords, those that lack valid lat and long</span>
+  <span class="fu"><a href="https://docs.ropensci.org/scrubr/reference/coords.html">coord_impossible</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="co">#rm impossible coords, those that are not possible (e.g., lat &gt; 90)</span>
+  <span class="fu"><a href="https://docs.ropensci.org/scrubr/reference/coords.html">coord_unlikely</a></span><span class="op">(</span><span class="op">)</span>      <span class="co">#rm unlikely coords, such as those at 0,0</span>
 <span class="co">#&gt; Assuming 'latitude' is latitude</span>
-<span class="co">#&gt; Assuming 'longitude' is longitude</span></pre></body></html></div>
+<span class="co">#&gt; Assuming 'longitude' is longitude</span></code></pre></div>
 </div>
 <div id="coordinate-rarefication" class="section level3">
 <h3 class="hasAnchor">
 <a href="#coordinate-rarefication" class="anchor"></a>Coordinate Rarefication</h3>
 <p>We now use the <code>humboldt</code> package rarefaction function <code><a href="https://rdrr.io/pkg/humboldt/man/humboldt.occ.rarefy.html">humboldt::humboldt.occ.rarefy()</a></code> to trime points that are <span class="math inline">\(&lt;10 km\)</span> from each other. This cleaning step reduces spatial autocorrelation in our data, which is a good thing! After this, we run the data through <code><a href="https://docs.ropensci.org/scrubr/reference/dedup.html">scrubr::dedup</a></code>.</p>
 <p>Note that the rarefaction takes a while for TOH especially (it is cleaning 67000+ records after all). We also manually remove some points from SLF that are clearly incorrect as of Fall 2020 (after consulting colleagues).</p>
-<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="kw">if</span>(<span class="fl">FALSE</span>){
-
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw">if</span><span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span><span class="op">{</span>
+  
 <span class="co">#rarefy points</span>
-<span class="no">slf_coords2</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/humboldt/man/humboldt.occ.rarefy.html">humboldt.occ.rarefy</a></span>(<span class="kw">in.pts</span> <span class="kw">=</span> <span class="no">slf_coords1</span>, <span class="kw">colxy</span> <span class="kw">=</span> <span class="fl">2</span>:<span class="fl">3</span>, <span class="kw">rarefy.dist</span> <span class="kw">=</span> <span class="fl">10</span>, <span class="kw">rarefy.units</span> <span class="kw">=</span> <span class="st">"km"</span>, <span class="kw">run.silent.rar</span> <span class="kw">=</span> <span class="no">F</span>)
-<span class="no">toh_coords2</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/humboldt/man/humboldt.occ.rarefy.html">humboldt.occ.rarefy</a></span>(<span class="kw">in.pts</span> <span class="kw">=</span> <span class="no">toh_coords1</span>, <span class="kw">colxy</span> <span class="kw">=</span> <span class="fl">2</span>:<span class="fl">3</span>, <span class="kw">rarefy.dist</span> <span class="kw">=</span> <span class="fl">10</span>, <span class="kw">rarefy.units</span> <span class="kw">=</span> <span class="st">"km"</span>, <span class="kw">run.silent.rar</span> <span class="kw">=</span> <span class="no">F</span>)
+<span class="va">slf_coords2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/humboldt/man/humboldt.occ.rarefy.html">humboldt.occ.rarefy</a></span><span class="op">(</span>in.pts <span class="op">=</span> <span class="va">slf_coords1</span>, colxy <span class="op">=</span> <span class="fl">2</span><span class="op">:</span><span class="fl">3</span>, rarefy.dist <span class="op">=</span> <span class="fl">10</span>, rarefy.units <span class="op">=</span> <span class="st">"km"</span>, run.silent.rar <span class="op">=</span> <span class="cn">F</span><span class="op">)</span>
+<span class="va">toh_coords2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/humboldt/man/humboldt.occ.rarefy.html">humboldt.occ.rarefy</a></span><span class="op">(</span>in.pts <span class="op">=</span> <span class="va">toh_coords1</span>, colxy <span class="op">=</span> <span class="fl">2</span><span class="op">:</span><span class="fl">3</span>, rarefy.dist <span class="op">=</span> <span class="fl">10</span>, rarefy.units <span class="op">=</span> <span class="st">"km"</span>, run.silent.rar <span class="op">=</span> <span class="cn">F</span><span class="op">)</span>
 
 <span class="co">#dedup now</span>
-<span class="no">slf_coords3</span> <span class="kw">&lt;-</span> <span class="no">slf_coords2</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://docs.ropensci.org/scrubr/reference/dedup.html">dedup</a></span>(<span class="kw">how</span> <span class="kw">=</span> <span class="st">"one"</span>, <span class="kw">tolerance</span> <span class="kw">=</span> <span class="fl">0.99</span>)
-<span class="no">toh_coords3</span> <span class="kw">&lt;-</span> <span class="no">toh_coords2</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://docs.ropensci.org/scrubr/reference/dedup.html">dedup</a></span>(<span class="kw">how</span> <span class="kw">=</span> <span class="st">"one"</span>, <span class="kw">tolerance</span> <span class="kw">=</span> <span class="fl">0.99</span>)
+<span class="va">slf_coords3</span> <span class="op">&lt;-</span> <span class="va">slf_coords2</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://docs.ropensci.org/scrubr/reference/dedup.html">dedup</a></span><span class="op">(</span>how <span class="op">=</span> <span class="st">"one"</span>, tolerance <span class="op">=</span> <span class="fl">0.99</span><span class="op">)</span>
+<span class="va">toh_coords3</span> <span class="op">&lt;-</span> <span class="va">toh_coords2</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://docs.ropensci.org/scrubr/reference/dedup.html">dedup</a></span><span class="op">(</span>how <span class="op">=</span> <span class="st">"one"</span>, tolerance <span class="op">=</span> <span class="fl">0.99</span><span class="op">)</span>
 
 <span class="co">#rm manually incorrect SLF points</span>
 <span class="co">#we have points in: MA, NE, OR, DE coast for SLF that need to be removed</span>
 <span class="co">#key should work to get rid of identified points</span>
-<span class="no">slf_coords3</span> <span class="kw">&lt;-</span> <span class="no">slf_coords2</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="no">key</span> <span class="kw">!=</span> <span class="st">"2860187641"</span>) <span class="kw">%&gt;%</span> <span class="co">#rm OR---lat, lon:(43.63691, -121.85569)</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="no">key</span> <span class="kw">!=</span> <span class="st">"2862292948"</span>) <span class="kw">%&gt;%</span> <span class="co">#rm NE---lat, lon:(42.50641,-101.01562)</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="no">key</span> <span class="kw">!=</span> <span class="st">"2864687343"</span>) <span class="kw">%&gt;%</span> <span class="co">#rm DE---lat, lon:(37.91855, -75.14999)</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(!<span class="no">key</span> <span class="kw">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"2856537682"</span>, <span class="st">"2851117559"</span>)) <span class="co">#rm MA---lat, lon: (42.20994, -71.18331)</span>
+<span class="va">slf_coords3</span> <span class="op">&lt;-</span> <span class="va">slf_coords2</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">key</span> <span class="op">!=</span> <span class="st">"2860187641"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="co">#rm OR---lat, lon:(43.63691, -121.85569)</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">key</span> <span class="op">!=</span> <span class="st">"2862292948"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="co">#rm NE---lat, lon:(42.50641,-101.01562)</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">key</span> <span class="op">!=</span> <span class="st">"2864687343"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="co">#rm DE---lat, lon:(37.91855, -75.14999)</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="va">key</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2856537682"</span>, <span class="st">"2851117559"</span><span class="op">)</span><span class="op">)</span> <span class="co">#rm MA---lat, lon: (42.20994, -71.18331)</span>
 
 <span class="co">#change order of final coords to be lat, lon</span>
-<span class="no">slf_coords3</span> <span class="kw">&lt;-</span> <span class="no">slf_coords3</span> <span class="kw">%&gt;%</span>
-  <span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="no">name</span>, <span class="no">latitude</span>, <span class="no">longitude</span>, <span class="no">prov</span>, <span class="no">date</span>, <span class="no">key</span>)
-<span class="no">toh_coords3</span> <span class="kw">&lt;-</span> <span class="no">toh_coords3</span> <span class="kw">%&gt;%</span>
-  <span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="no">name</span>, <span class="no">latitude</span>, <span class="no">longitude</span>, <span class="no">prov</span>, <span class="no">date</span>, <span class="no">key</span>)
+<span class="va">slf_coords3</span> <span class="op">&lt;-</span> <span class="va">slf_coords3</span> <span class="op">%&gt;%</span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">name</span>, <span class="va">latitude</span>, <span class="va">longitude</span>, <span class="va">prov</span>, <span class="va">date</span>, <span class="va">key</span><span class="op">)</span>
+<span class="va">toh_coords3</span> <span class="op">&lt;-</span> <span class="va">toh_coords3</span> <span class="op">%&gt;%</span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">name</span>, <span class="va">latitude</span>, <span class="va">longitude</span>, <span class="va">prov</span>, <span class="va">date</span>, <span class="va">key</span><span class="op">)</span>
 
 <span class="co">#write the saved final data</span>
-<span class="fu">write_csv</span>(<span class="no">slf_coords3</span>, <span class="kw">file</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="fu"><a href="https://rdrr.io/pkg/here/man/here.html">here</a></span>(), <span class="st">"data-raw"</span>, <span class="st">"slf_gbif_cleaned_coords_2020.csv"</span>))
-<span class="fu">write_csv</span>(<span class="no">toh_coords3</span>, <span class="kw">file</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="fu"><a href="https://rdrr.io/pkg/here/man/here.html">here</a></span>(), <span class="st">"data-raw"</span>, <span class="st">"toh_gbif_cleaned_coords_2020.csv"</span>))
+<span class="fu">write_csv</span><span class="op">(</span><span class="va">slf_coords3</span>, file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"data-raw"</span>, <span class="st">"slf_gbif_cleaned_coords_2020.csv"</span><span class="op">)</span><span class="op">)</span>
+<span class="fu">write_csv</span><span class="op">(</span><span class="va">toh_coords3</span>, file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"data-raw"</span>, <span class="st">"toh_gbif_cleaned_coords_2020.csv"</span><span class="op">)</span><span class="op">)</span>
 
-}</pre></body></html></div>
+<span class="op">}</span></code></pre></div>
 </div>
 </div>
 </div>
@@ -308,40 +318,41 @@
 <h1 class="hasAnchor">
 <a href="#visualize-data" class="anchor"></a>Visualize Data</h1>
 <p>We can read in the final data for looking at the spatial coverage despite the thinning.</p>
-<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="co">#read in data for viewing differences</span>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">#read in data for viewing differences</span>
 <span class="co">#slf_coords3 &lt;- read_csv(file = file.path(here(), "data-raw", "slf_gbif_cleaned_coords_2020.csv"))</span>
 <span class="co">#toh_coords3 &lt;- read_csv(file = file.path(here(), "data-raw", "toh_gbif_cleaned_coords_2020.csv"))</span>
 
 <span class="co">#note: we read in slightly modified versions of the same coords. lat/lon were changed to y/x respectively and the species names were cleaned up. see corresponding section in data-raw/convert_data_rda.R for details</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"slf_points"</span>, <span class="kw">package</span> <span class="kw">=</span> <span class="st">"slfrsk"</span>)
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"toh_points"</span>, <span class="kw">package</span> <span class="kw">=</span> <span class="st">"slfrsk"</span>)
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"slf_points"</span>, package <span class="op">=</span> <span class="st">"slfrsk"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"toh_points"</span>, package <span class="op">=</span> <span class="st">"slfrsk"</span><span class="op">)</span>
 
 <span class="co">#plot the difference</span>
 <span class="co">#TOH</span>
-<span class="no">map_toh</span> <span class="kw">&lt;-</span> <span class="fu">ggplot</span>() +
-  <span class="fu">geom_polygon</span>(<span class="kw">data</span> <span class="kw">=</span> <span class="fu">map_data</span>(<span class="st">'world'</span>), <span class="fu">aes</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">long</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">lat</span>, <span class="kw">group</span> <span class="kw">=</span> <span class="no">group</span>), <span class="kw">fill</span> <span class="kw">=</span> <span class="fl">NA</span>, <span class="kw">color</span> <span class="kw">=</span> <span class="st">"black"</span>, <span class="kw">lwd</span> <span class="kw">=</span> <span class="fl">0.15</span>) +
-  <span class="fu">geom_point</span>(<span class="kw">data</span> <span class="kw">=</span> <span class="no">toh_coords1</span>, <span class="fu">aes</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">longitude</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">latitude</span>), <span class="kw">color</span> <span class="kw">=</span> <span class="st">"red"</span>, <span class="kw">size</span> <span class="kw">=</span> <span class="fl">2</span>) +
-  <span class="fu">geom_point</span>(<span class="kw">data</span> <span class="kw">=</span> <span class="no">toh_points</span>, <span class="fu">aes</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">x</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">y</span>), <span class="kw">color</span> <span class="kw">=</span> <span class="st">"blue"</span>, <span class="kw">shape</span> <span class="kw">=</span> <span class="fl">2</span>) +
-  <span class="fu">coord_quickmap</span>(<span class="kw">xlim</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(-<span class="fl">164.5</span>, <span class="fl">163.5</span>), <span class="kw">ylim</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(-<span class="fl">55</span>,<span class="fl">85</span>)) +
-  <span class="fu">ggtitle</span>(<span class="st">"TOH"</span>) +
-  <span class="fu">theme</span>(<span class="kw">panel.grid.major</span> <span class="kw">=</span> <span class="fu">element_blank</span>(),
-        <span class="kw">panel.grid.minor</span> <span class="kw">=</span> <span class="fu">element_blank</span>(),
-        <span class="kw">panel.background</span> <span class="kw">=</span> <span class="fu">element_blank</span>()) +
-  <span class="fu">theme_bw</span>()
+<span class="va">map_toh</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">geom_polygon</span><span class="op">(</span>data <span class="op">=</span> <span class="fu">map_data</span><span class="op">(</span><span class="st">'world'</span><span class="op">)</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">long</span>, y <span class="op">=</span> <span class="va">lat</span>, group <span class="op">=</span> <span class="va">group</span><span class="op">)</span>, fill <span class="op">=</span> <span class="cn">NA</span>, color <span class="op">=</span> <span class="st">"black"</span>, lwd <span class="op">=</span> <span class="fl">0.15</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">geom_point</span><span class="op">(</span>data <span class="op">=</span> <span class="va">toh_coords1</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">longitude</span>, y <span class="op">=</span> <span class="va">latitude</span><span class="op">)</span>, color <span class="op">=</span> <span class="st">"red"</span>, size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">geom_point</span><span class="op">(</span>data <span class="op">=</span> <span class="va">toh_points</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">y</span><span class="op">)</span>, color <span class="op">=</span> <span class="st">"blue"</span>, shape <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">coord_quickmap</span><span class="op">(</span>xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">164.5</span>, <span class="fl">163.5</span><span class="op">)</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">55</span>,<span class="fl">85</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">ggtitle</span><span class="op">(</span><span class="st">"TOH"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">theme</span><span class="op">(</span>panel.grid.major <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span>,
+        panel.grid.minor <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span>,
+        panel.background <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">theme_bw</span><span class="op">(</span><span class="op">)</span>
 <span class="co">#SLF</span>
-<span class="no">map_slf</span> <span class="kw">&lt;-</span> <span class="fu">ggplot</span>() +
-  <span class="fu">geom_polygon</span>(<span class="kw">data</span> <span class="kw">=</span> <span class="fu">map_data</span>(<span class="st">'world'</span>), <span class="fu">aes</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">long</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">lat</span>, <span class="kw">group</span> <span class="kw">=</span> <span class="no">group</span>), <span class="kw">fill</span> <span class="kw">=</span> <span class="fl">NA</span>, <span class="kw">color</span> <span class="kw">=</span> <span class="st">"black"</span>, <span class="kw">lwd</span> <span class="kw">=</span> <span class="fl">0.15</span>) +
-  <span class="fu">geom_point</span>(<span class="kw">data</span> <span class="kw">=</span> <span class="no">slf_coords1</span>, <span class="fu">aes</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">longitude</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">latitude</span>), <span class="kw">color</span> <span class="kw">=</span> <span class="st">"red"</span>, <span class="kw">size</span> <span class="kw">=</span> <span class="fl">2</span>) +
-  <span class="fu">geom_point</span>(<span class="kw">data</span> <span class="kw">=</span> <span class="no">slf_points</span>, <span class="fu">aes</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">x</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">y</span>), <span class="kw">color</span> <span class="kw">=</span> <span class="st">"blue"</span>, <span class="kw">shape</span> <span class="kw">=</span> <span class="fl">2</span>) +
-  <span class="fu">coord_quickmap</span>(<span class="kw">xlim</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(-<span class="fl">164.5</span>, <span class="fl">163.5</span>), <span class="kw">ylim</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(-<span class="fl">55</span>,<span class="fl">85</span>)) +
-  <span class="fu">ggtitle</span>(<span class="st">"SLF"</span>) +
-  <span class="fu">theme</span>(<span class="kw">panel.grid.major</span> <span class="kw">=</span> <span class="fu">element_blank</span>(),
-        <span class="kw">panel.grid.minor</span> <span class="kw">=</span> <span class="fu">element_blank</span>(),
-        <span class="kw">panel.background</span> <span class="kw">=</span> <span class="fu">element_blank</span>()) +
-  <span class="fu">theme_bw</span>()
+<span class="va">map_slf</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">geom_polygon</span><span class="op">(</span>data <span class="op">=</span> <span class="fu">map_data</span><span class="op">(</span><span class="st">'world'</span><span class="op">)</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">long</span>, y <span class="op">=</span> <span class="va">lat</span>, group <span class="op">=</span> <span class="va">group</span><span class="op">)</span>, fill <span class="op">=</span> <span class="cn">NA</span>, color <span class="op">=</span> <span class="st">"black"</span>, lwd <span class="op">=</span> <span class="fl">0.15</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">geom_point</span><span class="op">(</span>data <span class="op">=</span> <span class="va">slf_coords1</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">longitude</span>, y <span class="op">=</span> <span class="va">latitude</span><span class="op">)</span>, color <span class="op">=</span> <span class="st">"red"</span>, size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">geom_point</span><span class="op">(</span>data <span class="op">=</span> <span class="va">slf_points</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">y</span><span class="op">)</span>, color <span class="op">=</span> <span class="st">"blue"</span>, shape <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">coord_quickmap</span><span class="op">(</span>xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">164.5</span>, <span class="fl">163.5</span><span class="op">)</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">55</span>,<span class="fl">85</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">ggtitle</span><span class="op">(</span><span class="st">"SLF"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">theme</span><span class="op">(</span>panel.grid.major <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span>,
+        panel.grid.minor <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span>,
+        panel.background <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">theme_bw</span><span class="op">(</span><span class="op">)</span>
 
 <span class="co">#patchwork output of both maps</span>
-<span class="no">map_toh</span> / <span class="no">map_slf</span></pre></body></html></div>
+<span class="va">map_toh</span> <span class="op">/</span> <span class="va">map_slf</span></code></pre></div>
 <p><img src="vignette-003-get-gbif-data_files/figure-html/read%20in%20final%20data-1.png" width="960"></p>
 <p>We have practically the same coverage with less autocorrelation (note the dropped false records for SLF)! Now we can use these data for SDMs!</p>
 </div>
@@ -362,7 +373,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

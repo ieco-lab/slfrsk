@@ -59,6 +59,8 @@ navbar:
             - text: ----------------
             - text: "Paninvasion Severity"
               href: articles/vignette-041-market-plot.html
+            - text: "West Coast AVAs vs Temperature"
+              href: articles/vignette-050-ava-temp.html
             - text: ----------------
         - text: ----------------
 

@@ -84,6 +84,7 @@ tinyslf %<>%
 
 ```
 
+Add the observations and establishment dates to the county outline data
 ```{r}
 # defining the year of establishment
 by_county <- tinyslf %>% 
@@ -203,8 +204,9 @@ by_county %<>%
          FirstRecord = as.factor(FirstRecord))
 ```
 
-plot check
-```{r}
+Plot the spread map
+
+```{r plot spread map, fig.dim=c(8,10)}
 #get the focal counties to outline
 focal_counties <- by_county %>%
   filter(!is.na(FirstRecord)) %>%
@@ -230,7 +232,7 @@ map_plot
 ```
 
 
-```{r optional leaflet plotting, eval=FALSE}
+```{r optional leaflet plotting, eval=TRUE}
 library(leaflet)
 
 colpal <- colorFactor(c(brewer.pal(7, "YlOrRd")),
