@@ -19,9 +19,13 @@ knitr::opts_chunk$set(
 )
 ```
 
-Figure 1: SLF Spread
+Map of SLF Spread Through Time in the US
 
 ***
+
+We read in the packages to access data and generate the spread map. We also set the option to not download counties shapefiles every time (only the first).
+
+# Setup
 
 ```{r setup, warning=FALSE, results='hide', message=FALSE}
 library(slfrsk) #this package, has extract_enm()
@@ -34,9 +38,10 @@ library(sf) #simple features for easy shapefile manipulation
 library(magrittr) #fast pipe assign
 library(lubridate) #extract years
 library(RColorBrewer) #palette
+options(tigris_use_cache = TRUE) # make sure that tigris does not keep downloading the files
 ```
 
-now try to read in the seba SLF records data
+Now, we read in the SLF records from the package `lycormap`. We also obtain the supplemental SLF records that contain the updated transportation data for uninvaded states, which was obtained from the raw data in the `lycodata` package.
 
 ```{r read in records data for map figure}
 data("tinyslf", package = "lycormap")
@@ -48,44 +53,50 @@ man_county_data <- read_csv(file.path("/Volumes/GoogleDrive/My Drive/spotted_lan
                                           RT_check = "l", ST_check = "l", RS_match = "l"))
 ```
 
-generate the shapefile for the counties (~3mb download)
+We obtain the counties shapefile as a simple feature (sf) from the `tigris` package.
+
 ```{r counties shapefile, message=FALSE}
 counties <- counties(cb = T, resolution = "5m")
 ```
 
-match coordinates to counties
-```{r}
-#adapted from SDB code in lycordata
-factor_order <- c("Unpopulated", "Low", "Medium", "High")
+# Merge and clean data
 
+Here is the first of the code adapted from Seba De Bona (SDB), who built the `lycordata` and `lycormap` packages. This code finds the county that  each presence point corresponds to and attaches the county shapefile data to those rows.
+
+```{r tinyslf st combining and tidying, message=FALSE}
+#adapted from SDB code in lycordata
+
+#add column of temporary row ID's for later reference
 tinyslf %<>% 
-  add_column(row_ID = 1:nrow(.)) %>% 
-  mutate(slf_density = factor(slf_density, levels = factor_order))
+  add_column(row_ID = 1:nrow(.))
 
 tinyslf %<>%
   # reducing data to coordinates only, and ID for future merging
   dplyr::select(latitude, longitude, row_ID) %>%
   # transforming into sf object
-  sf::st_as_sf(coords = c("longitude", "latitude"),
-           crs = sf::st_crs(counties)) %>% 
-  # intersecting state polygons with coordinate points in data, 
-  # to find in which US state the coordinates are
-  sf::st_join(., counties, join = sf::st_intersects) %>% 
+  st_as_sf(coords = c("longitude", "latitude"),
+           crs = st_crs(counties)) %>% 
+  #intersecting state polygons with data coordinates to match them to US counties
+  st_join(., counties, join = st_intersects) %>%
+  #make it a tibble now
   as_tibble() %>% 
-  # simplifying to row ID, county name and county identity
+  #simplify to row ID, county name and identity
   dplyr::select(row_ID, county = NAME, GEOID) %>% 
-  # then joining this into main dataset
+  #then joining this into main tinyslf data
   left_join(tinyslf, ., by = "row_ID") %>% 
-  # removing unnecessary ID column
+  #remove the temporary id column
   dplyr::select(-c(row_ID))
 
+#remove the NA values for county. which are the points that do not fall in a county
 tinyslf %<>%
   filter(!is.na(county))
 
 ```
 
 Add the observations and establishment dates to the county outline data
-```{r}
+Now, the earliest year of establishment or recording of an observation (dead or alive) are identified from the `tinyslf` dataset and then added accordingly to county shapefile data. Lastly, the projection is confirmed.
+
+```{r find establishment and first records, message=FALSE}
 # defining the year of establishment
 by_county <- tinyslf %>% 
   group_by(GEOID) %>% 
@@ -110,15 +121,12 @@ by_county %<>%
 
 ```
 
-now to do the seba check of the data with some manual entry  data
-```{r}
+Because our first record and establishment data are constantly updating from multiple sources, we have a googlesheet that is the source of `man_by_county` (saved as `slf_county_record_timeline.csv`). We again adapt code from SDB to tidy and splice these new records into the counties dataset.
+
+```{r add manual counties data to counties data, message=FALSE}
 
 # we can use the FIPS code to merge to the main data
 # now let's extract the status and the year of record/establishment
-# Let's check the promising "Status" columns
-table(man_county_data$Status)
-# we can use this column to define establishment vs record
-
 # there are three date columns that hopefully can be collapsed into 1
 # first, let's check if all counties occur only once
 stopifnot(
@@ -130,7 +138,8 @@ stopifnot(
 )
 
 # now we check whether any row has more than one date entry
-# first transforming to date
+
+#standardize date format
 man_county_data %<>% 
   mutate_at(vars(starts_with("Date")), .funs = ~parsedate::parse_date(.))
 
@@ -204,7 +213,8 @@ by_county %<>%
          FirstRecord = as.factor(FirstRecord))
 ```
 
-Plot the spread map
+# Plot spread figure
+Lastly, we plot the data after identifying a set of focal counties to outline (this bypasses layering issues with `sf` objects and plotting with `ggplot2`).
 
 ```{r plot spread map, fig.dim=c(8,10)}
 #get the focal counties to outline
@@ -230,8 +240,18 @@ map_plot <- ggplot() +
 
 map_plot
 ```
+# Save plot output
 
+```{r save spread plot for pub}
+pdf(file.path(here::here(),"vignettes", paste0("spread_figure.pdf")),width = 10, height = 8)
+map_plot
+invisible(dev.off())
 
+```
+
+# Extras
+
+We also include a modification of SDB code here to show how to make a nice `leaflet` interactive map too... but we do not use this code.
 ```{r optional leaflet plotting, eval=TRUE}
 library(leaflet)
 

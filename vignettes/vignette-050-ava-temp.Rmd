@@ -233,4 +233,15 @@ Finally, we present the full table of AVAs for both thresholds.
 knitr::kable(ava_results)
 ```
 
+# Save plot output
+
+```{r write out patchwork plots}
+#chill and no_chill maps with AVA tables
+pdf(file.path(here::here(),"vignettes", paste0("ca_temps_figure.pdf")),width = 8, height = 9)
+(wc_plot + (gridExtra::tableGrob(ava_results[1:14, c("ava", "state","chill_dia")]))) / (wc_ndp_plot + (gridExtra::tableGrob(ava_results[1:14, c("ava", "state","no_chill")])))
+invisible(dev.off())
+
+```
+
+
 # References
