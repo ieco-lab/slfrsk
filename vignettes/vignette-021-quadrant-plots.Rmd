@@ -1019,7 +1019,7 @@ logp1_rnd <- trans_new(
 
 ```{r plotly version of states scatter, message=FALSE, warning=FALSE, fig.height= 8, fig.width=8, echo=FALSE}
 #plotly version of states scatter
-states_ggplot <- states_summary_future %>%
+states_ggplot <- states_summary_present %>%
   mutate_if(.predicate = is.numeric, .funs = ~round(x = ., digits = 2)) %>%
   mutate(`establishment potential` = grand_mean_max_scaled, `transport potential` = avg_infected_mass_scaled, avg_wine = signif(avg_wine, digits = 3)) %>%
   ggplot(data = ., aes(y = `transport potential`, x = `establishment potential`, size = avg_wine, fill = grapes, color = status)) +
@@ -1077,7 +1077,7 @@ ggplotly(states_ggplot, dynamicTicks = F, tooltip = c("ID", "establishment poten
 
 ```{r plotly version of countries scatter, message=FALSE, warning=FALSE, fig.height= 8, fig.width=8, echo=FALSE}
 #plotly version of countries scatter
-countries_ggplot <- countries_summary_future %>%
+countries_ggplot <- countries_summary_present %>%
   mutate_if(.predicate = is.numeric, .funs = ~round(x = ., digits = 2)) %>%
   mutate(`establishment potential` = grand_mean_max_scaled, `transport potential` = avg_infected_mass_scaled, avg_wine = signif(avg_wine, digits = 3)) %>%
   ggplot(data = ., aes(y = `transport potential`, x = `establishment potential`, size = avg_wine, fill = grapes, color = status)) +

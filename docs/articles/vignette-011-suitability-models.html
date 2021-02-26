@@ -72,6 +72,12 @@
       <ul class="dropdown-menu" role="menu">
 <li class="divider">
         <li>
+          <a href="../articles/vignette-060-spread-figure.html">Identify Invaded States/Reg. Incidents</a>
+        </li>
+        <li>
+          <a href="../articles/vignette-042-trade-presence.html">Confirm SLF--Trade Tonnage Relationship</a>
+        </li>
+        <li>
           <a href="../articles/vignette-003-get-gbif-data.html">Get GBIF Records</a>
         </li>
         <li>
@@ -79,6 +85,9 @@
         </li>
         <li>
           <a href="../articles/vignette-011-suitability-models.html">Species Distribution Modeling</a>
+        </li>
+        <li>
+          <a href="../articles/vignette-050-ava-temp.html">Confirm US West Coast AVA Suitability</a>
         </li>
         <li class="divider">
       </ul>
@@ -115,9 +124,6 @@
 <li class="divider">
         <li>
           <a href="../articles/vignette-041-market-plot.html">Paninvasion Severity</a>
-        </li>
-        <li>
-          <a href="../articles/vignette-050-ava-temp.html">West Coast AVAs vs Temperature</a>
         </li>
         <li class="divider">
       </ul>
@@ -388,7 +394,7 @@
 </ol>
 <p>Here, we report in a simple table the metrics used to evaluate the various models that were considered as well as the percent contribution of each variable to each model (where applicable). Model validation was conducted with <em>k</em>-fold cross-validation (<em>k</em> partitions discussed above) via evaluation of the receiver operating characteristic of the AUC and omission error (<span class="citation"><a href="#ref-fielding_review_1997" role="doc-biblioref">Fielding and Bell</a> (<a href="#ref-fielding_review_1997" role="doc-biblioref">1997</a>)</span>, <span class="citation"><a href="#ref-phillips_maximum_2006" role="doc-biblioref">Phillips, Anderson, and Schapire</a> (<a href="#ref-phillips_maximum_2006" role="doc-biblioref">2006</a>)</span>, <span class="citation"><a href="#ref-pearson_predicting_2007" role="doc-biblioref">Pearson et al.</a> (<a href="#ref-pearson_predicting_2007" role="doc-biblioref">2007</a>)</span>, <span class="citation"><a href="#ref-anderson_species-specific_2011" role="doc-biblioref">Anderson and Gonzalez</a> (<a href="#ref-anderson_species-specific_2011" role="doc-biblioref">2011</a>)</span>).</p>
 <p>For AUC, the fraction of true positives relative to type I error (positive background points) is compared at all possible thresholds for each model (<span class="citation"><a href="#ref-fielding_review_1997" role="doc-biblioref">Fielding and Bell</a> (<a href="#ref-fielding_review_1997" role="doc-biblioref">1997</a>)</span>, <span class="citation"><a href="#ref-phillips_maximum_2006" role="doc-biblioref">Phillips, Anderson, and Schapire</a> (<a href="#ref-phillips_maximum_2006" role="doc-biblioref">2006</a>)</span>). The resultant plot’s area under the curve is assessed relative to a random model (<span class="math inline">\(AUC = 0.50\)</span>), such that values close to <span class="math inline">\(1.00\)</span> indicate strong model performance and those <span class="math inline">\(\leq 0.50\)</span> suggest poor performance (<span class="citation"><a href="#ref-fielding_review_1997" role="doc-biblioref">Fielding and Bell</a> (<a href="#ref-fielding_review_1997" role="doc-biblioref">1997</a>)</span>). Given presence only data, measured AUC cannot reach <span class="math inline">\(1.00\)</span>, but model AUCs that approach <span class="math inline">\(1.00\)</span> are considered to perform well (<span class="citation"><a href="#ref-wiley_niche_2003" role="doc-biblioref">Wiley et al.</a> (<a href="#ref-wiley_niche_2003" role="doc-biblioref">2003</a>)</span>, <span class="citation"><a href="#ref-phillips_maximum_2006" role="doc-biblioref">Phillips, Anderson, and Schapire</a> (<a href="#ref-phillips_maximum_2006" role="doc-biblioref">2006</a>)</span>).</p>
-<p>Given recent concerns with model evaluation with AUC (<span class="citation"><a href="#ref-peterson_rethinking_2008" role="doc-biblioref">A. Townsend Peterson, Papeş, and Soberón</a> (<a href="#ref-peterson_rethinking_2008" role="doc-biblioref">2008</a>)</span>, <span class="citation"><a href="#ref-lobo_auc:_2008" role="doc-biblioref">Lobo, Jiménez-Valverde, and Real</a> (<a href="#ref-lobo_auc:_2008" role="doc-biblioref">2008</a>)</span>, <span class="citation">(<a href="#ref-jimenez-valverde_insights_2012" role="doc-biblioref"><strong>jimenez-valverde_insights_2012?</strong></a>)</span>), we confirmed model performance with average omission error, which measures the proportion of presence point(s) predicted with suitability less than the minimum training presence threshold (<span class="citation"><a href="#ref-pearson_predicting_2007" role="doc-biblioref">Pearson et al.</a> (<a href="#ref-pearson_predicting_2007" role="doc-biblioref">2007</a>)</span>, <span class="citation"><a href="#ref-anderson_species-specific_2011" role="doc-biblioref">Anderson and Gonzalez</a> (<a href="#ref-anderson_species-specific_2011" role="doc-biblioref">2011</a>)</span>).</p>
+<p>Given recent concerns with model evaluation with AUC (<span class="citation"><a href="#ref-peterson_rethinking_2008" role="doc-biblioref">A. Townsend Peterson, Papeş, and Soberón</a> (<a href="#ref-peterson_rethinking_2008" role="doc-biblioref">2008</a>)</span>, <span class="citation"><a href="#ref-lobo_auc:_2008" role="doc-biblioref">Lobo, Jiménez-Valverde, and Real</a> (<a href="#ref-lobo_auc:_2008" role="doc-biblioref">2008</a>)</span>, <span class="citation"><a href="#ref-jimenezvalverde_insights_2012" role="doc-biblioref">Jiménez‐Valverde</a> (<a href="#ref-jimenezvalverde_insights_2012" role="doc-biblioref">2012</a>)</span>), we confirmed model performance with average omission error, which measures the proportion of presence point(s) predicted with suitability less than the minimum training presence threshold (<span class="citation"><a href="#ref-pearson_predicting_2007" role="doc-biblioref">Pearson et al.</a> (<a href="#ref-pearson_predicting_2007" role="doc-biblioref">2007</a>)</span>, <span class="citation"><a href="#ref-anderson_species-specific_2011" role="doc-biblioref">Anderson and Gonzalez</a> (<a href="#ref-anderson_species-specific_2011" role="doc-biblioref">2011</a>)</span>).</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#read in summary table and view</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"models_summary"</span><span class="op">)</span>
@@ -715,6 +721,9 @@ Fielding, Alan H., and John F. Bell. 1997. <span>“A Review of Methods for the 
 </div>
 <div id="ref-hijmans_very_2005" class="csl-entry">
 Hijmans, Robert J., Susan E. Cameron, Juan L. Parra, Peter G. Jones, and Andy Jarvis. 2005. <span>“Very High Resolution Interpolated Climate Surfaces for Global Land Areas.”</span> <em>International Journal of Climatology</em> 25 (15): 1965–78. <a href="https://doi.org/10.1002/joc.1276">https://doi.org/10.1002/joc.1276</a>.
+</div>
+<div id="ref-jimenezvalverde_insights_2012" class="csl-entry">
+Jiménez‐Valverde, Alberto. 2012. <span>“Insights into the Area Under the Receiver Operating Characteristic Curve (<span>AUC</span>) as a Discrimination Measure in Species Distribution Modelling.”</span> <em>Global Ecology and Biogeography</em> 21 (4): 498–507. <a href="https://doi.org/10.1111/j.1466-8238.2011.00683.x">https://doi.org/10.1111/j.1466-8238.2011.00683.x</a>.
 </div>
 <div id="ref-lobo_auc:_2008" class="csl-entry">
 Lobo, Jorge M., Alberto Jiménez-Valverde, and Raimundo Real. 2008. <span>“<span>AUC</span>: A Misleading Measure of the Performance of Predictive Distribution Models.”</span> <em>Global Ecology and Biogeography</em> 17 (2): 145–51. <a href="https://doi.org/10.1111/j.1466-8238.2007.00358.x">https://doi.org/10.1111/j.1466-8238.2007.00358.x</a>.

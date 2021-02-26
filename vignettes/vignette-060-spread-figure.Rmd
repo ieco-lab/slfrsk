@@ -1,8 +1,8 @@
 ---
-title: "slf spread"
+title: "SLF Spread Through Time"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{vignette-xxx-misc}
+  %\VignetteIndexEntry{vignette-060-spread-figure}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
@@ -252,7 +252,7 @@ invisible(dev.off())
 # Extras
 
 We also include a modification of SDB code here to show how to make a nice `leaflet` interactive map too... but we do not use this code.
-```{r optional leaflet plotting, eval=TRUE}
+```{r optional leaflet plotting, eval=TRUE, fig.dim=c(8,10)}
 library(leaflet)
 
 colpal <- colorFactor(c(brewer.pal(7, "YlOrRd")),

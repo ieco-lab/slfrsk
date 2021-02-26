@@ -260,7 +260,7 @@ Here, we report in a simple table the metrics used to evaluate the various model
 
 For AUC, the fraction of true positives relative to type I error (positive background points) is compared at all possible thresholds for each model (@fielding_review_1997, @phillips_maximum_2006). The resultant plot's area under the curve is assessed relative to a random model ($AUC = 0.50$), such that values close to $1.00$ indicate strong model performance and those $\leq 0.50$  suggest poor performance (@fielding_review_1997). Given presence only data, measured AUC cannot reach $1.00$, but model AUCs that approach $1.00$ are considered to perform well (@wiley_niche_2003, @phillips_maximum_2006).
 
-Given recent concerns with model evaluation with AUC (@peterson_rethinking_2008, @lobo_auc:_2008, @jimenez-valverde_insights_2012), we confirmed model performance with average omission error, which measures the proportion of presence point(s) predicted with suitability less than the minimum training presence threshold (@pearson_predicting_2007, @anderson_species-specific_2011).
+Given recent concerns with model evaluation with AUC (@peterson_rethinking_2008, @lobo_auc:_2008, @jimenezvalverde_insights_2012), we confirmed model performance with average omission error, which measures the proportion of presence point(s) predicted with suitability less than the minimum training presence threshold (@pearson_predicting_2007, @anderson_species-specific_2011).
 
 ```{r summary of model performance, results='asis'}
 #read in summary table and view
