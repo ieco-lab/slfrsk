@@ -48,7 +48,7 @@ data("tinyslf", package = "lycormap")
 
 # reading manually added data (for a later step)
 man_county_data <- read_csv(file.path("/Volumes/GoogleDrive/My Drive/spotted_lanternfly_ieco_projects/code/FINAL_CODE/R package/lycordata/", "data-raw", "additional",
-                                      "slf_county_record_timeline.csv"),
+                                      "slf_county_record_timeline_v2.csv"),
                             col_types = cols(.default = "c", FIPS = "d", 
                                           RT_check = "l", ST_check = "l", RS_match = "l"))
 ```
@@ -243,7 +243,7 @@ map_plot
 # Save plot output
 
 ```{r save spread plot for pub}
-pdf(file.path(here::here(),"vignettes", paste0("spread_figure.pdf")),width = 10, height = 8)
+pdf(file.path(here::here(),"vignettes", paste0("spread_figure_v2.pdf")),width = 10, height = 8)
 map_plot
 invisible(dev.off())
 
