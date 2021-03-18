@@ -46,7 +46,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -57,7 +57,7 @@
   <a href="../articles/vignette-002-terms.html">Definitions</a>
 </li>
 <li>
-  <a href="../articles/vignette-040-ee-data.html">Paninvasion Risk App</a>
+  <a href="../articles/vignette-040-ee-data.html">Paninvasion Severity App</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -67,34 +67,67 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li class="divider">
-    <li>
-      <a href="../articles/vignette-010-tidy-data.html">Data Tidying</a>
-    </li>
-    <li>
-      <a href="../articles/vignette-011-suitability-models.html">Suitability Modeling &amp; Evaluation</a>
-    </li>
-    <li>
-      <a href="../articles/vignette-030-risk-maps.html">Risk Map Plotting</a>
-    </li>
     <li class="dropdown-submenu">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Invasion Potential Alignment</a>
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Step 1: Estimate Invasion Potentials</a>
       <ul class="dropdown-menu" role="menu">
 <li class="divider">
         <li>
-          <a href="../articles/vignette-021-quadrant-plots.html">Published (Max)</a>
+          <a href="../articles/vignette-060-spread-figure.html">Identify Invaded States/Reg. Incidents</a>
         </li>
         <li>
-          <a href="../articles/vignette-026-quadrant-plots-alt-median.html">Alternate (Median)</a>
+          <a href="../articles/vignette-042-trade-presence.html">Confirm SLF--Trade Tonnage Relationship</a>
         </li>
         <li>
-          <a href="../articles/vignette-027-quadrant-plots-alt-mean.html">Alternate (Mean)</a>
+          <a href="../articles/vignette-003-get-gbif-data.html">Get GBIF Records</a>
+        </li>
+        <li>
+          <a href="../articles/vignette-010-tidy-data.html">Data Tidying</a>
+        </li>
+        <li>
+          <a href="../articles/vignette-011-suitability-models.html">Species Distribution Modeling</a>
+        </li>
+        <li>
+          <a href="../articles/vignette-050-ava-temp.html">Confirm US West Coast AVA Suitability</a>
         </li>
         <li class="divider">
       </ul>
 </li>
-    <li>
-      <a href="../articles/vignette-041-market-plot.html">Wine Market Risk of Shock Evaluation</a>
-    </li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Step 2: Calculate Alignment Correlations</a>
+      <ul class="dropdown-menu" role="menu">
+<li class="divider">
+        <li>
+          <a href="../articles/vignette-030-potentials-maps.html">Invasion Potential Maps</a>
+        </li>
+        <li class="dropdown-submenu">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Invasion Potential Alignment</a>
+          <ul class="dropdown-menu" role="menu">
+<li class="divider">
+            <li>
+              <a href="../articles/vignette-021-quadrant-plots.html">Published (Max)</a>
+            </li>
+            <li>
+              <a href="../articles/vignette-026-quadrant-plots-alt-median.html">Alternate (Median)</a>
+            </li>
+            <li>
+              <a href="../articles/vignette-027-quadrant-plots-alt-mean.html">Alternate (Mean)</a>
+            </li>
+            <li class="divider">
+          </ul>
+</li>
+        <li class="divider">
+      </ul>
+</li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Step 3: Quantify Paninvasion Severity</a>
+      <ul class="dropdown-menu" role="menu">
+<li class="divider">
+        <li>
+          <a href="../articles/vignette-041-market-plot.html">Paninvasion Severity</a>
+        </li>
+        <li class="divider">
+      </ul>
+</li>
     <li class="divider">
   </ul>
 </li>
@@ -102,7 +135,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/ieco-lab/slfrsk">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fas fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -116,7 +149,7 @@
 
       
 
-      </header><script src="vignette-001-overview_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><script src="vignette-001-overview_files/header-attrs-2.6/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Overview</h1>
@@ -129,7 +162,7 @@
 
     
     
-<p>Overview of the Spotted Lanternfly Paninvasion Risk Research Compendium</p>
+<p>Overview of the Spotted Lanternfly Paninvasion Severity Research Compendium</p>
 <hr>
 <div id="purpose" class="section level1">
 <h1 class="hasAnchor">
@@ -139,8 +172,8 @@
 <div id="about-the-compendium" class="section level1">
 <h1 class="hasAnchor">
 <a href="#about-the-compendium" class="anchor"></a>About the Compendium</h1>
-<p>This compendium follows the paper structure, which assesses the severity of risk of a paninvasion of <em>Lycorma delicatula</em>, the spotted lanternfly (SLF). This emerging invasive pest was recently introduced to the U.S. and demonstrates a preference for feeding on agriculturally important crops, including grapes (<span class="citation">Urban (<a href="#ref-urban_perspective:_2019" role="doc-biblioref">2019</a>)</span>). As it continues to spread, the severity of risk for SLF paninvasion can be thought of in much the same way as emerging infectious diseases. Therefore, we adapt a framework from the epidemiologic literature (<span class="citation">Reed et al. (<a href="#ref-reed_novel_2013" role="doc-biblioref">2013</a>)</span>) and merge it with existing invasion ecology theory (<span class="citation">Blackburn et al. (<a href="#ref-blackburn_proposed_2011" role="doc-biblioref">2011</a>)</span>) to determine the severity of risk for a SLF paninvasion.</p>
-<p>Our adapted framework determines how closely three (3) risk potentials align:</p>
+<p>This compendium follows the paper structure, which assesses the severity of a paninvasion of <em>Lycorma delicatula</em>, the spotted lanternfly (SLF). This emerging invasive pest was recently introduced to the U.S. and demonstrates a preference for feeding on agriculturally important crops, including grapes (<span class="citation"><a href="#ref-urban_perspective:_2019" role="doc-biblioref">Urban</a> (<a href="#ref-urban_perspective:_2019" role="doc-biblioref">2019</a>)</span>). As it continues to spread, the severity of SLF paninvasion can be thought of in much the same way as emerging infectious diseases. Therefore, we adapt a framework from the epidemiologic literature (<span class="citation"><a href="#ref-reed_novel_2013" role="doc-biblioref">Reed et al.</a> (<a href="#ref-reed_novel_2013" role="doc-biblioref">2013</a>)</span>) and merge it with existing invasion ecology theory (<span class="citation"><a href="#ref-blackburn_proposed_2011" role="doc-biblioref">Blackburn et al.</a> (<a href="#ref-blackburn_proposed_2011" role="doc-biblioref">2011</a>)</span>) to determine the intensity of a SLF paninvasion.</p>
+<p>Our adapted framework determines how closely three (3) invasion potentials align:</p>
 <ol style="list-style-type: decimal">
 <li>
 <strong>Transportation</strong>—How likely is SLF to be carried beyond its newly-invaded U.S. range to novel geographic regions?</li>
@@ -149,7 +182,7 @@
 <li>
 <strong>Impact</strong>—How likely is SLF to adversely effect economic activities associated with the grape and wine industries in novel geographic regions?</li>
 </ol>
-<p>We ascertain the strength of alignment at both a domestic (<em>U.S. states</em>) and global (<em>countries</em>) scale. With the resulting alignments, we assign the overall risk of a paninvasion by SLF by calculating the relationship between predicted <strong>impact</strong> risk to grape production and the market size for the <em>wine industry</em>. Lastly, we deploy a public-facing visualization app of our risk assessment with Google Earth Engine (<a href="https://ieco.users.earthengine.app/view/ieco-slf-riskmap" class="uri">https://ieco.users.earthengine.app/view/ieco-slf-riskmap</a>).</p>
+<p>We ascertain the strength of alignment at both a domestic (<em>U.S. states</em>) and global (<em>countries</em>) scale. With the resulting alignments, we assign the overall severity of a paninvasion by SLF by calculating the relationship between predicted <strong>impact</strong> potential to grape production and the market size for the <em>wine industry</em>. Lastly, we deploy a public-facing visualization app of our assessment with Google Earth Engine (<a href="https://ieco.users.earthengine.app/view/ieco-slf-riskmap" class="uri">https://ieco.users.earthengine.app/view/ieco-slf-riskmap</a>).</p>
 </div>
 <div id="navigating-the-compendium" class="section level1">
 <h1 class="hasAnchor">
@@ -157,17 +190,19 @@
 <p>The research compendium is organized into several <strong>Articles</strong> (or vignettes) that can be accessed via the top bar of this site. Each article aims to illuminate the process by which we obtained, prepared, or visualized our results. Currently, the compendium contains the following articles:</p>
 <ol style="list-style-type: decimal">
 <li>
+<strong>Get GBIF Records</strong>—Show the process of obtaining coordinates for SLF and TOH that were used to model suitability</li>
+<li>
 <strong>Data Tidying</strong>—Demonstration of how we cleaned the data obtained to conduct this study</li>
 <li>
 <strong>Suitability Modeling &amp; Evaluation</strong>—Step-by-step process of modeling SLF suitability and extracting suitability for <strong>Establishment</strong> potential</li>
 <li>
-<strong>Risk Map Plotting</strong>—Reproduction of the risk map figure(s) in the main text</li>
+<strong>Invasion Potentials Maps</strong>—Reproduction of the risk map figure(s) in the main text</li>
 <li>
-<strong>Invasion Potential Alignment Calculation</strong>—Presentation of the evaluation of alignment for <strong>Transport</strong>, <strong>Establishment</strong>, and <strong>Impact</strong> potentials and reproduction of the invasion alignment plots in the main text with optional modifications to evaluate different data partitions</li>
+<strong>Invasion Potential Alignment</strong>—Presentation of the evaluation of alignment for <strong>Transport</strong>, <strong>Establishment</strong>, and <strong>Impact</strong> potentials and reproduction of the invasion alignment plots in the main text with optional modifications to evaluate different data partitions</li>
 <li>
-<strong>Wine Market Risk of Shock Evaluation</strong>—Reproduction of the severity of risk figure in the main text with additional model diagnostics</li>
+<strong>Wine Market Shock Severity Evaluation</strong>—Reproduction of the wine market shock figure in the main text with additional model diagnostics</li>
 <li>
-<strong>Earth Engine Risk Extraction</strong>—Conversion of the alignment and risk data for implementation in the Google Earth Engine app.</li>
+<strong>Paninvasion Severity App</strong>—Guide for Google Earth Engine app and conversion of the alignment and severity data for implementation in the app.</li>
 </ol>
 </div>
 <div id="citation" class="section level1">
@@ -178,15 +213,15 @@
 <div id="references" class="section level1 unnumbered">
 <h1 class="hasAnchor">
 <a href="#references" class="anchor"></a>References</h1>
-<div id="refs" class="references">
-<div id="ref-blackburn_proposed_2011">
-<p>Blackburn, Tim M., Petr Pyšek, Sven Bacher, James T. Carlton, Richard P. Duncan, Vojtěch Jarošík, John R. U. Wilson, and David M. Richardson. 2011. “A Proposed Unified Framework for Biological Invasions.” <em>Trends in Ecology &amp; Evolution</em> 26 (7): 333–39. <a href="https://doi.org/10.1016/j.tree.2011.03.023">https://doi.org/10.1016/j.tree.2011.03.023</a>.</p>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-blackburn_proposed_2011" class="csl-entry">
+Blackburn, Tim M., Petr Pyšek, Sven Bacher, James T. Carlton, Richard P. Duncan, Vojtěch Jarošík, John R. U. Wilson, and David M. Richardson. 2011. <span>“A Proposed Unified Framework for Biological Invasions.”</span> <em>Trends in Ecology &amp; Evolution</em> 26 (7): 333–39. <a href="https://doi.org/10.1016/j.tree.2011.03.023">https://doi.org/10.1016/j.tree.2011.03.023</a>.
 </div>
-<div id="ref-reed_novel_2013">
-<p>Reed, Carrie, Matthew Biggerstaff, Lyn Finelli, Lisa M Koonin, Denise Beauvais, Amra Uzicanin, Andrew Plummer, Joe Bresee, Stephen C Redd, and Daniel B Jernigan. 2013. “Novel Framework for Assessing Epidemiologic Effects of Influenza Epidemics and Pandemics.” <em>Emerging Infectious Diseases</em> 19 (1): 85.</p>
+<div id="ref-reed_novel_2013" class="csl-entry">
+Reed, Carrie, Matthew Biggerstaff, Lyn Finelli, Lisa M Koonin, Denise Beauvais, Amra Uzicanin, Andrew Plummer, Joe Bresee, Stephen C Redd, and Daniel B Jernigan. 2013. <span>“Novel Framework for Assessing Epidemiologic Effects of Influenza Epidemics and Pandemics.”</span> <em>Emerging Infectious Diseases</em> 19 (1): 85.
 </div>
-<div id="ref-urban_perspective:_2019">
-<p>Urban, Julie M. 2019. “Perspective: Shedding Light on Spotted Lanternfly Impacts in the USA.” <em>Pest Management Science</em>, October.</p>
+<div id="ref-urban_perspective:_2019" class="csl-entry">
+Urban, Julie M. 2019. <span>“Perspective: Shedding Light on Spotted Lanternfly Impacts in the <span>USA</span>.”</span> <em>Pest Management Science</em>, October.
 </div>
 </div>
 </div>
@@ -207,7 +242,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

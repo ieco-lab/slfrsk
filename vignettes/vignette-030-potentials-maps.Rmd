@@ -1,5 +1,5 @@
 ---
-title: "Invasion Potentials Maps"
+title: "Invasion Potential Maps"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{vignette-030-potentials-maps}
@@ -18,7 +18,7 @@ Build and Save Maps of Transport and Establishment Potential
 
 ***
 
-This vignette produces the published map figures that demonstrate where **SLF** is most likely to become established, the states and countries that trade most with the `future` scenario infected states, and shows locations of important viticultural areas (areas of high **impact** potential).
+This vignette produces the published map figures that demonstrate where **SLF** is most likely to become established, the states and countries that trade most with the `present` scenario infected states, and shows locations of important viticultural areas (areas of high **impact** potential).
 
 # Setup
 
@@ -36,13 +36,13 @@ library(scales)
 As in `vignette-021-quadrant-plots`, we have several parameters that can be modified to visualize different versions of the figures. Here is where one could change the version of data for the map figures via the following: 
 
   1. present_transport: Use `present` or `future` infected U.S. states? 
-      - default is `FALSE` for `future`
+      - default is `TRUE` for `present`
   2. top_to_plot: Set the number of top **transport** potential partners to plot arrows for?
       - default is `10`
 
 ```{r plotting options}
-#we need a switch for this map that does the same thing for including the following states: New York, Ohio, West Virginia, North Carolina
-present_transport <- FALSE
+#we need a switch for this map that does the same thing for including the following states: North Carolina
+present_transport <- TRUE
 # How many countries and states to highlight for labels?
 top_to_plot <- 10 
 ```
@@ -77,7 +77,8 @@ Now that we have most of the data loaded, we can go ahead and conditionally load
 #need states trade data
 #need to read in trade data to shape network in map figure
 if(present_transport == TRUE){
-  data("states_summary_present")
+  #data("states_summary_present")
+  data("states_summary_present_ensemble")
   states_centers <- states_centers %>%
     #remove the invaded states
     filter(!geopol_unit %in% c("Connecticut","Delaware", "Maryland", "New Jersey", "New York", "Ohio", "Pennsylvania", "Virginia", "West Virginia")) %>%
@@ -87,7 +88,7 @@ if(present_transport == TRUE){
     mutate(x = as.numeric(x), y = as.numeric(y))
   
 #now add the "invaded core" == SLF as a column
-states_summary_present <- states_summary_present %>%
+states_summary_present <- states_summary_present_ensemble %>%
   cbind("SLF", .) %>%
   as_tibble() %>%
   mutate(origin = `"SLF"`) %>%
@@ -108,8 +109,8 @@ states_trade_final <- states_centers %>%
   as_tibble()
   
 } else {
-  data("states_summary_future")
-  
+  #data("states_summary_future")
+  data("states_summary_future_ensemble")
     states_centers <- states_centers %>%
     #remove the invaded states
     filter(!geopol_unit %in% c("Connecticut","Delaware", "Maryland", "New Jersey", "New York", "North Carolina", "Ohio", "Pennsylvania", "Virginia", "West Virginia")) %>%
@@ -119,7 +120,7 @@ states_trade_final <- states_centers %>%
     mutate(x = as.numeric(x), y = as.numeric(y))
 
         #now add the "invaded core" == SLF as a column
-    states_summary_future <- states_summary_future %>%
+    states_summary_future <- states_summary_future_ensemble %>%
       cbind("SLF", .) %>%
       as_tibble() %>%
       mutate(origin = `"SLF"`) %>%
@@ -167,10 +168,11 @@ countries_centers$y[countries_centers$geopol_unit == "Canada"] <- countries_cent
 
 
 if(present_transport == TRUE){
-  data("countries_summary_present")
+  #data("countries_summary_present")
+  data("countries_summary_present_ensemble")
   
   #filter out the countries with SLF
-  countries_summary_present <- countries_summary_present %>%
+  countries_summary_present <- countries_summary_present_ensemble %>%
   filter(!geopol_unit %in% c("China", "Japan", "Korea, South", "India")) %>%
   cbind("SLF", .) %>%
   as_tibble() %>%
@@ -184,10 +186,11 @@ countries_trade_final <- left_join(countries_summary_present, countries_centers,
 
 
 } else {
-  data("countries_summary_future")
+  #data("countries_summary_future")
+  data("countries_summary_future_ensemble")
   
   #filter out the countries with SLF
-  countries_summary_future <- countries_summary_future %>%
+  countries_summary_future <- countries_summary_future_ensemble %>%
   filter(!geopol_unit %in% c("China", "Japan", "Korea, South", "India")) %>%
   cbind("SLF", .) %>%
   as_tibble() %>%
@@ -299,7 +302,7 @@ map_plot_countries
 
 Lastly, we can save the output of our map figure plots as `.pdf` files to `/vignettes`. Note that this chunk does not run by default but can be run by setting the top `if` from `FALSE` to `TRUE`!
 
-```{r save map plots, eval=FALSE, warning=FALSE, message=FALSE}
+```{r save map plots, eval=TRUE, warning=FALSE, message=FALSE}
 if(FALSE){
   if(present_transport){
 #states

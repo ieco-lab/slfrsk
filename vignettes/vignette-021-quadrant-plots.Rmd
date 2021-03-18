@@ -337,7 +337,7 @@ i <- 1
 
 ## Plotting code
 
-From here, the code to plot the correlation figures is run but the resulting figures are *NOT* shown, as they need a bit of spacing adjustments to be visualized in this vignette. However, `.pdf` output of the individual plots with attached legends are saved to `/vignettes`. Notably, both the impact model and multiple correlation code are run but not displayed. `Vignette-041-market-plot` covers these analyses.
+From here, the code to plot the correlation figures is run but the resulting figures are *NOT* shown, as they need a bit of spacing adjustments to be visualized in this vignette. However, `.pdf` output of the individual plots with attached legends are saved to `/vignettes`. Notably, `Vignette-041-market-plot` covers both the impact model and multiple correlation analyses that aid in interpretation of these plots.
 
 ```{r plot figures, warning=FALSE, message=FALSE, echo=TRUE, results="hide"}
 for (i in 1:length(plots_which)) {
@@ -885,7 +885,9 @@ if(present_transport == FALSE){
 
 #SAVES RESULTS AS PDF
 #plot the states+legend and save
-if (statez) {
+#outer loop to turn off the saving
+if(FALSE){
+  if (statez) {
   if(present_transport){
     pdf(file.path(here::here(),"vignettes", paste0("states_combined_present_max_",impact_prod,".pdf")),width = 7.5, height = 7)
 
@@ -908,12 +910,14 @@ if(present_transport){
     invisible(dev.off())
 
 }
+
+} #end the turn off and on save PDF loop
   
 } # end of the 2 loop for loop for plotting states and countries
 
 ```
 
-We also tag on a quick piece of code that will calculate the correlations for both versions of the `impact_prod` for the `present` case. We remove `countries` with established *Lycorma* populations.
+Despite the focus of `Vignette-041-market-plot`, we also tag on a quick piece of code that will calculate the correlations for both versions of the `impact_prod` for the `present` case. We remove `countries` with established *Lycorma* populations.
 
 ```{r calculate correlations, warning=FALSE, message=FALSE}
 #grapes
@@ -1015,7 +1019,7 @@ logp1_rnd <- trans_new(
 
 ```{r plotly version of states scatter, message=FALSE, warning=FALSE, fig.height= 8, fig.width=8, echo=FALSE}
 #plotly version of states scatter
-states_ggplot <- states_summary_future %>%
+states_ggplot <- states_summary_present %>%
   mutate_if(.predicate = is.numeric, .funs = ~round(x = ., digits = 2)) %>%
   mutate(`establishment potential` = grand_mean_max_scaled, `transport potential` = avg_infected_mass_scaled, avg_wine = signif(avg_wine, digits = 3)) %>%
   ggplot(data = ., aes(y = `transport potential`, x = `establishment potential`, size = avg_wine, fill = grapes, color = status)) +
@@ -1073,7 +1077,7 @@ ggplotly(states_ggplot, dynamicTicks = F, tooltip = c("ID", "establishment poten
 
 ```{r plotly version of countries scatter, message=FALSE, warning=FALSE, fig.height= 8, fig.width=8, echo=FALSE}
 #plotly version of countries scatter
-countries_ggplot <- countries_summary_future %>%
+countries_ggplot <- countries_summary_present %>%
   mutate_if(.predicate = is.numeric, .funs = ~round(x = ., digits = 2)) %>%
   mutate(`establishment potential` = grand_mean_max_scaled, `transport potential` = avg_infected_mass_scaled, avg_wine = signif(avg_wine, digits = 3)) %>%
   ggplot(data = ., aes(y = `transport potential`, x = `establishment potential`, size = avg_wine, fill = grapes, color = status)) +
@@ -1131,10 +1135,10 @@ ggplotly(countries_ggplot, dynamicTicks = F, tooltip = c("ID", "establishment po
 
 # Save plot output
 
-We can also save the plots to `/vignettes` as a `.pdf`. Note that the saving chunks can be run by setting the top `if` from `FALSE` to `TRUE`!
+We can also save the static plots to `/vignettes` as a `.pdf`. Note that the saving chunks can be run by setting the top `if` from `FALSE` to `TRUE`!
 
 ```{r optional write to pdf step, message=FALSE, eval=TRUE, fig.height= 12, fig.width=10}
-if(TRUE){
+if(FALSE){
   #optional save as pdf code
 if(present_transport){
     pdf(file.path(here::here(),"vignettes", paste0("combined_present_max_",impact_prod,".pdf")),width = 10, height = 12)
@@ -1152,7 +1156,7 @@ if(present_transport){
 We also save a version of the combined plots with the legend as a separate file to `/vignettes`. 
 
 ```{r combined plot with separate legend pdf, eval=TRUE}
-if(TRUE){
+if(FALSE){
   #save the plots w/o legend
 #set up a layout grid
   lay2 <- rbind(c( 1, 1, 1, 1, 1,NA),

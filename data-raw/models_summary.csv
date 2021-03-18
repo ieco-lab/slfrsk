@@ -1,4 +1,4 @@
-﻿model,avg_test_auc,avg_omission_error
-sdm_toh,0.7779,0.0003
-sdm_slf1,0.9828,0.0064
-sdm_slf2,0.9675,0.0032
+﻿model,avg_test_auc,avg_omission_error,atc_contribution,bio01_contribution,bio02_contribution,bio12_contribution,bio15_contribution,elev_contribution
+sdm_toh,0.7779,0.0003,61.03,36.74,0.06,1.08,0.81,0.28
+sdm_slf1,0.9828,0.0064,57.16,22.97,1.95,11.63,5.96,0.32
+sdm_slf2,0.9675,0.0032,NA,NA,NA,NA,NA,NA

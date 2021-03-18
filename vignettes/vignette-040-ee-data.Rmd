@@ -1,5 +1,5 @@
 ---
-title: "Paninvasion Risk App"
+title: "Paninvasion Severity App"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{vignette-040-ee-data}
@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-Google Earth Engine Paninvasion Risk App Companion: <https://ieco.users.earthengine.app/view/ieco-slf-riskmap>
+Google Earth Engine Paninvasion Severity App Companion: <https://ieco.users.earthengine.app/view/ieco-slf-riskmap>
 
 ***
 
@@ -29,11 +29,11 @@ library(dplyr)
 library(ggplot2)
 ```
 
-The `slrsk` Paninvasion Risk App is an interactive map that allows for highly customizable visualization. When loaded, it will display a map of the earth with several different data layers already enabled (see image below for example).
+The `slrsk` Paninvasion Severity App is an interactive map that allows for highly customizable visualization. When loaded, it will display a map of the earth with several different data layers already enabled (see image below for example).
 
 <center>
 
-![Landing page and labeled visualization tools for `slfrsk` Paninvasion Risk App.](/Volumes/GoogleDrive/My Drive/spotted_lanternfly_ieco_projects/code/FINAL_CODE/R package/nah_work/slfrsk/docs/articles/slfrsk_ee_home_label.png)
+![Landing page and labeled visualization tools for `slfrsk` Paninvasion Severity App.](/Volumes/GoogleDrive/My Drive/spotted_lanternfly_ieco_projects/code/FINAL_CODE/R package/nah_work/slfrsk/docs/articles/slfrsk_ee_home_label.png)
 
 </center>
 
@@ -62,7 +62,7 @@ The layers panel contains several key measures of SLF invasion potential. Each l
 
 <center>
 
-![Default view of Layers Panel for `slfrsk` Paninvasion Risk App.](/Volumes/GoogleDrive/My Drive/spotted_lanternfly_ieco_projects/code/FINAL_CODE/R package/nah_work/slfrsk/docs/articles/slfrsk_ee_layers_panel.png)
+![Default view of Layers Panel for `slfrsk` Paninvasion Severity App.](/Volumes/GoogleDrive/My Drive/spotted_lanternfly_ieco_projects/code/FINAL_CODE/R package/nah_work/slfrsk/docs/articles/slfrsk_ee_layers_panel.png)
 
 </center>
 
@@ -139,9 +139,9 @@ scale_fill_manual(
 
 \newline
 
-6. **invasion risk**: the risk of shock to the wine market as determined by the relationship between predicted values of average annual grape production based on SLF transport and establishment potential and average annual wine market size (scaled $[1,10]$). This scaling ranges from a completely negative relationship at 1 to a completely positive relationship at 10 (thus explaining the change from the $[0,10]$ scale seen for other layers) This layer is a shaded fill for *only* `countries` that **do not already have established SLF populations**.
+6. **invasion severity**: the severity of shock to the wine market as determined by the relationship between predicted values of average annual grape production based on SLF transport and establishment potential and average annual wine market size (scaled $[1,10]$). This scaling ranges from a completely negative relationship at 1 to a completely positive relationship at 10 (thus explaining the change from the $[0,10]$ scale seen for other layers) This layer is a shaded fill for *only* `countries` that **do not already have established SLF populations**.
 
-```{r risk key, echo=FALSE, fig.width=5, fig.height=1, fig.align='center'}
+```{r severity key, echo=FALSE, fig.width=5, fig.height=1, fig.align='center'}
 tibble(x= seq(from = 0, to = 10, by = 1), colors = rev(c('#a50026','#d73027','#f46d43','#fdae61','#fee090','#ffffbf','#e0f3f8','#abd9e9','#74add1','#4575b4','#313695'))) %>%
 ggplot(data = .) +
   geom_tile(aes(x = x, y = 1, fill = colors), show.legend = F) +
@@ -164,7 +164,7 @@ scale_fill_manual(
         axis.text.y = element_blank(),
         axis.ticks.y = element_blank()) +
         labs(x = "", y = "") +
-    ggtitle("Invasion Risk") +
+    ggtitle("Invasion Severity") +
     scale_x_continuous(name = "", breaks = c(0.001,9.999), labels = c("1", "10"), limits = c(-0.5,10.5))
 ```
 
@@ -172,7 +172,7 @@ scale_fill_manual(
 
 # Data preparation
 
-This vignette is a companion to the interactive `slfrsk` Google Earth Engine (EE) Paninvasion Risk App <https://ieco.users.earthengine.app/view/ieco-slf-riskmap>. It provides a brief demonstration of how the data were treated prior to inclusion in the app. Output data from this vignette are saved in the shared GoogleDrive `./slfRiskMapping/data/slfRisk/` directory. 
+This vignette is a companion to the interactive `slfrsk` Google Earth Engine (EE) Paninvasion Severity App <https://ieco.users.earthengine.app/view/ieco-slf-riskmap>. It provides a brief demonstration of how the data were treated prior to inclusion in the app. Output data from this vignette are saved in the shared GoogleDrive `./slfRiskMapping/data/slfRisk/` directory. 
 
 ## Setup
 
@@ -192,11 +192,16 @@ library(cleangeo) #clgeo_Clean
 We then read in the summary data for both `states` and `countries` from `vignette-010-tidy-data` to eventually merge with shapfiles. We also remove any `countries` with `establishment` potential that are `-Inf` values.
 
 ```{r read data, eval=TRUE}
-data("states_summary_future_ensemble")
-data("countries_summary_future_ensemble")
+#data("states_summary_future_ensemble")
+#data("countries_summary_future_ensemble")
+data("states_summary_present_ensemble")
+data("countries_summary_present_ensemble")
+
 
 #rm the -Inf countries
-countries_summary_future_ensemble <- countries_summary_future_ensemble %>%
+#countries_summary_future_ensemble <- countries_summary_future_ensemble %>%
+#      filter(!ID %in% c("Antarctica", "Monaco", "Norfolk Island", "Spratly Islands"))
+countries_summary_present_ensemble <- countries_summary_present_ensemble %>%
       filter(!ID %in% c("Antarctica", "Monaco", "Norfolk Island", "Spratly Islands"))
 ```
 
@@ -213,7 +218,7 @@ After these transformations, we go ahead and round the raw data for reducing fil
 
 ```{r add the corr plot data, eval=TRUE}
 #states
-states_summary_future_ensemble <- states_summary_future_ensemble %>%
+states_summary_present_ensemble <- states_summary_present_ensemble %>%
   #transport in 2 mutate steps
   mutate(transport = log10_avg_infected_mass - min(log10_avg_infected_mass)) %>%
   mutate(transport = round(x = transport / max(transport), digits = 1)*10) %>%
@@ -225,7 +230,7 @@ states_summary_future_ensemble <- states_summary_future_ensemble %>%
   mutate(impact_grape = round(x = log10_avg_prod / max(log10_avg_prod), digits = 1)*10)
 
 #rounding
-states_summary_future_ensemble <- states_summary_future_ensemble %>%
+states_summary_present_ensemble <- states_summary_present_ensemble %>%
   mutate(grand_mean_max = signif(grand_mean_max, digits = 5),
          #grand_se_max = signif(grand_se_max, digits = 5),
          avg_wine = signif(avg_wine, digits = 5),
@@ -246,7 +251,7 @@ states_summary_future_ensemble <- states_summary_future_ensemble %>%
          )
 
 #countries
-countries_summary_future_ensemble <- countries_summary_future_ensemble %>%
+countries_summary_present_ensemble <- countries_summary_present_ensemble %>%
   #transport in 2 mutate steps
   mutate(transport = log10_avg_infected_mass - min(log10_avg_infected_mass)) %>%
   mutate(transport = round(x = transport / max(transport), digits = 1)*10) %>%
@@ -258,7 +263,7 @@ countries_summary_future_ensemble <- countries_summary_future_ensemble %>%
   mutate(impact_grape = round(x = log10_avg_prod / max(log10_avg_prod), digits = 1)*10)
 
 #rounding
-countries_summary_future_ensemble <- countries_summary_future_ensemble %>%
+countries_summary_present_ensemble <- countries_summary_present_ensemble %>%
   mutate(grand_mean_max = signif(grand_mean_max, digits = 5),
          #grand_se_max = signif(grand_se_max, digits = 5),
          avg_wine = signif(avg_wine, digits = 5),
@@ -279,26 +284,26 @@ countries_summary_future_ensemble <- countries_summary_future_ensemble %>%
          )
 ```
 
-We also need to obtain the predicted invasion risk from `vignette-041-market-plot`. We have conveniently saved those data as `data/countries_risk_market.rda`, which actually is a modified version of `countries_summary_future`. We will load these data, round the new columns, and `join` by `ID` (note that`states` do not have values for these fields, as they were not evaluated this way).
+We also need to obtain the predicted invasion severity from `vignette-041-market-plot`. We have conveniently saved those data as `data/countries_severity.rda`, which actually is a modified version of `countries_summary_present`. We will load these data, round the new columns, and `join` by `ID` (note that`states` do not have values for these fields, as they were not evaluated this way).
 
-For reference, please see `vignette-041-market-plot` for methods to produce `market_size` ($log_{10}(value+1)$ transformed average wine exports) and `risk` (scaled invasion risk $[1,10]$).
+For reference, please see `vignette-041-market-plot` for methods to produce `market_size` ($log_{10}(value+1)$ transformed average wine exports) and `sev` (scaled invasion severity $[1,10]$).
 
 We also rename `market_size` to `mkt_size` to meet the ESRI shapefile column name requirements.
 
 ```{r load and merge market_risk data, eval=TRUE}
-#read in market risk data
-data("countries_risk")
+#read in market severity data
+data("countries_sev")
 
 #round similarly and rename market_size
-countries_risk <- countries_risk %>%
+countries_sev <- countries_sev %>%
   mutate(mkt_size = signif(market_size, digits = 5),
-         risk = signif(risk, digits = 5)
+         sev = signif(sev, digits = 5)
          ) %>%
   dplyr::select(-market_size)
 
 #merge the two datasets
-countries_summary_future_ensemble <- countries_summary_future_ensemble %>%
-  left_join(., countries_risk, by = "ID")
+countries_summary_present_ensemble <- countries_summary_present_ensemble %>%
+  left_join(., countries_sev, by = "ID")
 
 ```
 
@@ -308,10 +313,10 @@ We use the shared GoogleDrive file that contains downloaded GADM shapefiles (<ht
 
 ```{r read in the country and state shapefiles, message=FALSE, warning=FALSE, eval=TRUE}
   #shapefile of USA: data obtained from GADM: https://gadm.org/download_world.html
-states <- readOGR(dsn = "/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk/geo_shapefiles/gadm36_USA_shp/gadm36_USA_1.shp", verbose = F, p4s = '+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0')
+states <- readOGR(dsn = "/Volumes/GoogleDrive/Shared drives/slfData/data/slfRisk/geo_shapefiles/gadm36_USA_shp/gadm36_USA_1.shp", verbose = F, p4s = '+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0')
 
   #shapefile of world by countries
-countries <- readOGR("/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk/geo_shapefiles/gadm36_levels_shp/gadm36_0.shp", verbose = F, p4s = '+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0')
+countries <- readOGR("/Volumes/GoogleDrive/Shared drives/slfData/data/slfRisk/geo_shapefiles/gadm36_levels_shp/gadm36_0.shp", verbose = F, p4s = '+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0')
 ```
 
 There are a few shapefile data entries that need to be cleaned, so we alter the names. We also removed the US from `countries`, as in other analyses.
@@ -344,11 +349,11 @@ Following this, the shapefiles were filtered to only geopolitical entities that 
 
 ```{r filter the states to just those in the trade data, eval=TRUE}
 #states
-states <- states[states@data$NAME_1 %in% unique(states_summary_future_ensemble$geopol_unit),]
-states_lo <- states_lo[states_lo@data$NAME_1 %in% unique(states_summary_future_ensemble$geopol_unit),]
+states <- states[states@data$NAME_1 %in% unique(states_summary_present_ensemble$geopol_unit),]
+states_lo <- states_lo[states_lo@data$NAME_1 %in% unique(states_summary_present_ensemble$geopol_unit),]
 #countries
-countries <- countries[countries@data$NAME_0 %in% unique(countries_summary_future_ensemble$geopol_unit),]
-countries_lo <- countries_lo[countries_lo@data$NAME_0 %in% unique(countries_summary_future_ensemble$geopol_unit),]
+countries <- countries[countries@data$NAME_0 %in% unique(countries_summary_present_ensemble$geopol_unit),]
+countries_lo <- countries_lo[countries_lo@data$NAME_0 %in% unique(countries_summary_present_ensemble$geopol_unit),]
 ```
 
 In the downscaling and filtering process, we needed to make sure that the geometries are intact and cleaned, and so we used the `clgeo_Clean()` function to ensure that the shapefiles work appropriately.
@@ -359,7 +364,6 @@ states <- clgeo_Clean(states)
 states_lo <- clgeo_Clean(states_lo)
 countries <- clgeo_Clean(countries)
 countries_lo <- clgeo_Clean(countries_lo)
-
 ```
 
 # Data merging
@@ -368,15 +372,15 @@ Now, we use `left_join()` to join the `shapefile@data` table to the correspondin
 
 ```{r add in the trade data, eval=TRUE}
 #states
-states@data <- left_join(states@data, states_summary_future_ensemble, by = c("NAME_1" = "geopol_unit"))
-states_lo@data <- left_join(states_lo@data, states_summary_future_ensemble, by = c("NAME_1" = "geopol_unit"))
+states@data <- left_join(states@data, states_summary_present_ensemble, by = c("NAME_1" = "geopol_unit"))
+states_lo@data <- left_join(states_lo@data, states_summary_present_ensemble, by = c("NAME_1" = "geopol_unit"))
 #countries
-countries@data <- left_join(countries@data, countries_summary_future_ensemble, by = c("NAME_0" = "geopol_unit"))
-countries_lo@data <- left_join(countries_lo@data, countries_summary_future_ensemble, by = c("NAME_0" = "geopol_unit"))
+countries@data <- left_join(countries@data, countries_summary_present_ensemble, by = c("NAME_0" = "geopol_unit"))
+countries_lo@data <- left_join(countries_lo@data, countries_summary_present_ensemble, by = c("NAME_0" = "geopol_unit"))
 
 ```
 
-We also rename the column fields to accommodate for ESRI shapefile column name character limits. A README file exists in the GoogleDrive `./slfRiskMapping/data/slfRisk/` that outlines the keys for the old names and the shorter names used here.
+We also rename the column fields to accommodate for ESRI shapefile column name character limits. A README file exists in the GoogleDrive `./slfData/data/slfRisk/` that outlines the keys for the old names and the shorter names used here.
 
 ```{r rename fields, eval=TRUE}
 #states
@@ -422,20 +426,20 @@ combined_lo <- rbind(states_lo, countries_lo, makeUniqueIDs = TRUE)
 
 # Save shapefiles for EE
 
-The newly merged shapefiles (`countries`, `states`, and `combined` for regular and `_lo` versions) are written to the shared GoogleDrive directory `./slfRiskMapping/data/slfRisk/geo_shapefiles/gadm36_USA_with_data/` for visualization with EE.
+The newly merged shapefiles (`countries`, `states`, and `combined` for regular and `_lo` versions) are written to the shared GoogleDrive directory `./slfData/data/slfRisk/geo_shapefiles/gadm36_USA_with_data/`for visualization with EE.
 
 ```{r write out the shapefiles, warning=FALSE, message=FALSE, eval=FALSE}
 #states
-writeOGR(obj = states, dsn = "/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk/geo_shapefiles/gadm36_USA_with_data/",  driver="ESRI Shapefile", layer = "states", verbose = FALSE, overwrite_layer = TRUE)
-writeOGR(obj = states_lo, dsn = "/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk/geo_shapefiles/gadm36_USA_with_data/",  driver="ESRI Shapefile", layer = "states_lores", verbose = FALSE, overwrite_layer = TRUE)
+writeOGR(obj = states, dsn = "/Volumes/GoogleDrive/Shared drives/slfData/data/slfRisk/geo_shapefiles/gadm36_USA_with_data/",  driver="ESRI Shapefile", layer = "states", verbose = FALSE, overwrite_layer = TRUE)
+writeOGR(obj = states_lo, dsn = "/Volumes/GoogleDrive/Shared drives/slfData/data/slfRisk/geo_shapefiles/gadm36_USA_with_data/",  driver="ESRI Shapefile", layer = "states_lores", verbose = FALSE, overwrite_layer = TRUE)
 
 #countries
-writeOGR(obj = countries, dsn = "/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk/geo_shapefiles/gadm36_levels_with_data/",  driver="ESRI Shapefile", layer = "countries", verbose = FALSE, overwrite_layer = TRUE)
-writeOGR(obj = countries_lo, dsn = "/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk/geo_shapefiles/gadm36_levels_with_data/",  driver="ESRI Shapefile", layer = "countries_lores", verbose = FALSE, overwrite_layer = TRUE)
+writeOGR(obj = countries, dsn = "/Volumes/GoogleDrive/Shared drives/slfData/data/slfRisk/geo_shapefiles/gadm36_levels_with_data/",  driver="ESRI Shapefile", layer = "countries", verbose = FALSE, overwrite_layer = TRUE)
+writeOGR(obj = countries_lo, dsn = "/Volumes/GoogleDrive/Shared drives/slfData/data/slfRisk/geo_shapefiles/gadm36_levels_with_data/",  driver="ESRI Shapefile", layer = "countries_lores", verbose = FALSE, overwrite_layer = TRUE)
 
 #combined
-writeOGR(obj = combined, dsn = "/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk/geo_shapefiles/combined/",  driver="ESRI Shapefile", layer = "combined", verbose = FALSE, overwrite_layer = TRUE)
-writeOGR(obj = combined_lo, dsn = "/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk/geo_shapefiles/combined/",  driver="ESRI Shapefile", layer = "combined_lores", verbose = FALSE, overwrite_layer = TRUE)
+writeOGR(obj = combined, dsn = "/Volumes/GoogleDrive/Shared drives/slfData/data/slfRisk/geo_shapefiles/combined/",  driver="ESRI Shapefile", layer = "combined", verbose = FALSE, overwrite_layer = TRUE)
+writeOGR(obj = combined_lo, dsn = "/Volumes/GoogleDrive/Shared drives/slfData/data/slfRisk/geo_shapefiles/combined/",  driver="ESRI Shapefile", layer = "combined_lores", verbose = FALSE, overwrite_layer = TRUE)
 ```
 
 # Supplemental check of shapefiles 
@@ -450,7 +454,7 @@ Fortify data to test for plotting with `ggplot2`.
 
 #fortifying to make points
 states_gg <- fortify(states_lo, region = "NAME_1")
-states_gg <- left_join(states_gg, states_summary_future_ensemble, by = c("id" = "geopol_unit"))
+states_gg <- left_join(states_gg, states_summary_present_ensemble, by = c("id" = "geopol_unit"))
 
 #try with all
 #combined_gg <- fortify(combined_lo, region = "NAME_1")

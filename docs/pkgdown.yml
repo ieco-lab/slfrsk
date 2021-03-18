@@ -1,18 +1,21 @@
-pandoc: 2.7.3
-pkgdown: 1.5.1
+pandoc: 2.11.3.2
+pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
   vignette-001-overview: vignette-001-overview.html
   vignette-002-terms: vignette-002-terms.html
+  vignette-003-get-gbif-data: vignette-003-get-gbif-data.html
   vignette-010-tidy-data: vignette-010-tidy-data.html
   vignette-011-suitability-models: vignette-011-suitability-models.html
   vignette-021-quadrant-plots: vignette-021-quadrant-plots.html
   vignette-025-quadrant-plots-alt: vignette-025-quadrant-plots-alt.html
   vignette-026-quadrant-plots-alt-median: vignette-026-quadrant-plots-alt-median.html
   vignette-027-quadrant-plots-alt-mean: vignette-027-quadrant-plots-alt-mean.html
-  vignette-030-risk-maps: vignette-030-risk-maps.html
+  vignette-030-potentials-maps: vignette-030-potentials-maps.html
   vignette-040-ee-data: vignette-040-ee-data.html
   vignette-041-market-plot: vignette-041-market-plot.html
-  vignette-060-hops: vignette-060-hops.html
-last_built: 2020-10-16T18:21Z
+  vignette-042-trade-presence: vignette-042-trade-presence.html
+  vignette-050-ava-temp: vignette-050-ava-temp.html
+  vignette-060-spread-figure: vignette-060-spread-figure.html
+last_built: 2021-03-12T17:04Z
 

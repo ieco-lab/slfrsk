@@ -1,0 +1,151 @@
+---
+title: "Trade and Regulatory Incident Relationship"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{vignette-042-trade-presence}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: inline
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+Evaluate if Trade with Established States Relates to Regulatory Incidents or Establishment
+
+***
+
+This vignette fits a simple logistic regression model in the form of a binary dependent variable (either **states with regulatory incidents** or **states with established SLF**) on a continuous independent variable (trade with established states, mass in metric tons transformed as $log_{10}(value+1)$).
+
+# Setup
+
+## Load packages
+
+```{r setup, warning=FALSE, results='hide', message=FALSE}
+#packages to load
+library(tidyverse) #data tidying
+library(magrittr) #fast pipe assign
+library(lubridate) #extract years
+library(stargazer) #make easy model table for pub
+```
+
+## Read in data
+
+```{r read in data needed for functions}
+#data to load
+
+#slfrsk data (trade)
+data("states_summary_present_ensemble",package = "slfrsk")
+
+#recode the established variable as binary
+states_summary_present_ensemble <- states_summary_present_ensemble %>%
+  mutate(estab = ifelse(status == "established", 1, 0)) %>%
+   dplyr::select(ID:status, estab, everything())
+
+#lycormap and lycordata data
+#separate version with regulatory incidents
+data("tinyslf", package = "lycormap")
+
+# reading manually added data (for a later step)
+man_county_data <- read_csv(file.path("/Volumes/GoogleDrive/My Drive/spotted_lanternfly_ieco_projects/code/FINAL_CODE/R package/lycordata/", "data-raw", "additional",
+                                      "slf_county_record_timeline.csv"),
+                            col_types = cols(.default = "c", FIPS = "d", 
+                                             RT_check = "l", ST_check = "l", RS_match = "l"))
+
+```
+
+## Quick clean up of `lycordata`
+
+We now use some other data to get states with regulatory events. The `slfrsk` data already has established states, but it lacks the states that have regulatory events recorded but no established populations.
+
+```{r tidying and summarizing the regulatory states}
+#standardize the dates in the data
+man_county_data %<>% 
+  mutate_at(vars(starts_with("Date")), .funs = ~parsedate::parse_date(.))
+
+#get years for the manual data
+man_county_data %<>% 
+  mutate(Year_Alive = year(Date_Alive),
+         Year_Morbund = year(Date_Morbund),
+         Year_FirstRecord = ifelse(!(is.na(Year_Alive) & is.na(Year_Morbund)),
+                                   pmin(Year_Alive, Year_Morbund, na.rm = T),
+                                   NA)
+  ) %>% 
+  dplyr::select(-c(Year_Alive, Year_Morbund))
+
+# we here create two variables that echo those in the by_county
+man_county_data %<>% 
+  filter(!is.na(Status)) %>% 
+  # first grabbing the date (if present) from the Date_Establish or Date_Alive/Morbound columns
+  # Then attributing 2020 to all other established records without date
+  # doing this with nested ifelse statements
+  mutate(YearOfEstablishment_man = ifelse(
+    Status == "Infestation" & !is.na(Date_Establish),
+    year(Date_Establish),
+    ifelse(Status == "Infestation" & is.na(Date_Establish), 2020, NA)),
+    FirstRecord_man = ifelse(
+      Status != "Infestation" & !is.na(Year_FirstRecord),
+      Year_FirstRecord,
+      ifelse(Status == "Infestation" & is.na(Year_FirstRecord), 2020, NA))) %>% 
+  dplyr::select(-Year_FirstRecord)
+
+#get the states by pulling counties with records or establishment
+reg_states <- man_county_data %>%
+  rename(state = State) %>%
+  filter(!is.na(FirstRecord_man) | !is.na(YearOfEstablishment_man)) %>%
+  summarize(states = toupper(unique(state))) %>%
+#then bind to tinyslf main data to it
+  bind_rows(tinyslf %>%
+              filter(slf_present == TRUE | slf_established == TRUE) %>%
+              summarize(states = unique(state)), .) %>%
+#clear it to just unique values
+  distinct(states)
+
+#recode the regulatory event states
+states_summary_present_ensemble <- states_summary_present_ensemble %>%
+  mutate(regulatory = ifelse(ID %in% reg_states$states, 1, 0)) %>%
+  dplyr::select(ID:estab, regulatory, everything())
+
+```
+
+# Model the relationship
+
+We have two models that we look at, specifically the relationship between trade with established states AND:
+
+  1. establishment status as a binary (`estab`)
+  2. regulatory event status (`regulatory`)
+  
+```{r fit the models}
+#logistic regression
+glm.fit1 <- glm(estab ~ log10_avg_infected_mass, data = states_summary_present_ensemble, family = "binomial")
+#summarize to see fit
+summary(glm.fit1)
+
+
+#logistic regression for regulatory event states
+glm.fit2 <- glm(regulatory ~ log10_avg_infected_mass, data = states_summary_present_ensemble, family = "binomial")
+#summarize to see fit
+summary(glm.fit2)
+
+```
+
+# Display Models
+
+```{r stargazer output, results='asis'}
+star_table <- stargazer(glm.fit1, glm.fit2, 
+          type = "html", 
+          intercept.bottom = T,
+          ci = FALSE,
+          digits = 2,
+          style = "io",
+          #style = "default",
+          title = "SI Table: Logistic regression of SLF status on trade",
+          out = paste0(here::here(),"/vignettes/logistic_models.doc")
+          )
+```
+

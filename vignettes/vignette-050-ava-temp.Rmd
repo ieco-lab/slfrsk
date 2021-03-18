@@ -1,0 +1,247 @@
+---
+title: "West Coast AVAs: SLF Development Temperature Thresholds"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{vignette-050-ava-temp}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: inline
+bibliography: references.bib
+link-citations: yes
+---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.align='left'
+)
+```
+
+A Quick Evauation of West Coast AVAs for SLF Development Temperature Thresholds
+
+***
+
+This vignette serves as a quick check to ensure that the viticultural areas (AVAs) on the west coast of the United States have regions that have temperatures that can support populations of **SLF**. We plot temperature data interpolated from a SCDNA dataset and evaluate if critical thresholds for days in two possible temperature ranges are met in AVAs up and down the west coast. 
+
+# Setup
+
+We first load necessary packages:
+
+```{r setup, warning=FALSE, results='hide', message=FALSE}
+library(slfrsk) #this package, has extract_enm()
+library(tidyverse)  #data manipulation
+library(here) #making directory pathways easier on different instances
+library(rgdal) #load shapefiles
+library(patchwork) #easy combined plots
+library(raster) #raster geo stuffs
+library(ggfortify) #fortify rasters
+```
+
+We then read in a shapefiles for AVAs in CA, OR, and WA. These data are obtained from the American Viticultural Areas Project (data available at: <https://github.com/UCDavisLibrary/ava>). The project is ongoing, so some AVAs for WA and OR may be missing, and at least two contained incorrect geometries (Tualatin Hills and Laurelwood District, both OR) and were thus removed.
+
+```{r ava shapefiles, message=FALSE}
+#read in the shapefiles for AVAs
+ca_ava <- readOGR(dsn = "/Volumes/GoogleDrive/My Drive/spotted_lanternfly_ieco_projects/data/wineries/CA_avas_shapefile", layer = "CA_avas", verbose = F)
+or_ava <- readOGR(dsn = "/Volumes/GoogleDrive/My Drive/spotted_lanternfly_ieco_projects/data/wineries/OR_avas_shapefile", layer = "OR_avas", verbose = F)
+wa_ava <- readOGR(dsn = "/Volumes/GoogleDrive/My Drive/spotted_lanternfly_ieco_projects/data/wineries/WA_avas_shapefile", layer = "WA_avas", verbose = F)
+
+#clean some weird polygons for OR shapefiles
+or_ava <- or_ava[!or_ava$ava_id %in% c("tualatin_hills", "laurelwood_district"),]
+
+#make an all version
+wc_ava <- bind(ca_ava, or_ava, wa_ava)
+
+```
+
+Evaluation of presumptive critical thresholds for SLF development were based on results from @keena_comparison_2021, which detail that SLF eggs can viably emerge with or without a chilling period to terminate diapause in eggs (previously believed to be necessary, as per @shim_molecular_2015). A more comprehensive discussion of diapause is beyond the scope of this paper, but please see previous citations as a starting point for a current understanding of diapause in SLF. 
+
+We determine if west coast AVAs meet either of the following criteria (based on Table 1 in @keena_comparison_2021):
+
+1. Diapause-terminating Chilling Period (**chill_dia**): at least 60 days with temperatures $< 10C$ 
+2. No Chilling Period (**no_chill**): at least 95 days with temperatures $> 10C \& < 20C$
+
+To do this, we use temperature data collected from the station-based serially complete datasets for North America (SCDNA, @tang_scdna_2020). These data were previously interpolated by Seba De Bona (<sebastiano.debona@temple.edu>) to produce a grid of points at both 0.25 x 0.25 degree and 0.50 x 0.50 degree spatial resolutions (both available but the former is used). Temperature values were calculated as daily averages (degrees Celsius) for 2008--2018. Here, we read in the points, summarize the number of days at the temperature thresholds, and rasterize the data for visualization and comparison.
+
+```{r temperature data and rasterization, message=FALSE}
+#read in the grid gps points
+#temp_points <- read_csv("/Volumes/GoogleDrive/My Drive/spotted_lanternfly_c2m2_projects/code/data_to_model/age_time_gridded_data_3193.csv") #the 0.5 degrees spatial extent data
+temp_points <- read_csv("/Volumes/GoogleDrive/My Drive/spotted_lanternfly_c2m2_projects/code/data_to_model/age_time_gridded_data_12888.csv") #the 0.25 degrees spatial extent data
+
+#summarize data for days < 10C, < 5C, between 10 and 20C, between 14 and 20C
+cold_days <- temp_points %>%
+  group_by(latitude, longitude) %>%
+  summarize(days = n(), 
+            dlt10 = sum(temperature < 10), 
+            dlt5 = sum(temperature < 5), 
+            dbtwn1020 = sum(temperature < 20 & temperature > 10), 
+            dbtwn1420 = sum(temperature < 20 & temperature > 14)) %>%
+  dplyr::select(longitude, latitude, everything()) %>%
+  ungroup() %>%
+   data.frame(.)
+
+#rasterize this
+cold_days_ras <- rasterFromXYZ(xyz = cold_days[,-3], crs = crs("+proj=longlat +datum=WGS84 +no_defs"))
+```
+
+# Visualization
+
+With the summarized data, we plot the mapped data for the **chill_dia** threshold, with an additional focus on the famous Napa Valley AVA in CA. Notably, several key AVAs are outlined in **<span style="color:#FF0000;">red</span>** for future consideration below.
+
+```{r dlt plots, message=FALSE, fig.dim=c(8,6)}
+wc_plot <- ggplot() +
+  geom_raster(data = fortify(cold_days_ras[[1]]), aes(x = long, y = lat, fill = dlt10)) +
+  geom_polygon(data = map_data('state'), aes(x = long, y = lat, group = group), fill = NA, color = "black", lwd = 0.20) +
+  geom_path(data = fortify(wc_ava), aes(x = long, y = lat, group = group), color = "#ffca7b", lwd = 0.25) +
+  geom_path(data = fortify(wc_ava[wc_ava$ava_id %in% c("puget_sound","yakima_valley","willamette_valley","rogue_valley","mendocino","russian_river_valley","napa_valley" ,"sierra_foothills" ,"santa_clara_valley","monterey","paso_robles","santa_maria_valley","sta__rita_hills","south_coast"), ]), aes(x = long, y = lat, group = group), color = "#ff7251") +
+  coord_quickmap(xlim = c(-124, -112), ylim = c(33, 48.5)) +
+  scale_fill_viridis_b(breaks = c(30,60,180,270))
+
+napa_plot <- ggplot() +
+  geom_raster(data = fortify(cold_days_ras[[1]]), aes(x = long, y = lat, fill = dlt10)) +
+  geom_polygon(data = map_data('state'), aes(x = long, y = lat, group = group), fill = NA, color = "black", lwd = 0.20) +
+  geom_path(data = fortify(ca_ava[ca_ava$ava_id =="napa_valley",]), aes(x = long, y = lat, group = group), color = "#ff7251") +
+  coord_quickmap(xlim = c(-123.5, -121.5), ylim = c(38, 39)) + #napa
+  scale_fill_viridis_b(breaks = c(30,60,180,270))
+
+#plot them with a spacer
+wc_plot + (plot_spacer() / napa_plot)
+
+```
+
+We repeat this same first visualization for the **no_chill** threshold.
+
+```{r dbtwn plots, message=FALSE, fig.dim=c(8,6), echo=FALSE}
+
+wc_ndp_plot <- ggplot() +
+  geom_raster(data = fortify(cold_days_ras[[3]]), aes(x = long, y = lat, fill = dbtwn1020)) +
+  geom_polygon(data = map_data('state'), aes(x = long, y = lat, group = group), fill = NA, color = "black", lwd = 0.20) +
+  geom_path(data = fortify(wc_ava), aes(x = long, y = lat, group = group), color = "#ffca7b", lwd = 0.25) +
+  geom_path(data = fortify(wc_ava[wc_ava$ava_id %in% c("puget_sound","yakima_valley","willamette_valley","rogue_valley","mendocino","russian_river_valley","napa_valley" ,"sierra_foothills" ,"santa_clara_valley","monterey","paso_robles","santa_maria_valley","sta__rita_hills","south_coast"), ]), aes(x = long, y = lat, group = group), color = "#ff7251") +
+  #coord_quickmap(xlim = c(-123, -121), ylim = c(38, 39)) + #napa
+  coord_quickmap(xlim = c(-124, -112), ylim = c(33, 48.5)) +
+  scale_fill_viridis_b(breaks = c(70,95))
+
+```
+
+To better evaluate if any part of each AVA meets either threshold, we extract the values that meet the criteria for the thresholds with `raster::extract()` and put a $1$ for AVAs that do and $0$ for those that do not. We present these results as a table (further below).
+
+```{r ava results table, warning=F, echo=FALSE}
+#create a dummy df with all the names of the AVAs and the states they belong to and the cols of interest
+ava_results <- tibble(
+  ava = c(ca_ava$ava_id, or_ava$ava_id, wa_ava$ava_id),
+  state = c(rep("CA", times = length(ca_ava$ava_id)), rep("OR", times = length(or_ava$ava_id)), rep("WA", times = length(wa_ava$ava_id))),
+  chill_dia = NA,
+  no_chill = NA
+)
+
+#run through a loop of each ava shapefile dataset
+#for each AVA ID,
+  #extract all pixels from the AVA for cold_days_ras
+    #evaluate if any pixels in dlt10 > 60 -- > add in 1/0
+    #evaluate if any pixels in dbtwn1020 > 95 -- > add in 1/0
+
+#CA AVAs
+for(a in ca_ava$ava_id){
+  #extract pixels as a df
+  hold_extract <- extract(cold_days_ras, ca_ava[ca_ava$ava_id == a,], df = T)
+  #rm NA rows
+  hold_extract <- na.omit(hold_extract)
+  
+  #evaluate dlt10 and populate ava_results
+  if(any(hold_extract$dlt10 > 60) == TRUE){
+    ava_results$chill_dia[ava_results$ava == a] <- 1
+  } else if(any(hold_extract$dlt10 > 60) == FALSE){
+    ava_results$chill_dia[ava_results$ava == a] <- 0
+  }
+  #evaluate dbtwn1020 and populate
+  if(any(hold_extract$dbtwn1020 > 95) == TRUE){
+    ava_results$no_chill[ava_results$ava == a] <- 1
+  } else if(any(hold_extract$dbtwn1020 > 95) == FALSE){
+    ava_results$no_chill[ava_results$ava == a] <- 0
+  }
+  
+}
+
+#OR AVAs
+for(a in or_ava$ava_id){
+  #extract pixels as a df
+  hold_extract <- extract(cold_days_ras, or_ava[or_ava$ava_id == a,], df = T)
+  #rm NA rows
+  hold_extract <- na.omit(hold_extract)
+  
+  #evaluate dlt10 and populate ava_results
+  if(any(hold_extract$dlt10 > 60) == TRUE){
+    ava_results$chill_dia[ava_results$ava == a] <- 1
+  } else if(any(hold_extract$dlt10 > 60) == FALSE){
+    ava_results$chill_dia[ava_results$ava == a] <- 0
+  }
+  #evaluate dbtwn1020 and populate
+  if(any(hold_extract$dbtwn1020 > 95) == TRUE){
+    ava_results$no_chill[ava_results$ava == a] <- 1
+  } else if(any(hold_extract$dbtwn1020 > 95) == FALSE){
+    ava_results$no_chill[ava_results$ava == a] <- 0
+  }
+  
+}
+
+#WA AVAs
+for(a in wa_ava$ava_id){
+  #extract pixels as a df
+  hold_extract <- extract(cold_days_ras, wa_ava[wa_ava$ava_id == a,], df = T)
+  #rm NA rows
+  hold_extract <- na.omit(hold_extract)
+  
+  #evaluate dlt10 and populate ava_results
+  if(any(hold_extract$dlt10 > 60) == TRUE){
+    ava_results$chill_dia[ava_results$ava == a] <- 1
+  } else if(any(hold_extract$dlt10 > 60) == FALSE){
+    ava_results$chill_dia[ava_results$ava == a] <- 0
+  }
+  #evaluate dbtwn1020 and populate
+  if(any(hold_extract$dbtwn1020 > 95) == TRUE){
+    ava_results$no_chill[ava_results$ava == a] <- 1
+  } else if(any(hold_extract$dbtwn1020 > 95) == FALSE){
+    ava_results$no_chill[ava_results$ava == a] <- 0
+  }
+  
+}
+```
+
+We also take some representative AVAs along the west coast and move them to the top of the table. 
+
+```{r, message=FALSE, echo=FALSE}
+#clean up the table with ordering
+ava_results <- ava_results %>%
+  arrange(match(ava, c("puget_sound","yakima_valley","willamette_valley","rogue_valley","mendocino","russian_river_valley","napa_valley" ,"sierra_foothills" ,"santa_clara_valley","monterey","paso_robles","santa_maria_valley","sta__rita_hills","south_coast"))
+, state, ava)
+
+```
+
+
+We now combine the map figures for both thresholds with their corresponding versions of the table. Here, we emphasize the outlined focal AVAs as discussed previously.
+
+```{r combined table plots, message=FALSE, fig.dim=c(8,10), echo=FALSE}
+(wc_plot + (gridExtra::tableGrob(ava_results[1:14, c("ava", "state","chill_dia")]))) / (wc_ndp_plot + (gridExtra::tableGrob(ava_results[1:14, c("ava", "state","no_chill")])))
+
+```
+
+Finally, we present the full table of AVAs for both thresholds.
+
+```{r view full table, echo=FALSE}
+knitr::kable(ava_results)
+```
+
+# Save plot output
+
+```{r write out patchwork plots}
+#chill and no_chill maps with AVA tables
+pdf(file.path(here::here(),"vignettes", paste0("ca_temps_figure.pdf")),width = 8, height = 9)
+(wc_plot + (gridExtra::tableGrob(ava_results[1:14, c("ava", "state","chill_dia")]))) / (wc_ndp_plot + (gridExtra::tableGrob(ava_results[1:14, c("ava", "state","no_chill")])))
+invisible(dev.off())
+
+```
+
+
+# References

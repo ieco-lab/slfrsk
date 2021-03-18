@@ -1,5 +1,5 @@
 ---
-title: "Suitability Modeling & Evaluation"
+title: "Species Distribution Modeling"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{vignette-011-suitability-models}
@@ -19,11 +19,11 @@ knitr::opts_chunk$set(
 )
 ```
 
-How to Build, Evaluate, and Save Ecological Niche Models of Suitability for *Ailanthus altissima* (TOH) and *Lycorma delicatula* (SLF)
+How to Build, Evaluate, and Save Species Distribution Models for *Ailanthus altissima* (TOH) and *Lycorma delicatula* (SLF)
 
 ***
 
-This vignette is designed to demonstrate the workflow that lead to the creation of the three suitability models used to assess the risk of **SLF** paninvasion. The description will not include actual running of some steps of this workflow, as some are unwieldy. Instead, information to ensure proper replication of those steps is provided. Notably, the MaxEnt runs are not conducted in this vignette, although the means to do so within `R` may be possible.
+This vignette is designed to demonstrate the workflow that lead to the creation of the three species distribution models (SDMs) used to assess the severity of **SLF** paninvasion. The description will not include actual running of some steps of this workflow, as some are unwieldy. Instead, information to ensure proper replication of those steps is provided. Notably, the MaxEnt runs are not conducted in this vignette, although the means to do so within `R` may be possible.
 
 The scope of this vignette is as follows:
 
@@ -50,7 +50,7 @@ library(doParallel) #parallized extraction
 
 # 1. Reading and Visualization of Presence Data
 
-We built models of both SLF and TOH from presence records obtained from public and collaborator databases (queried 24-09-2018 and 26-09-2018, respectively; @kim_molecular_2013, @gbif_gbif:_2019). As is standard practice, we checked all records for quality, removed duplicate and imprecise records, and obtained 8,578 TOH and 145 SLF unique and cleaned presence records.
+We built models of both SLF and TOH from presence records obtained from public databases (as seen in the **"GBIF Records" vignette**). As is standard practice, we checked all records for quality, removed duplicate and imprecise records, and obtained 8,022 TOH and 325 SLF unique and cleaned presence records.
 
 ```{r read in presence records and show on a quick map, fig.height= 10, fig.width=10}
 #load data
@@ -256,11 +256,11 @@ A third model was created from *sdm_toh* suitability and **SLF** presence record
 
   3. *sdm_slf2*---a single variate SDM of SLF
   
-Here, we report in a simple table the metrics used to evaluate the various models that were considered. Model validation was conducted with *k*-fold cross-validation (*k* partitions discussed above) via evaluation of the receiver operating characteristic of the AUC and omission error (@fielding_review_1997, @phillips_maximum_2006, @pearson_predicting_2007, @anderson_species-specific_2011). 
+Here, we report in a simple table the metrics used to evaluate the various models that were considered as well as the percent contribution of each variable to each model (where applicable). Model validation was conducted with *k*-fold cross-validation (*k* partitions discussed above) via evaluation of the receiver operating characteristic of the AUC and omission error (@fielding_review_1997, @phillips_maximum_2006, @pearson_predicting_2007, @anderson_species-specific_2011). 
 
 For AUC, the fraction of true positives relative to type I error (positive background points) is compared at all possible thresholds for each model (@fielding_review_1997, @phillips_maximum_2006). The resultant plot's area under the curve is assessed relative to a random model ($AUC = 0.50$), such that values close to $1.00$ indicate strong model performance and those $\leq 0.50$  suggest poor performance (@fielding_review_1997). Given presence only data, measured AUC cannot reach $1.00$, but model AUCs that approach $1.00$ are considered to perform well (@wiley_niche_2003, @phillips_maximum_2006).
 
-Given recent concerns with model evaluation with AUC (@peterson_rethinking_2008, @lobo_auc:_2008, @jimenez-valverde_insights_2012), we confirmed model performance with average omission error, which measures the proportion of presence point(s) predicted with suitability less than the minimum training presence threshold (@pearson_predicting_2007, @anderson_species-specific_2011).
+Given recent concerns with model evaluation with AUC (@peterson_rethinking_2008, @lobo_auc:_2008, @jimenezvalverde_insights_2012), we confirmed model performance with average omission error, which measures the proportion of presence point(s) predicted with suitability less than the minimum training presence threshold (@pearson_predicting_2007, @anderson_species-specific_2011).
 
 ```{r summary of model performance, results='asis'}
 #read in summary table and view
@@ -271,7 +271,7 @@ knitr::kable(models_summary)
 
 ```
 
-The three models performed similarly, albeit with small differences across model performance metrics. Thus, we created a consensus output map by averaging the three models as an ensemble.
+The three models performed similarly, albeit with small differences across model performance metrics. Notably, the variables that contributed most the *sdm_toh* also contributed most to *sdm_slf1*, albeit at differing amounts. Thus, we created a consensus output map by averaging the three models as an ensemble.
 
 To visualize the models and produce the ensemble model image, we first had to convert the mean model for each set of replicates (`species_name_avg.asc`) and convert it to a GeoTIFF (`.tif`), which is more easily visualized and stored (example code below).
 
@@ -335,7 +335,7 @@ data("slftoh_usa_df")
 data("toh_usa_df")
 
 #plot just the states and suitability first
-m1_usa <- ggplot() +
+sdm_toh_usa <- ggplot() +
   geom_raster(data = toh_usa_df, aes(x = x, y = y, fill = rescale(value)), alpha=0.9, show.legend = F) +
   scale_fill_gradientn(limits= c(0,1), name = "Suitability", colors = rev(c("#e31a1c","#fd8d3c", "#fecc5c", "#FFFFFF"))) +
   geom_polygon(data = map_data('state'), aes(x = long, y = lat, group = group), fill = NA, color = "black", lwd = 0.10) +
@@ -345,8 +345,8 @@ m1_usa <- ggplot() +
         panel.grid.minor = element_blank(),
         panel.background = element_blank()) +
   coord_quickmap(xlim = c(-124.7628, -66.94889), ylim = c(24.52042, 49.3833)) +
-  ggtitle(label = "m1 USA")
-m2_usa <- ggplot() +
+  ggtitle(label = "sdm_toh USA")
+sdm_slf1_usa <- ggplot() +
   geom_raster(data = slf_usa_df, aes(x = x, y = y, fill = rescale(value)), alpha=0.9, show.legend = F) +
   scale_fill_gradientn(limits= c(0,1), name = "Suitability", colors = rev(c("#e31a1c","#fd8d3c", "#fecc5c", "#FFFFFF"))) +
   geom_polygon(data = map_data('state'), aes(x = long, y = lat, group = group), fill = NA, color = "black", lwd = 0.10) +
@@ -356,8 +356,8 @@ m2_usa <- ggplot() +
         panel.grid.minor = element_blank(),
         panel.background = element_blank()) +
   coord_quickmap(xlim = c(-124.7628, -66.94889), ylim = c(24.52042, 49.3833)) +
-  ggtitle(label = "m2 USA")
-s3_usa <- ggplot() +
+  ggtitle(label = "sdm_slf1 USA")
+sdm_slf2_usa <- ggplot() +
   geom_raster(data = slftoh_usa_df, aes(x = x, y = y, fill = rescale(value)), alpha=0.9, show.legend = T) +
   scale_fill_gradientn(limits= c(0,1), name = "Suitability", colors = rev(c("#e31a1c","#fd8d3c", "#fecc5c", "#FFFFFF"))) +
   geom_polygon(data = map_data('state'), aes(x = long, y = lat, group = group), fill = NA, color = "black", lwd = 0.10) +
@@ -367,10 +367,10 @@ s3_usa <- ggplot() +
         panel.grid.minor = element_blank(),
         panel.background = element_blank()) +
   coord_quickmap(xlim = c(-124.7628, -66.94889), ylim = c(24.52042, 49.3833)) +
-  ggtitle(label = "s3 USA")
+  ggtitle(label = "sdm_slf2 USA")
 
 #visualize together
-m1_usa / m2_usa / s3_usa
+sdm_toh_usa / sdm_slf1_usa / sdm_slf2_usa
 
 ```
 
@@ -385,7 +385,7 @@ data("slftoh_df")
 data("toh_df")
 
 #plot just the states and suitability first
-m1 <- ggplot() +
+sdm_toh <- ggplot() +
   geom_raster(data = toh_df, aes(x = x, y = y, fill = rescale(value)), alpha=0.8, show.legend = F) +
   scale_fill_gradientn(limits= c(0,1), name = "Suitability", colors = rev(c("#e31a1c","#fd8d3c", "#fecc5c", "#FFFFFF"))) +
   geom_polygon(data = map_data('world'), aes(x = long, y = lat, group = group), fill = NA, color = "black", lwd = 0.15) +
@@ -395,8 +395,8 @@ m1 <- ggplot() +
         panel.grid.minor = element_blank(),
         panel.background = element_blank()) +
   coord_quickmap(xlim = c(-164.5, 163.5), ylim = c(-55,85)) +
-  ggtitle(label = "m1")
-m2 <- ggplot() +
+  ggtitle(label = "sdm_toh")
+sdm_slf1 <- ggplot() +
   geom_raster(data = slf_df, aes(x = x, y = y, fill = rescale(value)), alpha=0.8, show.legend = F) +
   scale_fill_gradientn(limits= c(0,1), name = "Suitability", colors = rev(c("#e31a1c","#fd8d3c", "#fecc5c", "#FFFFFF"))) +
   geom_polygon(data = map_data('world'), aes(x = long, y = lat, group = group), fill = NA, color = "black", lwd = 0.15) +
@@ -406,8 +406,8 @@ m2 <- ggplot() +
         panel.grid.minor = element_blank(),
         panel.background = element_blank()) +
   coord_quickmap(xlim = c(-164.5, 163.5), ylim = c(-55,85)) +
-  ggtitle(label = "m2")
-s3 <- ggplot() +
+  ggtitle(label = "sdm_slf1")
+sdm_slf2 <- ggplot() +
   geom_raster(data = slftoh_df, aes(x = x, y = y, fill = rescale(value)), alpha=0.8, show.legend = T) +
   scale_fill_gradientn(limits= c(0,1), name = "Suitability", colors = rev(c("#e31a1c","#fd8d3c", "#fecc5c", "#FFFFFF"))) +
   geom_polygon(data = map_data('world'), aes(x = long, y = lat, group = group), fill = NA, color = "black", lwd = 0.15) +
@@ -417,10 +417,10 @@ s3 <- ggplot() +
         panel.grid.minor = element_blank(),
         panel.background = element_blank()) +
   coord_quickmap(xlim = c(-164.5, 163.5), ylim = c(-55,85)) +
-  ggtitle(label = "s3")
+  ggtitle(label = "sdm_slf2")
 
 #visualize together
-m1 / m2 / s3
+sdm_toh / sdm_slf1 / sdm_slf2
 
 ```
 
