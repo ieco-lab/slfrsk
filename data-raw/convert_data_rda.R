@@ -1172,7 +1172,8 @@ states_wine <- states_wine %>%
 
 
 #COUNTRIES
-countries_wine <- read_csv("./data-raw/FAOSTAT_data_wine_6-21-2019_v2.csv")
+#countries_wine <- read_csv("./data-raw/FAOSTAT_data_wine_6-21-2019_v2.csv")
+countries_wine <- read_csv("./data-raw/FAOSTAT_data_countries_wine_4-2-2021.csv")
 
 #clean up the countries data
 countries_wine <- countries_wine %>%

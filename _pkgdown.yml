@@ -41,8 +41,6 @@ navbar:
               href:  articles/vignette-010-tidy-data.html
             - text: "Species Distribution Modeling"
               href: articles/vignette-011-suitability-models.html
-            - text: "Confirm US West Coast AVA Suitability"
-              href: articles/vignette-050-ava-temp.html
             - text: ----------------
         - text: "Step 2: Calculate Alignment Correlations"
           menu:
