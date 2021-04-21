@@ -28,15 +28,7 @@ This page briefly defines commonly used terms in the **Research Compendium** for
 
 # Definitions
 
-- **spotted lanternfly (SLF)**---*Lycorma delicatula* is a planthopper native to China, Vietnam, and India. It invaded South Korea and Japan in the early 2000's and the northeastern US ca. 2014. It is known to feed on $>100$ different host species, including grapes (@urban_perspective:_2019, @barringer_worldwide_2020).
-
-\newline
-
-- **invasion potentials**---likelihoods of a species to move through stages in an invasion process across regions (@blackburn_proposed_2011). We focus on the main stages: transport, establishment, impact.
-
-\newline
-
-- **transport potential**---likelihood of a region to have an introduction of an alien species.
+- **alignment correlation**---multivariate relationship among invasion potentials.
 
 \newline
 
@@ -48,39 +40,44 @@ This page briefly defines commonly used terms in the **Research Compendium** for
 
 \newline
 
-- **alignment correlation**---multivariate relationship among invasion potentials.
+- **invasion potentials**---likelihoods of a species to move through stages in an invasion process across regions (@blackburn_proposed_2011). We focus on the main stages: transport, establishment, impact.
 
 \newline
 
-- **economic shock**---an unexpected event that affects an economic market (@wikipedia_shock_2020). Economic shocks caused by environmental problems like invasive species are negative and reduce economic growth and destabilize socioeconomic systems (@bretschger_best_2019).
+-	**MaxEnt**---acronym for maximum entropy, a presence-only SDM methodology that uses machine-learning to estimate the probability distribution of maximum entropy based on environmental variables and species occurrence records (@phillips_maximum_2006, @phillips_steven_j._opening_2017).
 
 \newline
 
-- **paninvasive species**---globally invasive species that may shock a global economic market.
+- **paninvasion**---invasion of a species at the global scale that disturbs a global economic market.
 
 \newline
 
-- **paninvasion**---invasion of a species at the global scale that shocks a global economic market.
+-	**paninvasion severity**---the likelihood of a regional invasive species to become a globally invasive species and cause economic repercussions.
 
 \newline
 
-- **phylloxera**---*Daktulosphaira vitifoliae* is grapevine root pest native to North America that was responsible for the Great Wine Blight of the late 1800's, which was the largest economic shock to the global wine market ever recorded. The shock was mitigated by widespread planting of European vines that were grafted to North American grapevine root stocks. The paninvasion of phylloxera continues to this day (@ordish_great_1972, @gale_dying_2011).
+- **paninvasive species**---globally invasive species that goes through the three main invasion stages and thus can disturb global economic markets.
 
 \newline
 
--	**paninvasion severity**---the likelihood of a regional invasive species to become a globally invasive species and cause economic shock.
+- **phylloxera**---*Daktulosphaira vitifoliae* is grapevine root pest native to North America that was responsible for the Great Wine Blight of the late 1800???s, which was the largest economic disturbance to the global wine market ever recorded. The disruption was mitigated by widespread planting of European vines that were grafted to North American grapevine root stocks. The paninvasion of phylloxera continues to this day (@ordish_great_1972, @gale_dying_2011).
 
 \newline
 
--	**species distribution model (SDM)**---spatial model used to predict the environmental niche, habitat suitability and establishment potential of a species.
+-	**species distribution model (SDM)**---spatial model used to predict the environmental niche, habitat suitability, and establishment potential of a species.
 
 \newline
 
--	**MaxEnt**---acronym for maximum entropy, which is a presence-only SDM methodology that uses machine-learning to estimate the probability distribution of maximum entropy based on environmental variables and species occurrence records (@phillips_maximum_2006, @phillips_steven_j._opening_2017).
-
+- **spotted lanternfly (SLF)**---*Lycorma delicatula* is a planthopper native to China, Vietnam, and India. It invaded South Korea and Japan in the early 2000???s and the northeastern US ca. 2014. It is known to feed on $>100$ different host species, including grapes (@urban_perspective:_2019, @barringer_worldwide_2020).
 
 \newline
 
-- **tree of heaven (TOH)**---*Ailanthus altissima* is a paninvasive deciduous tree that is native to China, Taiwan, and northern Korea, but has been spread globally. It is a highly preferred host for SLF and determines SLF establishment potential.
+- **transport potential**---likelihood of a region to have an introduction of an alien species.
+
+\newline
+
+- **tree of heaven (TOH)**---*Ailanthus altissima* is a paninvasive deciduous tree that is native to China, Taiwan, and northern Korea, but has been spread globally. It is a highly preferred host for SLF and may determine SLF establishment potential.
+
+\newline
 
 # References
