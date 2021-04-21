@@ -24,7 +24,7 @@ Overview of the Spotted Lanternfly Paninvasion Severity Research Compendium
 
 # Purpose
 
-Welcome to the **Research Compendium** Overview for "High risk of a spotted lanternfly paninvasion to shock the global wine market" [INSERT STABLE BIORXIV LINK]. This overview aims to outline the contents of the compendium to ensure that the study is transparent and reproducible.
+Welcome to the **Research Compendium** Overview for "Paninvasion severity assessment for a US grape pest to impact the global wine market" [INSERT STABLE BIORXIV LINK]. This overview aims to outline the contents of the compendium to ensure that the study is transparent and reproducible.
 
 # About the Compendium
 
@@ -40,15 +40,22 @@ We ascertain the strength of alignment at both a domestic (*U.S. states*) and gl
 
 # Navigating the Compendium
 
-The research compendium is organized into several **Articles** (or vignettes) that can be accessed via the top bar of this site. Each article aims to illuminate the process by which we obtained, prepared, or visualized our results. Currently, the compendium contains the following articles:
+The research compendium is organized into several **Analyses** (or vignettes) that can be accessed via the top bar of this site. Each analysis aims to illuminate the process by which we obtained, prepared, or visualized our results. Currently, the compendium contains the following articles:
 
-  1. **Get GBIF Records**---Show the process of obtaining coordinates for SLF and TOH that were used to model suitability
-  2. **Data Tidying**---Demonstration of how we cleaned the data obtained to conduct this study
-  3. **Suitability Modeling & Evaluation**---Step-by-step process of modeling SLF suitability and extracting suitability for **Establishment** potential
-  4. **Invasion Potentials Maps**---Reproduction of the risk map figure(s) in the main text
-  5. **Invasion Potential Alignment**---Presentation of the evaluation of alignment for **Transport**, **Establishment**, and **Impact** potentials and reproduction of the invasion alignment plots in the main text with optional modifications to evaluate different data partitions
-  6. **Wine Market Shock Severity Evaluation**---Reproduction of the wine market shock figure in the main text with additional model diagnostics
-  7. **Paninvasion Severity App**---Guide for Google Earth Engine app and conversion of the alignment and severity data for implementation in the app.
+  **Step 1: Estimate Invasion Potentials**
+  - Identify Invaded States/Reg. Incidents---Reproduce the figure of SLF spread for the US that shows areas with established populations and reported regulatory incidents
+  - Confirm SLF--Trade Tonnage Relationship---Demonstrate that trade as average annual metric total tonnage is an appropriate estimate of SLF **Transport** potential 
+  - Get GBIF Records---Show the process of obtaining coordinates for SLF and TOH that were used to model suitability
+  - Data Tidying---Demonstration of how we cleaned the data obtained to conduct this study
+  - Species Distribution Modeling---Step-by-step process of modeling SLF suitability and extracting suitability for **Establishment** potential
+  
+  **Step 2: Calculate Alignment Correlations**
+  - Invasion Potentials Maps---Reproduction of the risk map figure(s) in the main text
+  - Invasion Potential Alignment---Presentation of the evaluation of alignment for **Transport**, **Establishment**, and **Impact** potentials and reproduction of the invasion alignment plots in the main text with optional modifications to evaluate different data partitions
+  
+  **Step 3: Quantify Paninvasion Severity**
+  - Paninvasion Severity---Reproduction of the wine market shock figure in the main text with additional model diagnostics
+
   
 # Citation
 
