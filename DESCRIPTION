@@ -14,8 +14,12 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Suggests: 
+    doParallel,
     knitr,
-    rmarkdown
+    lycordata,
+    lycormap,
+    rmarkdown,
+    tcltk
 VignetteBuilder: knitr
 Imports: 
     dplyr,
@@ -39,14 +43,14 @@ Imports:
     spocc,
     scrubr,
     humboldt,
-    tcltk,
     ggfortify,
-    lycormap,
     RColorBrewer,
     tigris,
     sf,
     magrittr,
-    lubridate
+    lubridate,
+    stargazer,
+    RStoolbox
 RoxygenNote: 7.1.1
 Depends: 
     R (>= 3.50)

@@ -44,7 +44,7 @@ This page briefly defines commonly used terms in the **Research Compendium** for
 
 \newline
 
--	**MaxEnt**---acronym for maximum entropy, a presence-only SDM methodology that uses machine-learning to estimate the probability distribution of maximum entropy based on environmental variables and species occurrence records (@phillips_maximum_2006, @phillips_steven_j._opening_2017).
+-	**MaxEnt**---abbreviation for maximum entropy, a presence-only SDM methodology that uses machine-learning to estimate the probability distribution of maximum entropy based on environmental variables and species occurrence records (@phillips_maximum_2006, @phillips_steven_j._opening_2017).
 
 \newline
 
@@ -52,7 +52,7 @@ This page briefly defines commonly used terms in the **Research Compendium** for
 
 \newline
 
--	**paninvasion severity**---the likelihood of a regional invasive species to become a globally invasive species and cause economic repercussions.
+-	**paninvasion risk**---the likelihood of a regional invasive species to become a globally invasive species and cause economic repercussions.
 
 \newline
 
@@ -68,7 +68,7 @@ This page briefly defines commonly used terms in the **Research Compendium** for
 
 \newline
 
-- **spotted lanternfly (SLF)**---*Lycorma delicatula* is a planthopper native to China, Vietnam, and India. It invaded South Korea and Japan in the early 2000???s and the northeastern US ca. 2014. It is known to feed on $>100$ different host species, including grapes (@urban_perspective:_2019, @barringer_worldwide_2020).
+- **spotted lanternfly (SLF)**---*Lycorma delicatula* is a planthopper native to China, Vietnam, and India. It invaded South Korea and Japan in the early 2000's and the northeastern US ca. 2014. It is known to feed on $>100$ different host species, including grapes (@urban_perspective:_2019, @barringer_worldwide_2020).
 
 \newline
 

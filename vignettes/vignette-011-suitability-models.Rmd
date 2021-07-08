@@ -88,6 +88,21 @@ map_toh / map_slf
 
 ```
 
+```{r quick plot of things together}
+ggplot() +
+  geom_polygon(data = map_data('world'), aes(x = long, y = lat, group = group), fill = "#FFFFFF", color = "black", lwd = 0.15) + #world map
+geom_point(data = toh_points, aes(x = x, y = y), color = "#0072b2", alpha = 0.10) +
+geom_point(data = slf_points, aes(x = x, y = y), color = "#d55e00", alpha = 0.50) +
+  theme_bw() +
+  labs(x = "", y = "") +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        #plot.background = element_rect(fill ="#f0f8ff"),
+        panel.background = element_rect(fill = "#f0f8ff")) +
+  #theme_bw() +
+  coord_quickmap(xlim = c(-164.5, 163.5), ylim = c(-55,85))
+```
+
 # 2. Preparation of Spatial Data
 
 To discern which environmental variables to use in the species distribution models (SDMs), we had to minimize collinearity among included covariates (@peterson_ecological_2011). To do so, we estimated pairwise correlation coefficients for 22 global raster covariates hypothesized to influence SLF and TOH distributions: the 20 WorldClim topographic and bioclimatic variables (@hijmans_very_2005, @fick_worldclim_2017), forest height (@simard_mapping_2011),  and access to cities (@weiss_global_2018). 
@@ -468,14 +483,13 @@ With the three original and ensemble SDMs, we extracted summary statistics by ge
 
   1. *mean*
   2. *standard deviation*
-  3. *relative suitable area*---the proportion of points over a given threshold supplied in the function (we would specify the minimum presence threshold, the lowest suitability of a known presence record, but we do not use this metric)
-  4. *minimum*
-  5. *maximum*
-  6. quantiles at the following probabilities:
-    - *0.25*
-    - *0.50* (median)
-    - *0.75*
-    - *0.90*
+  3. *minimum*
+  4. *maximum*
+  5. quantiles at the following probabilities:
+      + *0.25*
+      + *0.50* (median)
+      + *0.75*
+      + *0.90*
 
 Here, we demonstrate how we used this function to extract the summary statistics for each `state` and `country` used as our measure of **establishment** potential. Note that we do not use the `save.plots` argument or save the output. We also use the `.tif` versions of full-scale models for these extractions, due to their smaller size. We show code that works for the `ensemble` but also include commented-out code to run for an individual model and calculate `rsa`.
 

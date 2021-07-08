@@ -61,7 +61,7 @@ counties <- counties(cb = T, resolution = "5m")
 
 # Merge and clean data
 
-Here is the first of the code adapted from Seba De Bona (SDB), who built the `lycordata` and `lycormap` packages. This code finds the county that  each presence point corresponds to and attaches the county shapefile data to those rows.
+Here is the first of the code adapted from Seba De Bona (SDB), who built the `lycordata` and `lycormap` packages. Please email SDB if you are unable to access these packages ([sebastiano.debona@temple.edu](mailto:sebastiano.debona@temple.edu)). This code finds the county that  each presence point corresponds to and attaches the county shapefile data to those rows.
 
 ```{r tinyslf st combining and tidying, message=FALSE}
 #adapted from SDB code in lycordata
@@ -227,6 +227,7 @@ focal_counties <- by_county %>%
 map_plot <- ggplot() +
   #geom_sf(data = by_county %>% filter(!GEOID %in% focal_counties), fill = "#FFFFFF", size = 0.5) +
     geom_polygon(data = map_data('state'), aes(x = long, y = lat, group = group), fill = "#FFFFFF", color = "black", lwd = 0.10) +
+  geom_polygon(data = map_data('state', c("Connecticut","Delaware", "Maryland", "New Jersey", "New York", "Ohio", "Pennsylvania", "Virginia", "West Virginia")), aes(x = long, y = lat, group = group), fill = NA, color = "#e31a1c", lwd = 0.75) +
   geom_sf(data = by_county %>% filter(GEOID %in% focal_counties), aes(color = FirstRecord, fill = YearOfEstablishment), show.legend = T) +
   coord_sf(xlim = c(-124.7628, -66.94889), ylim = c(24.52042, 49.3833), expand = FALSE) +
   labs(x = "", y = "") +
@@ -243,7 +244,7 @@ map_plot
 # Save plot output
 
 ```{r save spread plot for pub}
-pdf(file.path(here::here(),"vignettes", paste0("spread_figure_v2.pdf")),width = 10, height = 8)
+pdf(file.path(here::here(),"vignettes", paste0("spread_figure_v3.pdf")),width = 10, height = 8)
 map_plot
 invisible(dev.off())
 
