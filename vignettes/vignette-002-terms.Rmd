@@ -32,11 +32,11 @@ This page briefly defines commonly used terms in the **Research Compendium** for
 
 \newline
 
-- **establishment potential**---likelihood of a region to contain suitable habitat for transported individuals of an alien species to form a spreading population.
+- **establishment potential**---likelihood of a region to contain suitable habitat for transported individuals of a non-native species to form a spreading population.
 
 \newline
 
-- **impact potential**---likelihood of a region to experience negative economic effects from an established alien species.
+- **impact potential**---likelihood of a region to experience negative economic effects from an established non-native species.
 
 \newline
 
@@ -72,7 +72,7 @@ This page briefly defines commonly used terms in the **Research Compendium** for
 
 \newline
 
-- **transport potential**---likelihood of a region to have an introduction of an alien species.
+- **transport potential**---likelihood of a region to have an introduction of a non-native species.
 
 \newline
 
