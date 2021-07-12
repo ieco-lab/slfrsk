@@ -60,7 +60,7 @@ This page briefly defines commonly used terms in the **Research Compendium** for
 
 \newline
 
-- **phylloxera**---*Daktulosphaira vitifoliae* is grapevine root pest native to North America that was responsible for the Great Wine Blight of the late 1800???s, which was the largest economic disturbance to the global wine market ever recorded. The disruption was mitigated by widespread planting of European vines that were grafted to North American grapevine root stocks. The paninvasion of phylloxera continues to this day (@ordish_great_1972, @gale_dying_2011).
+- **phylloxera**---*Daktulosphaira vitifoliae* is grapevine root pest native to North America that was responsible for the Great Wine Blight of the late 1800s, which was the largest economic disturbance to the global wine market ever recorded. The disruption was mitigated by widespread planting of European vines that were grafted to North American grapevine root stocks. The paninvasion of phylloxera continues to this day (@ordish_great_1972, @gale_dying_2011).
 
 \newline
 

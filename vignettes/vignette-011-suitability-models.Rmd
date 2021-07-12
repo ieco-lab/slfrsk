@@ -23,7 +23,7 @@ How to Build, Evaluate, and Save Species Distribution Models for *Ailanthus alti
 
 ***
 
-This vignette is designed to demonstrate the workflow that lead to the creation of the three species distribution models (SDMs) used to assess the severity of **SLF** paninvasion. The description will not include actual running of some steps of this workflow, as some are unwieldy. Instead, information to ensure proper replication of those steps is provided. Notably, the MaxEnt runs are not conducted in this vignette, although the means to do so within `R` may be possible.
+This vignette is designed to demonstrate the workflow that lead to the creation of the three species distribution models (SDMs) used to assess the risk of **SLF** paninvasion. The description will not include actual running of some steps of this workflow, as some are unwieldy. Instead, information to ensure proper replication of those steps is provided. Notably, the MaxEnt runs are not conducted in this vignette, although the means to do so within `R` may be possible.
 
 The scope of this vignette is as follows:
 
@@ -59,27 +59,28 @@ data("toh_points")
 
 #plot points on map: TOH
 map_toh <- ggplot() +
-  geom_polygon(data = map_data('world'), aes(x = long, y = lat, group = group), fill = "#778899", color = "black", lwd = 0.15) + #world map
-  geom_point(data = toh_points, aes(x = x, y = y), color = "blue") +
+  geom_polygon(data = map_data('world'), aes(x = long, y = lat, group = group), fill = "#FFFFFF", color = "black", lwd = 0.15) + #world map
+  geom_point(data = toh_points, aes(x = x, y = y), color = "#0072b2", alpha = 0.10) +
   theme_bw() +
   labs(x = "", y = "") +
   theme(panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
-        panel.background = element_blank()) +
-  theme_bw() +
+        #plot.background = element_rect(fill ="#f0f8ff"),
+        panel.background = element_rect(fill = "#f0f8ff")) +  
   coord_quickmap(xlim = c(-164.5, 163.5), ylim = c(-55,85)) +
   ggtitle(label = "TOH Presence")
 
 #plot points on map: SLF
 map_slf <- ggplot() +
-  geom_polygon(data = map_data('world'), aes(x = long, y = lat, group = group), fill = "#778899", color = "black", lwd = 0.15) + #world map
-  geom_point(data = slf_points, aes(x = x, y = y), color = "red") +
+  geom_polygon(data = map_data('world'), aes(x = long, y = lat, group = group), fill = "#FFFFFF", color = "black", lwd = 0.15) + #world map
+  geom_point(data = slf_points, aes(x = x, y = y), color = "#d55e00", alpha = 0.50) +
   theme_bw() +
   labs(x = "", y = "") +
+  theme_bw() +
   theme(panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
-        panel.background = element_blank()) +
-  theme_bw() +
+        #plot.background = element_rect(fill ="#f0f8ff"),
+        panel.background = element_rect(fill = "#f0f8ff")) +
   coord_quickmap(xlim = c(-164.5, 163.5), ylim = c(-55,85)) +
   ggtitle(label = "SLF Presence")
 
@@ -88,7 +89,7 @@ map_toh / map_slf
 
 ```
 
-```{r quick plot of things together}
+```{r quick plot of things together, eval=FALSE}
 ggplot() +
   geom_polygon(data = map_data('world'), aes(x = long, y = lat, group = group), fill = "#FFFFFF", color = "black", lwd = 0.15) + #world map
 geom_point(data = toh_points, aes(x = x, y = y), color = "#0072b2", alpha = 0.10) +
