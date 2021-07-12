@@ -33,15 +33,15 @@ All of the following data sources will be read in as raw data from `slfrsk/data/
 Here we load the required packages to prepare the data.
 
 ```{r setup, warning=FALSE, results='hide', message=FALSE}
-library(slfrsk)
-library(tidyverse)
-library(here)
+library(slfrsk) #this package for data sources
+library(tidyverse) #data tidying and cleaning
+library(here) #making directory pathways easier on different instances
 ```
 
 # Establishment
 ## Maxent Ensemble Model
 
-Previously, we built three separate species distribution models (SDMs) with MaxEnt. We also obtained summary statistics for suitability in each geopolitical unit (country and U.S. state) in each SDM (as well as an ensemble SDM), which were transferred to the `states_extracts` and `countries_extracts` datasets (or `states_extracts_ensemble` and `countries_extracts_ensemble` for the ensemble SDM). 
+Previously, we built three separate species distribution models (SDMs) with MaxEnt (See species distribution modeling analysis for more information). We also obtained summary statistics for suitability in each geopolitical unit (country and U.S. state) in each SDM (as well as an ensemble SDM), which were transferred to the `states_extracts` and `countries_extracts` datasets (or `states_extracts_ensemble` and `countries_extracts_ensemble` for the ensemble SDM). 
 
 Here, we explore the ensemble *maximum suitability* by obtaining the maximum suitability per geopolitical unit for each SDM and calculating the *mean* and *standard error* across the models (or just use the extracted maximum value for ensemble models). These summarized suitabilities constitute our predicted **Establishment potential**.
 
@@ -97,11 +97,11 @@ summary_countries_extracts <- summary_countries_extracts %>%
 
 Now that **Establishment** data are nicely organized, we can move on to **Transport**. We estimate **Transport potential** based on the average annual mass of goods traded (in metric tons) with **SLF**-established U.S. states over 2012--2017 (we also track value of traded goods in USD). Our existing data can be partitioned into geopolitical units as above (states and countries), but can further be separated into two categories: 1. states with confirmed **SLF** populations (`present`) and 2. states that have a high probability of hosting **SLF** populations in the near future based on proximity to `present` states and records of isolated observations (`future`). 
 
-Although we maintain several possible permutations of data to analyze, we focus on mass of goods traded for `future` scenarios, as these data are unlikely to be skewed by trade of high value goods that are less likely to lead to transportation of egg masses (e.g., electronics) and provide us with a more careful outlook for risk of slf paninvasion.
+Although we maintain several possible permutations of data to analyze, we focus on mass of goods traded for `present` scenarios, as these data are unlikely to be skewed by trade of high value goods that are less likely to lead to transportation of egg masses (e.g., electronics) and provide us with a more careful outlook for risk of slf paninvasion.
 
 ### U.S. States
 
-We first treat the states data by adding two letter codes and **SLF**-establishment status. For `present`, we treat the following states as having established **SLF**: **DE, MD, NJ, PA, and VA**. For `future`, we add the following states as having established **SLF**: **NC, NY, OH, and WV**. From here, the data are tidied and gathered before calculating the mean and standard error (SE) of trade with established states for 2012--2017. To do so, we first removed all cases of intrastate trade for established states. Then, we calculated the total trade with established states for each year before obtaining the overall mean and SE.
+We first treat the states data by adding two letter codes and **SLF**-establishment status. For `present`, we treat the following states as having established **SLF**: **CT, DE, MD, NJ, NY, OH, PA, VA, and WV**. For `future`, we add the following states as having established **SLF**: **NC**. From here, the data are tidied and gathered before calculating the mean and standard error (SE) of trade with established states for 2012--2017. To do so, we first removed all cases of intrastate trade for established states. Then, we calculated the total trade with established states for each year before obtaining the overall mean and SE.
 
 Below, we demonstrate the code for both `present` and `future` trade data in value (USD) for U.S. `states`.
 
@@ -506,7 +506,7 @@ knitr::kable(head(summary_countries_trade_mass_future, n = 10))
 
 Now that we have several permutations of trade with **SLF**-established states data (both `present` and `future` scenarios) for both geopolitical units (`states` and `countries`) as measured in **value** and **mass** (USD and metric tons, respectively), we can combine some of these data into fewer dataframes to minimize the number of files we are juggling for future analyses. To do this, we merge the **value** and **mass** data for each geopolitical unit dataset.
 
-As we do so, we take the time to create $\log_{10}$ transformed versions of the trade **value** and **mass** data. To avoid possible errors for this transformation, we add a constant ($value+1$) to data prior to transformation. This process for transformation is held constant for **Impact potential** data.
+As we do so, we take the time to create $\log_{10}$ transformed versions of the trade **value** and **mass** data. To avoid possible errors for this transformation, we add a constant ($value+1$) to data prior to transformation. We use the same transformation process for **Impact potential** data.
 
 ```{r bind trade data together, message=FALSE}
 #STATES
@@ -552,7 +552,7 @@ For `grapes`, two forms of cultivation data were available:
   1. grape production (metric tons)
   2. grape yield per unit area (metric tons/hectare)
   
-Although provide both sources of data, we focus more on **production** as a total measure of output per geopolitical unit. 
+Although we provide both sources of data, we focus more on **production** as a total measure of output per geopolitical unit. 
 
 ```{r read in and summarize both grape yield and production, message=FALSE}
 data("states_grapes")

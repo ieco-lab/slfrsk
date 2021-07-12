@@ -61,7 +61,7 @@ man_county_data <- read_csv(file.path("/Volumes/GoogleDrive/My Drive/spotted_lan
 
 ## Quick clean up of `lycordata`
 
-We now use some other data to get states with regulatory events. The `slfrsk` data already has established states, but it lacks the states that have regulatory events recorded but no established populations.
+We now use some other data to get states with regulatory events. These data come from the `lycordata` package. Please email SDB if unable to access the packages/data ([sebastiano.debona@temple.edu](mailto:sebastiano.debona@temple.edu)). The `slfrsk` data already has established states, but it lacks the states that have regulatory events recorded but no established populations.
 
 ```{r tidying and summarizing the regulatory states}
 #standardize the dates in the data

@@ -57,7 +57,7 @@
   <a href="../articles/vignette-002-terms.html">Definitions</a>
 </li>
 <li>
-  <a href="../articles/vignette-040-ee-data.html">Paninvasion Severity App</a>
+  <a href="../articles/vignette-040-ee-data.html">Paninvasion Severity Assessment App</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -85,9 +85,6 @@
         </li>
         <li>
           <a href="../articles/vignette-011-suitability-models.html">Species Distribution Modeling</a>
-        </li>
-        <li>
-          <a href="../articles/vignette-050-ava-temp.html">Confirm US West Coast AVA Suitability</a>
         </li>
         <li class="divider">
       </ul>
@@ -119,11 +116,11 @@
       </ul>
 </li>
     <li class="dropdown-submenu">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Step 3: Quantify Paninvasion Severity</a>
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Step 3: Quantify Paninvasion Risk</a>
       <ul class="dropdown-menu" role="menu">
 <li class="divider">
         <li>
-          <a href="../articles/vignette-041-market-plot.html">Paninvasion Severity</a>
+          <a href="../articles/vignette-041-market-plot.html">Paninvasion Risk</a>
         </li>
         <li class="divider">
       </ul>
@@ -149,7 +146,7 @@
 
       
 
-      </header><script src="vignette-002-terms_files/header-attrs-2.6/header-attrs.js"></script><div class="row">
+      </header><script src="vignette-002-terms_files/header-attrs-2.8/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Definitions</h1>
@@ -174,7 +171,15 @@
 <a href="#definitions" class="anchor"></a>Definitions</h1>
 <ul>
 <li>
-<strong>spotted lanternfly (SLF)</strong>—<em>Lycorma delicatula</em> is a planthopper native to China, Vietnam, and India. It invaded South Korea and Japan in the early 2000’s and the northeastern US ca. 2014. It is known to feed on <span class="math inline">\(&gt;100\)</span> different host species, including grapes (<span class="citation"><a href="#ref-urban_perspective:_2019" role="doc-biblioref">Urban</a> (<a href="#ref-urban_perspective:_2019" role="doc-biblioref">2019</a>)</span>, <span class="citation"><a href="#ref-barringer_worldwide_2020" role="doc-biblioref">Barringer and Ciafré</a> (<a href="#ref-barringer_worldwide_2020" role="doc-biblioref">2020</a>)</span>).</li>
+<strong>alignment correlation</strong>—multivariate relationship among invasion potentials.</li>
+</ul>
+<ul>
+<li>
+<strong>establishment potential</strong>—likelihood of a region to contain suitable habitat for transported individuals of a non-native species to form a spreading population.</li>
+</ul>
+<ul>
+<li>
+<strong>impact potential</strong>—likelihood of a region to experience negative economic effects from an established non-native species.</li>
 </ul>
 <ul>
 <li>
@@ -182,51 +187,39 @@
 </ul>
 <ul>
 <li>
-<strong>transport potential</strong>—likelihood of a region to have an introduction of an alien species.</li>
+<strong>MaxEnt</strong>—abbreviation for maximum entropy, a presence-only SDM methodology that uses machine-learning to estimate the probability distribution of maximum entropy based on environmental variables and species occurrence records (<span class="citation"><a href="#ref-phillips_maximum_2006" role="doc-biblioref">Phillips, Anderson, and Schapire</a> (<a href="#ref-phillips_maximum_2006" role="doc-biblioref">2006</a>)</span>, <span class="citation"><a href="#ref-phillips_steven_j._opening_2017" role="doc-biblioref">Phillips Steven J. et al.</a> (<a href="#ref-phillips_steven_j._opening_2017" role="doc-biblioref">2017</a>)</span>).</li>
 </ul>
 <ul>
 <li>
-<strong>establishment potential</strong>—likelihood of a region to contain suitable habitat for transported individuals of an alien species to form a spreading population.</li>
+<strong>paninvasion</strong>—invasion of a species at the global scale that disturbs a global economic market.</li>
 </ul>
 <ul>
 <li>
-<strong>impact potential</strong>—likelihood of a region to experience negative economic effects from an established alien species.</li>
+<strong>paninvasion risk</strong>—the likelihood of a regional invasive species to become a globally invasive species and cause economic repercussions.</li>
 </ul>
 <ul>
 <li>
-<strong>alignment correlation</strong>—multivariate relationship among invasion potentials.</li>
+<strong>paninvasive species</strong>—globally invasive species that goes through the three main invasion stages and thus can disturb global economic markets.</li>
 </ul>
 <ul>
 <li>
-<strong>economic shock</strong>—an unexpected event that affects an economic market (<span class="citation"><a href="#ref-wikipedia_shock_2020" role="doc-biblioref">Wikipedia</a> (<a href="#ref-wikipedia_shock_2020" role="doc-biblioref">2020</a>)</span>). Economic shocks caused by environmental problems like invasive species are negative and reduce economic growth and destabilize socioeconomic systems (<span class="citation"><a href="#ref-bretschger_best_2019" role="doc-biblioref">Bretschger and Vinogradova</a> (<a href="#ref-bretschger_best_2019" role="doc-biblioref">2019</a>)</span>).</li>
+<strong>phylloxera</strong>—<em>Daktulosphaira vitifoliae</em> is grapevine root pest native to North America that was responsible for the Great Wine Blight of the late 1800???s, which was the largest economic disturbance to the global wine market ever recorded. The disruption was mitigated by widespread planting of European vines that were grafted to North American grapevine root stocks. The paninvasion of phylloxera continues to this day (<span class="citation"><a href="#ref-ordish_great_1972" role="doc-biblioref">Ordish</a> (<a href="#ref-ordish_great_1972" role="doc-biblioref">1972</a>)</span>, <span class="citation"><a href="#ref-gale_dying_2011" role="doc-biblioref">Gale</a> (<a href="#ref-gale_dying_2011" role="doc-biblioref">2011</a>)</span>).</li>
 </ul>
 <ul>
 <li>
-<strong>paninvasive species</strong>—globally invasive species that may shock a global economic market.</li>
+<strong>species distribution model (SDM)</strong>—spatial model used to predict the environmental niche, habitat suitability, and establishment potential of a species.</li>
 </ul>
 <ul>
 <li>
-<strong>paninvasion</strong>—invasion of a species at the global scale that shocks a global economic market.</li>
+<strong>spotted lanternfly (SLF)</strong>—<em>Lycorma delicatula</em> is a planthopper native to China, Vietnam, and India. It invaded South Korea and Japan in the early 2000’s and the northeastern US ca. 2014. It is known to feed on <span class="math inline">\(&gt;100\)</span> different host species, including grapes (<span class="citation"><a href="#ref-urban_perspective:_2019" role="doc-biblioref">Urban</a> (<a href="#ref-urban_perspective:_2019" role="doc-biblioref">2019</a>)</span>, <span class="citation"><a href="#ref-barringer_worldwide_2020" role="doc-biblioref">Barringer and Ciafré</a> (<a href="#ref-barringer_worldwide_2020" role="doc-biblioref">2020</a>)</span>).</li>
 </ul>
 <ul>
 <li>
-<strong>phylloxera</strong>—<em>Daktulosphaira vitifoliae</em> is grapevine root pest native to North America that was responsible for the Great Wine Blight of the late 1800’s, which was the largest economic shock to the global wine market ever recorded. The shock was mitigated by widespread planting of European vines that were grafted to North American grapevine root stocks. The paninvasion of phylloxera continues to this day (<span class="citation"><a href="#ref-ordish_great_1972" role="doc-biblioref">Ordish</a> (<a href="#ref-ordish_great_1972" role="doc-biblioref">1972</a>)</span>, <span class="citation"><a href="#ref-gale_dying_2011" role="doc-biblioref">Gale</a> (<a href="#ref-gale_dying_2011" role="doc-biblioref">2011</a>)</span>).</li>
+<strong>transport potential</strong>—likelihood of a region to have an introduction of a non-native species.</li>
 </ul>
 <ul>
 <li>
-<strong>paninvasion severity</strong>—the likelihood of a regional invasive species to become a globally invasive species and cause economic shock.</li>
-</ul>
-<ul>
-<li>
-<strong>species distribution model (SDM)</strong>—spatial model used to predict the environmental niche, habitat suitability and establishment potential of a species.</li>
-</ul>
-<ul>
-<li>
-<strong>MaxEnt</strong>—acronym for maximum entropy, which is a presence-only SDM methodology that uses machine-learning to estimate the probability distribution of maximum entropy based on environmental variables and species occurrence records (<span class="citation"><a href="#ref-phillips_maximum_2006" role="doc-biblioref">Phillips, Anderson, and Schapire</a> (<a href="#ref-phillips_maximum_2006" role="doc-biblioref">2006</a>)</span>, <span class="citation"><a href="#ref-phillips_steven_j._opening_2017" role="doc-biblioref">Phillips Steven J. et al.</a> (<a href="#ref-phillips_steven_j._opening_2017" role="doc-biblioref">2017</a>)</span>).</li>
-</ul>
-<ul>
-<li>
-<strong>tree of heaven (TOH)</strong>—<em>Ailanthus altissima</em> is a paninvasive deciduous tree that is native to China, Taiwan, and northern Korea, but has been spread globally. It is a highly preferred host for SLF and determines SLF establishment potential.</li>
+<strong>tree of heaven (TOH)</strong>—<em>Ailanthus altissima</em> is a paninvasive deciduous tree that is native to China, Taiwan, and northern Korea, but has been spread globally. It is a highly preferred host for SLF and may determine SLF establishment potential.</li>
 </ul>
 </div>
 <div id="references" class="section level1 unnumbered">
@@ -234,13 +227,10 @@
 <a href="#references" class="anchor"></a>References</h1>
 <div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-barringer_worldwide_2020" class="csl-entry">
-Barringer, Lawrence, and Claire M Ciafré. 2020. <span>“Worldwide <span>Feeding</span> <span>Host</span> <span>Plants</span> of <span>Spotted</span> <span>Lanternfly</span>, <span>With</span> <span>Significant</span> <span>Additions</span> <span>From</span> <span>North</span> <span>America</span>.”</span> Edited by Melody Keena. <em>Environmental Entomology</em>, August, nvaa093. <a href="https://doi.org/10.1093/ee/nvaa093">https://doi.org/10.1093/ee/nvaa093</a>.
+Barringer, Lawrence, and Claire M Ciafré. 2020. <span>“Worldwide Feeding Host Plants of Spotted Lanternfly, with Significant Additions from <span>North</span> <span>America</span>.”</span> Edited by Melody Keena. <em>Environmental Entomology</em> 49 (5): 999–1011. <a href="https://doi.org/10.1093/ee/nvaa093">https://doi.org/10.1093/ee/nvaa093</a>.
 </div>
 <div id="ref-blackburn_proposed_2011" class="csl-entry">
 Blackburn, Tim M., Petr Pyšek, Sven Bacher, James T. Carlton, Richard P. Duncan, Vojtěch Jarošík, John R. U. Wilson, and David M. Richardson. 2011. <span>“A Proposed Unified Framework for Biological Invasions.”</span> <em>Trends in Ecology &amp; Evolution</em> 26 (7): 333–39. <a href="https://doi.org/10.1016/j.tree.2011.03.023">https://doi.org/10.1016/j.tree.2011.03.023</a>.
-</div>
-<div id="ref-bretschger_best_2019" class="csl-entry">
-Bretschger, Lucas, and Alexandra Vinogradova. 2019. <span>“Best Policy Response to Environmental Shocks: <span>Applying</span> a Stochastic Framework.”</span> <em>Journal of Environmental Economics and Management</em> 97 (September): 23–41. <a href="https://doi.org/10.1016/j.jeem.2017.07.003">https://doi.org/10.1016/j.jeem.2017.07.003</a>.
 </div>
 <div id="ref-gale_dying_2011" class="csl-entry">
 Gale, George. 2011. <em>Dying on the <span>Vine</span></em>. 1st ed. University of California Press. <a href="https://www.jstor.org/stable/10.1525/j.ctt7zw232">www.jstor.org/stable/10.1525/j.ctt7zw232</a>.
@@ -249,16 +239,13 @@ Gale, George. 2011. <em>Dying on the <span>Vine</span></em>. 1st ed. University 
 Ordish, George. 1972. <em>The <span>Great</span> <span>Wine</span> <span>Blight</span></em>. New York: Charles Scribner’s Sons.
 </div>
 <div id="ref-phillips_steven_j-_opening_2017" class="csl-entry">
-Phillips Steven J., Anderson Robert P., Dudík Miroslav, Schapire Robert E., and Blair Mary E. 2017. <span>“Opening the Black Box: An Open‐source Release of <span>Maxent</span>.”</span> <em>Ecography</em> 40 (7): 887–93. <a href="https://doi.org/10.1111/ecog.03049">https://doi.org/10.1111/ecog.03049</a>.
+Phillips Steven J., Anderson Robert P., Dudík Miroslav, Schapire Robert E., and Blair Mary E. 2017. <span>“Opening the Black Box: <span>An</span> Open‐source Release of <span>Maxent</span>.”</span> <em>Ecography</em> 40 (7): 887–93. <a href="https://doi.org/10.1111/ecog.03049">https://doi.org/10.1111/ecog.03049</a>.
 </div>
 <div id="ref-phillips_maximum_2006" class="csl-entry">
 Phillips, Steven J., Robert P. Anderson, and Robert E. Schapire. 2006. <span>“Maximum Entropy Modeling of Species Geographic Distributions.”</span> <em>Ecological Modelling</em> 190 (3-4): 231–59. <a href="https://doi.org/10.1016/j.ecolmodel.2005.03.026">https://doi.org/10.1016/j.ecolmodel.2005.03.026</a>.
 </div>
 <div id="ref-urban_perspective:_2019" class="csl-entry">
-Urban, Julie M. 2019. <span>“Perspective: Shedding Light on Spotted Lanternfly Impacts in the <span>USA</span>.”</span> <em>Pest Management Science</em>, October.
-</div>
-<div id="ref-wikipedia_shock_2020" class="csl-entry">
-Wikipedia. 2020. <span>“Shock (Economics).”</span> <em>Wikipedia</em>. <a href="https://en.wikipedia.org/w/index.php?title=Shock_(economics)&amp;oldid=980105034">https://en.wikipedia.org/w/index.php?title=Shock_(economics)&amp;oldid=980105034</a>.
+Urban, Julie M. 2019. <span>“Perspective: <span>Shedding</span> Light on Spotted Lanternfly Impacts in the <span>USA</span>.”</span> <em>Pest Management Science</em> 76 (1): 10–17.
 </div>
 </div>
 </div>

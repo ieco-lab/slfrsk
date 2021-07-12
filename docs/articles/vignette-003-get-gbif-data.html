@@ -57,7 +57,7 @@
   <a href="../articles/vignette-002-terms.html">Definitions</a>
 </li>
 <li>
-  <a href="../articles/vignette-040-ee-data.html">Paninvasion Severity App</a>
+  <a href="../articles/vignette-040-ee-data.html">Paninvasion Severity Assessment App</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -85,9 +85,6 @@
         </li>
         <li>
           <a href="../articles/vignette-011-suitability-models.html">Species Distribution Modeling</a>
-        </li>
-        <li>
-          <a href="../articles/vignette-050-ava-temp.html">Confirm US West Coast AVA Suitability</a>
         </li>
         <li class="divider">
       </ul>
@@ -119,11 +116,11 @@
       </ul>
 </li>
     <li class="dropdown-submenu">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Step 3: Quantify Paninvasion Severity</a>
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Step 3: Quantify Paninvasion Risk</a>
       <ul class="dropdown-menu" role="menu">
 <li class="divider">
         <li>
-          <a href="../articles/vignette-041-market-plot.html">Paninvasion Severity</a>
+          <a href="../articles/vignette-041-market-plot.html">Paninvasion Risk</a>
         </li>
         <li class="divider">
       </ul>
@@ -149,7 +146,7 @@
 
       
 
-      </header><script src="vignette-003-get-gbif-data_files/header-attrs-2.6/header-attrs.js"></script><div class="row">
+      </header><script src="vignette-003-get-gbif-data_files/header-attrs-2.8/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Get GBIF Records</h1>
@@ -171,7 +168,7 @@
 <p>We first loaded the full suite of required libraries. The most critical for this particular vignette is <code>spocc</code>, which is the package that allows us to query <code>GBIF</code> (Global Biodiversity Information Facility).</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">slfrsk</span><span class="op">)</span> <span class="co">#this package, has extract_enm()</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>  <span class="co">#data manipulation</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>  <span class="co">#data manipulation</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://here.r-lib.org/">here</a></span><span class="op">)</span> <span class="co">#making directory pathways easier on different instances</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/spocc">spocc</a></span><span class="op">)</span> <span class="co">#query gbif and format as a dataframe</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/scrubr">scrubr</a></span><span class="op">)</span> <span class="co">#clean records for gbif data</span>

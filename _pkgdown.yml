@@ -23,7 +23,7 @@ navbar:
       href: articles/vignette-001-overview.html
     - text: "Definitions"
       href: articles/vignette-002-terms.html
-    - text: "Paninvasion Severity App"
+    - text: "Paninvasion Severity Assessment App"
       href: articles/vignette-040-ee-data.html
     - text: "Analyses"
       menu:
@@ -41,8 +41,6 @@ navbar:
               href:  articles/vignette-010-tidy-data.html
             - text: "Species Distribution Modeling"
               href: articles/vignette-011-suitability-models.html
-            - text: "Confirm US West Coast AVA Suitability"
-              href: articles/vignette-050-ava-temp.html
             - text: ----------------
         - text: "Step 2: Calculate Alignment Correlations"
           menu:
@@ -60,10 +58,10 @@ navbar:
                   href: articles/vignette-027-quadrant-plots-alt-mean.html
                 - text: ----------------
             - text: ----------------
-        - text: "Step 3: Quantify Paninvasion Severity"
+        - text: "Step 3: Quantify Paninvasion Risk"
           menu:
             - text: ----------------
-            - text: "Paninvasion Severity"
+            - text: "Paninvasion Risk"
               href: articles/vignette-041-market-plot.html
             - text: ----------------
         - text: ----------------
