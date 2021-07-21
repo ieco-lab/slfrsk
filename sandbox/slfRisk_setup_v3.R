@@ -11,7 +11,8 @@ library(roxygen2)
 
 #pkgdown::build_articles()
 pkgdown::preview_site()
-pkgdown::build_site()
+pkgdown::build_site(lazy = FALSE)
+pkgdown::build_site(lazy = TRUE)
 
 load_all()
 document()
