@@ -1,5 +1,5 @@
 ---
-title: "Paninvasion Severity"
+title: "Paninvasion Risk"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{vignette-041-market-plot}
@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-Quantify Paninvasion Severity to Shock Wine Market
+Quantify Paninvasion Risk to Shock Wine Market
 
 ***
 
@@ -71,7 +71,7 @@ countries_wine_market$market_size[countries_wine_market$market_size==0] <- NA
 qplot((countries_wine_market$market_size))
 ```
 
-From here, we add an `ID` column that matches the other use of this label in the other package vignettes. Then, we isolate `ID` and `market_size` for severity analyses.
+From here, we add an `ID` column that matches the other use of this label in the other package vignettes. Then, we isolate `ID` and `market_size` for risk analyses.
 
 ```{r add the ID column for joining to summary data, eval = TRUE}
 #add the ID column for joining and plotting later
@@ -149,7 +149,7 @@ From here, we now can build (or rebuild, technically, `vignette-021-quadrant-plo
 
 We then rescaled the predicted **impact** values to be bounded $[1,10]$ to produce initial `sev` values.
 
-To create the initial *shock model* (`shock_mod`) and ultimately obtain a scaled measure of severity of **SLF** to shock the global wine market, we performed linear regression of the `market_size` data on `sev` for countries and conducted diagnostics as for `sev_mod`. We then evaluated the unscaled and scaled correlations between `market_size` and `sev` for countries, resulting in a severity of $8$ based on a scale of $[1,10]$.
+To create the initial *shock model* (`shock_mod`) and ultimately obtain a scaled measure of risk of **SLF** to shock the global wine market, we performed linear regression of the `market_size` data on `sev` for countries and conducted diagnostics as for `sev_mod`. We then evaluated the unscaled and scaled correlations between `market_size` and `sev` for countries, resulting in a risk of $8$ based on a scale of $[1,10]$.
 
 ```{r, fig.height= 7, fig.width=7, message=FALSE}
 sev_mod <- lm(log10_avg_prod ~ log10_avg_infected_mass + grand_mean_max, 
@@ -181,9 +181,9 @@ cor.test(countries_sev_market$market_size, countries_sev_market$sev)
   round())
 ```
 
-# Plotting severity vs market scatter
+# Plotting risk vs market scatter
 
-With the predicted **severity**, we were able plot the scaled `sev` and `market_size`, resulting in the published severity of **SLF** to shock the global wine market plot.
+With the predicted **risk**, we were able plot the scaled `sev` and `market_size`, resulting in the published risk of **SLF** to shock the global wine market plot.
 
 ## Static plot
 
@@ -199,7 +199,7 @@ market_scatter <- countries_sev_market %>%
   geom_abline(slope = 1, intercept = 5, lty = 2) +
   geom_abline(slope = 1, intercept = -5, lty = 2) +
 
-  ggtitle(label = paste('Spotted Lanternfly Paninvasion Severity =',
+  ggtitle(label = paste('Spotted Lanternfly Paninvasion Risk =',
                         shock_cor,'of 10 (P<0.001)')) +
   geom_point(pch = 21) + 
      scale_x_continuous(
@@ -313,11 +313,11 @@ p1 <- countries_sev_market %>%
 #execute plotly
 ggplotly(p = p1, tooltip = c("ID", "sev", "market_size", "wine"), dynamicTicks = T) %>%
 layout(xaxis = 
-           list(title = list(text = paste('Spotted Lanternfly',sprintf("(<i>Lycorma delicatula</i>)"),'Invasion Severity'), font = list(size = 11)), showspikes = T),
+           list(title = list(text = paste('Spotted Lanternfly',sprintf("(<i>Lycorma delicatula</i>)"),'Invasion Risk'), font = list(size = 11)), showspikes = T),
          yaxis = 
            list(title = list(text = "Wine Export Market Size, log10 USD", font = list(size = 11)), showspikes = T),
          title = 
-           list(text = paste('Spotted Lanternfly Paninvasion Severity =', shock_cor,'of 10 (P<0.001)'),
+           list(text = paste('Spotted Lanternfly Paninvasion Risk =', shock_cor,'of 10 (P<0.001)'),
                 font = list(size = 12),
                 x = 0.1,
                 y = 0.99),

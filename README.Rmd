@@ -31,7 +31,7 @@ knitr::opts_chunk$set(
 ## Usage
 To understand how this paninvasion risk assessment was made: 
 
-1. Read the [paper](https://www.iecolab.org/publications/) 
+1. Read the [paper](https://www.biorxiv.org/content/10.1101/2021.07.19.452723v1) 
 2. Dive deep into this [research compendium](https://ieco-lab.github.io/slfrsk/index.html) https://ieco-lab.github.io/slfrsk/index.html
 3. Install and Build [the package](https://github.com/ieco-lab/slfrsk) https://github.com/ieco-lab/slfrsk
 ```r
@@ -41,4 +41,6 @@ To understand how this paninvasion risk assessment was made:
 
 ## Citation
 
-Huron, Behm, Helmus. https://www.iecolab.org/
+Huron, N. A., Behm, J. E. & Helmus, M. R. Paninvasion severity assessment of a US grape pest to disrupt the global wine market. *in review.* doi:10.1101/2021.07.19.452723.
+
+
