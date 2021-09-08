@@ -2,16 +2,16 @@
 #'
 #' The function \code{extract_enm2}
 #'
-#'@param enm input raster data (usually a species distribution model, SDM)
-#'@param geoshape input shapefile with boundaries of geometries to summarize the raster data for
-#'@param id subset in \code{geoshape} identifier table to iterate through: a vector of names, may need to match this to a particular part of geoshape with \code{id0}
-#'@param id0 part of \code{'geoshape@data'} that holds the names of the geopolitical units to focus on (polygons of interest)
-#'@param th threshold of suitability used to calculate RSA. If not provided, the RSA is not calculated.
-#'@param multipar use multicore processors to perform the function in parallel (default is false)
-#'@param ncores tell the function to use a set number of cores if \code{multipar = TRUE} and defaults to \code{ncores=1}
+#' @param enm input raster data (usually a species distribution model, SDM)
+#' @param geoshape input shapefile with boundaries of geometries to summarize the raster data for
+#' @param id subset in \code{geoshape} identifier table to iterate through: a vector of names, may need to match this to a particular part of geoshape with \code{id0}
+#' @param id0 part of \code{'geoshape@data'} that holds the names of the geopolitical units to focus on (polygons of interest)
+#' @param th threshold of suitability used to calculate RSA. If not provided, the RSA is not calculated.
+#' @param multipar use multicore processors to perform the function in parallel (default is false)
+#' @param ncores tell the function to use a set number of cores if \code{multipar = TRUE} and defaults to \code{ncores=1}
 #'
-#'@return Dataframe (tibble) that contains columns that include
-#'@export
+#' @return Dataframe (tibble) that contains columns that include summary statistics from the input.
+#' @export
 
 extract_enm2 <- function(enm, geoshape, id0, id, th = NA, multipar = FALSE, ncores = 1){
 
