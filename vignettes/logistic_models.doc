@@ -2,12 +2,12 @@
 <table style="text-align:center"><caption><strong>SI Table: Logistic regression of SLF status on trade</strong></caption>
 <tr><td colspan="3" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left"></td><td>estab</td><td>regulatory</td></tr>
 <tr><td style="text-align:left"></td><td>(1)</td><td>(2)</td></tr>
-<tr><td colspan="3" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">LOG10_AVG_INFECTED_MASS</td><td>5.64<sup>***</sup></td><td>3.10<sup>***</sup></td></tr>
-<tr><td style="text-align:left"></td><td>(2.03)</td><td>(0.90)</td></tr>
-<tr><td style="text-align:left">CONSTANT</td><td>-42.74<sup>***</sup></td><td>-22.64<sup>***</sup></td></tr>
-<tr><td style="text-align:left"></td><td>(15.27)</td><td>(6.49)</td></tr>
+<tr><td colspan="3" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">LOG10_AVG_INFECTED_MASS</td><td>5.64<sup>***</sup></td><td>3.00<sup>***</sup></td></tr>
+<tr><td style="text-align:left"></td><td>(2.03)</td><td>(0.85)</td></tr>
+<tr><td style="text-align:left">CONSTANT</td><td>-42.74<sup>***</sup></td><td>-21.54<sup>***</sup></td></tr>
+<tr><td style="text-align:left"></td><td>(15.27)</td><td>(6.02)</td></tr>
 <tr><td style="text-align:left"><em>Observations</em></td><td>51</td><td>51</td></tr>
-<tr><td style="text-align:left"><em>Log likelihood</em></td><td>-9.80</td><td>-18.15</td></tr>
-<tr><td style="text-align:left"><em>Akaike information criterion</em></td><td>23.61</td><td>40.30</td></tr>
+<tr><td style="text-align:left"><em>Log likelihood</em></td><td>-9.80</td><td>-19.25</td></tr>
+<tr><td style="text-align:left"><em>Akaike information criterion</em></td><td>23.61</td><td>42.51</td></tr>
 <tr><td colspan="3" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left"><em>Notes:</em></td><td colspan="2" style="text-align:left"><sup>***</sup>p < .01; <sup>**</sup>p < .05; <sup>*</sup>p < .1</td></tr>
 </table>

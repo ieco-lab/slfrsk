@@ -211,8 +211,8 @@
 
 <span class="co">#get years for the manual data</span>
 <span class="va">man_county_data</span> <span class="op">%&lt;&gt;%</span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>Year_Alive <span class="op">=</span> <span class="fu"><a href="http://lubridate.tidyverse.org/reference/year.html">year</a></span><span class="op">(</span><span class="va">Date_Alive</span><span class="op">)</span>,
-         Year_Morbund <span class="op">=</span> <span class="fu"><a href="http://lubridate.tidyverse.org/reference/year.html">year</a></span><span class="op">(</span><span class="va">Date_Morbund</span><span class="op">)</span>,
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>Year_Alive <span class="op">=</span> <span class="fu"><a href="https://lubridate.tidyverse.org/reference/year.html">year</a></span><span class="op">(</span><span class="va">Date_Alive</span><span class="op">)</span>,
+         Year_Morbund <span class="op">=</span> <span class="fu"><a href="https://lubridate.tidyverse.org/reference/year.html">year</a></span><span class="op">(</span><span class="va">Date_Morbund</span><span class="op">)</span>,
          Year_FirstRecord <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="op">!</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">Year_Alive</span><span class="op">)</span> <span class="op">&amp;</span> <span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">Year_Morbund</span><span class="op">)</span><span class="op">)</span>,
                                    <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">pmin</a></span><span class="op">(</span><span class="va">Year_Alive</span>, <span class="va">Year_Morbund</span>, na.rm <span class="op">=</span> <span class="cn">T</span><span class="op">)</span>,
                                    <span class="cn">NA</span><span class="op">)</span>
@@ -227,7 +227,7 @@
   <span class="co"># doing this with nested ifelse statements</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>YearOfEstablishment_man <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span>
     <span class="va">Status</span> <span class="op">==</span> <span class="st">"Infestation"</span> <span class="op">&amp;</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">Date_Establish</span><span class="op">)</span>,
-    <span class="fu"><a href="http://lubridate.tidyverse.org/reference/year.html">year</a></span><span class="op">(</span><span class="va">Date_Establish</span><span class="op">)</span>,
+    <span class="fu"><a href="https://lubridate.tidyverse.org/reference/year.html">year</a></span><span class="op">(</span><span class="va">Date_Establish</span><span class="op">)</span>,
     <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">Status</span> <span class="op">==</span> <span class="st">"Infestation"</span> <span class="op">&amp;</span> <span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">Date_Establish</span><span class="op">)</span>, <span class="fl">2020</span>, <span class="cn">NA</span><span class="op">)</span><span class="op">)</span>,
     FirstRecord_man <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span>
       <span class="va">Status</span> <span class="op">!=</span> <span class="st">"Infestation"</span> <span class="op">&amp;</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">Year_FirstRecord</span><span class="op">)</span>,
@@ -302,20 +302,20 @@
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Deviance Residuals: </span>
 <span class="co">#&gt;     Min       1Q   Median       3Q      Max  </span>
-<span class="co">#&gt; -1.5362  -0.6016  -0.2374   0.4365   2.7755  </span>
+<span class="co">#&gt; -1.6670  -0.6181  -0.2227   0.5172   2.6132  </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Coefficients:</span>
 <span class="co">#&gt;                         Estimate Std. Error z value Pr(&gt;|z|)    </span>
-<span class="co">#&gt; (Intercept)             -22.6357     6.4880  -3.489 0.000485 ***</span>
-<span class="co">#&gt; log10_avg_infected_mass   3.1027     0.9026   3.437 0.000587 ***</span>
+<span class="co">#&gt; (Intercept)             -21.5407     6.0197  -3.578 0.000346 ***</span>
+<span class="co">#&gt; log10_avg_infected_mass   2.9962     0.8472   3.537 0.000405 ***</span>
 <span class="co">#&gt; ---</span>
 <span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; (Dispersion parameter for binomial family taken to be 1)</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt;     Null deviance: 61.791  on 50  degrees of freedom</span>
-<span class="co">#&gt; Residual deviance: 36.302  on 49  degrees of freedom</span>
-<span class="co">#&gt; AIC: 40.302</span>
+<span class="co">#&gt;     Null deviance: 64.924  on 50  degrees of freedom</span>
+<span class="co">#&gt; Residual deviance: 38.506  on 49  degrees of freedom</span>
+<span class="co">#&gt; AIC: 42.506</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Number of Fisher Scoring iterations: 6</span></code></pre></div>
 </div>
@@ -373,7 +373,7 @@ LOG10_AVG_INFECTED_MASS
 5.64<sup>***</sup>
 </td>
 <td>
-3.10<sup>***</sup>
+3.00<sup>***</sup>
 </td>
 </tr>
 <tr>
@@ -383,7 +383,7 @@ LOG10_AVG_INFECTED_MASS
 (2.03)
 </td>
 <td>
-(0.90)
+(0.85)
 </td>
 </tr>
 <tr>
@@ -394,7 +394,7 @@ CONSTANT
 -42.74<sup>***</sup>
 </td>
 <td>
--22.64<sup>***</sup>
+-21.54<sup>***</sup>
 </td>
 </tr>
 <tr>
@@ -404,7 +404,7 @@ CONSTANT
 (15.27)
 </td>
 <td>
-(6.49)
+(6.02)
 </td>
 </tr>
 <tr>
@@ -426,7 +426,7 @@ CONSTANT
 -9.80
 </td>
 <td>
--18.15
+-19.25
 </td>
 </tr>
 <tr>
@@ -437,7 +437,7 @@ CONSTANT
 23.61
 </td>
 <td>
-40.30
+42.51
 </td>
 </tr>
 <tr>
