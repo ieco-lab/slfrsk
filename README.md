@@ -25,7 +25,7 @@ delicatula* paninvasion risk assessment.
 To understand how this paninvasion risk assessment was made:
 
 1.  Read the
-    [paper](https://www.biorxiv.org/content/10.1101/2021.07.19.452723v1)
+    [paper](https://www.biorxiv.org/content/10.1101/2021.07.19.452723v1.full)
 2.  Dive deep into this [research
     compendium](https://ieco-lab.github.io/slfrsk/index.html)
     <https://ieco-lab.github.io/slfrsk/index.html>
@@ -41,4 +41,4 @@ To understand how this paninvasion risk assessment was made:
 
 Huron, N. A., Behm, J. E. & Helmus, M. R. Paninvasion severity
 assessment of a US grape pest to disrupt the global wine market. *in
-review.* <doi:10.1101/2021.07.19.452723>.
+review.* [doi:10.1101/2021.07.19.452723](https://www.biorxiv.org/content/10.1101/2021.07.19.452723v1.full).
