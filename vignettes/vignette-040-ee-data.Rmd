@@ -35,7 +35,7 @@ The `slrsk` Paninvasion Severity App is an interactive map that allows for highl
 
 <center>
 
-![Landing page and labeled visualization tools for `slfrsk` Paninvasion Severity App.](/Volumes/GoogleDrive/My Drive/spotted_lanternfly_ieco_projects/code/FINAL_CODE/R package/nah_work/slfrsk/docs/articles/slfrsk_ee_home_label.png)
+![Landing page and labeled visualization tools for `slfrsk` Paninvasion Severity App.](/Volumes/GoogleDrive-104607290079958926089/My Drive/spotted_lanternfly_ieco_projects/code/FINAL_CODE/R package/nah_work/slfrsk/docs/articles/slfrsk_ee_home_label.png)
 
 </center>
 
@@ -64,7 +64,7 @@ The layers panel contains several key measures of SLF invasion potential. Each l
 
 <center>
 
-![Default view of Layers Panel for `slfrsk` Paninvasion Severity App.](/Volumes/GoogleDrive/My Drive/spotted_lanternfly_ieco_projects/code/FINAL_CODE/R package/nah_work/slfrsk/docs/articles/slfrsk_ee_layers_panel.png)
+![Default view of Layers Panel for `slfrsk` Paninvasion Severity App.](/Volumes/GoogleDrive-104607290079958926089/My Drive/spotted_lanternfly_ieco_projects/code/FINAL_CODE/R package/nah_work/slfrsk/docs/articles/slfrsk_ee_layers_panel.png)
 
 </center>
 
@@ -141,7 +141,7 @@ scale_fill_manual(
 
 \newline
 
-6. **invasion severity**: the severity of shock to the wine market as determined by the relationship between predicted values of average annual grape production based on SLF transport and establishment potential and average annual wine market size (scaled $[1,10]$). This scaling ranges from a completely negative relationship at 1 to a completely positive relationship at 10 (thus explaining the change from the $[0,10]$ scale seen for other layers) This layer is a shaded fill for *only* `countries` that **do not already have established SLF populations**.
+6. **invasion risk**: the severity of shock to the wine market as determined by the relationship between predicted values of average annual grape production based on SLF transport and establishment potential and average annual wine market size (scaled $[1,10]$). This scaling ranges from a completely negative relationship at 1 to a completely positive relationship at 10 (thus explaining the change from the $[0,10]$ scale seen for other layers) This layer is a shaded fill for *only* `countries` that **do not already have established SLF populations**.
 
 ```{r severity key, echo=FALSE, fig.width=5, fig.height=1, fig.align='center'}
 tibble(x= seq(from = 0, to = 10, by = 1), colors = rev(c('#a50026','#d73027','#f46d43','#fdae61','#fee090','#ffffbf','#e0f3f8','#abd9e9','#74add1','#4575b4','#313695'))) %>%
@@ -166,7 +166,7 @@ scale_fill_manual(
         axis.text.y = element_blank(),
         axis.ticks.y = element_blank()) +
         labs(x = "", y = "") +
-    ggtitle("Invasion Severity") +
+    ggtitle("Invasion Risk") +
     scale_x_continuous(name = "", breaks = c(0.001,9.999), labels = c("1", "10"), limits = c(-0.5,10.5))
 ```
 
@@ -315,10 +315,10 @@ We use the shared GoogleDrive file that contains downloaded GADM shapefiles (<ht
 
 ```{r read in the country and state shapefiles, message=FALSE, warning=FALSE, eval=TRUE}
   #shapefile of USA: data obtained from GADM: https://gadm.org/download_world.html
-states <- readOGR(dsn = "/Volumes/GoogleDrive/Shared drives/slfData/data/slfRisk/geo_shapefiles/gadm36_USA_shp/gadm36_USA_1.shp", verbose = F, p4s = '+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0')
+states <- readOGR(dsn = "/Volumes/GoogleDrive-104607290079958926089/Shared drives/slfData/data/slfRisk/geo_shapefiles/gadm36_USA_shp/gadm36_USA_1.shp", verbose = F, p4s = '+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0')
 
   #shapefile of world by countries
-countries <- readOGR("/Volumes/GoogleDrive/Shared drives/slfData/data/slfRisk/geo_shapefiles/gadm36_levels_shp/gadm36_0.shp", verbose = F, p4s = '+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0')
+countries <- readOGR("/Volumes/GoogleDrive-104607290079958926089/Shared drives/slfData/data/slfRisk/geo_shapefiles/gadm36_levels_shp/gadm36_0.shp", verbose = F, p4s = '+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0')
 ```
 
 There are a few shapefile data entries that need to be cleaned, so we alter the names. We also removed the US from `countries`, as in other analyses.
@@ -432,16 +432,16 @@ The newly merged shapefiles (`countries`, `states`, and `combined` for regular a
 
 ```{r write out the shapefiles, warning=FALSE, message=FALSE, eval=FALSE}
 #states
-writeOGR(obj = states, dsn = "/Volumes/GoogleDrive/Shared drives/slfData/data/slfRisk/geo_shapefiles/gadm36_USA_with_data/",  driver="ESRI Shapefile", layer = "states", verbose = FALSE, overwrite_layer = TRUE)
-writeOGR(obj = states_lo, dsn = "/Volumes/GoogleDrive/Shared drives/slfData/data/slfRisk/geo_shapefiles/gadm36_USA_with_data/",  driver="ESRI Shapefile", layer = "states_lores", verbose = FALSE, overwrite_layer = TRUE)
+writeOGR(obj = states, dsn = "/Volumes/GoogleDrive-104607290079958926089/Shared drives/slfData/data/slfRisk/geo_shapefiles/gadm36_USA_with_data/",  driver="ESRI Shapefile", layer = "states", verbose = FALSE, overwrite_layer = TRUE)
+writeOGR(obj = states_lo, dsn = "/Volumes/GoogleDrive-104607290079958926089/Shared drives/slfData/data/slfRisk/geo_shapefiles/gadm36_USA_with_data/",  driver="ESRI Shapefile", layer = "states_lores", verbose = FALSE, overwrite_layer = TRUE)
 
 #countries
-writeOGR(obj = countries, dsn = "/Volumes/GoogleDrive/Shared drives/slfData/data/slfRisk/geo_shapefiles/gadm36_levels_with_data/",  driver="ESRI Shapefile", layer = "countries", verbose = FALSE, overwrite_layer = TRUE)
-writeOGR(obj = countries_lo, dsn = "/Volumes/GoogleDrive/Shared drives/slfData/data/slfRisk/geo_shapefiles/gadm36_levels_with_data/",  driver="ESRI Shapefile", layer = "countries_lores", verbose = FALSE, overwrite_layer = TRUE)
+writeOGR(obj = countries, dsn = "/Volumes/GoogleDrive-104607290079958926089/Shared drives/slfData/data/slfRisk/geo_shapefiles/gadm36_levels_with_data/",  driver="ESRI Shapefile", layer = "countries", verbose = FALSE, overwrite_layer = TRUE)
+writeOGR(obj = countries_lo, dsn = "/Volumes/GoogleDrive-104607290079958926089/Shared drives/slfData/data/slfRisk/geo_shapefiles/gadm36_levels_with_data/",  driver="ESRI Shapefile", layer = "countries_lores", verbose = FALSE, overwrite_layer = TRUE)
 
 #combined
-writeOGR(obj = combined, dsn = "/Volumes/GoogleDrive/Shared drives/slfData/data/slfRisk/geo_shapefiles/combined/",  driver="ESRI Shapefile", layer = "combined", verbose = FALSE, overwrite_layer = TRUE)
-writeOGR(obj = combined_lo, dsn = "/Volumes/GoogleDrive/Shared drives/slfData/data/slfRisk/geo_shapefiles/combined/",  driver="ESRI Shapefile", layer = "combined_lores", verbose = FALSE, overwrite_layer = TRUE)
+writeOGR(obj = combined, dsn = "/Volumes/GoogleDrive-104607290079958926089/Shared drives/slfData/data/slfRisk/geo_shapefiles/combined/",  driver="ESRI Shapefile", layer = "combined", verbose = FALSE, overwrite_layer = TRUE)
+writeOGR(obj = combined_lo, dsn = "/Volumes/GoogleDrive-104607290079958926089/Shared drives/slfData/data/slfRisk/geo_shapefiles/combined/",  driver="ESRI Shapefile", layer = "combined_lores", verbose = FALSE, overwrite_layer = TRUE)
 ```
 
 # Supplemental check of shapefiles 
