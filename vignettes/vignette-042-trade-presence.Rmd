@@ -52,7 +52,7 @@ states_summary_present_ensemble <- states_summary_present_ensemble %>%
 data("tinyslf", package = "lycormap")
 
 # reading manually added data (for a later step)
-man_county_data <- read_csv(file.path("/Volumes/GoogleDrive/My Drive/spotted_lanternfly_ieco_projects/code/FINAL_CODE/R package/lycordata/", "data-raw", "additional",
+man_county_data <- read_csv(file.path("/Volumes/GoogleDrive-104607290079958926089/My Drive/spotted_lanternfly_ieco_projects/code/FINAL_CODE/R package/lycordata/", "data-raw", "additional",
                                       "slf_county_record_timeline.csv"),
                             col_types = cols(.default = "c", FIPS = "d", 
                                              RT_check = "l", ST_check = "l", RS_match = "l"))
