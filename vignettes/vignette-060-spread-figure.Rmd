@@ -243,8 +243,8 @@ map_plot
 ```
 # Save plot output
 
-```{r save spread plot for pub}
-pdf(file.path(here::here(),"vignettes", paste0("spread_figure_v3.pdf")),width = 10, height = 8)
+```{r save spread plot for pub, eval=FALSE}
+pdf(file.path(here::here(),"vignettes", paste0("spread_figure_v3.pdf")), width = (18/2.54), height = (14/2.54))
 map_plot
 invisible(dev.off())
 
