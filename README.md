@@ -28,9 +28,7 @@ To understand how this paninvasion risk assessment was made:
     [paper](https://www.biorxiv.org/content/10.1101/2021.07.19.452723v2.full)
 2.  Dive deep into this [research
     compendium](https://ieco-lab.github.io/slfrsk/index.html)
-    <https://ieco-lab.github.io/slfrsk/index.html>
 3.  Install and Build [the package](https://github.com/ieco-lab/slfrsk)
-    <https://github.com/ieco-lab/slfrsk>
 
 ``` r
  library(devtools)
@@ -41,4 +39,5 @@ To understand how this paninvasion risk assessment was made:
 
 Huron, N. A., Behm, J. E. & Helmus, M. R. Paninvasion severity
 assessment of a US grape pest to disrupt the global wine market. *in
-review.* [doi:10.1101/2021.07.19.452723](https://www.biorxiv.org/content/10.1101/2021.07.19.452723v2.full).
+review.*
+[doi:10.1101/2021.07.19.452723](https://www.biorxiv.org/content/10.1101/2021.07.19.452723v2.full).
