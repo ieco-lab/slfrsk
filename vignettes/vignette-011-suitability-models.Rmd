@@ -341,7 +341,7 @@ writeRaster(x = enm_ensemble, filename = file.path(mypath, "maxent_models/slftoh
 
 ## Visualization
 
-To make visualization more tractable, we reduced the size of the SDMs by using `raster::aggregate(fun = mean, expand = TRUE, na.rm = TRUE)` (setting `fact=` to `4` for `states` and `10` for `countries`) to reduce the SDM raster resolution (more specific example code can be found in `data-raw/downsample_raster_models.R`). We also clipped the SDMs to the continental US to produce the files used for separate `states` and `countries` visualization. The three models can be visualized below for the US and then the world:
+To make visualization more tractable, we reduced the size of the SDMs by using `raster::aggregate(fun = mean, expand = TRUE, na.rm = TRUE)` (setting `fact=` to `4` for `states` and `10` for `countries`) to reduce the SDM raster resolution (more specific example code can be found in `data-raw/downsample_raster_models.R` for downsampling and `data-raw/convert_data_rda.R` for `fortify()`-ing rasters to plot rasters easily with `ggplot2`). We also clipped the SDMs to the continental US to produce the files used for separate `states` and `countries` visualization. The three models can be visualized below for the US and then the world:
 
 ### USA Maps
 ```{r visualize models at us, fig.height=15, fig.width=10, warning=FALSE}
@@ -480,7 +480,7 @@ en_usa / en
 
 ## Extraction of Summary Statistics
 
-With the three original and ensemble SDMs, we extracted summary statistics by geopolitical unit to later use for evaluation of **suitability**. To do this, we use a custom function (`slfrsk::extract_enm()`) that uses a reference shapefile (we use the GADM data saved in the shared GoogleDrive directory but can be obtained online separately, <https://gadm.org/download_world.html>) to isolate the portion of the raster contained within each geopolitical unit and calculate the following summary statistics for suitability values:
+With the three original and ensemble SDMs, we extracted summary statistics by geopolitical unit to later use for evaluation of **suitability**. To do this, we use a custom function (`slfrsk::extract_enm()`) that uses a reference shapefile (we use a saved copy of GADM data v3.4 but can be obtained online separately, <https://gadm.org/download_world.html>) to isolate the portion of the raster contained within each geopolitical unit and calculate the following summary statistics for suitability values:
 
   1. *mean*
   2. *standard deviation*

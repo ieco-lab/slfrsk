@@ -477,7 +477,7 @@
 <code class="sourceCode R"><span class="kw">if</span><span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span><span class="op">{</span>  <span class="co">#open no run if</span>
 
 <span class="co">#my path to the GoogleDrive shared directory</span>
-<span class="va">mypath</span> <span class="op">&lt;-</span> <span class="st">"/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk"</span>
+<span class="va">mypath</span> <span class="op">&lt;-</span> <span class="st">"/Volumes/GoogleDrive/Shared drives/slfData/data/slfRisk/"</span>
 
 <span class="co">#read in file as ASCII raster</span>
 <span class="va">enm_data_slf</span> <span class="op">&lt;-</span> <span class="fu">raster</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">mypath</span>, <span class="st">"maxent_models/10_21_20_maxent_slf_full/Lycorma_delicatula__White,_1845__avg.asc"</span><span class="op">)</span><span class="op">)</span>
@@ -497,7 +497,7 @@
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="cn">FALSE</span>){  <span class="co">#open no run if</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co">#my path to the GoogleDrive shared directory</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>mypath <span class="ot">&lt;-</span> <span class="st">"/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk"</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>mypath <span class="ot">&lt;-</span> <span class="st">"/Volumes/GoogleDrive/Shared drives/slfData/data/slfRisk"</span></span>
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="co">#read in a geotiff version of the maxent suitability for all three models</span></span>
 <span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>toh <span class="ot">&lt;-</span> <span class="fu">raster</span>(<span class="fu">file.path</span>(mypath,<span class="st">"maxent_models/toh.tif"</span>))</span>
@@ -522,7 +522,7 @@
 <div id="visualization" class="section level2">
 <h2 class="hasAnchor">
 <a href="#visualization" class="anchor"></a>Visualization</h2>
-<p>To make visualization more tractable, we reduced the size of the SDMs by using <code><a href="https://rdrr.io/pkg/raster/man/aggregate.html">raster::aggregate(fun = mean, expand = TRUE, na.rm = TRUE)</a></code> (setting <code>fact=</code> to <code>4</code> for <code>states</code> and <code>10</code> for <code>countries</code>) to reduce the SDM raster resolution. We also clipped the SDMs to the continental US to produce the files used for separate <code>states</code> and <code>countries</code> visualization. The three models can be visualized below for the US and then the world:</p>
+<p>To make visualization more tractable, we reduced the size of the SDMs by using <code><a href="https://rdrr.io/pkg/raster/man/aggregate.html">raster::aggregate(fun = mean, expand = TRUE, na.rm = TRUE)</a></code> (setting <code>fact=</code> to <code>4</code> for <code>states</code> and <code>10</code> for <code>countries</code>) to reduce the SDM raster resolution (more specific example code can be found in <code>data-raw/downsample_raster_models.R</code> for downsampling and <code>data-raw/convert_data_rda.R</code> for <code>fortify()</code>-ing rasters to plot rasters easily with <code>ggplot2</code>). We also clipped the SDMs to the continental US to produce the files used for separate <code>states</code> and <code>countries</code> visualization. The three models can be visualized below for the US and then the world:</p>
 <div id="usa-maps" class="section level3">
 <h3 class="hasAnchor">
 <a href="#usa-maps" class="anchor"></a>USA Maps</h3>
@@ -661,7 +661,7 @@
 <div id="extraction-of-summary-statistics" class="section level2">
 <h2 class="hasAnchor">
 <a href="#extraction-of-summary-statistics" class="anchor"></a>Extraction of Summary Statistics</h2>
-<p>With the three original and ensemble SDMs, we extracted summary statistics by geopolitical unit to later use for evaluation of <strong>suitability</strong>. To do this, we use a custom function (<code><a href="../reference/extract_enm.html">slfrsk::extract_enm()</a></code>) that uses a reference shapefile (we use the GADM data saved in the shared GoogleDrive directory but can be obtained online separately, <a href="https://gadm.org/download_world.html" class="uri">https://gadm.org/download_world.html</a>) to isolate the portion of the raster contained within each geopolitical unit and calculate the following summary statistics for suitability values:</p>
+<p>With the three original and ensemble SDMs, we extracted summary statistics by geopolitical unit to later use for evaluation of <strong>suitability</strong>. To do this, we use a custom function (<code><a href="../reference/extract_enm.html">slfrsk::extract_enm()</a></code>) that uses a reference shapefile (we use a saved copy of GADM data v3.4 but can be obtained online separately, <a href="https://gadm.org/download_world.html" class="uri">https://gadm.org/download_world.html</a>) to isolate the portion of the raster contained within each geopolitical unit and calculate the following summary statistics for suitability values:</p>
 <ol style="list-style-type: decimal">
 <li><em>mean</em></li>
 <li><em>standard deviation</em></li>
@@ -682,7 +682,7 @@
 <code class="sourceCode R"><span class="kw">if</span><span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span><span class="op">{</span>  <span class="co">#open no run if</span>
 
 <span class="co">#my path to the GoogleDrive shared directory</span>
-<span class="va">mypath</span> <span class="op">&lt;-</span> <span class="st">"/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk"</span>
+<span class="va">mypath</span> <span class="op">&lt;-</span> <span class="st">"/Volumes/GoogleDrive/Shared drives/slfData/data/slfRisk"</span>
 
 <span class="co">#shapefile of world by countries</span>
 <span class="va">world</span> <span class="op">&lt;-</span> <span class="fu"><a href="http://rgdal.r-forge.r-project.org/reference/readOGR.html">readOGR</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">mypath</span>, <span class="st">"geo_shapefiles/gadm36_levels_shp/gadm36_0.shp"</span><span class="op">)</span>, verbose <span class="op">=</span> <span class="cn">F</span>, p4s <span class="op">=</span> <span class="st">'+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0'</span><span class="op">)</span>
@@ -719,7 +719,7 @@
 <span class="co">#state_extracts_slftoh &lt;- extract_enm(enm = enm_data_slftoh, geoshape = states, id0 = "NAME_1", id = as.character(states$NAME_1), th = enm_slftoh$`Minimum training presence Cloglog threshold`[nrow(enm_slftoh)])</span>
 
   <span class="op">}</span> <span class="co">#closes no run if</span></code></pre></div>
-<p>Ultimately, the saved versions of these extracted suitabilities are saved in <code>/data-raw</code> and then can be handled by the script in the same directory, <code>convert_data-rda.R</code>, to be converted into <code>.rda</code> file(s), which are stored in <code>/data</code> and used by the other vignettes (with few, if any, exceptions that use the shared GoogleDrive).</p>
+<p>Ultimately, the saved versions of these extracted suitabilities are saved in <code>/data-raw</code> and then can be handled by the script in the same directory, <code>convert_data-rda.R</code>, to be converted into <code>.rda</code> file(s), which are stored in <code>/data</code> and used by the other vignettes (with few, if any, exceptions that use a shared GoogleDrive). Any exceptions should be reproducible with the relevant raw starting files (INSERT HERE).</p>
 </div>
 </div>
 <div id="references" class="section level1 unnumbered">
