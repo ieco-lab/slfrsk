@@ -68,7 +68,7 @@ This page briefly defines commonly used terms in the **Research Compendium** for
 
 \newline
 
-- **spotted lanternfly (SLF)**---*Lycorma delicatula* is a planthopper native to China, Vietnam, and India. It invaded South Korea and Japan in the early 2000's and the northeastern US ca. 2014. It is known to feed on $>100$ different host species, including grapes (@urban_perspective_2020, @barringer_worldwide_2020).
+- **spotted lanternfly (SLF)**---*Lycorma delicatula* is a planthopper native to China, Vietnam, and India. It invaded South Korea and Japan in the early 2000's and the northeastern U.S. ca. 2014. It is known to feed on $>100$ different host species, including grapes (@urban_perspective_2020, @barringer_worldwide_2020).
 
 \newline
 

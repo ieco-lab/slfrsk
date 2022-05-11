@@ -661,7 +661,7 @@
 <div id="extraction-of-summary-statistics" class="section level2">
 <h2 class="hasAnchor">
 <a href="#extraction-of-summary-statistics" class="anchor"></a>Extraction of Summary Statistics</h2>
-<p>With the three original and ensemble SDMs, we extracted summary statistics by geopolitical unit to later use for evaluation of <strong>suitability</strong>. To do this, we use a custom function (<code><a href="../reference/extract_enm.html">slfrsk::extract_enm()</a></code>) that uses a reference shapefile (we use a saved copy of GADM data v3.4 but can be obtained online separately, <a href="https://gadm.org/download_world.html" class="uri">https://gadm.org/download_world.html</a>) to isolate the portion of the raster contained within each geopolitical unit and calculate the following summary statistics for suitability values:</p>
+<p>With the three original and ensemble SDMs, we extracted summary statistics by geopolitical unit to later use for evaluation of <strong>suitability</strong>. To do this, we use a custom function (<code><a href="../reference/extract_enm.html">slfrsk::extract_enm()</a></code>) that uses a reference shapefile (we use a saved copy of GADM data v3.6 for the world and US—both can be obtained online, <a href="https://gadm.org/data.html" class="uri">https://gadm.org/data.html</a>) to isolate the portion of the raster contained within each geopolitical unit and calculate the following summary statistics for suitability values:</p>
 <ol style="list-style-type: decimal">
 <li><em>mean</em></li>
 <li><em>standard deviation</em></li>

@@ -160,7 +160,7 @@
     
     
 <p>Google Earth Engine Paninvasion Severity App Companion: <a href="https://ieco.users.earthengine.app/view/ieco-slf-riskmap" class="uri">https://ieco.users.earthengine.app/view/ieco-slf-riskmap</a></p>
-<p>Huron, N. A., Behm, J. E. &amp; Helmus, M. R. Paninvasion severity assessment of a US grape pest to disrupt the global wine market. <em>in review.</em> <a href="doi:10.1101/2021.07.19.452723" class="uri">doi:10.1101/2021.07.19.452723</a>.</p>
+<p>Huron, N. A., Behm, J. E. &amp; Helmus, M. R. Paninvasion severity assessment of a U.S grape pest to disrupt the global wine market. <em>in review.</em> <a href="doi:10.1101/2021.07.19.452723" class="uri">doi:10.1101/2021.07.19.452723</a>.</p>
 <hr>
 <div id="map-legend" class="section level1">
 <h1 class="hasAnchor">
@@ -224,7 +224,7 @@
 </ol>
 <ol start="3" style="list-style-type: decimal">
 <li>
-<strong>vineyards US</strong>: areas reported to be cultivated as vineyards in the US according to <span class="citation"><a href="#ref-usda_national_agricultural_statistics_service_nass_cropscape_2019" role="doc-biblioref">USDA National Agricultural Statistics Service</a> (<a href="#ref-usda_national_agricultural_statistics_service_nass_cropscape_2019" role="doc-biblioref">2019</a>)</span> are depicted by <strong><span style="color:#800080;">purple pixels</span></strong>
+<strong>vineyards U.S</strong>: areas reported to be cultivated as vineyards in the U.S according to <span class="citation"><a href="#ref-usda_national_agricultural_statistics_service_nass_cropscape_2019" role="doc-biblioref">USDA National Agricultural Statistics Service</a> (<a href="#ref-usda_national_agricultural_statistics_service_nass_cropscape_2019" role="doc-biblioref">2019</a>)</span> are depicted by <strong><span style="color:#800080;">purple pixels</span></strong>
 </li>
 </ol>
 <ol start="4" style="list-style-type: decimal">
@@ -234,7 +234,7 @@
 <p><img src="vignette-040-ee-data_files/figure-html/establishment%20key-1.png" width="480" style="display: block; margin: auto;"></p>
 <ol start="5" style="list-style-type: decimal">
 <li>
-<strong>transport potential</strong>: the potential for transport of SLF as determined by the metric tonnage of trade with US states that are considered to have established SLF populations (scaled <span class="math inline">\([0,10]\)</span>). This layer is a border outline for countries and US states.</li>
+<strong>transport potential</strong>: the potential for transport of SLF as determined by the metric tonnage of trade with U.S states that are considered to have established SLF populations (scaled <span class="math inline">\([0,10]\)</span>). This layer is a border outline for countries and U.S states.</li>
 </ol>
 <p><img src="vignette-040-ee-data_files/figure-html/transport%20key-1.png" width="480" style="display: block; margin: auto;"></p>
 <ol start="6" style="list-style-type: decimal">
@@ -377,7 +377,7 @@
 
   <span class="co">#shapefile of world by countries</span>
 <span class="va">countries</span> <span class="op">&lt;-</span> <span class="fu"><a href="http://rgdal.r-forge.r-project.org/reference/readOGR.html">readOGR</a></span><span class="op">(</span><span class="st">"/Volumes/GoogleDrive-104607290079958926089/Shared drives/slfData/data/slfRisk/geo_shapefiles/gadm36_levels_shp/gadm36_0.shp"</span>, verbose <span class="op">=</span> <span class="cn">F</span>, p4s <span class="op">=</span> <span class="st">'+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0'</span><span class="op">)</span></code></pre></div>
-<p>There are a few shapefile data entries that need to be cleaned, so we alter the names. We also removed the US from <code>countries</code>, as in other analyses.</p>
+<p>There are a few shapefile data entries that need to be cleaned, so we alter the names. We also removed the U.S from <code>countries</code>, as in other analyses.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#STATES</span>
 <span class="co">#change DC name</span>

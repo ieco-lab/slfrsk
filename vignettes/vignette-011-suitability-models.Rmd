@@ -480,7 +480,7 @@ en_usa / en
 
 ## Extraction of Summary Statistics
 
-With the three original and ensemble SDMs, we extracted summary statistics by geopolitical unit to later use for evaluation of **suitability**. To do this, we use a custom function (`slfrsk::extract_enm()`) that uses a reference shapefile (we use a saved copy of GADM data v3.4 but can be obtained online separately, <https://gadm.org/download_world.html>) to isolate the portion of the raster contained within each geopolitical unit and calculate the following summary statistics for suitability values:
+With the three original and ensemble SDMs, we extracted summary statistics by geopolitical unit to later use for evaluation of **suitability**. To do this, we use a custom function (`slfrsk::extract_enm()`) that uses a reference shapefile (we use a saved copy of GADM data v3.6 for the world and US---both can be obtained online, <https://gadm.org/data.html>) to isolate the portion of the raster contained within each geopolitical unit and calculate the following summary statistics for suitability values:
 
   1. *mean*
   2. *standard deviation*

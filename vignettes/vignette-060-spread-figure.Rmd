@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-Map of SLF Spread Through Time in the US
+Map of SLF Spread Through Time in the U.S.
 
 ***
 
@@ -76,7 +76,7 @@ tinyslf %<>%
   # transforming into sf object
   st_as_sf(coords = c("longitude", "latitude"),
            crs = st_crs(counties)) %>% 
-  #intersecting state polygons with data coordinates to match them to US counties
+  #intersecting state polygons with data coordinates to match them to U.S. counties
   st_join(., counties, join = st_intersects) %>%
   #make it a tibble now
   as_tibble() %>% 
@@ -253,7 +253,7 @@ invisible(dev.off())
 # Extras
 
 We also include a modification of SDB code here to show how to make a nice `leaflet` interactive map too... but we do not use this code.
-```{r optional leaflet plotting, eval=TRUE, fig.dim=c(8,10)}
+```{r optional leaflet plotting, message=FALSE, eval=TRUE, fig.dim=c(8,10)}
 library(leaflet)
 
 colpal <- colorFactor(c(brewer.pal(7, "YlOrRd")),
@@ -281,6 +281,3 @@ leaflet(data = by_county,
   )
 
 ```
-
-
-
