@@ -1,6 +1,4 @@
-#downsample Maxent output rasters to plot more easily
-
-#may want to do it straight from ASCII version some day
+#convert .asc to .tif and downsample Maxent output rasters to plot more easily
 
 #Authors: NAH
 
@@ -14,6 +12,28 @@ library(raster)
 #setwd("/Volumes/GoogleDrive/My Drive/spotted_lanternfly_ieco_projects/")
 
 mypath <- "/Volumes/GoogleDrive/Shared drives/slfData/data/slfRisk"
+
+#################################
+#.asc to .tif
+#################################
+
+#THIS IS A GUIDE IF NEEDED TO CONVERT! (much like that in vignette-011-suitability-models.Rmd)
+
+#read in rasters as asciis
+enm_data_slftoh <- raster(file.path(mypath, "maxent_models","10_27_2020_maxent_slftoh_full", "10_27_2020_slftoh_avg.asc"))
+enm_data_toh <- raster(file.path(mypath, "maxent_models", "10_21_2020_maxent_toh_full", "10_21_2020_toh_avg.asc"))
+enm_data_slf <- raster(file.path(mypath, "maxent_models", "10_21_2020_maxent_slf_full","10_21_2020_slf_avg.asc"))
+
+crs(enm_data_slftoh) <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
+crs(enm_data_toh) <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
+crs(enm_data_slf) <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
+
+
+#now convert!
+writeRaster(x = enm_data_slftoh, filename = file.path(mypath, "maxent_models", "slftoh.tif"), format = "GTiff")
+writeRaster(x = enm_data_toh, filename = file.path(mypath, "maxent_models", "toh.tif"), format = "GTiff")
+writeRaster(x = enm_data_slf, filename = file.path(mypath, "maxent_models", "slf.tif"), format = "GTiff")
+
 
 
 #################################
