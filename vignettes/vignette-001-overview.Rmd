@@ -24,7 +24,7 @@ Overview of the Spotted Lanternfly Paninvasion Severity Research Compendium
 
 # Purpose
 
-Welcome to the **Research Compendium** Overview for "Paninvasion severity assessment of a US grape pest to disrupt the global wine market" ([https://www.biorxiv.org/content/10.1101/2021.07.19.452723v2.full](https://www.biorxiv.org/content/10.1101/2021.07.19.452723v2.full)). This overview aims to outline the contents of the compendium to ensure that the study is transparent and reproducible.
+Welcome to the **Research Compendium** Overview for "Paninvasion severity assessment of a U.S. grape pest to disrupt the global wine market" ([https://www.biorxiv.org/content/10.1101/2021.07.19.452723](https://www.biorxiv.org/content/10.1101/2021.07.19.452723)). This overview aims to outline the contents of the compendium to ensure that the study is transparent and reproducible.
 
 # About the Compendium
 
@@ -36,7 +36,7 @@ Our adapted framework determines how closely three (3) invasion potentials align
   2. **Establishment**---How likely is SLF to found stable populations in novel geographic regions?
   3. **Impact**---How likely is SLF to adversely effect economic activities associated with the grape and wine industries in novel geographic regions?
 
-We ascertain the strength of alignment at both a domestic (*U.S. states*) and global (*countries*) scale. With the resulting alignments, we assign the overall risk of a paninvasion by SLF by calculating the relationship between predicted **impact** potential to grape production and the market size for the *wine industry*. Lastly, we deploy a public-facing visualization app of our assessment with Google Earth Engine (<https://ieco.users.earthengine.app/view/ieco-slf-riskmap>).
+We ascertain the strength of alignment at both a domestic (*U.S. states*) and global (*countries*) scale. With the resulting alignments, we assign the overall risk of a paninvasion by SLF by calculating the relationship between predicted **impact** potential to grape production and the market size for the *wine industry*. Of note, large data for this study are kept separately in a Dryad repository (<https://doi.org/10.5061/dryad.msbcc2g1b>). Lastly, we deploy a public-facing visualization app of our assessment with Google Earth Engine (<https://ieco.users.earthengine.app/view/ieco-slf-riskmap>).
 
 # Navigating the Compendium
 
@@ -44,7 +44,7 @@ The research compendium is organized into several **Analyses** (or vignettes) th
 
 **Step 1: Estimate Invasion Potentials**
   
-* Identify Invaded States/Reg. Incidents---Reproduce the figure of SLF spread for the US that shows areas with established populations and reported regulatory incidents
+* Identify Invaded States/Reg. Incidents---Reproduce the figure of SLF spread for the U.S. that shows areas with established populations and reported regulatory incidents
 * Confirm SLF--Trade Tonnage Relationship---Demonstrate that trade as average annual metric total tonnage is an appropriate estimate of SLF **Transport** potential 
 * Get GBIF Records---Show the process of obtaining coordinates for SLF and TOH that were used to model suitability
 * Data Tidying---Demonstration of how we cleaned the data obtained to conduct this study
@@ -62,6 +62,6 @@ The research compendium is organized into several **Analyses** (or vignettes) th
   
 # Citation
 
-Huron, N. A., Behm, J. E. & Helmus, M. R. Paninvasion severity assessment of a US grape pest to disrupt the global wine market. *in review.* doi:10.1101/2021.07.19.452723.
+Huron, N. A., Behm, J. E. & Helmus, M. R. Paninvasion severity assessment of a U.S. grape pest to disrupt the global wine market. *in review.* doi:10.1101/2021.07.19.452723.
 
 # References

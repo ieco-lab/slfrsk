@@ -56,7 +56,7 @@ To build the map plots, we have several sources of data that we need to read in,
 Of note, the actual trade data (**transport** potential) will be read conditionally in a later chunk below.
 
 ```{r read in the data we need}
-#location of wineries (US and COUNTRIES)
+#location of wineries (U.S. and COUNTRIES)
 data("wineries")
 #need usa enviro raster
 data("suitability_usa_df")
@@ -148,11 +148,11 @@ states_trade_final <- states_centers %>%
 
 ```{r countries trade, message=FALSE}
 
-#edit the world centers to also have the SLF US invasion point
+#edit the world centers to also have the SLF U.S. invasion point
 countries_centers <- countries_centers %>%
   #rm the others in the dataset
   filter(!is.na(x), !is.na(y)) %>%
-  #add center for SLF invasion in US
+  #add center for SLF invasion in U.S.
   #rbind(c("SLF", NA, -75.917622, 40.400189)) %>%
   rbind(c(rep("SLF", times = 4), -75.917622, 40.400189)) %>%  #(x,y) for coords
   #add the netherlands, not a wine country but needs a set of coords

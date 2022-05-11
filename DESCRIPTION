@@ -7,7 +7,7 @@ Authors@R: c(
   person(given = "Jocelyn E.", family = "Behm", email = "jebehm@temple.edu", role = "aut"),
   person(given = "Matthew R.",  family = "Helmus", email = "mrhelmus@temple.edu", role = c("aut", "cre"))
   )
-Description: Lycorma delicatula paninvasion severity risk assessment for wine market shock. v_0.2.0 Global US Stepping Stone of spotted lanternfly transport, establishment, and impact on grape yield and wine production.
+Description: Paninvasion severity assessment of a U.S. grape pest to disrupt the global wine market v_0.2.0 Global US Stepping Stone of spotted lanternfly transport, establishment, and impact on grape yield and wine production.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true

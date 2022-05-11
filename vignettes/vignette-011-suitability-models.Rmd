@@ -295,7 +295,7 @@ To visualize the models and produce the ensemble model image, we first had to co
 if(FALSE){  #open no run if
 
 #my path to the GoogleDrive shared directory
-mypath <- "/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk"
+mypath <- "/Volumes/GoogleDrive/Shared drives/slfData/data/slfRisk/"
 
 #read in file as ASCII raster
 enm_data_slf <- raster(file.path(mypath, "maxent_models/10_21_20_maxent_slf_full/Lycorma_delicatula__White,_1845__avg.asc"))
@@ -318,7 +318,7 @@ To create the ensemble model image, we averaged the three models (see code below
 if(FALSE){  #open no run if
 
 #my path to the GoogleDrive shared directory
-mypath <- "/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk"
+mypath <- "/Volumes/GoogleDrive/Shared drives/slfData/data/slfRisk"
 
 #read in a geotiff version of the maxent suitability for all three models
 toh <- raster(file.path(mypath,"maxent_models/toh.tif"))
@@ -341,7 +341,7 @@ writeRaster(x = enm_ensemble, filename = file.path(mypath, "maxent_models/slftoh
 
 ## Visualization
 
-To make visualization more tractable, we reduced the size of the SDMs by using `raster::aggregate(fun = mean, expand = TRUE, na.rm = TRUE)` (setting `fact=` to `4` for `states` and `10` for `countries`) to reduce the SDM raster resolution. We also clipped the SDMs to the continental US to produce the files used for separate `states` and `countries` visualization. The three models can be visualized below for the US and then the world:
+To make visualization more tractable, we reduced the size of the SDMs by using `raster::aggregate(fun = mean, expand = TRUE, na.rm = TRUE)` (setting `fact=` to `4` for `states` and `10` for `countries`) to reduce the SDM raster resolution (more specific example code can be found in `data-raw/downsample_raster_models.R` for downsampling and `data-raw/convert_data_rda.R` for `fortify()`-ing rasters to plot rasters easily with `ggplot2`). We also clipped the SDMs to the continental US to produce the files used for separate `states` and `countries` visualization. The three models can be visualized below for the US and then the world:
 
 ### USA Maps
 ```{r visualize models at us, fig.height=15, fig.width=10, warning=FALSE}
@@ -480,7 +480,7 @@ en_usa / en
 
 ## Extraction of Summary Statistics
 
-With the three original and ensemble SDMs, we extracted summary statistics by geopolitical unit to later use for evaluation of **suitability**. To do this, we use a custom function (`slfrsk::extract_enm()`) that uses a reference shapefile (we use the GADM data saved in the shared GoogleDrive directory but can be obtained online separately, <https://gadm.org/download_world.html>) to isolate the portion of the raster contained within each geopolitical unit and calculate the following summary statistics for suitability values:
+With the three original and ensemble SDMs, we extracted summary statistics by geopolitical unit to later use for evaluation of **suitability**. To do this, we use a custom function (`slfrsk::extract_enm()`) that uses a reference shapefile (we use a saved copy of GADM data v3.6 for the world and US---both can be obtained online, <https://gadm.org/data.html>) to isolate the portion of the raster contained within each geopolitical unit and calculate the following summary statistics for suitability values:
 
   1. *mean*
   2. *standard deviation*
@@ -498,7 +498,7 @@ Here, we demonstrate how we used this function to extract the summary statistics
 if(FALSE){  #open no run if
 
 #my path to the GoogleDrive shared directory
-mypath <- "/Volumes/GoogleDrive/Shared drives/slfRiskMapping/data/slfRisk"
+mypath <- "/Volumes/GoogleDrive/Shared drives/slfData/data/slfRisk"
 
 #shapefile of world by countries
 world <- readOGR(file.path(mypath, "geo_shapefiles/gadm36_levels_shp/gadm36_0.shp"), verbose = F, p4s = '+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0')
@@ -538,6 +538,6 @@ write_csv(path = file.path(here(),"data-raw/extract_countries_slftoh_ensemble_me
 
 ```
 
-Ultimately, the saved versions of these extracted suitabilities are saved in `/data-raw` and then can be handled by the script in the same directory, `convert_data-rda.R`, to be converted into `.rda` file(s), which are stored in `/data` and used by the other vignettes (with few, if any, exceptions that use the shared GoogleDrive).
+Ultimately, the saved versions of these extracted suitabilities are saved in `/data-raw` and then can be handled by the script in the same directory, `convert_data-rda.R`, to be converted into `.rda` file(s), which are stored in `/data` and used by the other vignettes (with few, if any, exceptions that use a shared GoogleDrive). Any exceptions should be reproducible with the relevant raw starting files (INSERT HERE).
 
 # References

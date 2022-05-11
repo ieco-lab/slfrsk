@@ -20,7 +20,7 @@ knitr::opts_chunk$set(
 
 Google Earth Engine Paninvasion Severity App Companion: <https://ieco.users.earthengine.app/view/ieco-slf-riskmap>
 
-Huron, N. A., Behm, J. E. & Helmus, M. R. Paninvasion severity assessment of a US grape pest to disrupt the global wine market. *in review.* doi:10.1101/2021.07.19.452723.
+Huron, N. A., Behm, J. E. & Helmus, M. R. Paninvasion severity assessment of a U.S grape pest to disrupt the global wine market. *in review.* doi:10.1101/2021.07.19.452723.
 
 ***
 
@@ -76,7 +76,7 @@ The layers panel contains several key measures of SLF invasion potential. Each l
 
 \newline
 
-3. **vineyards US**: areas reported to be cultivated as vineyards in the US according to @usda_national_agricultural_statistics_service_nass_cropscape_2019 are  depicted by **<span style="color:#800080;">purple pixels</span>**
+3. **vineyards U.S**: areas reported to be cultivated as vineyards in the U.S according to @usda_national_agricultural_statistics_service_nass_cropscape_2019 are  depicted by **<span style="color:#800080;">purple pixels</span>**
 
 \newline
 
@@ -110,7 +110,7 @@ scale_fill_manual(
 
 \newline
 
-5. **transport potential**: the potential for transport of SLF as determined by the metric tonnage of trade with US states that are considered to have established SLF populations (scaled $[0,10]$). This layer is a border outline for countries and US states.
+5. **transport potential**: the potential for transport of SLF as determined by the metric tonnage of trade with U.S states that are considered to have established SLF populations (scaled $[0,10]$). This layer is a border outline for countries and U.S states.
 
 ```{r transport key, echo=FALSE, fig.width=5, fig.height=1, fig.align='center'}
 tibble(x= seq(from = 0, to = 10, by = 1), colors = rev(c('#a50026','#d73027','#f46d43','#fdae61','#fee090','#ffffbf','#e0f3f8','#abd9e9','#74add1','#4575b4','#313695'))) %>%
@@ -321,7 +321,7 @@ states <- readOGR(dsn = "/Volumes/GoogleDrive-104607290079958926089/Shared drive
 countries <- readOGR("/Volumes/GoogleDrive-104607290079958926089/Shared drives/slfData/data/slfRisk/geo_shapefiles/gadm36_levels_shp/gadm36_0.shp", verbose = F, p4s = '+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0')
 ```
 
-There are a few shapefile data entries that need to be cleaned, so we alter the names. We also removed the US from `countries`, as in other analyses.
+There are a few shapefile data entries that need to be cleaned, so we alter the names. We also removed the U.S from `countries`, as in other analyses.
 
 ```{r clean the shape data, eval=TRUE}
 #STATES

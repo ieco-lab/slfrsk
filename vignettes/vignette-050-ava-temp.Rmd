@@ -62,7 +62,7 @@ We determine if west coast AVAs meet either of the following criteria (based on 
 1. Diapause-terminating Chilling Period (**chill_dia**): at least 60 days with temperatures $< 10C$ 
 2. No Chilling Period (**no_chill**): at least 95 days with temperatures $> 10C \& < 20C$
 
-To do this, we use temperature data collected from the station-based serially complete datasets for North America (SCDNA, @tang_scdna_2020). These data were previously interpolated by Seba De Bona (<sebastiano.debona@temple.edu>) to produce a grid of points at both 0.25 x 0.25 degree and 0.50 x 0.50 degree spatial resolutions (both available but the former is used). Temperature values were calculated as daily averages (degrees Celsius) for 2008--2018. Here, we read in the points, summarize the number of days at the temperature thresholds, and rasterize the data for visualization and comparison.
+To do this, we use temperature data collected from the station-based serially complete datasets for North America (SCDNA, @tang_scdna_2020). These data were previously interpolated by Seba De Bona ([sebastiano.debona@temple.edu](mailto:sebastiano.debona@temple.edu)) to produce a grid of points at both 0.25 x 0.25 degree and 0.50 x 0.50 degree spatial resolutions (both available but the former is used). Temperature values were calculated as daily averages (degrees Celsius) for 2008--2018. Here, we read in the points, summarize the number of days at the temperature thresholds, and rasterize the data for visualization and comparison.
 
 ```{r temperature data and rasterization, message=FALSE}
 #read in the grid gps points

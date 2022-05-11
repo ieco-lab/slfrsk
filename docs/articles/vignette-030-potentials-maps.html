@@ -202,7 +202,7 @@
 </ol>
 <p>Of note, the actual trade data (<strong>transport</strong> potential) will be read conditionally in a later chunk below.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">#location of wineries (US and COUNTRIES)</span>
+<code class="sourceCode R"><span class="co">#location of wineries (U.S. and COUNTRIES)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"wineries"</span><span class="op">)</span>
 <span class="co">#need usa enviro raster</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"suitability_usa_df"</span><span class="op">)</span>
@@ -293,11 +293,11 @@
 <a href="#countries" class="anchor"></a>Countries</h2>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
-<span class="co">#edit the world centers to also have the SLF US invasion point</span>
+<span class="co">#edit the world centers to also have the SLF U.S. invasion point</span>
 <span class="va">countries_centers</span> <span class="op">&lt;-</span> <span class="va">countries_centers</span> <span class="op">%&gt;%</span>
   <span class="co">#rm the others in the dataset</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="co">#add center for SLF invasion in US</span>
+  <span class="co">#add center for SLF invasion in U.S.</span>
   <span class="co">#rbind(c("SLF", NA, -75.917622, 40.400189)) %&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"SLF"</span>, times <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>, <span class="op">-</span><span class="fl">75.917622</span>, <span class="fl">40.400189</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>  <span class="co">#(x,y) for coords</span>
   <span class="co">#add the netherlands, not a wine country but needs a set of coords</span>

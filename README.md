@@ -9,7 +9,7 @@
 ## Description
 
 `R package` and [research
-compendium](https://ieco-lab.github.io/slfrsk/index.html) for a *Lycorma
+compendium](https://ieco-lab.github.io/slfrsk/) for a *Lycorma
 delicatula* paninvasion risk assessment.
 
 -   *Why slfrsk?* slf == spotted lanternfly == *Lycorma delicatula* +
@@ -25,9 +25,10 @@ delicatula* paninvasion risk assessment.
 To understand how this paninvasion risk assessment was made:
 
 1.  Read the
-    [paper](https://www.biorxiv.org/content/10.1101/2021.07.19.452723v2.full)
+    [paper](https://www.biorxiv.org/content/10.1101/2021.07.19.452723)
 2.  Dive deep into this [research
-    compendium](https://ieco-lab.github.io/slfrsk/index.html)
+    compendium](https://ieco-lab.github.io/slfrsk/) and corresponding
+    [large datasets](https://doi.org/10.5061/dryad.msbcc2g1b)
 3.  Install and Build [the package](https://github.com/ieco-lab/slfrsk)
 
 ``` r
@@ -38,6 +39,6 @@ To understand how this paninvasion risk assessment was made:
 ## Citation
 
 Huron, N. A., Behm, J. E. & Helmus, M. R. Paninvasion severity
-assessment of a US grape pest to disrupt the global wine market. *in
+assessment of a U.S. grape pest to disrupt the global wine market. *in
 review.*
-[doi:10.1101/2021.07.19.452723](https://www.biorxiv.org/content/10.1101/2021.07.19.452723v2.full).
+[doi:10.1101/2021.07.19.452723](https://www.biorxiv.org/content/10.1101/2021.07.19.452723).

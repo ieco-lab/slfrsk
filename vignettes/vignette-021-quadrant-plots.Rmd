@@ -1067,7 +1067,7 @@ ggplotly(states_ggplot, dynamicTicks = F, tooltip = c("ID", "establishment poten
          yaxis = 
            list(title = list(font = list(size = 11)), showspikes = T),
          title = 
-           list(text = "US States Invasion Potential Alignment",
+           list(text = "U.S. States Invasion Potential Alignment",
                 font = list(size = 12),
                 x = 0.1,
                 y = 0.99),
