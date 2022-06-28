@@ -87,6 +87,7 @@ map_slf <- ggplot() +
 #patchwork output of both maps
 map_toh / map_slf
 
+#ggsave((map_toh / map_slf), filename = file.path(here(), "slf_toh_presence.png"), height = 10, width = 10)
 ```
 
 ```{r quick plot of things together, eval=FALSE}
@@ -209,7 +210,7 @@ To visualize the correlations between pairs of environmental covariates easily, 
 env.cor <- read.csv(file = file.path(here::here(),"data-raw/env_cor_v1_downsampled.csv"), row.names = 1)
 
 #here, we make cor's absolute values and make the data tidy to make it easier to plot in ggplot2
-env.cor %>%
+p_env_cor <- env.cor %>%
   abs(.) %>%
 as_tibble() %>%
   mutate(covar = colnames(.)) %>%
@@ -222,6 +223,9 @@ ggplot() +
   guides(x =  guide_axis(angle = 90)) +
   labs(x = "", y = "")
 
+p_env_cor
+
+#ggsave(p_env_cor, filename = file.path(here(), "p_env_cor.png"), height = 10, width = 10)
 ```
 
 With the correlations, we identified 6 of the 22 covariates that had minimal cross-correlations: annual mean temperature (**BIO01**), mean diurnal temperature range (**BIO02**), annual precipitation (**BIO12**), precipitation seasonality (**BIO15**), elevation (**ELEV**), and access to cities (**ATC**). These variables were then converted to ASCII files (`.asc`), as required by MaxEnt (example code below). We also set all `NA` values to `-9999`, which is the default value recognized as `NA` by MaxEnt.
@@ -388,6 +392,10 @@ sdm_slf2_usa <- ggplot() +
 #visualize together
 sdm_toh_usa / sdm_slf1_usa / sdm_slf2_usa
 
+#ggsave(sdm_toh_usa, filename = file.path(here(), "sdm_toh_usa.png"), height = 5, width = 10)
+#ggsave(sdm_slf1_usa, filename = file.path(here(), "sdm_slf1_usa.png"), height = 5, width = 10)
+#ggsave(sdm_slf2_usa, filename = file.path(here(), "sdm_slf2_usa.png"), height = 5, width = 10)
+
 ```
 
 ### World Maps
@@ -438,6 +446,9 @@ sdm_slf2 <- ggplot() +
 #visualize together
 sdm_toh / sdm_slf1 / sdm_slf2
 
+#ggsave(sdm_toh, filename = file.path(here(), "sdm_toh.png"), height = 5, width = 10)
+#ggsave(sdm_slf1, filename = file.path(here(), "sdm_slf1.png"), height = 5, width = 10)
+#ggsave(sdm_slf2, filename = file.path(here(), "sdm_slf2.png"), height = 5, width = 10)
 ```
 
 ### Ensemble Maps
@@ -475,6 +486,10 @@ en <- ggplot() +
 
 #visualize together
 en_usa / en
+
+#ggsave(en_usa, filename = file.path(here(), "en_usa.png"), height = 5, width = 10)
+#ggsave(en, filename = file.path(here(), "en.png"), height = 5, width = 10)
+
 
 ```
 
