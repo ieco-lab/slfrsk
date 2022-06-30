@@ -159,9 +159,14 @@
 
     
     
-<p>Evaluate if Trade with Established States Relates to Regulatory Incidents or Establishment</p>
+<p>Evaluate if Trade with Established States Relates to Regulatory
+Incidents or Establishment</p>
 <hr>
-<p>This vignette fits a simple logistic regression model in the form of a binary dependent variable (either <strong>states with regulatory incidents</strong> or <strong>states with established SLF</strong>) on a continuous independent variable (trade with established states, mass in metric tons transformed as <span class="math inline">\(log_{10}(value+1)\)</span>).</p>
+<p>This vignette fits a simple logistic regression model in the form of
+a binary dependent variable (either <strong>states with regulatory
+incidents</strong> or <strong>states with established SLF</strong>) on a
+continuous independent variable (trade with established states, mass in
+metric tons transformed as <span class="math inline">\(log_{10}(value+1)\)</span>).</p>
 <div id="setup" class="section level1">
 <h1 class="hasAnchor">
 <a href="#setup" class="anchor"></a>Setup</h1>
@@ -203,7 +208,12 @@
 <h2 class="hasAnchor">
 <a href="#quick-clean-up-of-lycordata" class="anchor"></a>Quick clean up of <code>lycordata</code>
 </h2>
-<p>We now use some other data to get states with regulatory events. These data come from the <code>lycordata</code> package. Please email SDB if unable to access the packages/data (<a href="mailto:sebastiano.debona@temple.edu">sebastiano.debona@temple.edu</a>). The <code>slfrsk</code> data already has established states, but it lacks the states that have regulatory events recorded but no established populations.</p>
+<p>We now use some other data to get states with regulatory events.
+These data come from the <code>lycordata</code> package. Please email
+SDB if unable to access the packages/data (<a href="mailto:sebastiano.debona@temple.edu">sebastiano.debona@temple.edu</a>).
+The <code>slfrsk</code> data already has established states, but it
+lacks the states that have regulatory events recorded but no established
+populations.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#standardize the dates in the data</span>
 <span class="va">man_county_data</span> <span class="op">%&lt;&gt;%</span> 
@@ -256,7 +266,8 @@
 <div id="model-the-relationship" class="section level1">
 <h1 class="hasAnchor">
 <a href="#model-the-relationship" class="anchor"></a>Model the relationship</h1>
-<p>We have two models that we look at, specifically the relationship between trade with established states AND:</p>
+<p>We have two models that we look at, specifically the relationship
+between trade with established states AND:</p>
 <ol style="list-style-type: decimal">
 <li>establishment status as a binary (<code>estab</code>)</li>
 <li>regulatory event status (<code>regulatory</code>)</li>
@@ -449,7 +460,8 @@ CONSTANT
 <em>Notes:</em>
 </td>
 <td colspan="2" style="text-align:left">
-<sup><em><strong></strong></em></sup>p &lt; .01; <sup></sup>p &lt; .05; <sup></sup>p &lt; .1
+<sup><em><strong></strong></em></sup>p &lt; .01; <sup></sup>p &lt; .05;
+<sup></sup>p &lt; .1
 </td>
 </tr>
 </table>

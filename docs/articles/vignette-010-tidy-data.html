@@ -161,7 +161,16 @@
     
 <p>Wrangle and Tidy Package data</p>
 <hr>
-<p>All of the following data sources will be read in as raw data from <code>slfrsk/data/</code> (originally cleaned a bit from raw data versions in <code>slfrsk/data-raw/</code>) and then cleaned up individually in this vignette (see <code>/data-raw/convert_data_rda.R</code> for script and commenting that includes earlier unit conversion and transformation of raw data from <code>.csv</code> to <code>.rda</code> files used here). Depending on the situation, the resultant “cleaned/tidied” data may be saved to <code>slfrsk/data/</code> as a new <code>.rda</code> file. In this vignette, the following data are treated:</p>
+<p>All of the following data sources will be read in as raw data from
+<code>slfrsk/data/</code> (originally cleaned a bit from raw data
+versions in <code>slfrsk/data-raw/</code>) and then cleaned up
+individually in this vignette (see
+<code>/data-raw/convert_data_rda.R</code> for script and commenting that
+includes earlier unit conversion and transformation of raw data from
+<code>.csv</code> to <code>.rda</code> files used here). Depending on
+the situation, the resultant “cleaned/tidied” data may be saved to
+<code>slfrsk/data/</code> as a new <code>.rda</code> file. In this
+vignette, the following data are treated:</p>
 <ol style="list-style-type: decimal">
 <li>Establishment potential</li>
 <li>Transport potential</li>
@@ -183,9 +192,24 @@
 <div id="maxent-ensemble-model" class="section level2">
 <h2 class="hasAnchor">
 <a href="#maxent-ensemble-model" class="anchor"></a>Maxent Ensemble Model</h2>
-<p>Previously, we built three separate species distribution models (SDMs) with MaxEnt (See species distribution modeling analysis for more information). We also obtained summary statistics for suitability in each geopolitical unit (country and U.S. state) in each SDM (as well as an ensemble SDM), which were transferred to the <code>states_extracts</code> and <code>countries_extracts</code> datasets (or <code>states_extracts_ensemble</code> and <code>countries_extracts_ensemble</code> for the ensemble SDM).</p>
-<p>Here, we explore the ensemble <em>maximum suitability</em> by obtaining the maximum suitability per geopolitical unit for each SDM and calculating the <em>mean</em> and <em>standard error</em> across the models (or just use the extracted maximum value for ensemble models). These summarized suitabilities constitute our predicted <strong>Establishment potential</strong>.</p>
-<p>We also strip <em>Western Sahara</em> from the <code>countries</code> datasets here and for other datsets, as it is not informative for our analyses (zero trade for <strong>Transport potential</strong> below).</p>
+<p>Previously, we built three separate species distribution models
+(SDMs) with MaxEnt (See species distribution modeling analysis for more
+information). We also obtained summary statistics for suitability in
+each geopolitical unit (country and U.S. state) in each SDM (as well as
+an ensemble SDM), which were transferred to the
+<code>states_extracts</code> and <code>countries_extracts</code>
+datasets (or <code>states_extracts_ensemble</code> and
+<code>countries_extracts_ensemble</code> for the ensemble SDM).</p>
+<p>Here, we explore the ensemble <em>maximum suitability</em> by
+obtaining the maximum suitability per geopolitical unit for each SDM and
+calculating the <em>mean</em> and <em>standard error</em> across the
+models (or just use the extracted maximum value for ensemble models).
+These summarized suitabilities constitute our predicted
+<strong>Establishment potential</strong>.</p>
+<p>We also strip <em>Western Sahara</em> from the <code>countries</code>
+datasets here and for other datsets, as it is not informative for our
+analyses (zero trade for <strong>Transport potential</strong>
+below).</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#new extract of ensemble</span>
 <span class="kw">if</span><span class="op">(</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">{</span>
@@ -215,13 +239,41 @@
 <div id="import-trade-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#import-trade-data" class="anchor"></a>Import Trade Data</h2>
-<p>Now that <strong>Establishment</strong> data are nicely organized, we can move on to <strong>Transport</strong>. We estimate <strong>Transport potential</strong> based on the average annual mass of goods traded (in metric tons) with <strong>SLF</strong>-established U.S. states over 2012–2017 (we also track value of traded goods in USD). Our existing data can be partitioned into geopolitical units as above (states and countries), but can further be separated into two categories: 1. states with confirmed <strong>SLF</strong> populations (<code>present</code>) and 2. states that have a high probability of hosting <strong>SLF</strong> populations in the near future based on proximity to <code>present</code> states and records of isolated observations (<code>future</code>).</p>
-<p>Although we maintain several possible permutations of data to analyze, we focus on mass of goods traded for <code>present</code> scenarios, as these data are unlikely to be skewed by trade of high value goods that are less likely to lead to transportation of egg masses (e.g., electronics) and provide us with a more careful outlook for risk of slf paninvasion.</p>
+<p>Now that <strong>Establishment</strong> data are nicely organized, we
+can move on to <strong>Transport</strong>. We estimate <strong>Transport
+potential</strong> based on the average annual mass of goods traded (in
+metric tons) with <strong>SLF</strong>-established U.S. states over
+2012–2017 (we also track value of traded goods in USD). Our existing
+data can be partitioned into geopolitical units as above (states and
+countries), but can further be separated into two categories: 1. states
+with confirmed <strong>SLF</strong> populations (<code>present</code>)
+and 2. states that have a high probability of hosting
+<strong>SLF</strong> populations in the near future based on proximity
+to <code>present</code> states and records of isolated observations
+(<code>future</code>).</p>
+<p>Although we maintain several possible permutations of data to
+analyze, we focus on mass of goods traded for <code>present</code>
+scenarios, as these data are unlikely to be skewed by trade of high
+value goods that are less likely to lead to transportation of egg masses
+(e.g., electronics) and provide us with a more careful outlook for risk
+of slf paninvasion.</p>
 <div id="u-s--states" class="section level3">
 <h3 class="hasAnchor">
 <a href="#u-s--states" class="anchor"></a>U.S. States</h3>
-<p>We first treat the states data by adding two letter codes and <strong>SLF</strong>-establishment status. For <code>present</code>, we treat the following states as having established <strong>SLF</strong>: <strong>CT, DE, MD, NJ, NY, OH, PA, VA, and WV</strong>. For <code>future</code>, we add the following states as having established <strong>SLF</strong>: <strong>NC</strong>. From here, the data are tidied and gathered before calculating the mean and standard error (SE) of trade with established states for 2012–2017. To do so, we first removed all cases of intrastate trade for established states. Then, we calculated the total trade with established states for each year before obtaining the overall mean and SE.</p>
-<p>Below, we demonstrate the code for both <code>present</code> and <code>future</code> trade data in value (USD) for U.S. <code>states</code>.</p>
+<p>We first treat the states data by adding two letter codes and
+<strong>SLF</strong>-establishment status. For <code>present</code>, we
+treat the following states as having established <strong>SLF</strong>:
+<strong>CT, DE, MD, NJ, NY, OH, PA, VA, and WV</strong>. For
+<code>future</code>, we add the following states as having established
+<strong>SLF</strong>: <strong>NC</strong>. From here, the data are
+tidied and gathered before calculating the mean and standard error (SE)
+of trade with established states for 2012–2017. To do so, we first
+removed all cases of intrastate trade for established states. Then, we
+calculated the total trade with established states for each year before
+obtaining the overall mean and SE.</p>
+<p>Below, we demonstrate the code for both <code>present</code> and
+<code>future</code> trade data in value (USD) for U.S.
+<code>states</code>.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#load states value</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"states_trade_summary_slf"</span><span class="op">)</span>
@@ -345,7 +397,9 @@
     <span class="fu">group_by</span><span class="op">(</span><span class="va">destination</span>, <span class="va">status</span><span class="op">)</span> <span class="op">%&gt;%</span>
     <span class="fu">mutate</span><span class="op">(</span>se <span class="op">=</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">avg_infected_trade</span>, na.rm <span class="op">=</span> <span class="cn">T</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">year</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
     <span class="fu">summarise</span><span class="op">(</span>avg_infected_trade <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">avg_infected_trade</span>, na.rm <span class="op">=</span> <span class="cn">T</span><span class="op">)</span>, se <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">se</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p>We repeat the same process for <code>states</code> but for the total mass of imported goods (<code>mass</code>). In doing so, we convert the existing units from kg to <strong>metric tons</strong>.</p>
+<p>We repeat the same process for <code>states</code> but for the total
+mass of imported goods (<code>mass</code>). In doing so, we convert the
+existing units from kg to <strong>metric tons</strong>.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#load states mass</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"states_trade_mass_summary_slf"</span><span class="op">)</span>
@@ -457,7 +511,8 @@
     <span class="fu">mutate</span><span class="op">(</span>se <span class="op">=</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">avg_infected_mass</span>, na.rm <span class="op">=</span> <span class="cn">T</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">year</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
     <span class="fu">summarise</span><span class="op">(</span>avg_infected_mass <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">avg_infected_mass</span>, na.rm <span class="op">=</span> <span class="cn">T</span><span class="op">)</span>, se <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">se</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <blockquote>
-<p>Here, you can see the summary for the first 10 states for the <code>future</code> trade data for mass of trade (metric tons).</p>
+<p>Here, you can see the summary for the first 10 states for the
+<code>future</code> trade data for mass of trade (metric tons).</p>
 </blockquote>
 <table class="table">
 <thead><tr class="header">
@@ -533,7 +588,13 @@
 <div id="countries" class="section level3">
 <h3 class="hasAnchor">
 <a href="#countries" class="anchor"></a>Countries</h3>
-<p>From here, we turn to complete the same analyses for <code>countries</code> as states (value of trade in USD and then mass of trade in metric tons). Notably, we do not have to worry about the intrastate trade that we filtered out in the <code>states</code> datasets. As such, we do not bother with attaching a <code>$status</code> identifier to each country (this is done as needed for visualization later).</p>
+<p>From here, we turn to complete the same analyses for
+<code>countries</code> as states (value of trade in USD and then mass of
+trade in metric tons). Notably, we do not have to worry about the
+intrastate trade that we filtered out in the <code>states</code>
+datasets. As such, we do not bother with attaching a
+<code>$status</code> identifier to each country (this is done as needed
+for visualization later).</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#COUNTRIES</span>
 
@@ -675,7 +736,9 @@
     <span class="fu">mutate</span><span class="op">(</span>se <span class="op">=</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">avg_infected_mass</span>, na.rm <span class="op">=</span> <span class="cn">T</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">year</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
     <span class="fu">summarise</span><span class="op">(</span>avg_infected_mass <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">avg_infected_mass</span>, na.rm <span class="op">=</span> <span class="cn">T</span><span class="op">)</span>, se <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">se</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <blockquote>
-<p>Here, you can see the summary for the first 10 countries for the <code>future</code> trade data for mass of trade (metric tons), just like the <code>states</code> data.</p>
+<p>Here, you can see the summary for the first 10 countries for the
+<code>future</code> trade data for mass of trade (metric tons), just
+like the <code>states</code> data.</p>
 </blockquote>
 <table class="table">
 <thead><tr class="header">
@@ -740,8 +803,20 @@
 <div id="combined-final-trade-data" class="section level3">
 <h3 class="hasAnchor">
 <a href="#combined-final-trade-data" class="anchor"></a>Combined Final Trade Data</h3>
-<p>Now that we have several permutations of trade with <strong>SLF</strong>-established states data (both <code>present</code> and <code>future</code> scenarios) for both geopolitical units (<code>states</code> and <code>countries</code>) as measured in <strong>value</strong> and <strong>mass</strong> (USD and metric tons, respectively), we can combine some of these data into fewer dataframes to minimize the number of files we are juggling for future analyses. To do this, we merge the <strong>value</strong> and <strong>mass</strong> data for each geopolitical unit dataset.</p>
-<p>As we do so, we take the time to create <span class="math inline">\(\log_{10}\)</span> transformed versions of the trade <strong>value</strong> and <strong>mass</strong> data. To avoid possible errors for this transformation, we add a constant (<span class="math inline">\(value+1\)</span>) to data prior to transformation. We use the same transformation process for <strong>Impact potential</strong> data.</p>
+<p>Now that we have several permutations of trade with
+<strong>SLF</strong>-established states data (both <code>present</code>
+and <code>future</code> scenarios) for both geopolitical units
+(<code>states</code> and <code>countries</code>) as measured in
+<strong>value</strong> and <strong>mass</strong> (USD and metric tons,
+respectively), we can combine some of these data into fewer dataframes
+to minimize the number of files we are juggling for future analyses. To
+do this, we merge the <strong>value</strong> and <strong>mass</strong>
+data for each geopolitical unit dataset.</p>
+<p>As we do so, we take the time to create <span class="math inline">\(\log_{10}\)</span> transformed versions of the
+trade <strong>value</strong> and <strong>mass</strong> data. To avoid
+possible errors for this transformation, we add a constant (<span class="math inline">\(value+1\)</span>) to data prior to transformation.
+We use the same transformation process for <strong>Impact
+potential</strong> data.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#STATES</span>
 <span class="va">summary_states_trade</span> <span class="op">&lt;-</span> <span class="fu">left_join</span><span class="op">(</span><span class="va">summary_states_trade_value</span>, <span class="va">summary_states_trade_mass</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"destination"</span>, <span class="st">"status"</span><span class="op">)</span>, suffix <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"_trade"</span>, <span class="st">"_mass"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
@@ -760,7 +835,8 @@
     <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">destination</span> <span class="op">!=</span> <span class="st">"Western Sahara"</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">mutate</span><span class="op">(</span>log10_avg_infected_trade <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span><span class="op">(</span><span class="va">avg_infected_trade</span><span class="op">+</span><span class="fl">1</span><span class="op">)</span>, log10_avg_infected_mass <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span><span class="op">(</span><span class="va">avg_infected_mass</span><span class="op">+</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <blockquote>
-<p>Here is the merged <code>states</code> data for <code>future</code>:</p>
+<p>Here is the merged <code>states</code> data for
+<code>future</code>:</p>
 </blockquote>
 <table class="table">
 <colgroup>
@@ -887,7 +963,8 @@
 </tbody>
 </table>
 <blockquote>
-<p>And here is the merged <code>countries</code> data for <code>future</code>:</p>
+<p>And here is the merged <code>countries</code> data for
+<code>future</code>:</p>
 </blockquote>
 <table class="table">
 <colgroup>
@@ -1008,16 +1085,21 @@
 <div id="impact" class="section level1">
 <h1 class="hasAnchor">
 <a href="#impact" class="anchor"></a>Impact</h1>
-<p>Given the close relationship between cultivation of grapes (<code>grapes</code>) and winemaking (<code>wine</code>), we evaluate impact potential of <strong>SLF</strong> based on data from both.</p>
+<p>Given the close relationship between cultivation of grapes
+(<code>grapes</code>) and winemaking (<code>wine</code>), we evaluate
+impact potential of <strong>SLF</strong> based on data from both.</p>
 <div id="grapes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#grapes" class="anchor"></a>Grapes</h2>
-<p>For <code>grapes</code>, two forms of cultivation data were available:</p>
+<p>For <code>grapes</code>, two forms of cultivation data were
+available:</p>
 <ol style="list-style-type: decimal">
 <li>grape production (metric tons)</li>
 <li>grape yield per unit area (metric tons/hectare)</li>
 </ol>
-<p>Although we provide both sources of data, we focus more on <strong>production</strong> as a total measure of output per geopolitical unit.</p>
+<p>Although we provide both sources of data, we focus more on
+<strong>production</strong> as a total measure of output per
+geopolitical unit.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"states_grapes"</span><span class="op">)</span>
 
@@ -1057,7 +1139,8 @@
 <div id="wine" class="section level2">
 <h2 class="hasAnchor">
 <a href="#wine" class="anchor"></a>Wine</h2>
-<p>For <code>wine</code>, we were able to obtain wine production for both geopolitical unit datasets in units of mass, metric tons.</p>
+<p>For <code>wine</code>, we were able to obtain wine production for
+both geopolitical unit datasets in units of mass, metric tons.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"states_wine"</span><span class="op">)</span>
 
@@ -1078,12 +1161,25 @@
 <div id="potentials-summary" class="section level1">
 <h1 class="hasAnchor">
 <a href="#potentials-summary" class="anchor"></a>Potentials Summary</h1>
-<p>Now that all of these data sources have been summarized and tidied, we will merge them together with <code>left_join()</code> sequentially, using the <code>trade</code> data (<strong>Transport potential</strong>) as the inital dataset that all others are joined to. The resultant datasets contain all permuatations of geopolitical units (<code>states</code> and <code>countries</code>) and infection scenarios (<code>present</code> and <code>future</code>).</p>
-<p>During this process, we also use the <code>wine</code> and <code>grape</code> data to produce binary categorical data for each geopolitical unit to indicate whether it is involved directly in that industry. For this, we also manually add the <em>United States</em> as a grape producer in the <code>countries</code> datasets. Additionally, we manually add <code>$status</code> to the <code>countries</code> datasets as follows:</p>
+<p>Now that all of these data sources have been summarized and tidied,
+we will merge them together with <code>left_join()</code> sequentially,
+using the <code>trade</code> data (<strong>Transport potential</strong>)
+as the inital dataset that all others are joined to. The resultant
+datasets contain all permuatations of geopolitical units
+(<code>states</code> and <code>countries</code>) and infection scenarios
+(<code>present</code> and <code>future</code>).</p>
+<p>During this process, we also use the <code>wine</code> and
+<code>grape</code> data to produce binary categorical data for each
+geopolitical unit to indicate whether it is involved directly in that
+industry. For this, we also manually add the <em>United States</em> as a
+grape producer in the <code>countries</code> datasets. Additionally, we
+manually add <code>$status</code> to the <code>countries</code> datasets
+as follows:</p>
 <ul>
 <li>Native: <strong>China, India, Taiwan, and Vietnam</strong>
 </li>
-<li>Established: <strong>Japan, South Korea, and United States</strong>
+<li>Established: <strong>Japan, South Korea, and United
+States</strong>
 </li>
 </ul>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
@@ -1226,7 +1322,12 @@
 <div id="save-data" class="section level1">
 <h1 class="hasAnchor">
 <a href="#save-data" class="anchor"></a>Save data</h1>
-<p>This section provides the code to save each of the final summary objects to the <code>/data</code> directory. They are currently set to not run, as the package <strong>should</strong> ship with the files already in <code>/data</code>. Note that this chunk can be run by setting the top <code>if</code> from <code>FALSE</code> to <code>TRUE</code>!</p>
+<p>This section provides the code to save each of the final summary
+objects to the <code>/data</code> directory. They are currently set to
+not run, as the package <strong>should</strong> ship with the files
+already in <code>/data</code>. Note that this chunk can be run by
+setting the top <code>if</code> from <code>FALSE</code> to
+<code>TRUE</code>!</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw">if</span><span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span><span class="op">{</span>
 <span class="fu"><a href="https://rdrr.io/r/base/save.html">save</a></span><span class="op">(</span><span class="va">states_summary_present</span>, file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"data"</span>, <span class="st">"states_summary_present.rda"</span><span class="op">)</span><span class="op">)</span>

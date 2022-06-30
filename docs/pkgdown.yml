@@ -1,4 +1,4 @@
-pandoc: 2.11.3.2
+pandoc: 2.17.1.1
 pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
@@ -17,5 +17,5 @@ articles:
   vignette-042-trade-presence: vignette-042-trade-presence.html
   vignette-050-ava-temp: vignette-050-ava-temp.html
   vignette-060-spread-figure: vignette-060-spread-figure.html
-last_built: 2022-05-11T21:06Z
+last_built: 2022-06-30T02:47Z
 
