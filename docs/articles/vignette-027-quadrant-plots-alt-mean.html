@@ -149,7 +149,8 @@
       </header><script src="vignette-027-quadrant-plots-alt-mean_files/header-attrs-2.8/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>Invasion Potential Alignment Alternative (Mean)</h1>
+      <h1 data-toc-skip>Invasion Potential Alignment Alternative
+(Mean)</h1>
             
       
       
@@ -159,7 +160,8 @@
 
     
     
-<p>Build and Save Risk Correlation Quadrant Plots (Ensemble Extracts, Alternate Extraction Data)</p>
+<p>Build and Save Risk Correlation Quadrant Plots (Ensemble Extracts,
+Alternate Extraction Data)</p>
 <div id="load-required-packages-and-set-the-same-settings" class="section level1">
 <h1 class="hasAnchor">
 <a href="#load-required-packages-and-set-the-same-settings" class="anchor"></a>1. Load required packages and set the same settings</h1>
@@ -196,8 +198,12 @@
 </div>
 <div id="load-the-full-suitability-extract-ensemble-data-and-the-summary_future-data-states-and-countries-" class="section level1">
 <h1 class="hasAnchor">
-<a href="#load-the-full-suitability-extract-ensemble-data-and-the-summary_future-data-states-and-countries-" class="anchor"></a>2. Load the full <code>suitability extract ensemble</code> data and the <code>summary_future</code> data (<code>states</code> and <code>countries</code>).</h1>
-<p>Join the two dataframes and resolve conflicts. Use the <code>summary_future</code> data to lead the merging with <code>left_join()</code>.</p>
+<a href="#load-the-full-suitability-extract-ensemble-data-and-the-summary_future-data-states-and-countries-" class="anchor"></a>2. Load the full <code>suitability extract ensemble</code> data and
+the <code>summary_future</code> data (<code>states</code> and
+<code>countries</code>).</h1>
+<p>Join the two dataframes and resolve conflicts. Use the
+<code>summary_future</code> data to lead the merging with
+<code>left_join()</code>.</p>
 <ul>
 <li>mean suitability</li>
 <li>median suitability</li>
@@ -228,7 +234,8 @@
 </div>
 <div id="drop-the-same-states-and-countries-that-we-dropped-in-the-regular-correlation-plot-" class="section level1">
 <h1 class="hasAnchor">
-<a href="#drop-the-same-states-and-countries-that-we-dropped-in-the-regular-correlation-plot-" class="anchor"></a>3. Drop the same <code>states</code> and <code>countries</code> that we dropped in the regular correlation plot.</h1>
+<a href="#drop-the-same-states-and-countries-that-we-dropped-in-the-regular-correlation-plot-" class="anchor"></a>3. Drop the same <code>states</code> and <code>countries</code> that
+we dropped in the regular correlation plot.</h1>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#filter out some No Data for ensemble model</span>
 <span class="va">countries_summary_present</span> <span class="op">&lt;-</span> <span class="va">countries_summary_present</span> <span class="op">%&gt;%</span>
@@ -296,7 +303,8 @@
 </div>
 <div id="rescale-the-data-the-same-way-but-also-select-the-metric-to-look-at-" class="section level1">
 <h1 class="hasAnchor">
-<a href="#rescale-the-data-the-same-way-but-also-select-the-metric-to-look-at-" class="anchor"></a>4. Rescale the data the same way but also select the metric to look at.</h1>
+<a href="#rescale-the-data-the-same-way-but-also-select-the-metric-to-look-at-" class="anchor"></a>4. Rescale the data the same way but also select the metric to look
+at.</h1>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># scale the import data</span>
 <span class="kw">if</span><span class="op">(</span><span class="va">one_zero</span><span class="op">)</span><span class="op">{</span>
@@ -964,22 +972,27 @@
 <li><strong>GRAPES</strong></li>
 </ol>
 <ul>
-<li>U.S. State Alignment Correlation = 0.444, p = 1.087 x 10<sup>-03</sup>
+<li>U.S. State Alignment Correlation = 0.444, p = 1.087 x
+10<sup>-03</sup>
 </li>
-<li>Country Alignment Correlation = 0.605, p = 1.301 x 10<sup>-23</sup>
+<li>Country Alignment Correlation = 0.605, p = 1.301 x
+10<sup>-23</sup>
 </li>
 </ul>
 <ol start="2" style="list-style-type: decimal">
 <li><strong>WINE</strong></li>
 </ol>
 <ul>
-<li>U.S. State Alignment Correlation = 0.611, p = 1.955 x 10<sup>-06</sup>
+<li>U.S. State Alignment Correlation = 0.611, p = 1.955 x
+10<sup>-06</sup>
 </li>
-<li>Country Alignment Correlation = 0.547, p = 8.745 x 10<sup>-19</sup>
+<li>Country Alignment Correlation = 0.547, p = 8.745 x
+10<sup>-19</sup>
 </li>
 </ul>
 <blockquote>
-<p>Note: <strong>grapes</strong> is the plotted impact product and <strong>mean</strong> is the metric of interest.</p>
+<p>Note: <strong>grapes</strong> is the plotted impact product and
+<strong>mean</strong> is the metric of interest.</p>
 </blockquote>
 </div>
   </div>

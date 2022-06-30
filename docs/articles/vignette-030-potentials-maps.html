@@ -161,7 +161,11 @@
     
 <p>Build and Save Maps of Transport and Establishment Potential</p>
 <hr>
-<p>This vignette produces the published map figures that demonstrate where <strong>SLF</strong> is most likely to become established, the states and countries that trade most with the <code>present</code> scenario infected states, and shows locations of important viticultural areas (areas of high <strong>impact</strong> potential).</p>
+<p>This vignette produces the published map figures that demonstrate
+where <strong>SLF</strong> is most likely to become established, the
+states and countries that trade most with the <code>present</code>
+scenario infected states, and shows locations of important viticultural
+areas (areas of high <strong>impact</strong> potential).</p>
 <div id="setup" class="section level1">
 <h1 class="hasAnchor">
 <a href="#setup" class="anchor"></a>Setup</h1>
@@ -174,15 +178,20 @@
 <div id="toggle-plotting-options" class="section level2">
 <h2 class="hasAnchor">
 <a href="#toggle-plotting-options" class="anchor"></a>Toggle plotting options</h2>
-<p>As in <code>vignette-021-quadrant-plots</code>, we have several parameters that can be modified to visualize different versions of the figures. Here is where one could change the version of data for the map figures via the following:</p>
+<p>As in <code>vignette-021-quadrant-plots</code>, we have several
+parameters that can be modified to visualize different versions of the
+figures. Here is where one could change the version of data for the map
+figures via the following:</p>
 <ol style="list-style-type: decimal">
-<li>present_transport: Use <code>present</code> or <code>future</code> infected U.S. states?
+<li>present_transport: Use <code>present</code> or <code>future</code>
+infected U.S. states?
 <ul>
 <li>default is <code>TRUE</code> for <code>present</code>
 </li>
 </ul>
 </li>
-<li>top_to_plot: Set the number of top <strong>transport</strong> potential partners to plot arrows for?
+<li>top_to_plot: Set the number of top <strong>transport</strong>
+potential partners to plot arrows for?
 <ul>
 <li>default is <code>10</code>
 </li>
@@ -194,13 +203,17 @@
 <span class="va">present_transport</span> <span class="op">&lt;-</span> <span class="cn">TRUE</span>
 <span class="co"># How many countries and states to highlight for labels?</span>
 <span class="va">top_to_plot</span> <span class="op">&lt;-</span> <span class="fl">10</span> </code></pre></div>
-<p>To build the map plots, we have several sources of data that we need to read in, namely:</p>
+<p>To build the map plots, we have several sources of data that we need
+to read in, namely:</p>
 <ol style="list-style-type: decimal">
 <li>viticultural area geographic locations</li>
-<li>suitability maps for <code>U.S. states</code> and all <code>countries</code> from the ensemble model</li>
-<li>locations to point to trade partners (capital cities of <code>states</code> and <code>countries</code>)</li>
+<li>suitability maps for <code>U.S. states</code> and all
+<code>countries</code> from the ensemble model</li>
+<li>locations to point to trade partners (capital cities of
+<code>states</code> and <code>countries</code>)</li>
 </ol>
-<p>Of note, the actual trade data (<strong>transport</strong> potential) will be read conditionally in a later chunk below.</p>
+<p>Of note, the actual trade data (<strong>transport</strong> potential)
+will be read conditionally in a later chunk below.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#location of wineries (U.S. and COUNTRIES)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"wineries"</span><span class="op">)</span>
@@ -215,7 +228,15 @@
 <div id="data-preparation" class="section level1">
 <h1 class="hasAnchor">
 <a href="#data-preparation" class="anchor"></a>Data preparation</h1>
-<p>Now that we have most of the data loaded, we can go ahead and conditionally load the <strong>transport</strong> potential data based on the state of <code>present_transport</code>. The <strong>transport</strong> potential data for <code>states</code> and <code>countries</code> are then combined with the appropriate trade partner coordinate data and an approximate center of the <strong>SLF</strong> invasion in the U.S. is added as an origin for depicting trade arrows in the map figures. The <code>states</code> data are presented first and then the <code>countries</code> thereafter.</p>
+<p>Now that we have most of the data loaded, we can go ahead and
+conditionally load the <strong>transport</strong> potential data based
+on the state of <code>present_transport</code>. The
+<strong>transport</strong> potential data for <code>states</code> and
+<code>countries</code> are then combined with the appropriate trade
+partner coordinate data and an approximate center of the
+<strong>SLF</strong> invasion in the U.S. is added as an origin for
+depicting trade arrows in the map figures. The <code>states</code> data
+are presented first and then the <code>countries</code> thereafter.</p>
 <div id="states" class="section level2">
 <h2 class="hasAnchor">
 <a href="#states" class="anchor"></a>States</h2>
@@ -362,7 +383,16 @@
 <div id="plots" class="section level1">
 <h1 class="hasAnchor">
 <a href="#plots" class="anchor"></a>Plots</h1>
-<p>We are now able to plot both the <code>states</code> and <code>countries</code> published map figures. We stepwise add in the different features, beginning with the suitability raster and geopolitical boundary outlines (the latter ships with <code>ggplot2</code> in <code>map_data()</code>). We then add <span style="color: red;">red outlines</span> for the U.S. states that have established <strong>SLF</strong> according to the scenario selected with <code>present_transport</code>. Following that, <span style="color:#a020f0;">purple points</span> are added for viticultural areas. Lastly, we add arrows from the approximate center of the <strong>SLF</strong> invasion in the U.S. to high <strong>transport</strong> potential trade partners.</p>
+<p>We are now able to plot both the <code>states</code> and
+<code>countries</code> published map figures. We stepwise add in the
+different features, beginning with the suitability raster and
+geopolitical boundary outlines (the latter ships with
+<code>ggplot2</code> in <code>map_data()</code>). We then add <span style="color: red;">red outlines</span> for the U.S. states that have
+established <strong>SLF</strong> according to the scenario selected with
+<code>present_transport</code>. Following that, <span style="color:#a020f0;">purple points</span> are added for viticultural
+areas. Lastly, we add arrows from the approximate center of the
+<strong>SLF</strong> invasion in the U.S. to high
+<strong>transport</strong> potential trade partners.</p>
 <div id="states-1" class="section level2">
 <h2 class="hasAnchor">
 <a href="#states-1" class="anchor"></a>States</h2>
@@ -385,6 +415,7 @@
 <span class="kw">if</span><span class="op">(</span><span class="va">present_transport</span> <span class="op">==</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">{</span>
   <span class="va">map_plot</span> <span class="op">&lt;-</span> <span class="va">map_plot</span> <span class="op">+</span>
     <span class="fu">geom_polygon</span><span class="op">(</span>data <span class="op">=</span> <span class="fu">map_data</span><span class="op">(</span><span class="st">'state'</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Connecticut"</span>,<span class="st">"Delaware"</span>, <span class="st">"Maryland"</span>, <span class="st">"New Jersey"</span>, <span class="st">"New York"</span>, <span class="st">"Ohio"</span>, <span class="st">"Pennsylvania"</span>, <span class="st">"Virginia"</span>, <span class="st">"West Virginia"</span><span class="op">)</span><span class="op">)</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">long</span>, y <span class="op">=</span> <span class="va">lat</span>, group <span class="op">=</span> <span class="va">group</span><span class="op">)</span>, fill <span class="op">=</span> <span class="cn">NA</span>, color <span class="op">=</span> <span class="st">"#e31a1c"</span>, lwd <span class="op">=</span> <span class="fl">0.75</span><span class="op">)</span>
+    <span class="co">#geom_polygon(data = map_data('state', c("Connecticut","Delaware", "Indiana", "Maryland", "Massachusetts", "New Jersey", "New York", "Ohio", "Pennsylvania", "Virginia", "West Virginia")), aes(x = long, y = lat, group = group), fill = NA, color = "#000000", lwd = 0.75)</span>
   
 <span class="op">}</span> <span class="kw">else</span><span class="op">{</span>
   <span class="va">map_plot</span> <span class="op">&lt;-</span> <span class="va">map_plot</span> <span class="op">+</span>
@@ -451,7 +482,10 @@
 <div id="save-plot-output" class="section level1">
 <h1 class="hasAnchor">
 <a href="#save-plot-output" class="anchor"></a>Save plot output</h1>
-<p>Lastly, we can save the output of our map figure plots as <code>.pdf</code> files to <code>/vignettes</code>. Note that this chunk does not run by default but can be run by setting the top <code>if</code> from <code>FALSE</code> to <code>TRUE</code>!</p>
+<p>Lastly, we can save the output of our map figure plots as
+<code>.pdf</code> files to <code>/vignettes</code>. Note that this chunk
+does not run by default but can be run by setting the top
+<code>if</code> from <code>FALSE</code> to <code>TRUE</code>!</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw">if</span><span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span><span class="op">{</span>
   <span class="kw">if</span><span class="op">(</span><span class="va">present_transport</span><span class="op">)</span><span class="op">{</span>

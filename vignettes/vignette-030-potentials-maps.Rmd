@@ -240,6 +240,7 @@ map_plot <- ggplot() +
 if(present_transport == TRUE){
   map_plot <- map_plot +
     geom_polygon(data = map_data('state', c("Connecticut","Delaware", "Maryland", "New Jersey", "New York", "Ohio", "Pennsylvania", "Virginia", "West Virginia")), aes(x = long, y = lat, group = group), fill = NA, color = "#e31a1c", lwd = 0.75)
+    #geom_polygon(data = map_data('state', c("Connecticut","Delaware", "Indiana", "Maryland", "Massachusetts", "New Jersey", "New York", "Ohio", "Pennsylvania", "Virginia", "West Virginia")), aes(x = long, y = lat, group = group), fill = NA, color = "#000000", lwd = 0.75)
   
 } else{
   map_plot <- map_plot +

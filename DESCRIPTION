@@ -52,3 +52,6 @@ Imports:
 RoxygenNote: 7.1.1
 Depends: 
     R (>= 3.50)
+Remotes:
+  ropensci/scrubr
+  jasonleebrown/humboldt

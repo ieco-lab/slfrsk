@@ -161,11 +161,16 @@
     
 <p>Obtain Coordinate Data from GBIF for SLF and TOH</p>
 <hr>
-<p>This vignette shows how we obtained the most recent version of data for SLF and TOH coordinates and then cleaned said data for use in SDMs.</p>
+<p>This vignette shows how we obtained the most recent version of data
+for SLF and TOH coordinates and then cleaned said data for use in
+SDMs.</p>
 <div id="setup" class="section level1">
 <h1 class="hasAnchor">
 <a href="#setup" class="anchor"></a>Setup</h1>
-<p>We first loaded the full suite of required libraries. The most critical for this particular vignette is <code>spocc</code>, which is the package that allows us to query <code>GBIF</code> (Global Biodiversity Information Facility).</p>
+<p>We first loaded the full suite of required libraries. The most
+critical for this particular vignette is <code>spocc</code>, which is
+the package that allows us to query <code>GBIF</code> (Global
+Biodiversity Information Facility).</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">slfrsk</span><span class="op">)</span> <span class="co">#this package, has extract_enm()</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>  <span class="co">#data manipulation</span>
@@ -182,8 +187,15 @@
 <div id="acquire-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#acquire-data" class="anchor"></a>Acquire Data</h2>
-<p>We perform initial queries from GBIF for both SLF and TOH. We set the limit on records to be <span class="math inline">\(10^5\)</span> to capture all TOH records (after an initial test query). Notably, we also limit records to those with coordinates, given our purpose for these data. Our queries use the accepted latin binomial nomenclature for both species.</p>
-<p>It bears warning that the TOH query takes a considerable amount of time (<span class="math inline">\(&gt;120s\)</span>). We have it turned off by default (See below for more infomation).</p>
+<p>We perform initial queries from GBIF for both SLF and TOH. We set the
+limit on records to be <span class="math inline">\(10^5\)</span> to
+capture all TOH records (after an initial test query). Notably, we also
+limit records to those with coordinates, given our purpose for these
+data. Our queries use the accepted latin binomial nomenclature for both
+species.</p>
+<p>It bears warning that the TOH query takes a considerable amount of
+time (<span class="math inline">\(&gt;120s\)</span>). We have it turned
+off by default (See below for more infomation).</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw">if</span><span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span><span class="op">{</span>
   
@@ -192,8 +204,16 @@
 <span class="va">toh_gbif</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://docs.ropensci.org/spocc/reference/occ.html">occ</a></span><span class="op">(</span>query <span class="op">=</span> <span class="st">'Ailanthus altissima'</span>, from <span class="op">=</span> <span class="st">'gbif'</span>, limit <span class="op">=</span> <span class="fl">1e5</span>, has_coords <span class="op">=</span> <span class="cn">TRUE</span>, throw_warnings <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 
 <span class="op">}</span></code></pre></div>
-<p>We then turn the raw output into dataframes via <code>as_tibble()</code>. Oddly, this function fails to strip list items from the TOH data, so we set that particular subset to <code>NULL</code> afterwards to fully flatten the TOH dataset. These results could then be saved for reference/reproducibility and are ultimately called by this vignette to save run time.</p>
-<p>We end up also saving a copy of the coordinate results that have been transformed with <code><a href="https://docs.ropensci.org/spocc/reference/occ2df.html">spocc::occ2df()</a></code> as well. The output of this function is a cleaner dataframe that we manipulate for the rest of the vignette.</p>
+<p>We then turn the raw output into dataframes via
+<code>as_tibble()</code>. Oddly, this function fails to strip list items
+from the TOH data, so we set that particular subset to <code>NULL</code>
+afterwards to fully flatten the TOH dataset. These results could then be
+saved for reference/reproducibility and are ultimately called by this
+vignette to save run time.</p>
+<p>We end up also saving a copy of the coordinate results that have been
+transformed with <code><a href="https://docs.ropensci.org/spocc/reference/occ2df.html">spocc::occ2df()</a></code> as well. The output of
+this function is a cleaner dataframe that we manipulate for the rest of
+the vignette.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw">if</span><span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span><span class="op">{</span>
   
@@ -226,7 +246,8 @@
 <div id="clean-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#clean-data" class="anchor"></a>Clean Data</h2>
-<p>Now we can proceed to clean the data for use. We clean the data in three regards:</p>
+<p>Now we can proceed to clean the data for use. We clean the data in
+three regards:</p>
 <ol style="list-style-type: decimal">
 <li>consistent taxonomic labels</li>
 <li>coordinate veracity</li>
@@ -235,7 +256,11 @@
 <div id="consistent-taxonomy" class="section level3">
 <h3 class="hasAnchor">
 <a href="#consistent-taxonomy" class="anchor"></a>Consistent Taxonomy</h3>
-<p>Firstly, we check for taxonomic consistency in each dataset. <em>Spoiler</em>: SLF is fine and TOH needs to be homogenized. Thankfully, a check of the GBIF page for TOH (<a href="https://www.gbif.org/species/3190653" class="uri">https://www.gbif.org/species/3190653</a>) shows that all of the other names are just junior synonyms. Therefore, we change all of them to the same taxonomy.</p>
+<p>Firstly, we check for taxonomic consistency in each dataset.
+<em>Spoiler</em>: SLF is fine and TOH needs to be homogenized.
+Thankfully, a check of the GBIF page for TOH (<a href="https://www.gbif.org/species/3190653" class="uri">https://www.gbif.org/species/3190653</a>) shows that all of
+the other names are just junior synonyms. Therefore, we change all of
+them to the same taxonomy.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#check the taxonomy for only correct queries</span>
 <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">slf_coords1</span><span class="op">$</span><span class="va">name</span><span class="op">)</span> <span class="co">#all the same</span>
@@ -258,8 +283,15 @@
 <div id="coordinate-veracity" class="section level3">
 <h3 class="hasAnchor">
 <a href="#coordinate-veracity" class="anchor"></a>Coordinate Veracity</h3>
-<p>Coordinate veracity has several components that amount to removing coordinates that do not make sense. Given the difference in raw records for both species, SLF is easily cleaned of dubious records while TOH has too many records and breaks at least one function (<code><a href="https://docs.ropensci.org/scrubr/reference/dedup.html">scrubr::dedup()</a></code>) if run through the cleaning steps with removal of duplicates before rarefication. To account for this, both datasets run <code><a href="https://docs.ropensci.org/scrubr/reference/dedup.html">scrubr::dedup()</a></code> after rarefication.</p>
-<p>We make good use of the <code>scrubr</code> package functions to clean coordinates.</p>
+<p>Coordinate veracity has several components that amount to removing
+coordinates that do not make sense. Given the difference in raw records
+for both species, SLF is easily cleaned of dubious records while TOH has
+too many records and breaks at least one function
+(<code><a href="https://docs.ropensci.org/scrubr/reference/dedup.html">scrubr::dedup()</a></code>) if run through the cleaning steps with
+removal of duplicates before rarefication. To account for this, both
+datasets run <code><a href="https://docs.ropensci.org/scrubr/reference/dedup.html">scrubr::dedup()</a></code> after rarefication.</p>
+<p>We make good use of the <code>scrubr</code> package functions to
+clean coordinates.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">slf_coords1</span> <span class="op">&lt;-</span> <span class="va">slf_coords1</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://docs.ropensci.org/scrubr/reference/coords.html">coord_incomplete</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>  <span class="co">#rm incomplete coords, those that lack valid lat and long</span>
@@ -279,8 +311,16 @@
 <div id="coordinate-rarefication" class="section level3">
 <h3 class="hasAnchor">
 <a href="#coordinate-rarefication" class="anchor"></a>Coordinate Rarefication</h3>
-<p>We now use the <code>humboldt</code> package rarefaction function <code><a href="https://rdrr.io/pkg/humboldt/man/humboldt.occ.rarefy.html">humboldt::humboldt.occ.rarefy()</a></code> to trime points that are <span class="math inline">\(&lt;10 km\)</span> from each other. This cleaning step reduces spatial autocorrelation in our data, which is a good thing! After this, we run the data through <code><a href="https://docs.ropensci.org/scrubr/reference/dedup.html">scrubr::dedup</a></code>.</p>
-<p>Note that the rarefaction takes a while for TOH especially (it is cleaning 67000+ records after all). We also manually remove some points from SLF that are clearly incorrect as of Fall 2020 (after consulting colleagues).</p>
+<p>We now use the <code>humboldt</code> package rarefaction function
+<code><a href="https://rdrr.io/pkg/humboldt/man/humboldt.occ.rarefy.html">humboldt::humboldt.occ.rarefy()</a></code> to trime points that are
+<span class="math inline">\(&lt;10 km\)</span> from each other. This
+cleaning step reduces spatial autocorrelation in our data, which is a
+good thing! After this, we run the data through
+<code><a href="https://docs.ropensci.org/scrubr/reference/dedup.html">scrubr::dedup</a></code>.</p>
+<p>Note that the rarefaction takes a while for TOH especially (it is
+cleaning 67000+ records after all). We also manually remove some points
+from SLF that are clearly incorrect as of Fall 2020 (after consulting
+colleagues).</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw">if</span><span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span><span class="op">{</span>
   
@@ -320,7 +360,8 @@
 <div id="visualize-data" class="section level1">
 <h1 class="hasAnchor">
 <a href="#visualize-data" class="anchor"></a>Visualize Data</h1>
-<p>We can read in the final data for looking at the spatial coverage despite the thinning.</p>
+<p>We can read in the final data for looking at the spatial coverage
+despite the thinning.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#read in data for viewing differences</span>
 <span class="co">#slf_coords3 &lt;- read_csv(file = file.path(here(), "data-raw", "slf_gbif_cleaned_coords_2020.csv"))</span>
@@ -357,7 +398,9 @@
 <span class="co">#patchwork output of both maps</span>
 <span class="va">map_toh</span> <span class="op">/</span> <span class="va">map_slf</span></code></pre></div>
 <p><img src="vignette-003-get-gbif-data_files/figure-html/read%20in%20final%20data-1.png" width="960"></p>
-<p>We have practically the same coverage with less autocorrelation (note the dropped false records for SLF)! Now we can use these data for SDMs!</p>
+<p>We have practically the same coverage with less autocorrelation (note
+the dropped false records for SLF)! Now we can use these data for
+SDMs!</p>
 </div>
   </div>
 
