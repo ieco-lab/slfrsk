@@ -17,15 +17,14 @@ delicatula* paninvasion risk assessment.
 -   *Why slf?* Its impact to grape production [is comparable to
     grapevine
     phylloxera](https://en.wikipedia.org/wiki/Great_French_Wine_Blight).
--   *Why grape impact?* SLF impacts &gt; 100 plant species, but it
-    prefers grape.
+-   *Why grape impact?* SLF impacts \> 100 plant species, but it prefers
+    grape.
 
 ## Usage
 
 To understand how this paninvasion risk assessment was made:
 
-1.  Read the
-    [paper](https://www.biorxiv.org/content/10.1101/2021.07.19.452723)
+1.  Read the [paper](https://doi.org/10.1038/s42003-022-03580-w)
 2.  Dive deep into this [research
     compendium](https://ieco-lab.github.io/slfrsk/) and corresponding
     [large datasets](https://doi.org/10.5061/dryad.msbcc2g1b)
@@ -38,7 +37,7 @@ To understand how this paninvasion risk assessment was made:
 
 ## Citation
 
-Huron, N. A., Behm, J. E. & Helmus, M. R. Paninvasion severity
-assessment of a U.S. grape pest to disrupt the global wine market. *in
-review.*
-[doi:10.1101/2021.07.19.452723](https://www.biorxiv.org/content/10.1101/2021.07.19.452723).
+Huron, N. A., Behm, J. E. & Helmus, M. R. 2022. Paninvasion severity
+assessment of a U.S. grape pest to disrupt the global wine market.
+*Communications Biology*, 5:1–11.
+<https://doi.org/10.1038/s42003-022-03580-w>.
