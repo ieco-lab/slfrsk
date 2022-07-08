@@ -76,7 +76,7 @@ This page briefly defines commonly used terms in the **Research Compendium** for
 
 \newline
 
-- **tree of heaven (TOH)**---*Ailanthus altissima* is a paninvasive deciduous tree that is native to China, Taiwan, and northern Korea, but has been spread globally. It is a highly preferred host for SLF and may determine SLF establishment potential.
+- **tree of heaven (TOH)**---*Ailanthus altissima* is an invasive deciduous tree that is native to China, Taiwan, and northern Korea, but has been spread globally. It is a highly preferred host for SLF and may determine SLF establishment potential.
 
 \newline
 
