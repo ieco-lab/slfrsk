@@ -2,10 +2,8 @@ library(tidyverse)
 library(devtools)
 library(pkgdown)
 library(roxygen2)
+library(usethis)
 # library(fs)
-# library(usethis)
-
-# TODO
 
 #options(ENTREZ_KEY = ncbi_key)
 
