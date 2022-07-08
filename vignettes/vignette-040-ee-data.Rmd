@@ -20,7 +20,7 @@ knitr::opts_chunk$set(
 
 Google Earth Engine Paninvasion Severity App Companion: <https://ieco.users.earthengine.app/view/ieco-slf-riskmap>
 
-Huron, N. A., Behm, J. E. & Helmus, M. R. Paninvasion severity assessment of a U.S grape pest to disrupt the global wine market. *in review.* doi:10.1101/2021.07.19.452723.
+Huron, N. A., Behm, J. E. & Helmus, M. R. 2022. Paninvasion severity assessment of a U.S. grape pest to disrupt the global wine market. *Communications Biology*, 5:1--11. [https://doi.org/10.1038/s42003-022-03580-w](https://doi.org/10.1038/s42003-022-03580-w).
 
 ***
 

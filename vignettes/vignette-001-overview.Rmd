@@ -24,7 +24,7 @@ Overview of the Spotted Lanternfly Paninvasion Severity Research Compendium
 
 # Purpose
 
-Welcome to the **Research Compendium** Overview for "Paninvasion severity assessment of a U.S. grape pest to disrupt the global wine market" ([https://www.biorxiv.org/content/10.1101/2021.07.19.452723](https://www.biorxiv.org/content/10.1101/2021.07.19.452723)). This overview aims to outline the contents of the compendium to ensure that the study is transparent and reproducible.
+Welcome to the **Research Compendium** Overview for "Paninvasion severity assessment of a U.S. grape pest to disrupt the global wine market" ([https://doi.org/10.1038/s42003-022-03580-w](https://doi.org/10.1038/s42003-022-03580-w)). This overview aims to outline the contents of the compendium to ensure that the study is transparent and reproducible.
 
 # About the Compendium
 
@@ -62,6 +62,7 @@ The research compendium is organized into several **Analyses** (or vignettes) th
   
 # Citation
 
-Huron, N. A., Behm, J. E. & Helmus, M. R. Paninvasion severity assessment of a U.S. grape pest to disrupt the global wine market. *in review.* doi:10.1101/2021.07.19.452723.
+Huron, N. A., Behm, J. E. & Helmus, M. R. 2022. Paninvasion severity assessment of a U.S. grape pest to disrupt the global wine market. *Communications Biology*, 5:1--11. [https://doi.org/10.1038/s42003-022-03580-w](https://doi.org/10.1038/s42003-022-03580-w).
+
 
 # References
