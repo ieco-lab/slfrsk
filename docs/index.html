@@ -26,6 +26,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -38,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">slfrsk</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.0</span>
       </span>
     </div>
 
@@ -67,11 +69,13 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li class="divider">
-    <li class="dropdown-submenu">
+    </li>
+<li class="dropdown-submenu">
       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Step 1: Estimate Invasion Potentials</a>
       <ul class="dropdown-menu" role="menu">
 <li class="divider">
-        <li>
+        </li>
+<li>
           <a href="articles/vignette-060-spread-figure.html">Identify Invaded States/Reg. Incidents</a>
         </li>
         <li>
@@ -87,20 +91,23 @@
           <a href="articles/vignette-011-suitability-models.html">Species Distribution Modeling</a>
         </li>
         <li class="divider">
-      </ul>
+      </li>
+</ul>
 </li>
     <li class="dropdown-submenu">
       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Step 2: Calculate Alignment Correlations</a>
       <ul class="dropdown-menu" role="menu">
 <li class="divider">
-        <li>
+        </li>
+<li>
           <a href="articles/vignette-030-potentials-maps.html">Invasion Potential Maps</a>
         </li>
         <li class="dropdown-submenu">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Invasion Potential Alignment</a>
           <ul class="dropdown-menu" role="menu">
 <li class="divider">
-            <li>
+            </li>
+<li>
               <a href="articles/vignette-021-quadrant-plots.html">Published (Max)</a>
             </li>
             <li>
@@ -110,28 +117,33 @@
               <a href="articles/vignette-027-quadrant-plots-alt-mean.html">Alternate (Mean)</a>
             </li>
             <li class="divider">
-          </ul>
+          </li>
+</ul>
 </li>
         <li class="divider">
-      </ul>
+      </li>
+</ul>
 </li>
     <li class="dropdown-submenu">
       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Step 3: Quantify Paninvasion Risk</a>
       <ul class="dropdown-menu" role="menu">
 <li class="divider">
-        <li>
+        </li>
+<li>
           <a href="articles/vignette-041-market-plot.html">Paninvasion Risk</a>
         </li>
         <li class="divider">
-      </ul>
+      </li>
+</ul>
 </li>
     <li class="divider">
-  </ul>
+  </li>
+</ul>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/ieco-lab/slfrsk">
+  <a href="https://github.com/ieco-lab/slfrsk" class="external-link">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -148,78 +160,76 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="slfrsk" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#slfrsk" class="anchor"></a>slfrsk</h1></div>
+<div class="section level1">
+<div class="page-header"><h1 id="slfrsk">slfrsk<a class="anchor" aria-label="anchor" href="#slfrsk"></a>
+</h1></div>
 <!-- badges: start -->
 <!-- badges: end -->
-<div id="description" class="section level2">
-<h2 class="hasAnchor">
-<a href="#description" class="anchor"></a>Description</h2>
-<p><code>R package</code> and <a href="https://ieco-lab.github.io/slfrsk/">research compendium</a> for a
-<em>Lycorma delicatula</em> paninvasion risk assessment.</p>
+<div class="section level2">
+<h2 id="description">Description<a class="anchor" aria-label="anchor" href="#description"></a>
+</h2>
+<p><code>R package</code> and <a href="https://ieco-lab.github.io/slfrsk/" class="external-link">research compendium</a> for a <em>Lycorma delicatula</em> paninvasion risk assessment.</p>
 <ul>
 <li>
-<em>Why slfrsk?</em> slf == spotted lanternfly == <em>Lycorma
-delicatula</em> + rsk == risk</li>
+<em>Why slfrsk?</em> slf == spotted lanternfly == <em>Lycorma delicatula</em> + rsk == risk</li>
 <li>
-<em>Why slf?</em> Its impact to grape production <a href="https://en.wikipedia.org/wiki/Great_French_Wine_Blight">is
-comparable to grapevine phylloxera</a>.</li>
+<em>Why slf?</em> Its impact to grape production <a href="https://en.wikipedia.org/wiki/Great_French_Wine_Blight" class="external-link">is comparable to grapevine phylloxera</a>.</li>
 <li>
-<em>Why grape impact?</em> SLF impacts &gt; 100 plant species, but
-it prefers grape.</li>
+<em>Why grape impact?</em> SLF impacts &gt; 100 plant species, but it prefers grape.</li>
 </ul>
 </div>
-<div id="usage" class="section level2">
-<h2 class="hasAnchor">
-<a href="#usage" class="anchor"></a>Usage</h2>
+<div class="section level2">
+<h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
+</h2>
 <p>To understand how this paninvasion risk assessment was made:</p>
-<ol>
-<li>Read the <a href="https://doi.org/10.1038/s42003-022-03580-w">paper</a>
+<ol style="list-style-type: decimal">
+<li>Read the <a href="https://doi.org/10.1038/s42003-022-03580-w" class="external-link">paper</a>
 </li>
-<li>Dive deep into this <a href="https://ieco-lab.github.io/slfrsk/">research compendium</a> and
-corresponding <a href="https://doi.org/10.5061/dryad.msbcc2g1b">large
-datasets</a>
+<li>Dive deep into this <a href="https://ieco-lab.github.io/slfrsk/" class="external-link">research compendium</a> and corresponding <a href="https://doi.org/10.5061/dryad.msbcc2g1b" class="external-link">large datasets</a>
 </li>
-<li>Install and Build <a href="https://github.com/ieco-lab/slfrsk">the
-package</a>
+<li>Install and Build <a href="https://github.com/ieco-lab/slfrsk" class="external-link">the package</a>
 </li>
 </ol>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"> <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://devtools.r-lib.org/">devtools</a></span><span class="op">)</span>
- <span class="fu"><a href="https://devtools.r-lib.org/reference/remote-reexports.html">install_github</a></span><span class="op">(</span><span class="st">"ieco-lab/slfrsk"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span> <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://devtools.r-lib.org/" class="external-link">devtools</a></span><span class="op">)</span></span>
+<span> <span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"ieco-lab/slfrsk"</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="citation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#citation" class="anchor"></a>Citation</h2>
-<p>Huron, N. A., Behm, J. E. &amp; Helmus, M. R. 2022. Paninvasion
-severity assessment of a U.S. grape pest to disrupt the global wine
-market. <em>Communications Biology</em>, 5:1–11. <a href="https://doi.org/10.1038/s42003-022-03580-w" class="uri">https://doi.org/10.1038/s42003-022-03580-w</a>.</p>
+<div class="section level2">
+<h2 id="citation">Citation<a class="anchor" aria-label="anchor" href="#citation"></a>
+</h2>
+<p>Huron, N. A., Behm, J. E. &amp; Helmus, M. R. 2022. Paninvasion severity assessment of a U.S. grape pest to disrupt the global wine market. <em>Communications Biology</em>, 5:1–11. <a href="https://doi.org/10.1038/s42003-022-03580-w" class="external-link uri">https://doi.org/10.1038/s42003-022-03580-w</a>.</p>
 </div>
 </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>iEco Lab at <br><a href="https://www.iecolab.org">https://​www.iecolab.org</a>
-</li>
-<li>Center for Biodiversity at <br><a href="http://www.biodiversitycenter.org">http://​www.biodiversitycenter.org</a>
-</li>
-<li>Temple University Biology at <br><a href="https://bio.cst.temple.edu">https://​bio.cst.temple.edu</a>
-</li>
+<li><a href="https://www.iecolab.org" class="external-link">iEco Lab</a></li>
+<li><a href="http://www.biodiversitycenter.org" class="external-link">Center for Biodiversity</a></li>
+<li><a href="https://bio.cst.temple.edu" class="external-link">Temple University Biology</a></li>
 </ul>
 </div>
+
 <div class="license">
-<h2>License</h2>
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li><a href="LICENSE.html">Full license</a></li>
-<li><small><a href="https://opensource.org/licenses/mit-license.php">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a></small></li>
+<li><small><a href="https://opensource.org/licenses/mit-license.php" class="external-link">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a></small></li>
 </ul>
 </div>
+
+
+<div class="citation">
+<h2 data-toc-skip>Citation</h2>
+<ul class="list-unstyled">
+<li><a href="authors.html#citation">Citing slfrsk</a></li>
+</ul>
+</div>
+
 <div class="developers">
-<h2>Developers</h2>
+<h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
 <li>Nicholas A. Huron <br><small class="roles"> Author </small>  </li>
 <li>Jocelyn E. Behm <br><small class="roles"> Author </small>  </li>
@@ -227,16 +237,20 @@ market. <em>Communications Biology</em>, 5:1–11. <a href="https://doi.org/10.1
 </ul>
 </div>
 
+
+
   </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by Nicholas A. Huron, Jocelyn E. Behm, Matthew R. Helmus.</p>
+  <p></p>
+<p>Developed by Nicholas A. Huron, Jocelyn E. Behm, Matthew R. Helmus.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer>
@@ -244,6 +258,8 @@ market. <em>Communications Biology</em>, 5:1–11. <a href="https://doi.org/10.1
 
   
 
+
+  
 
   </body>
 </html>

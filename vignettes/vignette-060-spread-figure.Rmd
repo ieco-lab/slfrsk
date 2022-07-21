@@ -29,41 +29,58 @@ We read in the packages to access data and generate the spread map. We also set 
 
 ```{r setup, warning=FALSE, results='hide', message=FALSE}
 library(slfrsk) #this package, has extract_enm()
-library(lycormap) #package to get tinyslf dataset from
 library(tidyverse)  #data manipulation
 library(here) #making directory pathways easier on different instances
-library(ggfortify) #fortify rasters
-library(tigris) #county level shapefiles
 library(sf) #simple features for easy shapefile manipulation
 library(magrittr) #fast pipe assign
-library(lubridate) #extract years
 library(RColorBrewer) #palette
-options(tigris_use_cache = TRUE) # make sure that tigris does not keep downloading the files
+
+  #packages to use to extract raw data
+#library(lubridate) #extract years
+#library(tigris) #county level shapefiles
+#library(lycormap) #package to get tinyslf dataset from
+#options(tigris_use_cache = TRUE) # make sure that tigris does not keep downloading the files
 ```
 
-Now, we read in the SLF records from the package `lycormap`. We also obtain the supplemental SLF records that contain the updated transportation data for uninvaded states, which was obtained from the raw data in the `lycodata` package.
+# Read in SLF reporting data
 
-```{r read in records data for map figure}
+The data used here for the spread figure are based on an upcoming suite of packages (`lycodata` and `lycormap`) produced by the iEcoLab. The records in these packages contain data that are not yet available to the public, so all questions regarding the raw data should be directed to the creator of the `lycor*` suite, Seba De Bona (SDB, ([sebastiano.debona@temple.edu](mailto:sebastiano.debona@temple.edu))) or to Matthew R. Helmus ([mrhelmus@temple.edu](mailto:mrhelmus@temple.edu)). 
+
+Here, we will read in a `.rda` file that was created using the example code below from the raw data. These example code chunks are adapted from SDB code.
+
+```{r read in rda file}
+#data call
+data(by_county, package = "slfrsk")
+```
+
+# Example code for raw data to county-level data
+
+## Read in county shapefiles
+
+We obtain the counties shapefile as a simple feature (sf) from the `tigris` package.
+
+```{r counties shapefile, message=FALSE, eval=FALSE}
+counties <- counties(cb = T, resolution = "5m")
+```
+
+Now, we read in the SLF records from the package `lycormap`. We also obtain the supplemental SLF records that contain the updated transportation data for uninvaded states, which was obtained from the raw data in the `lycodata` package. At the time of publication of `slfrsk`, additional data were saved as raw data that comes with `lycordata` (`slf_county_record_timeline.csv`).
+
+```{r read in records data for map figure, eval=FALSE}
 data("tinyslf", package = "lycormap")
 
 # reading manually added data (for a later step)
-man_county_data <- read_csv(file.path("/Volumes/GoogleDrive-104607290079958926089/My Drive/spotted_lanternfly_ieco_projects/code/FINAL_CODE/R package/lycordata/", "data-raw", "additional",
-                                      "slf_county_record_timeline.csv"),
+man_county_data <- read_csv(file.path(here(), "..", "..", "lycordata", "data-raw", "additional", "slf_county_record_timeline.csv"),
                             col_types = cols(.default = "c", FIPS = "d", 
                                           RT_check = "l", ST_check = "l", RS_match = "l"))
 ```
 
-We obtain the counties shapefile as a simple feature (sf) from the `tigris` package.
+## Merge and clean data
 
-```{r counties shapefile, message=FALSE}
-counties <- counties(cb = T, resolution = "5m")
-```
+### `tinyslf`
 
-# Merge and clean data
+This code finds the county that each presence point corresponds to and attaches the county shapefile data to those rows. It also removes records that do not fall in a U.S. county (likely erroneous records). We also remove an errant record for Wasatch county, UT.
 
-Here is the first of the code adapted from Seba De Bona (SDB), who built the `lycordata` and `lycormap` packages. Please email SDB if you are unable to access these packages ([sebastiano.debona@temple.edu](mailto:sebastiano.debona@temple.edu)). This code finds the county that  each presence point corresponds to and attaches the county shapefile data to those rows.
-
-```{r tinyslf st combining and tidying, message=FALSE}
+```{r tinyslf st combining and tidying, message=FALSE, eval=FALSE}
 #adapted from SDB code in lycordata
 
 #add column of temporary row ID's for later reference
@@ -91,78 +108,54 @@ tinyslf %<>%
 tinyslf %<>%
   filter(!is.na(county))
 
+#rm errant Wasatch co, UT record
+tinyslf %<>%
+  filter(!(state %in% "UT" & county %in% "Wasatch"))
 ```
 
-Add the observations and establishment dates to the county outline data
-Now, the earliest year of establishment or recording of an observation (dead or alive) are identified from the `tinyslf` dataset and then added accordingly to county shapefile data. Lastly, the projection is confirmed.
+Add the observations and establishment dates to the county outline data. Now, the earliest year of establishment or recording of an observation (dead or alive) are identified from the `tinyslf` dataset and then added accordingly to county shapefile data. Lastly, the projection is confirmed.
 
-```{r find establishment and first records, message=FALSE}
-# defining the year of establishment
+```{r find establishment and first records, message=FALSE, eval=FALSE}
+#get the year of establishment
 by_county <- tinyslf %>% 
   group_by(GEOID) %>% 
   arrange(year) %>% 
   filter(slf_established) %>% 
   summarize(YearOfEstablishment = min(year)) %>% 
-  ungroup() %>% 
+  ungroup() %>%
+  #join to the counties shapefile
   left_join(counties, ., by = "GEOID")
 
-# and adding the first record
+# and add the first record year
 by_county <- tinyslf %>% 
   group_by(GEOID) %>% 
   arrange(year) %>% 
   filter(slf_present) %>% 
   summarize(FirstRecord = min(year)) %>% 
   ungroup() %>% 
+  #join to shapefile that also includes year of establishment
   left_join(by_county, ., by = "GEOID")
 
 # providing correct projections
 by_county %<>% 
   st_transform('+proj=longlat +datum=WGS84')
-
 ```
+
+### `slf_county_record_timeline.csv`
 
 Because our first record and establishment data are constantly updating from multiple sources, we have a googlesheet that is the source of `man_by_county` (saved as `slf_county_record_timeline.csv`). We again adapt code from SDB to tidy and splice these new records into the counties dataset.
 
-```{r add manual counties data to counties data, message=FALSE}
-
-# we can use the FIPS code to merge to the main data
-# now let's extract the status and the year of record/establishment
-# there are three date columns that hopefully can be collapsed into 1
-# first, let's check if all counties occur only once
-stopifnot(
-  man_county_data %>% 
-    group_by(FIPS) %>% 
-    tally() %>% 
-    filter(n > 1) %>% 
-    nrow(.) == 0
-)
-
-# now we check whether any row has more than one date entry
+```{r add manual counties data to counties data, message=FALSE, eval=FALSE}
+#we can use the FIPS code to merge to the main data
+#extract the status and the year of record/establishment
+#there are three date columns that hopefully can be collapsed into 1
 
 #standardize date format
 man_county_data %<>% 
   mutate_at(vars(starts_with("Date")), .funs = ~parsedate::parse_date(.))
 
-# now we check for overlaps in dates
-man_county_data %>% 
-  dplyr::select(starts_with("Date") & !ends_with("Descriptions")) %>% 
-  mutate_all(~!is.na(.)) %>% 
-  mutate(how_many_dates = apply(., MARGIN = 1, FUN = sum, na.rm = T)) %>% 
-  filter(how_many_dates > 1) %>% 
-  nrow(.) == 0
-
-# according to the previous check, data can have multiple dates associated to it
-# this means a county can have info on when the first record was scored separately from
-# the establishment date. We need to keep this in mind
-
-# let's now check whether all infestations have an establishment date associated to it
-man_county_data %>% 
-  filter(Status == "Infestation") %>% 
-  head()
-
-# It is immediately clear that the date is not always available.
-# When not, we'll attribute to that datapoint 2020 as the latest 
-# year establishement could have happened (given today is Jan 11 2021)
+#data can have multiple dates associated to it, meaning a county can have info on when the first record was scored separately from establishment date
+#not all infestations have an establishment data set, so cases where it is absent will be set to 2020 based on when data were analyzed
 # for Date_Alive/Date_Morbound, we'll take the smallest, if both are present
 man_county_data %<>% 
   mutate(Year_Alive = year(Date_Alive),
@@ -173,47 +166,84 @@ man_county_data %<>%
          ) %>% 
   dplyr::select(-c(Year_Alive, Year_Morbund))
 
-# we here create two variables that echo those in the by_county
+#create two variables that echo those in the by_county for years of first record and establishment
 man_county_data %<>% 
   filter(!is.na(Status)) %>% 
-  # first grabbing the date (if present) from the Date_Establish or Date_Alive/Morbound columns
-  # Then attributing 2020 to all other established records without date
-  # doing this with nested ifelse statements
+  #first grabbing the date (if present) from the Date_Establish or Date_Alive/Morbound columns or setting 2020 to established records without dates
+  #establishment
   mutate(YearOfEstablishment_man = ifelse(
+    #if infestation and has a date of establishment
     Status == "Infestation" & !is.na(Date_Establish),
     year(Date_Establish),
+    #if infestation and no date, sets to 2020
     ifelse(Status == "Infestation" & is.na(Date_Establish), 2020, NA)),
+    #first record
     FirstRecord_man = ifelse(
+    #not infested and has a year of first record
     Status != "Infestation" & !is.na(Year_FirstRecord),
     Year_FirstRecord,
+    #infested and does not have a year of first record is set to 2020
     ifelse(Status == "Infestation" & is.na(Year_FirstRecord), 2020, NA))) %>% 
   dplyr::select(-Year_FirstRecord)
+```
 
-# for appropriate merging, we create a FIPS columns in the shapefiles
-# then select only relevant columns from manual data
-# then merge
+### Merge the two datasets to just one county-level dataset
+
+Now that both datasets are cleaned to have years of first record and establishment, they can be combined. A combined FIPS code is added to the full county dataset first.
+
+```{r merge by_county and man_county_data, eval=FALSE}
+#create combined FIPS columns
 by_county %<>%
   mutate(FIPS = as.numeric(paste0(STATEFP, COUNTYFP)))
 
-# merging
+#merge
 by_county <- man_county_data %>% 
   dplyr::select(FIPS, YearOfEstablishment_man, FirstRecord_man) %>% 
   left_join(by_county, ., by = "FIPS")
+```
 
-# resolving conflict by picking the earliest year (between 
-# the records mined from the data and the manually compiled records)
+There may be some duplicate rows, and so the first record and establishment rows are retained. This dataset contains incomplete data for 2021, so we recode these as well, since our data are for as of 2020.
+```{r pick first year rows, eval=FALSE}
+#pick earliest year (between the records mined from the data and the manually compiled records)
 by_county %<>% 
   mutate(YearOfEstablishment = pmin(YearOfEstablishment, YearOfEstablishment_man, na.rm = T),
-         FirstRecord = pmin(FirstRecord, FirstRecord_man, na.rm = T))
+         FirstRecord = pmin(FirstRecord, FirstRecord_man, na.rm = T)) %>%
+  #recode the 2021 data
+  #get cases where the first record is 2021, and set record to NA
+  mutate(FirstRecord = case_when(
+    FirstRecord == 2021 ~ NA_real_,
+    TRUE ~ FirstRecord
+  ),
+  #get cases where the first record or year of establishment is 2021 and set establish to NA
+  YearOfEstablishment = case_when(
+    FirstRecord == 2021 ~ NA_real_,
+    YearOfEstablishment == 2021 ~ NA_real_,
+    TRUE ~ YearOfEstablishment
+  )
+  )
+```
 
+## Save the cleaned version of county-level data as `.rda`
+
+`by_county` is now at a safe resolution for our use here. It is saved as `by_county.rda` for use in this plotting vignette.
+
+```{r save by_county, eval=FALSE}
+if(FALSE){
+  save(by_county, file = file.path(here(), "data", "by_county.rda"))
+}
+```
+
+# Plot spread figure
+
+The data are read in above, and the year columns are also transformed into factors for easier plotting. 
+
+```{r transform years to factors}
 # transforming records and establishment
-# (this will make coloring the leaflet map easier)
 by_county %<>% 
   mutate(YearOfEstablishment = as.factor(YearOfEstablishment),
          FirstRecord = as.factor(FirstRecord))
 ```
 
-# Plot spread figure
 Lastly, we plot the data after identifying a set of focal counties to outline (this bypasses layering issues with `sf` objects and plotting with `ggplot2`).
 
 ```{r plot spread map, fig.dim=c(8,10)}
@@ -241,13 +271,13 @@ map_plot <- ggplot() +
 
 map_plot
 ```
+
 # Save plot output
 
 ```{r save spread plot for pub, eval=FALSE}
 pdf(file.path(here::here(),"vignettes", paste0("spread_figure_v3.pdf")), width = (18/2.54), height = (14/2.54))
 map_plot
 invisible(dev.off())
-
 ```
 
 # Extras

@@ -26,6 +26,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -38,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slfrsk</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.0</span>
       </span>
     </div>
 
@@ -67,11 +69,13 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li class="divider">
-    <li class="dropdown-submenu">
+    </li>
+<li class="dropdown-submenu">
       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Step 1: Estimate Invasion Potentials</a>
       <ul class="dropdown-menu" role="menu">
 <li class="divider">
-        <li>
+        </li>
+<li>
           <a href="../articles/vignette-060-spread-figure.html">Identify Invaded States/Reg. Incidents</a>
         </li>
         <li>
@@ -87,20 +91,23 @@
           <a href="../articles/vignette-011-suitability-models.html">Species Distribution Modeling</a>
         </li>
         <li class="divider">
-      </ul>
+      </li>
+</ul>
 </li>
     <li class="dropdown-submenu">
       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Step 2: Calculate Alignment Correlations</a>
       <ul class="dropdown-menu" role="menu">
 <li class="divider">
-        <li>
+        </li>
+<li>
           <a href="../articles/vignette-030-potentials-maps.html">Invasion Potential Maps</a>
         </li>
         <li class="dropdown-submenu">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Invasion Potential Alignment</a>
           <ul class="dropdown-menu" role="menu">
 <li class="divider">
-            <li>
+            </li>
+<li>
               <a href="../articles/vignette-021-quadrant-plots.html">Published (Max)</a>
             </li>
             <li>
@@ -110,28 +117,33 @@
               <a href="../articles/vignette-027-quadrant-plots-alt-mean.html">Alternate (Mean)</a>
             </li>
             <li class="divider">
-          </ul>
+          </li>
+</ul>
 </li>
         <li class="divider">
-      </ul>
+      </li>
+</ul>
 </li>
     <li class="dropdown-submenu">
       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Step 3: Quantify Paninvasion Risk</a>
       <ul class="dropdown-menu" role="menu">
 <li class="divider">
-        <li>
+        </li>
+<li>
           <a href="../articles/vignette-041-market-plot.html">Paninvasion Risk</a>
         </li>
         <li class="divider">
-      </ul>
+      </li>
+</ul>
 </li>
     <li class="divider">
-  </ul>
+  </li>
+</ul>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/ieco-lab/slfrsk">
+  <a href="https://github.com/ieco-lab/slfrsk" class="external-link">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -146,7 +158,7 @@
 
       
 
-      </header><script src="vignette-040-ee-data_files/header-attrs-2.14/header-attrs.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Paninvasion Severity App</h1>
@@ -159,14 +171,14 @@
 
     
     
-<p>Google Earth Engine Paninvasion Severity App Companion: <a href="https://ieco.users.earthengine.app/view/ieco-slf-riskmap" class="uri">https://ieco.users.earthengine.app/view/ieco-slf-riskmap</a></p>
+<p>Google Earth Engine Paninvasion Severity App Companion: <a href="https://ieco.users.earthengine.app/view/ieco-slf-riskmap" class="external-link uri">https://ieco.users.earthengine.app/view/ieco-slf-riskmap</a></p>
 <p>Huron, N. A., Behm, J. E. &amp; Helmus, M. R. 2022. Paninvasion
 severity assessment of a U.S. grape pest to disrupt the global wine
-market. <em>Communications Biology</em>, 5:1–11. <a href="https://doi.org/10.1038/s42003-022-03580-w">https://doi.org/10.1038/s42003-022-03580-w</a>.</p>
+market. <em>Communications Biology</em>, 5:1–11. <a href="https://doi.org/10.1038/s42003-022-03580-w" class="external-link">https://doi.org/10.1038/s42003-022-03580-w</a>.</p>
 <hr>
-<div id="map-legend" class="section level1">
-<h1 class="hasAnchor">
-<a href="#map-legend" class="anchor"></a>Map Legend</h1>
+<div class="section level2">
+<h2 id="map-legend">Map Legend<a class="anchor" aria-label="anchor" href="#map-legend"></a>
+</h2>
 <p>The <code>slrsk</code> Paninvasion Severity App is an interactive map
 that allows for highly customizable visualization. When loaded, it will
 display a map of the earth with several different data layers already
@@ -177,9 +189,9 @@ enabled (see image below for example).</p>
 <code>slfrsk</code> Paninvasion Severity App.</p>
 </div>
 </center>
-<div id="map-widgets" class="section level2">
-<h2 class="hasAnchor">
-<a href="#map-widgets" class="anchor"></a>Map Widgets</h2>
+<div class="section level3">
+<h3 id="map-widgets">Map Widgets<a class="anchor" aria-label="anchor" href="#map-widgets"></a>
+</h3>
 <p>The image shows several key tools that allow for interactive
 visualization. They are as follows:</p>
 <ol style="list-style-type: decimal">
@@ -218,12 +230,12 @@ SLF establishment suitability (scaled [0,1]) such that values closer to
 1 plot only the most suitable areas and values close to 0 plot closer to
 the full range of suitability.</li>
 <li>Legend Help link: clicking this link will direct back to this
-article (<a href="https://ieco-lab.github.io/slfrsk/articles/vignette-040-ee-data.html" class="uri">https://ieco-lab.github.io/slfrsk/articles/vignette-040-ee-data.html</a>)</li>
+article (<a href="https://ieco-lab.github.io/slfrsk/articles/vignette-040-ee-data.html" class="external-link uri">https://ieco-lab.github.io/slfrsk/articles/vignette-040-ee-data.html</a>)</li>
 </ol>
 </div>
-<div id="layers-panel" class="section level2">
-<h2 class="hasAnchor">
-<a href="#layers-panel" class="anchor"></a>Layers Panel</h2>
+<div class="section level3">
+<h3 id="layers-panel">Layers Panel<a class="anchor" aria-label="anchor" href="#layers-panel"></a>
+</h3>
 <p>The layers panel contains several key measures of SLF invasion
 potential. Each layer can be turned on or off via the checkbox to the
 left of its name. Additionally, the opacity of each layer can be changed
@@ -286,48 +298,50 @@ layer is a shaded fill for <em>only</em> <code>countries</code> that
 <p><img src="vignette-040-ee-data_files/figure-html/severity%20key-1.png" width="480" style="display: block; margin: auto;"></p>
 </div>
 </div>
-<div id="data-preparation" class="section level1">
-<h1 class="hasAnchor">
-<a href="#data-preparation" class="anchor"></a>Data preparation</h1>
+<div class="section level2">
+<h2 id="data-preparation">Data preparation<a class="anchor" aria-label="anchor" href="#data-preparation"></a>
+</h2>
 <p>This vignette is a companion to the interactive <code>slfrsk</code>
-Google Earth Engine (EE) Paninvasion Severity App <a href="https://ieco.users.earthengine.app/view/ieco-slf-riskmap" class="uri">https://ieco.users.earthengine.app/view/ieco-slf-riskmap</a>.
+Google Earth Engine (EE) Paninvasion Severity App <a href="https://ieco.users.earthengine.app/view/ieco-slf-riskmap" class="external-link uri">https://ieco.users.earthengine.app/view/ieco-slf-riskmap</a>.
 It provides a brief demonstration of how the data were treated prior to
 inclusion in the app. Output data from this vignette are saved in the
 shared GoogleDrive <code>./slfRiskMapping/data/slfRisk/</code>
 directory.</p>
-<div id="setup" class="section level2">
-<h2 class="hasAnchor">
-<a href="#setup" class="anchor"></a>Setup</h2>
+<div class="section level3">
+<h3 id="setup">Setup<a class="anchor" aria-label="anchor" href="#setup"></a>
+</h3>
 <p>Here we load the packages that allow us to visualize color palettes
 and reformat shapefile data and merge with the summarized potentials
 data visualized in <code>vignette-021-quadrant-plots</code>.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">slfrsk</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://rgdal.r-forge.r-project.org">rgdal</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://r-forge.r-project.org/projects/rgeos/">rgeos</a></span><span class="op">)</span>  <span class="co">#gSimplify</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/eblondel/cleangeo">cleangeo</a></span><span class="op">)</span> <span class="co">#clgeo_Clean</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">slfrsk</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: package 'tidyr' was built under R version 4.0.5</span></span>
+<span><span class="co">#&gt; Warning: package 'readr' was built under R version 4.0.5</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://rgdal.r-forge.r-project.org" class="external-link">rgdal</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-forge.r-project.org/projects/rgeos/" class="external-link">rgeos</a></span><span class="op">)</span>  <span class="co">#gSimplify</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/eblondel/cleangeo" class="external-link">cleangeo</a></span><span class="op">)</span> <span class="co">#clgeo_Clean</span></span></code></pre></div>
 </div>
-<div id="summary-data" class="section level2">
-<h2 class="hasAnchor">
-<a href="#summary-data" class="anchor"></a>Summary data</h2>
+<div class="section level3">
+<h3 id="summary-data">Summary data<a class="anchor" aria-label="anchor" href="#summary-data"></a>
+</h3>
 <p>We then read in the summary data for both <code>states</code> and
 <code>countries</code> from <code>vignette-010-tidy-data</code> to
 eventually merge with shapfiles. We also remove any
 <code>countries</code> with <code>establishment</code> potential that
 are <code>-Inf</code> values.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">#data("states_summary_future_ensemble")</span>
-<span class="co">#data("countries_summary_future_ensemble")</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"states_summary_present_ensemble"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"countries_summary_present_ensemble"</span><span class="op">)</span>
-
-
-<span class="co">#rm the -Inf countries</span>
-<span class="co">#countries_summary_future_ensemble &lt;- countries_summary_future_ensemble %&gt;%</span>
-<span class="co">#      filter(!ID %in% c("Antarctica", "Monaco", "Norfolk Island", "Spratly Islands"))</span>
-<span class="va">countries_summary_present_ensemble</span> <span class="op">&lt;-</span> <span class="va">countries_summary_present_ensemble</span> <span class="op">%&gt;%</span>
-      <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="va">ID</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Antarctica"</span>, <span class="st">"Monaco"</span>, <span class="st">"Norfolk Island"</span>, <span class="st">"Spratly Islands"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co">#data("states_summary_future_ensemble")</span></span>
+<span><span class="co">#data("countries_summary_future_ensemble")</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"states_summary_present_ensemble"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"countries_summary_present_ensemble"</span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="co">#rm the -Inf countries</span></span>
+<span><span class="co">#countries_summary_future_ensemble &lt;- countries_summary_future_ensemble %&gt;%</span></span>
+<span><span class="co">#      filter(!ID %in% c("Antarctica", "Monaco", "Norfolk Island", "Spratly Islands"))</span></span>
+<span><span class="va">countries_summary_present_ensemble</span> <span class="op">&lt;-</span> <span class="va">countries_summary_present_ensemble</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>      <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="va">ID</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Antarctica"</span>, <span class="st">"Monaco"</span>, <span class="st">"Norfolk Island"</span>, <span class="st">"Spratly Islands"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>We now transform the <code>summary</code> data to represent scaled
 versions of the three potentials (<strong>transport</strong>,
 <strong>establishment</strong>, and <strong>impact</strong>). Each of
@@ -350,71 +364,71 @@ establishment*10\)</span></li>
 <p>After these transformations, we go ahead and round the raw data for
 reducing file size to <em>5 significant digits</em>.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">#states</span>
-<span class="va">states_summary_present_ensemble</span> <span class="op">&lt;-</span> <span class="va">states_summary_present_ensemble</span> <span class="op">%&gt;%</span>
-  <span class="co">#transport in 2 mutate steps</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>transport <span class="op">=</span> <span class="va">log10_avg_infected_mass</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">log10_avg_infected_mass</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>transport <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">transport</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">transport</span><span class="op">)</span>, digits <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">*</span><span class="fl">10</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="co">#establishment</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>establishment <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">grand_mean_max</span>, digits <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">*</span><span class="fl">10</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="co">#impact_wine</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>impact_wine <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">log10_avg_wine</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">log10_avg_wine</span><span class="op">)</span>, digits <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">*</span><span class="fl">10</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="co">#impact_grape</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>impact_grape <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">log10_avg_prod</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">log10_avg_prod</span><span class="op">)</span>, digits <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">*</span><span class="fl">10</span><span class="op">)</span>
-
-<span class="co">#rounding</span>
-<span class="va">states_summary_present_ensemble</span> <span class="op">&lt;-</span> <span class="va">states_summary_present_ensemble</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>grand_mean_max <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">signif</a></span><span class="op">(</span><span class="va">grand_mean_max</span>, digits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,
-         <span class="co">#grand_se_max = signif(grand_se_max, digits = 5),</span>
-         avg_wine <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">signif</a></span><span class="op">(</span><span class="va">avg_wine</span>, digits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,
-         se_wine <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">signif</a></span><span class="op">(</span><span class="va">se_wine</span>, digits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,
-         log10_avg_wine <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">signif</a></span><span class="op">(</span><span class="va">log10_avg_wine</span>, digits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,
-         avg_yield <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">signif</a></span><span class="op">(</span><span class="va">avg_yield</span>, digits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,
-         se_yield <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">signif</a></span><span class="op">(</span><span class="va">se_yield</span>, digits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,
-         avg_prod <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">signif</a></span><span class="op">(</span><span class="va">avg_prod</span>, digits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,
-         se_prod <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">signif</a></span><span class="op">(</span><span class="va">se_prod</span>, digits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,
-         log10_avg_yield <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">signif</a></span><span class="op">(</span><span class="va">log10_avg_yield</span>, digits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,
-         log10_avg_prod <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">signif</a></span><span class="op">(</span><span class="va">log10_avg_prod</span>, digits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,
-         avg_infected_trade <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/formatc.html">formatC</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">signif</a></span><span class="op">(</span><span class="va">avg_infected_trade</span>, digits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>, format <span class="op">=</span> <span class="st">"e"</span><span class="op">)</span>,
-         se_trade <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/formatc.html">formatC</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">signif</a></span><span class="op">(</span><span class="va">se_trade</span>, digits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>, format <span class="op">=</span> <span class="st">"e"</span><span class="op">)</span>,
-         avg_infected_mass <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/formatc.html">formatC</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">signif</a></span><span class="op">(</span><span class="va">avg_infected_mass</span>, digits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>, format <span class="op">=</span> <span class="st">"e"</span><span class="op">)</span>,
-         se_mass <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/formatc.html">formatC</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">signif</a></span><span class="op">(</span><span class="va">se_mass</span>, digits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>, format <span class="op">=</span> <span class="st">"e"</span><span class="op">)</span>,
-         log10_avg_infected_trade <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">signif</a></span><span class="op">(</span><span class="va">log10_avg_infected_trade</span>, digits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,
-         log10_avg_infected_mass <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">signif</a></span><span class="op">(</span><span class="va">log10_avg_infected_mass</span>, digits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>
-         <span class="op">)</span>
-
-<span class="co">#countries</span>
-<span class="va">countries_summary_present_ensemble</span> <span class="op">&lt;-</span> <span class="va">countries_summary_present_ensemble</span> <span class="op">%&gt;%</span>
-  <span class="co">#transport in 2 mutate steps</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>transport <span class="op">=</span> <span class="va">log10_avg_infected_mass</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">log10_avg_infected_mass</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>transport <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">transport</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">transport</span><span class="op">)</span>, digits <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">*</span><span class="fl">10</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="co">#establishment</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>establishment <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">grand_mean_max</span>, digits <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">*</span><span class="fl">10</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="co">#impact_wine</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>impact_wine <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">log10_avg_wine</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">log10_avg_wine</span><span class="op">)</span>, digits <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">*</span><span class="fl">10</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="co">#impact_grape</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>impact_grape <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">log10_avg_prod</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">log10_avg_prod</span><span class="op">)</span>, digits <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">*</span><span class="fl">10</span><span class="op">)</span>
-
-<span class="co">#rounding</span>
-<span class="va">countries_summary_present_ensemble</span> <span class="op">&lt;-</span> <span class="va">countries_summary_present_ensemble</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>grand_mean_max <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">signif</a></span><span class="op">(</span><span class="va">grand_mean_max</span>, digits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,
-         <span class="co">#grand_se_max = signif(grand_se_max, digits = 5),</span>
-         avg_wine <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">signif</a></span><span class="op">(</span><span class="va">avg_wine</span>, digits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,
-         se_wine <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">signif</a></span><span class="op">(</span><span class="va">se_wine</span>, digits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,
-         log10_avg_wine <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">signif</a></span><span class="op">(</span><span class="va">log10_avg_wine</span>, digits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,
-         avg_yield <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">signif</a></span><span class="op">(</span><span class="va">avg_yield</span>, digits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,
-         se_yield <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">signif</a></span><span class="op">(</span><span class="va">se_yield</span>, digits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,
-         avg_prod <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">signif</a></span><span class="op">(</span><span class="va">avg_prod</span>, digits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,
-         se_prod <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">signif</a></span><span class="op">(</span><span class="va">se_prod</span>, digits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,
-         log10_avg_yield <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">signif</a></span><span class="op">(</span><span class="va">log10_avg_yield</span>, digits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,
-         log10_avg_prod <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">signif</a></span><span class="op">(</span><span class="va">log10_avg_prod</span>, digits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,
-         avg_infected_trade <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/formatc.html">formatC</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">signif</a></span><span class="op">(</span><span class="va">avg_infected_trade</span>, digits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>, format <span class="op">=</span> <span class="st">"e"</span><span class="op">)</span>,
-         se_trade <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/formatc.html">formatC</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">signif</a></span><span class="op">(</span><span class="va">se_trade</span>, digits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>, format <span class="op">=</span> <span class="st">"e"</span><span class="op">)</span>,
-         avg_infected_mass <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/formatc.html">formatC</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">signif</a></span><span class="op">(</span><span class="va">avg_infected_mass</span>, digits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>, format <span class="op">=</span> <span class="st">"e"</span><span class="op">)</span>,
-         se_mass <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/formatc.html">formatC</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">signif</a></span><span class="op">(</span><span class="va">se_mass</span>, digits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>, format <span class="op">=</span> <span class="st">"e"</span><span class="op">)</span>,
-         log10_avg_infected_trade <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">signif</a></span><span class="op">(</span><span class="va">log10_avg_infected_trade</span>, digits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,
-         log10_avg_infected_mass <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">signif</a></span><span class="op">(</span><span class="va">log10_avg_infected_mass</span>, digits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>
-         <span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co">#states</span></span>
+<span><span class="va">states_summary_present_ensemble</span> <span class="op">&lt;-</span> <span class="va">states_summary_present_ensemble</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="co">#transport in 2 mutate steps</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>transport <span class="op">=</span> <span class="va">log10_avg_infected_mass</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">log10_avg_infected_mass</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>transport <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">transport</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">transport</span><span class="op">)</span>, digits <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">*</span><span class="fl">10</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="co">#establishment</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>establishment <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">grand_mean_max</span>, digits <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">*</span><span class="fl">10</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="co">#impact_wine</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>impact_wine <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">log10_avg_wine</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">log10_avg_wine</span><span class="op">)</span>, digits <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">*</span><span class="fl">10</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="co">#impact_grape</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>impact_grape <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">log10_avg_prod</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">log10_avg_prod</span><span class="op">)</span>, digits <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">*</span><span class="fl">10</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#rounding</span></span>
+<span><span class="va">states_summary_present_ensemble</span> <span class="op">&lt;-</span> <span class="va">states_summary_present_ensemble</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>grand_mean_max <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">signif</a></span><span class="op">(</span><span class="va">grand_mean_max</span>, digits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,</span>
+<span>         <span class="co">#grand_se_max = signif(grand_se_max, digits = 5),</span></span>
+<span>         avg_wine <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">signif</a></span><span class="op">(</span><span class="va">avg_wine</span>, digits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,</span>
+<span>         se_wine <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">signif</a></span><span class="op">(</span><span class="va">se_wine</span>, digits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,</span>
+<span>         log10_avg_wine <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">signif</a></span><span class="op">(</span><span class="va">log10_avg_wine</span>, digits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,</span>
+<span>         avg_yield <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">signif</a></span><span class="op">(</span><span class="va">avg_yield</span>, digits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,</span>
+<span>         se_yield <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">signif</a></span><span class="op">(</span><span class="va">se_yield</span>, digits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,</span>
+<span>         avg_prod <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">signif</a></span><span class="op">(</span><span class="va">avg_prod</span>, digits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,</span>
+<span>         se_prod <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">signif</a></span><span class="op">(</span><span class="va">se_prod</span>, digits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,</span>
+<span>         log10_avg_yield <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">signif</a></span><span class="op">(</span><span class="va">log10_avg_yield</span>, digits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,</span>
+<span>         log10_avg_prod <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">signif</a></span><span class="op">(</span><span class="va">log10_avg_prod</span>, digits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,</span>
+<span>         avg_infected_trade <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/formatc.html" class="external-link">formatC</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">signif</a></span><span class="op">(</span><span class="va">avg_infected_trade</span>, digits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>, format <span class="op">=</span> <span class="st">"e"</span><span class="op">)</span>,</span>
+<span>         se_trade <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/formatc.html" class="external-link">formatC</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">signif</a></span><span class="op">(</span><span class="va">se_trade</span>, digits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>, format <span class="op">=</span> <span class="st">"e"</span><span class="op">)</span>,</span>
+<span>         avg_infected_mass <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/formatc.html" class="external-link">formatC</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">signif</a></span><span class="op">(</span><span class="va">avg_infected_mass</span>, digits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>, format <span class="op">=</span> <span class="st">"e"</span><span class="op">)</span>,</span>
+<span>         se_mass <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/formatc.html" class="external-link">formatC</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">signif</a></span><span class="op">(</span><span class="va">se_mass</span>, digits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>, format <span class="op">=</span> <span class="st">"e"</span><span class="op">)</span>,</span>
+<span>         log10_avg_infected_trade <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">signif</a></span><span class="op">(</span><span class="va">log10_avg_infected_trade</span>, digits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,</span>
+<span>         log10_avg_infected_mass <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">signif</a></span><span class="op">(</span><span class="va">log10_avg_infected_mass</span>, digits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
+<span>         <span class="op">)</span></span>
+<span></span>
+<span><span class="co">#countries</span></span>
+<span><span class="va">countries_summary_present_ensemble</span> <span class="op">&lt;-</span> <span class="va">countries_summary_present_ensemble</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="co">#transport in 2 mutate steps</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>transport <span class="op">=</span> <span class="va">log10_avg_infected_mass</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">log10_avg_infected_mass</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>transport <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">transport</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">transport</span><span class="op">)</span>, digits <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">*</span><span class="fl">10</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="co">#establishment</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>establishment <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">grand_mean_max</span>, digits <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">*</span><span class="fl">10</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="co">#impact_wine</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>impact_wine <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">log10_avg_wine</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">log10_avg_wine</span><span class="op">)</span>, digits <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">*</span><span class="fl">10</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="co">#impact_grape</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>impact_grape <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">log10_avg_prod</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">log10_avg_prod</span><span class="op">)</span>, digits <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">*</span><span class="fl">10</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#rounding</span></span>
+<span><span class="va">countries_summary_present_ensemble</span> <span class="op">&lt;-</span> <span class="va">countries_summary_present_ensemble</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>grand_mean_max <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">signif</a></span><span class="op">(</span><span class="va">grand_mean_max</span>, digits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,</span>
+<span>         <span class="co">#grand_se_max = signif(grand_se_max, digits = 5),</span></span>
+<span>         avg_wine <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">signif</a></span><span class="op">(</span><span class="va">avg_wine</span>, digits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,</span>
+<span>         se_wine <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">signif</a></span><span class="op">(</span><span class="va">se_wine</span>, digits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,</span>
+<span>         log10_avg_wine <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">signif</a></span><span class="op">(</span><span class="va">log10_avg_wine</span>, digits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,</span>
+<span>         avg_yield <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">signif</a></span><span class="op">(</span><span class="va">avg_yield</span>, digits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,</span>
+<span>         se_yield <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">signif</a></span><span class="op">(</span><span class="va">se_yield</span>, digits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,</span>
+<span>         avg_prod <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">signif</a></span><span class="op">(</span><span class="va">avg_prod</span>, digits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,</span>
+<span>         se_prod <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">signif</a></span><span class="op">(</span><span class="va">se_prod</span>, digits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,</span>
+<span>         log10_avg_yield <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">signif</a></span><span class="op">(</span><span class="va">log10_avg_yield</span>, digits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,</span>
+<span>         log10_avg_prod <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">signif</a></span><span class="op">(</span><span class="va">log10_avg_prod</span>, digits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,</span>
+<span>         avg_infected_trade <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/formatc.html" class="external-link">formatC</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">signif</a></span><span class="op">(</span><span class="va">avg_infected_trade</span>, digits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>, format <span class="op">=</span> <span class="st">"e"</span><span class="op">)</span>,</span>
+<span>         se_trade <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/formatc.html" class="external-link">formatC</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">signif</a></span><span class="op">(</span><span class="va">se_trade</span>, digits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>, format <span class="op">=</span> <span class="st">"e"</span><span class="op">)</span>,</span>
+<span>         avg_infected_mass <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/formatc.html" class="external-link">formatC</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">signif</a></span><span class="op">(</span><span class="va">avg_infected_mass</span>, digits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>, format <span class="op">=</span> <span class="st">"e"</span><span class="op">)</span>,</span>
+<span>         se_mass <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/formatc.html" class="external-link">formatC</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">signif</a></span><span class="op">(</span><span class="va">se_mass</span>, digits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>, format <span class="op">=</span> <span class="st">"e"</span><span class="op">)</span>,</span>
+<span>         log10_avg_infected_trade <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">signif</a></span><span class="op">(</span><span class="va">log10_avg_infected_trade</span>, digits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,</span>
+<span>         log10_avg_infected_mass <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">signif</a></span><span class="op">(</span><span class="va">log10_avg_infected_mass</span>, digits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
+<span>         <span class="op">)</span></span></code></pre></div>
 <p>We also need to obtain the predicted invasion severity from
 <code>vignette-041-market-plot</code>. We have conveniently saved those
 data as <code>data/countries_severity.rda</code>, which actually is a
@@ -428,48 +442,48 @@ wine exports) and <code>sev</code> (scaled invasion severity <span class="math i
 <p>We also rename <code>market_size</code> to <code>mkt_size</code> to
 meet the ESRI shapefile column name requirements.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">#read in market severity data</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"countries_sev"</span><span class="op">)</span>
-
-<span class="co">#round similarly and rename market_size</span>
-<span class="va">countries_sev</span> <span class="op">&lt;-</span> <span class="va">countries_sev</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>mkt_size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">signif</a></span><span class="op">(</span><span class="va">market_size</span>, digits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,
-         sev <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">signif</a></span><span class="op">(</span><span class="va">sev</span>, digits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>
-         <span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">market_size</span><span class="op">)</span>
-
-<span class="co">#merge the two datasets</span>
-<span class="va">countries_summary_present_ensemble</span> <span class="op">&lt;-</span> <span class="va">countries_summary_present_ensemble</span> <span class="op">%&gt;%</span>
-  <span class="fu">left_join</span><span class="op">(</span><span class="va">.</span>, <span class="va">countries_sev</span>, by <span class="op">=</span> <span class="st">"ID"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co">#read in market severity data</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"countries_sev"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#round similarly and rename market_size</span></span>
+<span><span class="va">countries_sev</span> <span class="op">&lt;-</span> <span class="va">countries_sev</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>mkt_size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">signif</a></span><span class="op">(</span><span class="va">market_size</span>, digits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,</span>
+<span>         sev <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">signif</a></span><span class="op">(</span><span class="va">sev</span>, digits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
+<span>         <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">market_size</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#merge the two datasets</span></span>
+<span><span class="va">countries_summary_present_ensemble</span> <span class="op">&lt;-</span> <span class="va">countries_summary_present_ensemble</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">.</span>, <span class="va">countries_sev</span>, by <span class="op">=</span> <span class="st">"ID"</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="shapefiles" class="section level2">
-<h2 class="hasAnchor">
-<a href="#shapefiles" class="anchor"></a>Shapefiles</h2>
+<div class="section level3">
+<h3 id="shapefiles">Shapefiles<a class="anchor" aria-label="anchor" href="#shapefiles"></a>
+</h3>
 <p>We use the shared GoogleDrive file that contains downloaded GADM
-shapefiles (<a href="https://gadm.org/download_world.html" class="uri">https://gadm.org/download_world.html</a>) for both
+shapefiles (<a href="https://gadm.org/download_world.html" class="external-link uri">https://gadm.org/download_world.html</a>) for both
 <code>countries</code> and <code>states</code> geopolitical borders.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R">  <span class="co">#shapefile of USA: data obtained from GADM: https://gadm.org/download_world.html</span>
-<span class="va">states</span> <span class="op">&lt;-</span> <span class="fu"><a href="http://rgdal.r-forge.r-project.org/reference/readOGR.html">readOGR</a></span><span class="op">(</span>dsn <span class="op">=</span> <span class="st">"/Volumes/GoogleDrive-104607290079958926089/Shared drives/slfData/data/slfRisk/geo_shapefiles/gadm36_USA_shp/gadm36_USA_1.shp"</span>, verbose <span class="op">=</span> <span class="cn">F</span>, p4s <span class="op">=</span> <span class="st">'+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0'</span><span class="op">)</span>
-
-  <span class="co">#shapefile of world by countries</span>
-<span class="va">countries</span> <span class="op">&lt;-</span> <span class="fu"><a href="http://rgdal.r-forge.r-project.org/reference/readOGR.html">readOGR</a></span><span class="op">(</span><span class="st">"/Volumes/GoogleDrive-104607290079958926089/Shared drives/slfData/data/slfRisk/geo_shapefiles/gadm36_levels_shp/gadm36_0.shp"</span>, verbose <span class="op">=</span> <span class="cn">F</span>, p4s <span class="op">=</span> <span class="st">'+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0'</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span>  <span class="co">#shapefile of USA: data obtained from GADM: https://gadm.org/download_world.html</span></span>
+<span><span class="va">states</span> <span class="op">&lt;-</span> <span class="fu"><a href="http://rgdal.r-forge.r-project.org/reference/readOGR.html" class="external-link">readOGR</a></span><span class="op">(</span>dsn <span class="op">=</span> <span class="st">"/Volumes/GoogleDrive-104607290079958926089/Shared drives/slfData/data/slfRisk/geo_shapefiles/gadm36_USA_shp/gadm36_USA_1.shp"</span>, verbose <span class="op">=</span> <span class="cn">F</span>, p4s <span class="op">=</span> <span class="st">'+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0'</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="co">#shapefile of world by countries</span></span>
+<span><span class="va">countries</span> <span class="op">&lt;-</span> <span class="fu"><a href="http://rgdal.r-forge.r-project.org/reference/readOGR.html" class="external-link">readOGR</a></span><span class="op">(</span><span class="st">"/Volumes/GoogleDrive-104607290079958926089/Shared drives/slfData/data/slfRisk/geo_shapefiles/gadm36_levels_shp/gadm36_0.shp"</span>, verbose <span class="op">=</span> <span class="cn">F</span>, p4s <span class="op">=</span> <span class="st">'+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0'</span><span class="op">)</span></span></code></pre></div>
 <p>There are a few shapefile data entries that need to be cleaned, so we
 alter the names. We also removed the U.S from <code>countries</code>, as
 in other analyses.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">#STATES</span>
-<span class="co">#change DC name</span>
-<span class="co">#states@data$NAME_1 &lt;- gsub(pattern = "Washington DC", replacement = "District of Columbia", x = states@data$NAME_1)</span>
-
-<span class="co">#COUNTRIES LAZY MAY WANT TO MAKE GSUB</span>
-<span class="va">countries</span><span class="op">@</span><span class="va">data</span><span class="op">$</span><span class="va">NAME_0</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html">grep</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="st">"Ivoire"</span>, x <span class="op">=</span> <span class="va">countries</span><span class="op">@</span><span class="va">data</span><span class="op">$</span><span class="va">NAME_0</span>, value <span class="op">=</span> <span class="cn">F</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"Ivory Coast"</span>
-<span class="va">countries</span><span class="op">@</span><span class="va">data</span><span class="op">$</span><span class="va">NAME_0</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html">grep</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="st">"ncipe"</span>, x <span class="op">=</span> <span class="va">countries</span><span class="op">@</span><span class="va">data</span><span class="op">$</span><span class="va">NAME_0</span>, value <span class="op">=</span> <span class="cn">F</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"Sao Tome and Principe"</span>
-<span class="va">countries</span><span class="op">@</span><span class="va">data</span><span class="op">$</span><span class="va">NAME_0</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html">grep</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="st">"Cura"</span>, x <span class="op">=</span> <span class="va">countries</span><span class="op">@</span><span class="va">data</span><span class="op">$</span><span class="va">NAME_0</span>, value <span class="op">=</span> <span class="cn">F</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"Curacao"</span>
-<span class="va">countries</span><span class="op">@</span><span class="va">data</span><span class="op">$</span><span class="va">NAME_0</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html">grep</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="st">"Saint Bart"</span>, x <span class="op">=</span> <span class="va">countries</span><span class="op">@</span><span class="va">data</span><span class="op">$</span><span class="va">NAME_0</span>, value <span class="op">=</span> <span class="cn">F</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"Saint Barthelemy"</span>
-
-<span class="co">#rm USA</span>
-<span class="va">countries</span> <span class="op">&lt;-</span> <span class="va">countries</span><span class="op">[</span><span class="va">countries</span><span class="op">$</span><span class="va">NAME_0</span> <span class="op">!=</span> <span class="st">"United States"</span>,<span class="op">]</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co">#STATES</span></span>
+<span><span class="co">#change DC name</span></span>
+<span><span class="co">#states@data$NAME_1 &lt;- gsub(pattern = "Washington DC", replacement = "District of Columbia", x = states@data$NAME_1)</span></span>
+<span></span>
+<span><span class="co">#COUNTRIES LAZY MAY WANT TO MAKE GSUB</span></span>
+<span><span class="va">countries</span><span class="op">@</span><span class="va">data</span><span class="op">$</span><span class="va">NAME_0</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="st">"Ivoire"</span>, x <span class="op">=</span> <span class="va">countries</span><span class="op">@</span><span class="va">data</span><span class="op">$</span><span class="va">NAME_0</span>, value <span class="op">=</span> <span class="cn">F</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"Ivory Coast"</span></span>
+<span><span class="va">countries</span><span class="op">@</span><span class="va">data</span><span class="op">$</span><span class="va">NAME_0</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="st">"ncipe"</span>, x <span class="op">=</span> <span class="va">countries</span><span class="op">@</span><span class="va">data</span><span class="op">$</span><span class="va">NAME_0</span>, value <span class="op">=</span> <span class="cn">F</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"Sao Tome and Principe"</span></span>
+<span><span class="va">countries</span><span class="op">@</span><span class="va">data</span><span class="op">$</span><span class="va">NAME_0</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="st">"Cura"</span>, x <span class="op">=</span> <span class="va">countries</span><span class="op">@</span><span class="va">data</span><span class="op">$</span><span class="va">NAME_0</span>, value <span class="op">=</span> <span class="cn">F</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"Curacao"</span></span>
+<span><span class="va">countries</span><span class="op">@</span><span class="va">data</span><span class="op">$</span><span class="va">NAME_0</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="st">"Saint Bart"</span>, x <span class="op">=</span> <span class="va">countries</span><span class="op">@</span><span class="va">data</span><span class="op">$</span><span class="va">NAME_0</span>, value <span class="op">=</span> <span class="cn">F</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"Saint Barthelemy"</span></span>
+<span></span>
+<span><span class="co">#rm USA</span></span>
+<span><span class="va">countries</span> <span class="op">&lt;-</span> <span class="va">countries</span><span class="op">[</span><span class="va">countries</span><span class="op">$</span><span class="va">NAME_0</span> <span class="op">!=</span> <span class="st">"United States"</span>,<span class="op">]</span></span></code></pre></div>
 <p>These shapefiles are rather large and unwieldly. To make the more
 manageable, we use <code>regeos::gSimplify()</code> to make them smaller
 by modifying the <code>tol</code> parameter, which is the value used in
@@ -477,92 +491,92 @@ the Douglas-Peuker algorithm. For <code>countries</code>, we downsized
 the used file in addition to the <code>_lo</code> versions used for both
 <code>countries</code> and <code>states</code>.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">#note that tol= can be modified to make the polygons simpler, larger values make the shapefile coarser</span>
-<span class="va">states_lo</span> <span class="op">&lt;-</span> <span class="fu">SpatialPolygonsDataFrame</span><span class="op">(</span>Sr <span class="op">=</span> <span class="fu">rgeos</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/rgeos/man/topo-unary-gSimplify.html">gSimplify</a></span><span class="op">(</span>spgeom <span class="op">=</span> <span class="va">states</span>, topologyPreserve <span class="op">=</span> <span class="cn">TRUE</span>, tol <span class="op">=</span> <span class="fl">0.01</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">states</span><span class="op">@</span><span class="va">data</span><span class="op">)</span>
-<span class="va">countries</span> <span class="op">&lt;-</span> <span class="fu">SpatialPolygonsDataFrame</span><span class="op">(</span>Sr <span class="op">=</span> <span class="fu">rgeos</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/rgeos/man/topo-unary-gSimplify.html">gSimplify</a></span><span class="op">(</span>spgeom <span class="op">=</span> <span class="va">countries</span>, topologyPreserve <span class="op">=</span> <span class="cn">TRUE</span>, tol <span class="op">=</span> <span class="fl">0.01</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">countries</span><span class="op">@</span><span class="va">data</span><span class="op">)</span>
-<span class="va">countries_lo</span> <span class="op">&lt;-</span> <span class="fu">SpatialPolygonsDataFrame</span><span class="op">(</span>Sr <span class="op">=</span> <span class="fu">rgeos</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/rgeos/man/topo-unary-gSimplify.html">gSimplify</a></span><span class="op">(</span>spgeom <span class="op">=</span> <span class="va">countries</span>, topologyPreserve <span class="op">=</span> <span class="cn">TRUE</span>, tol <span class="op">=</span> <span class="fl">0.01</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">countries</span><span class="op">@</span><span class="va">data</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co">#note that tol= can be modified to make the polygons simpler, larger values make the shapefile coarser</span></span>
+<span><span class="va">states_lo</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/sp/man/SpatialPolygons.html" class="external-link">SpatialPolygonsDataFrame</a></span><span class="op">(</span>Sr <span class="op">=</span> <span class="fu">rgeos</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/rgeos/man/topo-unary-gSimplify.html" class="external-link">gSimplify</a></span><span class="op">(</span>spgeom <span class="op">=</span> <span class="va">states</span>, topologyPreserve <span class="op">=</span> <span class="cn">TRUE</span>, tol <span class="op">=</span> <span class="fl">0.01</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">states</span><span class="op">@</span><span class="va">data</span><span class="op">)</span></span>
+<span><span class="va">countries</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/sp/man/SpatialPolygons.html" class="external-link">SpatialPolygonsDataFrame</a></span><span class="op">(</span>Sr <span class="op">=</span> <span class="fu">rgeos</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/rgeos/man/topo-unary-gSimplify.html" class="external-link">gSimplify</a></span><span class="op">(</span>spgeom <span class="op">=</span> <span class="va">countries</span>, topologyPreserve <span class="op">=</span> <span class="cn">TRUE</span>, tol <span class="op">=</span> <span class="fl">0.01</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">countries</span><span class="op">@</span><span class="va">data</span><span class="op">)</span></span>
+<span><span class="va">countries_lo</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/sp/man/SpatialPolygons.html" class="external-link">SpatialPolygonsDataFrame</a></span><span class="op">(</span>Sr <span class="op">=</span> <span class="fu">rgeos</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/rgeos/man/topo-unary-gSimplify.html" class="external-link">gSimplify</a></span><span class="op">(</span>spgeom <span class="op">=</span> <span class="va">countries</span>, topologyPreserve <span class="op">=</span> <span class="cn">TRUE</span>, tol <span class="op">=</span> <span class="fl">0.01</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">countries</span><span class="op">@</span><span class="va">data</span><span class="op">)</span></span></code></pre></div>
 <p>Following this, the shapefiles were filtered to only geopolitical
 entities that are in the corresponding <code>countries</code> and
 <code>states</code> data.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">#states</span>
-<span class="va">states</span> <span class="op">&lt;-</span> <span class="va">states</span><span class="op">[</span><span class="va">states</span><span class="op">@</span><span class="va">data</span><span class="op">$</span><span class="va">NAME_1</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">states_summary_present_ensemble</span><span class="op">$</span><span class="va">geopol_unit</span><span class="op">)</span>,<span class="op">]</span>
-<span class="va">states_lo</span> <span class="op">&lt;-</span> <span class="va">states_lo</span><span class="op">[</span><span class="va">states_lo</span><span class="op">@</span><span class="va">data</span><span class="op">$</span><span class="va">NAME_1</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">states_summary_present_ensemble</span><span class="op">$</span><span class="va">geopol_unit</span><span class="op">)</span>,<span class="op">]</span>
-<span class="co">#countries</span>
-<span class="va">countries</span> <span class="op">&lt;-</span> <span class="va">countries</span><span class="op">[</span><span class="va">countries</span><span class="op">@</span><span class="va">data</span><span class="op">$</span><span class="va">NAME_0</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">countries_summary_present_ensemble</span><span class="op">$</span><span class="va">geopol_unit</span><span class="op">)</span>,<span class="op">]</span>
-<span class="va">countries_lo</span> <span class="op">&lt;-</span> <span class="va">countries_lo</span><span class="op">[</span><span class="va">countries_lo</span><span class="op">@</span><span class="va">data</span><span class="op">$</span><span class="va">NAME_0</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">countries_summary_present_ensemble</span><span class="op">$</span><span class="va">geopol_unit</span><span class="op">)</span>,<span class="op">]</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co">#states</span></span>
+<span><span class="va">states</span> <span class="op">&lt;-</span> <span class="va">states</span><span class="op">[</span><span class="va">states</span><span class="op">@</span><span class="va">data</span><span class="op">$</span><span class="va">NAME_1</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">states_summary_present_ensemble</span><span class="op">$</span><span class="va">geopol_unit</span><span class="op">)</span>,<span class="op">]</span></span>
+<span><span class="va">states_lo</span> <span class="op">&lt;-</span> <span class="va">states_lo</span><span class="op">[</span><span class="va">states_lo</span><span class="op">@</span><span class="va">data</span><span class="op">$</span><span class="va">NAME_1</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">states_summary_present_ensemble</span><span class="op">$</span><span class="va">geopol_unit</span><span class="op">)</span>,<span class="op">]</span></span>
+<span><span class="co">#countries</span></span>
+<span><span class="va">countries</span> <span class="op">&lt;-</span> <span class="va">countries</span><span class="op">[</span><span class="va">countries</span><span class="op">@</span><span class="va">data</span><span class="op">$</span><span class="va">NAME_0</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">countries_summary_present_ensemble</span><span class="op">$</span><span class="va">geopol_unit</span><span class="op">)</span>,<span class="op">]</span></span>
+<span><span class="va">countries_lo</span> <span class="op">&lt;-</span> <span class="va">countries_lo</span><span class="op">[</span><span class="va">countries_lo</span><span class="op">@</span><span class="va">data</span><span class="op">$</span><span class="va">NAME_0</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">countries_summary_present_ensemble</span><span class="op">$</span><span class="va">geopol_unit</span><span class="op">)</span>,<span class="op">]</span></span></code></pre></div>
 <p>In the downscaling and filtering process, we needed to make sure that
 the geometries are intact and cleaned, and so we used the
-<code><a href="https://rdrr.io/pkg/cleangeo/man/clgeo_Clean.html">clgeo_Clean()</a></code> function to ensure that the shapefiles work
+<code><a href="https://rdrr.io/pkg/cleangeo/man/clgeo_Clean.html" class="external-link">clgeo_Clean()</a></code> function to ensure that the shapefiles work
 appropriately.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">#might as well clean them all</span>
-<span class="va">states</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/cleangeo/man/clgeo_Clean.html">clgeo_Clean</a></span><span class="op">(</span><span class="va">states</span><span class="op">)</span>
-<span class="va">states_lo</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/cleangeo/man/clgeo_Clean.html">clgeo_Clean</a></span><span class="op">(</span><span class="va">states_lo</span><span class="op">)</span>
-<span class="va">countries</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/cleangeo/man/clgeo_Clean.html">clgeo_Clean</a></span><span class="op">(</span><span class="va">countries</span><span class="op">)</span>
-<span class="va">countries_lo</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/cleangeo/man/clgeo_Clean.html">clgeo_Clean</a></span><span class="op">(</span><span class="va">countries_lo</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co">#might as well clean them all</span></span>
+<span><span class="va">states</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/cleangeo/man/clgeo_Clean.html" class="external-link">clgeo_Clean</a></span><span class="op">(</span><span class="va">states</span><span class="op">)</span></span>
+<span><span class="va">states_lo</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/cleangeo/man/clgeo_Clean.html" class="external-link">clgeo_Clean</a></span><span class="op">(</span><span class="va">states_lo</span><span class="op">)</span></span>
+<span><span class="va">countries</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/cleangeo/man/clgeo_Clean.html" class="external-link">clgeo_Clean</a></span><span class="op">(</span><span class="va">countries</span><span class="op">)</span></span>
+<span><span class="va">countries_lo</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/cleangeo/man/clgeo_Clean.html" class="external-link">clgeo_Clean</a></span><span class="op">(</span><span class="va">countries_lo</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
-<div id="data-merging" class="section level1">
-<h1 class="hasAnchor">
-<a href="#data-merging" class="anchor"></a>Data merging</h1>
-<p>Now, we use <code>left_join()</code> to join the
+<div class="section level2">
+<h2 id="data-merging">Data merging<a class="anchor" aria-label="anchor" href="#data-merging"></a>
+</h2>
+<p>Now, we use <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join()</a></code> to join the
 <code>shapefile@data</code> table to the corresponding
 <code>summary</code> data.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">#states</span>
-<span class="va">states</span><span class="op">@</span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">left_join</span><span class="op">(</span><span class="va">states</span><span class="op">@</span><span class="va">data</span>, <span class="va">states_summary_present_ensemble</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"NAME_1"</span> <span class="op">=</span> <span class="st">"geopol_unit"</span><span class="op">)</span><span class="op">)</span>
-<span class="va">states_lo</span><span class="op">@</span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">left_join</span><span class="op">(</span><span class="va">states_lo</span><span class="op">@</span><span class="va">data</span>, <span class="va">states_summary_present_ensemble</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"NAME_1"</span> <span class="op">=</span> <span class="st">"geopol_unit"</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#countries</span>
-<span class="va">countries</span><span class="op">@</span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">left_join</span><span class="op">(</span><span class="va">countries</span><span class="op">@</span><span class="va">data</span>, <span class="va">countries_summary_present_ensemble</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"NAME_0"</span> <span class="op">=</span> <span class="st">"geopol_unit"</span><span class="op">)</span><span class="op">)</span>
-<span class="va">countries_lo</span><span class="op">@</span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">left_join</span><span class="op">(</span><span class="va">countries_lo</span><span class="op">@</span><span class="va">data</span>, <span class="va">countries_summary_present_ensemble</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"NAME_0"</span> <span class="op">=</span> <span class="st">"geopol_unit"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co">#states</span></span>
+<span><span class="va">states</span><span class="op">@</span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">states</span><span class="op">@</span><span class="va">data</span>, <span class="va">states_summary_present_ensemble</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"NAME_1"</span> <span class="op">=</span> <span class="st">"geopol_unit"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">states_lo</span><span class="op">@</span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">states_lo</span><span class="op">@</span><span class="va">data</span>, <span class="va">states_summary_present_ensemble</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"NAME_1"</span> <span class="op">=</span> <span class="st">"geopol_unit"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#countries</span></span>
+<span><span class="va">countries</span><span class="op">@</span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">countries</span><span class="op">@</span><span class="va">data</span>, <span class="va">countries_summary_present_ensemble</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"NAME_0"</span> <span class="op">=</span> <span class="st">"geopol_unit"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">countries_lo</span><span class="op">@</span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">countries_lo</span><span class="op">@</span><span class="va">data</span>, <span class="va">countries_summary_present_ensemble</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"NAME_0"</span> <span class="op">=</span> <span class="st">"geopol_unit"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>We also rename the column fields to accommodate for ESRI shapefile
 column name character limits. A README file exists in the GoogleDrive
 <code>./slfData/data/slfRisk/</code> that outlines the keys for the old
 names and the shorter names used here.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">#states</span>
-<span class="co">#colnames(states@data)[13:35] &lt;- c("gmean_max","gse_max","wine","grapes","avg_wine","se_wine","lavg_wine","avg_yield","se_yield","avg_prod","se_prod","lavg_yield","lavg_prod","avg_itrad","se_trad","avg_imass","se_mass","lavg_itrad","lavg_imass", "transport", "establish", "imp_wine", "imp_grape")</span>
-<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">states</span><span class="op">@</span><span class="va">data</span><span class="op">)</span><span class="op">[</span><span class="fl">13</span><span class="op">:</span><span class="fl">34</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"gmean_max"</span>,<span class="st">"wine"</span>,<span class="st">"grapes"</span>,<span class="st">"avg_wine"</span>,<span class="st">"se_wine"</span>,<span class="st">"lavg_wine"</span>,<span class="st">"avg_yield"</span>,<span class="st">"se_yield"</span>,<span class="st">"avg_prod"</span>,<span class="st">"se_prod"</span>,<span class="st">"lavg_yield"</span>,<span class="st">"lavg_prod"</span>,<span class="st">"avg_itrad"</span>,<span class="st">"se_trad"</span>,<span class="st">"avg_imass"</span>,<span class="st">"se_mass"</span>,<span class="st">"lavg_itrad"</span>,<span class="st">"lavg_imass"</span>, <span class="st">"transport"</span>, <span class="st">"establish"</span>, <span class="st">"imp_wine"</span>, <span class="st">"imp_grape"</span><span class="op">)</span>
-
-<span class="co">#colnames(states_lo@data)[13:35] &lt;- c("gmean_max","gse_max","wine","grapes","avg_wine","se_wine","lavg_wine","avg_yield","se_yield","avg_prod","se_prod","lavg_yield","lavg_prod","avg_itrad","se_trad","avg_imass","se_mass","lavg_itrad","lavg_imass", "transport", "establish", "imp_wine", "imp_grape")</span>
-<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">states_lo</span><span class="op">@</span><span class="va">data</span><span class="op">)</span><span class="op">[</span><span class="fl">13</span><span class="op">:</span><span class="fl">34</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"gmean_max"</span>,<span class="st">"wine"</span>,<span class="st">"grapes"</span>,<span class="st">"avg_wine"</span>,<span class="st">"se_wine"</span>,<span class="st">"lavg_wine"</span>,<span class="st">"avg_yield"</span>,<span class="st">"se_yield"</span>,<span class="st">"avg_prod"</span>,<span class="st">"se_prod"</span>,<span class="st">"lavg_yield"</span>,<span class="st">"lavg_prod"</span>,<span class="st">"avg_itrad"</span>,<span class="st">"se_trad"</span>,<span class="st">"avg_imass"</span>,<span class="st">"se_mass"</span>,<span class="st">"lavg_itrad"</span>,<span class="st">"lavg_imass"</span>, <span class="st">"transport"</span>, <span class="st">"establish"</span>, <span class="st">"imp_wine"</span>, <span class="st">"imp_grape"</span><span class="op">)</span> 
-
-<span class="co">#countries</span>
-<span class="co">#colnames(countries@data)[5:27] &lt;- c("gmean_max","gse_max","wine","grapes","avg_wine","se_wine","lavg_wine","avg_yield","se_yield","avg_prod","se_prod","lavg_yield","lavg_prod","avg_itrad","se_trad","avg_imass","se_mass","lavg_itrad","lavg_imass", "transport", "establish", "imp_wine", "imp_grape")</span>
-<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">countries</span><span class="op">@</span><span class="va">data</span><span class="op">)</span><span class="op">[</span><span class="fl">5</span><span class="op">:</span><span class="fl">26</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"gmean_max"</span>,<span class="st">"wine"</span>,<span class="st">"grapes"</span>,<span class="st">"avg_wine"</span>,<span class="st">"se_wine"</span>,<span class="st">"lavg_wine"</span>,<span class="st">"avg_yield"</span>,<span class="st">"se_yield"</span>,<span class="st">"avg_prod"</span>,<span class="st">"se_prod"</span>,<span class="st">"lavg_yield"</span>,<span class="st">"lavg_prod"</span>,<span class="st">"avg_itrad"</span>,<span class="st">"se_trad"</span>,<span class="st">"avg_imass"</span>,<span class="st">"se_mass"</span>,<span class="st">"lavg_itrad"</span>,<span class="st">"lavg_imass"</span>, <span class="st">"transport"</span>, <span class="st">"establish"</span>, <span class="st">"imp_wine"</span>, <span class="st">"imp_grape"</span><span class="op">)</span>
-
-<span class="co">#colnames(countries_lo@data)[5:27] &lt;- c("gmean_max","gse_max","wine","grapes","avg_wine","se_wine","lavg_wine","avg_yield","se_yield","avg_prod","se_prod","lavg_yield","lavg_prod","avg_itrad","se_trad","avg_imass","se_mass","lavg_itrad","lavg_imass", "transport", "establish", "imp_wine", "imp_grape")</span>
-<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">countries_lo</span><span class="op">@</span><span class="va">data</span><span class="op">)</span><span class="op">[</span><span class="fl">5</span><span class="op">:</span><span class="fl">26</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"gmean_max"</span>,<span class="st">"wine"</span>,<span class="st">"grapes"</span>,<span class="st">"avg_wine"</span>,<span class="st">"se_wine"</span>,<span class="st">"lavg_wine"</span>,<span class="st">"avg_yield"</span>,<span class="st">"se_yield"</span>,<span class="st">"avg_prod"</span>,<span class="st">"se_prod"</span>,<span class="st">"lavg_yield"</span>,<span class="st">"lavg_prod"</span>,<span class="st">"avg_itrad"</span>,<span class="st">"se_trad"</span>,<span class="st">"avg_imass"</span>,<span class="st">"se_mass"</span>,<span class="st">"lavg_itrad"</span>,<span class="st">"lavg_imass"</span>, <span class="st">"transport"</span>, <span class="st">"establish"</span>, <span class="st">"imp_wine"</span>, <span class="st">"imp_grape"</span><span class="op">)</span> </code></pre></div>
+<code class="sourceCode R"><span><span class="co">#states</span></span>
+<span><span class="co">#colnames(states@data)[13:35] &lt;- c("gmean_max","gse_max","wine","grapes","avg_wine","se_wine","lavg_wine","avg_yield","se_yield","avg_prod","se_prod","lavg_yield","lavg_prod","avg_itrad","se_trad","avg_imass","se_mass","lavg_itrad","lavg_imass", "transport", "establish", "imp_wine", "imp_grape")</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">states</span><span class="op">@</span><span class="va">data</span><span class="op">)</span><span class="op">[</span><span class="fl">13</span><span class="op">:</span><span class="fl">34</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gmean_max"</span>,<span class="st">"wine"</span>,<span class="st">"grapes"</span>,<span class="st">"avg_wine"</span>,<span class="st">"se_wine"</span>,<span class="st">"lavg_wine"</span>,<span class="st">"avg_yield"</span>,<span class="st">"se_yield"</span>,<span class="st">"avg_prod"</span>,<span class="st">"se_prod"</span>,<span class="st">"lavg_yield"</span>,<span class="st">"lavg_prod"</span>,<span class="st">"avg_itrad"</span>,<span class="st">"se_trad"</span>,<span class="st">"avg_imass"</span>,<span class="st">"se_mass"</span>,<span class="st">"lavg_itrad"</span>,<span class="st">"lavg_imass"</span>, <span class="st">"transport"</span>, <span class="st">"establish"</span>, <span class="st">"imp_wine"</span>, <span class="st">"imp_grape"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#colnames(states_lo@data)[13:35] &lt;- c("gmean_max","gse_max","wine","grapes","avg_wine","se_wine","lavg_wine","avg_yield","se_yield","avg_prod","se_prod","lavg_yield","lavg_prod","avg_itrad","se_trad","avg_imass","se_mass","lavg_itrad","lavg_imass", "transport", "establish", "imp_wine", "imp_grape")</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">states_lo</span><span class="op">@</span><span class="va">data</span><span class="op">)</span><span class="op">[</span><span class="fl">13</span><span class="op">:</span><span class="fl">34</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gmean_max"</span>,<span class="st">"wine"</span>,<span class="st">"grapes"</span>,<span class="st">"avg_wine"</span>,<span class="st">"se_wine"</span>,<span class="st">"lavg_wine"</span>,<span class="st">"avg_yield"</span>,<span class="st">"se_yield"</span>,<span class="st">"avg_prod"</span>,<span class="st">"se_prod"</span>,<span class="st">"lavg_yield"</span>,<span class="st">"lavg_prod"</span>,<span class="st">"avg_itrad"</span>,<span class="st">"se_trad"</span>,<span class="st">"avg_imass"</span>,<span class="st">"se_mass"</span>,<span class="st">"lavg_itrad"</span>,<span class="st">"lavg_imass"</span>, <span class="st">"transport"</span>, <span class="st">"establish"</span>, <span class="st">"imp_wine"</span>, <span class="st">"imp_grape"</span><span class="op">)</span> </span>
+<span></span>
+<span><span class="co">#countries</span></span>
+<span><span class="co">#colnames(countries@data)[5:27] &lt;- c("gmean_max","gse_max","wine","grapes","avg_wine","se_wine","lavg_wine","avg_yield","se_yield","avg_prod","se_prod","lavg_yield","lavg_prod","avg_itrad","se_trad","avg_imass","se_mass","lavg_itrad","lavg_imass", "transport", "establish", "imp_wine", "imp_grape")</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">countries</span><span class="op">@</span><span class="va">data</span><span class="op">)</span><span class="op">[</span><span class="fl">5</span><span class="op">:</span><span class="fl">26</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gmean_max"</span>,<span class="st">"wine"</span>,<span class="st">"grapes"</span>,<span class="st">"avg_wine"</span>,<span class="st">"se_wine"</span>,<span class="st">"lavg_wine"</span>,<span class="st">"avg_yield"</span>,<span class="st">"se_yield"</span>,<span class="st">"avg_prod"</span>,<span class="st">"se_prod"</span>,<span class="st">"lavg_yield"</span>,<span class="st">"lavg_prod"</span>,<span class="st">"avg_itrad"</span>,<span class="st">"se_trad"</span>,<span class="st">"avg_imass"</span>,<span class="st">"se_mass"</span>,<span class="st">"lavg_itrad"</span>,<span class="st">"lavg_imass"</span>, <span class="st">"transport"</span>, <span class="st">"establish"</span>, <span class="st">"imp_wine"</span>, <span class="st">"imp_grape"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#colnames(countries_lo@data)[5:27] &lt;- c("gmean_max","gse_max","wine","grapes","avg_wine","se_wine","lavg_wine","avg_yield","se_yield","avg_prod","se_prod","lavg_yield","lavg_prod","avg_itrad","se_trad","avg_imass","se_mass","lavg_itrad","lavg_imass", "transport", "establish", "imp_wine", "imp_grape")</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">countries_lo</span><span class="op">@</span><span class="va">data</span><span class="op">)</span><span class="op">[</span><span class="fl">5</span><span class="op">:</span><span class="fl">26</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gmean_max"</span>,<span class="st">"wine"</span>,<span class="st">"grapes"</span>,<span class="st">"avg_wine"</span>,<span class="st">"se_wine"</span>,<span class="st">"lavg_wine"</span>,<span class="st">"avg_yield"</span>,<span class="st">"se_yield"</span>,<span class="st">"avg_prod"</span>,<span class="st">"se_prod"</span>,<span class="st">"lavg_yield"</span>,<span class="st">"lavg_prod"</span>,<span class="st">"avg_itrad"</span>,<span class="st">"se_trad"</span>,<span class="st">"avg_imass"</span>,<span class="st">"se_mass"</span>,<span class="st">"lavg_itrad"</span>,<span class="st">"lavg_imass"</span>, <span class="st">"transport"</span>, <span class="st">"establish"</span>, <span class="st">"imp_wine"</span>, <span class="st">"imp_grape"</span><span class="op">)</span> </span></code></pre></div>
 <p>To create a streamlined dataset, we make a version that includes both
 <code>countries</code> and <code>states</code> together, called
 <code>combined</code> (for combined data).</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">#create the combined data tables</span>
-<span class="va">comb</span> <span class="op">&lt;-</span> <span class="va">countries</span><span class="op">@</span><span class="va">data</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>NAME_1 <span class="op">=</span> <span class="va">NAME_0</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">full_join</span><span class="op">(</span><span class="va">.</span>, <span class="va">states</span><span class="op">@</span><span class="va">data</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">NAME_0</span>,<span class="va">NAME_1</span>,<span class="va">ID</span>,<span class="va">status</span><span class="op">:</span><span class="va">mkt_size</span><span class="op">)</span>
-<span class="va">comb_lo</span> <span class="op">&lt;-</span> <span class="va">countries_lo</span><span class="op">@</span><span class="va">data</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>NAME_1 <span class="op">=</span> <span class="va">NAME_0</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">full_join</span><span class="op">(</span><span class="va">.</span>, <span class="va">states_lo</span><span class="op">@</span><span class="va">data</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">NAME_0</span>,<span class="va">NAME_1</span>,<span class="va">ID</span>,<span class="va">status</span><span class="op">:</span><span class="va">mkt_size</span><span class="op">)</span>
-
-<span class="co">#change the data tables</span>
-<span class="co">#states</span>
-<span class="va">states</span><span class="op">@</span><span class="va">data</span> <span class="op">&lt;-</span> <span class="va">comb</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">NAME_0</span> <span class="op">==</span> <span class="st">"United States"</span><span class="op">)</span>
-<span class="va">states_lo</span><span class="op">@</span><span class="va">data</span> <span class="op">&lt;-</span> <span class="va">comb</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">NAME_0</span> <span class="op">==</span> <span class="st">"United States"</span><span class="op">)</span>
-<span class="co">#countries</span>
-<span class="va">countries</span><span class="op">@</span><span class="va">data</span> <span class="op">&lt;-</span> <span class="va">comb</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">NAME_0</span> <span class="op">!=</span> <span class="st">"United States"</span><span class="op">)</span>
-<span class="va">countries_lo</span><span class="op">@</span><span class="va">data</span> <span class="op">&lt;-</span> <span class="va">comb</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">NAME_0</span> <span class="op">!=</span> <span class="st">"United States"</span><span class="op">)</span>
-
-<span class="co">#final merge step</span>
-<span class="va">combined</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="va">states</span>, <span class="va">countries</span>, makeUniqueIDs <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="va">combined_lo</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="va">states_lo</span>, <span class="va">countries_lo</span>, makeUniqueIDs <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co">#create the combined data tables</span></span>
+<span><span class="va">comb</span> <span class="op">&lt;-</span> <span class="va">countries</span><span class="op">@</span><span class="va">data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>NAME_1 <span class="op">=</span> <span class="va">NAME_0</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">full_join</a></span><span class="op">(</span><span class="va">.</span>, <span class="va">states</span><span class="op">@</span><span class="va">data</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">NAME_0</span>,<span class="va">NAME_1</span>,<span class="va">ID</span>,<span class="va">status</span><span class="op">:</span><span class="va">mkt_size</span><span class="op">)</span></span>
+<span><span class="va">comb_lo</span> <span class="op">&lt;-</span> <span class="va">countries_lo</span><span class="op">@</span><span class="va">data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>NAME_1 <span class="op">=</span> <span class="va">NAME_0</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">full_join</a></span><span class="op">(</span><span class="va">.</span>, <span class="va">states_lo</span><span class="op">@</span><span class="va">data</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">NAME_0</span>,<span class="va">NAME_1</span>,<span class="va">ID</span>,<span class="va">status</span><span class="op">:</span><span class="va">mkt_size</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#change the data tables</span></span>
+<span><span class="co">#states</span></span>
+<span><span class="va">states</span><span class="op">@</span><span class="va">data</span> <span class="op">&lt;-</span> <span class="va">comb</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">NAME_0</span> <span class="op">==</span> <span class="st">"United States"</span><span class="op">)</span></span>
+<span><span class="va">states_lo</span><span class="op">@</span><span class="va">data</span> <span class="op">&lt;-</span> <span class="va">comb</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">NAME_0</span> <span class="op">==</span> <span class="st">"United States"</span><span class="op">)</span></span>
+<span><span class="co">#countries</span></span>
+<span><span class="va">countries</span><span class="op">@</span><span class="va">data</span> <span class="op">&lt;-</span> <span class="va">comb</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">NAME_0</span> <span class="op">!=</span> <span class="st">"United States"</span><span class="op">)</span></span>
+<span><span class="va">countries_lo</span><span class="op">@</span><span class="va">data</span> <span class="op">&lt;-</span> <span class="va">comb</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">NAME_0</span> <span class="op">!=</span> <span class="st">"United States"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#final merge step</span></span>
+<span><span class="va">combined</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">states</span>, <span class="va">countries</span>, makeUniqueIDs <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="va">combined_lo</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">states_lo</span>, <span class="va">countries_lo</span>, makeUniqueIDs <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="save-shapefiles-for-ee" class="section level1">
-<h1 class="hasAnchor">
-<a href="#save-shapefiles-for-ee" class="anchor"></a>Save shapefiles for EE</h1>
+<div class="section level2">
+<h2 id="save-shapefiles-for-ee">Save shapefiles for EE<a class="anchor" aria-label="anchor" href="#save-shapefiles-for-ee"></a>
+</h2>
 <p>The newly merged shapefiles (<code>countries</code>,
 <code>states</code>, and <code>combined</code> for regular and
 <code>_lo</code> versions) are written to the shared GoogleDrive
@@ -570,81 +584,81 @@ directory
 <code>./slfData/data/slfRisk/geo_shapefiles/gadm36_USA_with_data/</code>for
 visualization with EE.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">#states</span>
-<span class="fu"><a href="http://rgdal.r-forge.r-project.org/reference/writeOGR.html">writeOGR</a></span><span class="op">(</span>obj <span class="op">=</span> <span class="va">states</span>, dsn <span class="op">=</span> <span class="st">"/Volumes/GoogleDrive-104607290079958926089/Shared drives/slfData/data/slfRisk/geo_shapefiles/gadm36_USA_with_data/"</span>,  driver<span class="op">=</span><span class="st">"ESRI Shapefile"</span>, layer <span class="op">=</span> <span class="st">"states"</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span>, overwrite_layer <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="fu"><a href="http://rgdal.r-forge.r-project.org/reference/writeOGR.html">writeOGR</a></span><span class="op">(</span>obj <span class="op">=</span> <span class="va">states_lo</span>, dsn <span class="op">=</span> <span class="st">"/Volumes/GoogleDrive-104607290079958926089/Shared drives/slfData/data/slfRisk/geo_shapefiles/gadm36_USA_with_data/"</span>,  driver<span class="op">=</span><span class="st">"ESRI Shapefile"</span>, layer <span class="op">=</span> <span class="st">"states_lores"</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span>, overwrite_layer <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-
-<span class="co">#countries</span>
-<span class="fu"><a href="http://rgdal.r-forge.r-project.org/reference/writeOGR.html">writeOGR</a></span><span class="op">(</span>obj <span class="op">=</span> <span class="va">countries</span>, dsn <span class="op">=</span> <span class="st">"/Volumes/GoogleDrive-104607290079958926089/Shared drives/slfData/data/slfRisk/geo_shapefiles/gadm36_levels_with_data/"</span>,  driver<span class="op">=</span><span class="st">"ESRI Shapefile"</span>, layer <span class="op">=</span> <span class="st">"countries"</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span>, overwrite_layer <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="fu"><a href="http://rgdal.r-forge.r-project.org/reference/writeOGR.html">writeOGR</a></span><span class="op">(</span>obj <span class="op">=</span> <span class="va">countries_lo</span>, dsn <span class="op">=</span> <span class="st">"/Volumes/GoogleDrive-104607290079958926089/Shared drives/slfData/data/slfRisk/geo_shapefiles/gadm36_levels_with_data/"</span>,  driver<span class="op">=</span><span class="st">"ESRI Shapefile"</span>, layer <span class="op">=</span> <span class="st">"countries_lores"</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span>, overwrite_layer <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-
-<span class="co">#combined</span>
-<span class="fu"><a href="http://rgdal.r-forge.r-project.org/reference/writeOGR.html">writeOGR</a></span><span class="op">(</span>obj <span class="op">=</span> <span class="va">combined</span>, dsn <span class="op">=</span> <span class="st">"/Volumes/GoogleDrive-104607290079958926089/Shared drives/slfData/data/slfRisk/geo_shapefiles/combined/"</span>,  driver<span class="op">=</span><span class="st">"ESRI Shapefile"</span>, layer <span class="op">=</span> <span class="st">"combined"</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span>, overwrite_layer <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="fu"><a href="http://rgdal.r-forge.r-project.org/reference/writeOGR.html">writeOGR</a></span><span class="op">(</span>obj <span class="op">=</span> <span class="va">combined_lo</span>, dsn <span class="op">=</span> <span class="st">"/Volumes/GoogleDrive-104607290079958926089/Shared drives/slfData/data/slfRisk/geo_shapefiles/combined/"</span>,  driver<span class="op">=</span><span class="st">"ESRI Shapefile"</span>, layer <span class="op">=</span> <span class="st">"combined_lores"</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span>, overwrite_layer <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co">#states</span></span>
+<span><span class="fu"><a href="http://rgdal.r-forge.r-project.org/reference/writeOGR.html" class="external-link">writeOGR</a></span><span class="op">(</span>obj <span class="op">=</span> <span class="va">states</span>, dsn <span class="op">=</span> <span class="st">"/Volumes/GoogleDrive-104607290079958926089/Shared drives/slfData/data/slfRisk/geo_shapefiles/gadm36_USA_with_data/"</span>,  driver<span class="op">=</span><span class="st">"ESRI Shapefile"</span>, layer <span class="op">=</span> <span class="st">"states"</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span>, overwrite_layer <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="http://rgdal.r-forge.r-project.org/reference/writeOGR.html" class="external-link">writeOGR</a></span><span class="op">(</span>obj <span class="op">=</span> <span class="va">states_lo</span>, dsn <span class="op">=</span> <span class="st">"/Volumes/GoogleDrive-104607290079958926089/Shared drives/slfData/data/slfRisk/geo_shapefiles/gadm36_USA_with_data/"</span>,  driver<span class="op">=</span><span class="st">"ESRI Shapefile"</span>, layer <span class="op">=</span> <span class="st">"states_lores"</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span>, overwrite_layer <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#countries</span></span>
+<span><span class="fu"><a href="http://rgdal.r-forge.r-project.org/reference/writeOGR.html" class="external-link">writeOGR</a></span><span class="op">(</span>obj <span class="op">=</span> <span class="va">countries</span>, dsn <span class="op">=</span> <span class="st">"/Volumes/GoogleDrive-104607290079958926089/Shared drives/slfData/data/slfRisk/geo_shapefiles/gadm36_levels_with_data/"</span>,  driver<span class="op">=</span><span class="st">"ESRI Shapefile"</span>, layer <span class="op">=</span> <span class="st">"countries"</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span>, overwrite_layer <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="http://rgdal.r-forge.r-project.org/reference/writeOGR.html" class="external-link">writeOGR</a></span><span class="op">(</span>obj <span class="op">=</span> <span class="va">countries_lo</span>, dsn <span class="op">=</span> <span class="st">"/Volumes/GoogleDrive-104607290079958926089/Shared drives/slfData/data/slfRisk/geo_shapefiles/gadm36_levels_with_data/"</span>,  driver<span class="op">=</span><span class="st">"ESRI Shapefile"</span>, layer <span class="op">=</span> <span class="st">"countries_lores"</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span>, overwrite_layer <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#combined</span></span>
+<span><span class="fu"><a href="http://rgdal.r-forge.r-project.org/reference/writeOGR.html" class="external-link">writeOGR</a></span><span class="op">(</span>obj <span class="op">=</span> <span class="va">combined</span>, dsn <span class="op">=</span> <span class="st">"/Volumes/GoogleDrive-104607290079958926089/Shared drives/slfData/data/slfRisk/geo_shapefiles/combined/"</span>,  driver<span class="op">=</span><span class="st">"ESRI Shapefile"</span>, layer <span class="op">=</span> <span class="st">"combined"</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span>, overwrite_layer <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="http://rgdal.r-forge.r-project.org/reference/writeOGR.html" class="external-link">writeOGR</a></span><span class="op">(</span>obj <span class="op">=</span> <span class="va">combined_lo</span>, dsn <span class="op">=</span> <span class="st">"/Volumes/GoogleDrive-104607290079958926089/Shared drives/slfData/data/slfRisk/geo_shapefiles/combined/"</span>,  driver<span class="op">=</span><span class="st">"ESRI Shapefile"</span>, layer <span class="op">=</span> <span class="st">"combined_lores"</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span>, overwrite_layer <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="supplemental-check-of-shapefiles" class="section level1">
-<h1 class="hasAnchor">
-<a href="#supplemental-check-of-shapefiles" class="anchor"></a>Supplemental check of shapefiles</h1>
+<div class="section level2">
+<h2 id="supplemental-check-of-shapefiles">Supplemental check of shapefiles<a class="anchor" aria-label="anchor" href="#supplemental-check-of-shapefiles"></a>
+</h2>
 <p>Fortify data to test for plotting with <code>ggplot2</code>.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">#states_summary_present[match(x = states@data$NAME_1, table = states_summary_present$geopol_unit),]</span>
-<span class="co">#states@data</span>
-
-<span class="co">#states2 &lt;- broom::tidy(states)</span>
-
-<span class="co">#fortifying to make points</span>
-<span class="va">states_gg</span> <span class="op">&lt;-</span> <span class="fu">fortify</span><span class="op">(</span><span class="va">states_lo</span>, region <span class="op">=</span> <span class="st">"NAME_1"</span><span class="op">)</span>
-<span class="co">#&gt; SpP is invalid</span>
-<span class="va">states_gg</span> <span class="op">&lt;-</span> <span class="fu">left_join</span><span class="op">(</span><span class="va">states_gg</span>, <span class="va">states_summary_present_ensemble</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"id"</span> <span class="op">=</span> <span class="st">"geopol_unit"</span><span class="op">)</span><span class="op">)</span>
-
-<span class="co">#try with all</span>
-<span class="co">#combined_gg &lt;- fortify(combined_lo, region = "NAME_1")</span>
-<span class="co">#combined_gg &lt;- left_join(combined_gg, comb_lo, by = c("id" = "geopol_unit"))</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co">#states_summary_present[match(x = states@data$NAME_1, table = states_summary_present$geopol_unit),]</span></span>
+<span><span class="co">#states@data</span></span>
+<span></span>
+<span><span class="co">#states2 &lt;- broom::tidy(states)</span></span>
+<span></span>
+<span><span class="co">#fortifying to make points</span></span>
+<span><span class="va">states_gg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/fortify.html" class="external-link">fortify</a></span><span class="op">(</span><span class="va">states_lo</span>, region <span class="op">=</span> <span class="st">"NAME_1"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; SpP is invalid</span></span>
+<span><span class="va">states_gg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">states_gg</span>, <span class="va">states_summary_present_ensemble</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"id"</span> <span class="op">=</span> <span class="st">"geopol_unit"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#try with all</span></span>
+<span><span class="co">#combined_gg &lt;- fortify(combined_lo, region = "NAME_1")</span></span>
+<span><span class="co">#combined_gg &lt;- left_join(combined_gg, comb_lo, by = c("id" = "geopol_unit"))</span></span></code></pre></div>
 <p>Try to plot data with <code>ggplot2</code>.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span><span class="va">states_gg</span><span class="op">[</span><span class="op">!</span><span class="va">states_gg</span><span class="op">$</span><span class="va">id</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Alaska"</span>, <span class="st">"Hawaii"</span><span class="op">)</span>,<span class="op">]</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_polygon</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">long</span>, y <span class="op">=</span> <span class="va">lat</span>, group <span class="op">=</span> <span class="va">group</span>, fill <span class="op">=</span> <span class="va">transport</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">coord_quickmap</span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">states_gg</span><span class="op">[</span><span class="op">!</span><span class="va">states_gg</span><span class="op">$</span><span class="va">id</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Alaska"</span>, <span class="st">"Hawaii"</span><span class="op">)</span>,<span class="op">]</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_polygon.html" class="external-link">geom_polygon</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">long</span>, y <span class="op">=</span> <span class="va">lat</span>, group <span class="op">=</span> <span class="va">group</span>, fill <span class="op">=</span> <span class="va">transport</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_map.html" class="external-link">coord_quickmap</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="vignette-040-ee-data_files/figure-html/try%20to%20test%20plot-1.png" width="672"></p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span><span class="va">states_gg</span><span class="op">[</span><span class="op">!</span><span class="va">states_gg</span><span class="op">$</span><span class="va">id</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Alaska"</span>, <span class="st">"Hawaii"</span><span class="op">)</span>,<span class="op">]</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_polygon</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">long</span>, y <span class="op">=</span> <span class="va">lat</span>, group <span class="op">=</span> <span class="va">group</span>, fill <span class="op">=</span> <span class="va">establishment</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">coord_quickmap</span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">states_gg</span><span class="op">[</span><span class="op">!</span><span class="va">states_gg</span><span class="op">$</span><span class="va">id</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Alaska"</span>, <span class="st">"Hawaii"</span><span class="op">)</span>,<span class="op">]</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_polygon.html" class="external-link">geom_polygon</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">long</span>, y <span class="op">=</span> <span class="va">lat</span>, group <span class="op">=</span> <span class="va">group</span>, fill <span class="op">=</span> <span class="va">establishment</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_map.html" class="external-link">coord_quickmap</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="vignette-040-ee-data_files/figure-html/try%20to%20test%20plot-2.png" width="672"></p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span><span class="va">states_gg</span><span class="op">[</span><span class="op">!</span><span class="va">states_gg</span><span class="op">$</span><span class="va">id</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Alaska"</span>, <span class="st">"Hawaii"</span><span class="op">)</span>,<span class="op">]</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_polygon</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">long</span>, y <span class="op">=</span> <span class="va">lat</span>, group <span class="op">=</span> <span class="va">group</span>, fill <span class="op">=</span> <span class="va">impact_wine</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">coord_quickmap</span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">states_gg</span><span class="op">[</span><span class="op">!</span><span class="va">states_gg</span><span class="op">$</span><span class="va">id</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Alaska"</span>, <span class="st">"Hawaii"</span><span class="op">)</span>,<span class="op">]</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_polygon.html" class="external-link">geom_polygon</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">long</span>, y <span class="op">=</span> <span class="va">lat</span>, group <span class="op">=</span> <span class="va">group</span>, fill <span class="op">=</span> <span class="va">impact_wine</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_map.html" class="external-link">coord_quickmap</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="vignette-040-ee-data_files/figure-html/try%20to%20test%20plot-3.png" width="672"></p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span><span class="va">states_gg</span><span class="op">[</span><span class="op">!</span><span class="va">states_gg</span><span class="op">$</span><span class="va">id</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Alaska"</span>, <span class="st">"Hawaii"</span><span class="op">)</span>,<span class="op">]</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_polygon</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">long</span>, y <span class="op">=</span> <span class="va">lat</span>, group <span class="op">=</span> <span class="va">group</span>, fill <span class="op">=</span> <span class="va">impact_grape</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">coord_quickmap</span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">states_gg</span><span class="op">[</span><span class="op">!</span><span class="va">states_gg</span><span class="op">$</span><span class="va">id</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Alaska"</span>, <span class="st">"Hawaii"</span><span class="op">)</span>,<span class="op">]</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_polygon.html" class="external-link">geom_polygon</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">long</span>, y <span class="op">=</span> <span class="va">lat</span>, group <span class="op">=</span> <span class="va">group</span>, fill <span class="op">=</span> <span class="va">impact_grape</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_map.html" class="external-link">coord_quickmap</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="vignette-040-ee-data_files/figure-html/try%20to%20test%20plot-4.png" width="672"></p>
 </div>
-<div id="references" class="section level1 unnumbered">
-<h1 class="hasAnchor">
-<a href="#references" class="anchor"></a>References</h1>
+<div class="section level2">
+<h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+</h2>
 <div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-european_environment_agency_corine_2018" class="csl-entry">
 Agency, European Environment. 2018. <span>“<span>CORINE</span>
 <span>Land</span> <span>Cover</span> — <span>Copernicus</span>
 <span>Land</span> <span>Monitoring</span> <span>Service</span>.”</span>
-Land {Section}. <a href="https://land.copernicus.eu/pan-european/corine-land-cover">https://land.copernicus.eu/pan-european/corine-land-cover</a>.
+Land {Section}. <a href="https://land.copernicus.eu/pan-european/corine-land-cover" class="external-link">https://land.copernicus.eu/pan-european/corine-land-cover</a>.
 </div>
 <div id="ref-us_alcohol_and_tobacco_tax_and_trade_bureau_established_2019" class="csl-entry">
 Bureau, U. S. Alcohol and Tobacco Tax and Trade. 2019.
-<span>“Established <span>AVAs</span>.”</span> <a href="https://www.ttb.gov/wine/established-avas">https://www.ttb.gov/wine/established-avas</a>.
+<span>“Established <span>AVAs</span>.”</span> <a href="https://www.ttb.gov/wine/established-avas" class="external-link">https://www.ttb.gov/wine/established-avas</a>.
 </div>
 <div id="ref-usda_national_agricultural_statistics_service_nass_cropscape_2019" class="csl-entry">
 USDA National Agricultural Statistics Service, NASS. 2019.
 <span>“<span>CropScape</span> - <span>NASS</span> <span>CDL</span>
-<span>Program</span>.”</span> <a href="https://nassgeodata.gmu.edu/CropScape/">https://nassgeodata.gmu.edu/CropScape/</a>.
+<span>Program</span>.”</span> <a href="https://nassgeodata.gmu.edu/CropScape/" class="external-link">https://nassgeodata.gmu.edu/CropScape/</a>.
 </div>
 <div id="ref-wikipedia_httpsenwikipediaorgwikilist_of_wine-producing_regions_2020" class="csl-entry">
 Wikipedia. 2020.
 <span>“Https://En.wikipedia.org/Wiki/<span>List</span>_of_wine-Producing_regions.”</span>
-<a href="https://en.wikipedia.org/w/index.php?title=List_of_wine-producing_regions&amp;oldid=941515058">https://en.wikipedia.org/w/index.php?title=List_of_wine-producing_regions&amp;oldid=941515058</a>.
+<a href="https://en.wikipedia.org/w/index.php?title=List_of_wine-producing_regions&amp;oldid=941515058" class="external-link">https://en.wikipedia.org/w/index.php?title=List_of_wine-producing_regions&amp;oldid=941515058</a>.
 </div>
 </div>
 </div>
@@ -661,11 +675,13 @@ Wikipedia. 2020.
 
 
       <footer><div class="copyright">
-  <p>Developed by Nicholas A. Huron, Jocelyn E. Behm, Matthew R. Helmus.</p>
+  <p></p>
+<p>Developed by Nicholas A. Huron, Jocelyn E. Behm, Matthew R. Helmus.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer>
@@ -673,6 +689,8 @@ Wikipedia. 2020.
 
   
 
+
+  
 
   </body>
 </html>

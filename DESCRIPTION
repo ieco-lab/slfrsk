@@ -50,11 +50,9 @@ Imports:
     stargazer,
     RStoolbox,
     parsedate
-RoxygenNote: 7.1.1
+RoxygenNote: 7.2.0
 Depends: 
     R (>= 3.50)
 Remotes:
   ropensci/scrubr,
-  jasonleebrown/humboldt,
-  ieco-lab/lycordata,
-  ieco-lab/lycormap
+  jasonleebrown/humboldt
