@@ -50,7 +50,7 @@ Imports:
     stargazer,
     RStoolbox,
     parsedate
-RoxygenNote: 7.2.0
+RoxygenNote: 7.1.1
 Depends: 
     R (>= 3.50)
 Remotes:
