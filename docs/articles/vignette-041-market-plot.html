@@ -26,6 +26,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -38,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slfrsk</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.0</span>
       </span>
     </div>
 
@@ -67,11 +69,13 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li class="divider">
-    <li class="dropdown-submenu">
+    </li>
+<li class="dropdown-submenu">
       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Step 1: Estimate Invasion Potentials</a>
       <ul class="dropdown-menu" role="menu">
 <li class="divider">
-        <li>
+        </li>
+<li>
           <a href="../articles/vignette-060-spread-figure.html">Identify Invaded States/Reg. Incidents</a>
         </li>
         <li>
@@ -87,20 +91,23 @@
           <a href="../articles/vignette-011-suitability-models.html">Species Distribution Modeling</a>
         </li>
         <li class="divider">
-      </ul>
+      </li>
+</ul>
 </li>
     <li class="dropdown-submenu">
       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Step 2: Calculate Alignment Correlations</a>
       <ul class="dropdown-menu" role="menu">
 <li class="divider">
-        <li>
+        </li>
+<li>
           <a href="../articles/vignette-030-potentials-maps.html">Invasion Potential Maps</a>
         </li>
         <li class="dropdown-submenu">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Invasion Potential Alignment</a>
           <ul class="dropdown-menu" role="menu">
 <li class="divider">
-            <li>
+            </li>
+<li>
               <a href="../articles/vignette-021-quadrant-plots.html">Published (Max)</a>
             </li>
             <li>
@@ -110,28 +117,33 @@
               <a href="../articles/vignette-027-quadrant-plots-alt-mean.html">Alternate (Mean)</a>
             </li>
             <li class="divider">
-          </ul>
+          </li>
+</ul>
 </li>
         <li class="divider">
-      </ul>
+      </li>
+</ul>
 </li>
     <li class="dropdown-submenu">
       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Step 3: Quantify Paninvasion Risk</a>
       <ul class="dropdown-menu" role="menu">
 <li class="divider">
-        <li>
+        </li>
+<li>
           <a href="../articles/vignette-041-market-plot.html">Paninvasion Risk</a>
         </li>
         <li class="divider">
-      </ul>
+      </li>
+</ul>
 </li>
     <li class="divider">
-  </ul>
+  </li>
+</ul>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/ieco-lab/slfrsk">
+  <a href="https://github.com/ieco-lab/slfrsk" class="external-link">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -146,8 +158,8 @@
 
       
 
-      </header><script src="vignette-041-market-plot_files/header-attrs-2.14/header-attrs.js"></script><script src="vignette-041-market-plot_files/htmlwidgets-1.5.3/htmlwidgets.js"></script><script src="vignette-041-market-plot_files/plotly-binding-4.9.3/plotly.js"></script><script src="vignette-041-market-plot_files/typedarray-0.1/typedarray.min.js"></script><script src="vignette-041-market-plot_files/jquery-3.5.1/jquery.min.js"></script><link href="vignette-041-market-plot_files/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet">
-<script src="vignette-041-market-plot_files/crosstalk-1.1.1/js/crosstalk.min.js"></script><link href="vignette-041-market-plot_files/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet">
+      </header><script src="vignette-041-market-plot_files/htmlwidgets-1.5.4/htmlwidgets.js"></script><script src="vignette-041-market-plot_files/plotly-binding-4.9.3/plotly.js"></script><script src="vignette-041-market-plot_files/typedarray-0.1/typedarray.min.js"></script><link href="vignette-041-market-plot_files/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet">
+<script src="vignette-041-market-plot_files/crosstalk-1.2.0/js/crosstalk.min.js"></script><link href="vignette-041-market-plot_files/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet">
 <script src="vignette-041-market-plot_files/plotly-main-1.57.1/plotly-latest.min.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
@@ -169,24 +181,24 @@ from a severity model built from the alignment of the three invasion
 potentials (<strong>impact</strong> potential regressed on
 <strong>transport</strong> and <strong>establishment</strong>) to the
 <strong>wine market share</strong> by country.</p>
-<div id="setup" class="section level1">
-<h1 class="hasAnchor">
-<a href="#setup" class="anchor"></a>Setup</h1>
+<div class="section level2">
+<h2 id="setup">Setup<a class="anchor" aria-label="anchor" href="#setup"></a>
+</h2>
 <p>We will first load the required packages to reproduce the published
 market risk figure.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">slfrsk</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/slowkow/ggrepel">ggrepel</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://florianhartig.github.io/DHARMa/">DHARMa</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://plotly-r.com">plotly</a></span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">slfrsk</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/slowkow/ggrepel" class="external-link">ggrepel</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://florianhartig.github.io/DHARMa/" class="external-link">DHARMa</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://plotly-r.com" class="external-link">plotly</a></span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="load-and-summarize-data" class="section level1">
-<h1 class="hasAnchor">
-<a href="#load-and-summarize-data" class="anchor"></a>Load and summarize data</h1>
-<div id="market-size-data" class="section level2">
-<h2 class="hasAnchor">
-<a href="#market-size-data" class="anchor"></a>Market size data</h2>
+<div class="section level2">
+<h2 id="load-and-summarize-data">Load and summarize data<a class="anchor" aria-label="anchor" href="#load-and-summarize-data"></a>
+</h2>
+<div class="section level3">
+<h3 id="market-size-data">Market size data<a class="anchor" aria-label="anchor" href="#market-size-data"></a>
+</h3>
 <p>Next, we read in the <code>countries_market</code> dataset, which
 contains exports of wine by <code>country</code>. The data are in
 thousands of USD (1000’s USD), and so we will need to convert to USD as
@@ -196,113 +208,113 @@ values from 2012–2017.</p>
 <p>We quickly visualize the distribution of these summarized
 <code>market_size</code> data via a histogram:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"countries_market"</span><span class="op">)</span>
-<span class="co">#dim(countries_market)</span>
-
-<span class="co"># http://www.fao.org/faostat/en/#data/TM</span>
-<span class="va">countries_wine_market</span> <span class="op">&lt;-</span> <span class="va">countries_market</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">Year</span> <span class="op">%in%</span> <span class="op">(</span><span class="fl">2012</span><span class="op">:</span><span class="fl">2017</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">Element</span> <span class="op">==</span> <span class="st">"Export Value"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">`Area Code`</span>, <span class="va">Area</span>, <span class="va">Year</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">`Area Code`</span>,    <span class="va">Area</span>, <span class="va">Year</span>, <span class="va">Value</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>market_size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">Value</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span><span class="op">(</span><span class="va">Year</span><span class="op">)</span> <span class="op">%&gt;%</span>
-
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>market_size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span><span class="op">(</span><span class="op">(</span><span class="va">market_size</span><span class="op">*</span><span class="fl">1000</span><span class="op">)</span><span class="op">+</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="co"># units are in 1000s of USD</span>
-  <span class="co">#mutate(market_size = (market_size*1000)) %&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>market_size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">market_size</span><span class="op">)</span><span class="op">)</span>  <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span><span class="op">(</span><span class="op">)</span>
-
-<span class="co"># remove all that are zero</span>
-
-<span class="va">countries_wine_market</span><span class="op">$</span><span class="va">market_size</span><span class="op">[</span><span class="va">countries_wine_market</span><span class="op">$</span><span class="va">market_size</span><span class="op">==</span><span class="fl">0</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NA</span>
-<span class="co">#countries_wine_market$market_size &lt;- round(countries_wine_market$market_size)</span>
-
-<span class="co">#dim(countries_wine_market)</span>
-<span class="co">#countries_wine_market</span>
-
-<span class="fu">qplot</span><span class="op">(</span><span class="op">(</span><span class="va">countries_wine_market</span><span class="op">$</span><span class="va">market_size</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"countries_market"</span><span class="op">)</span></span>
+<span><span class="co">#dim(countries_market)</span></span>
+<span></span>
+<span><span class="co"># http://www.fao.org/faostat/en/#data/TM</span></span>
+<span><span class="va">countries_wine_market</span> <span class="op">&lt;-</span> <span class="va">countries_market</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Year</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="op">(</span><span class="fl">2012</span><span class="op">:</span><span class="fl">2017</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Element</span> <span class="op">==</span> <span class="st">"Export Value"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">`Area Code`</span>, <span class="va">Area</span>, <span class="va">Year</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">`Area Code`</span>,    <span class="va">Area</span>, <span class="va">Year</span>, <span class="va">Value</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>market_size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">Value</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">ungroup</a></span><span class="op">(</span><span class="va">Year</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>market_size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log10</a></span><span class="op">(</span><span class="op">(</span><span class="va">market_size</span><span class="op">*</span><span class="fl">1000</span><span class="op">)</span><span class="op">+</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="co"># units are in 1000s of USD</span></span>
+<span>  <span class="co">#mutate(market_size = (market_size*1000)) %&gt;%</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>market_size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">market_size</span><span class="op">)</span><span class="op">)</span>  <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">ungroup</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># remove all that are zero</span></span>
+<span></span>
+<span><span class="va">countries_wine_market</span><span class="op">$</span><span class="va">market_size</span><span class="op">[</span><span class="va">countries_wine_market</span><span class="op">$</span><span class="va">market_size</span><span class="op">==</span><span class="fl">0</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NA</span></span>
+<span><span class="co">#countries_wine_market$market_size &lt;- round(countries_wine_market$market_size)</span></span>
+<span></span>
+<span><span class="co">#dim(countries_wine_market)</span></span>
+<span><span class="co">#countries_wine_market</span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/qplot.html" class="external-link">qplot</a></span><span class="op">(</span><span class="op">(</span><span class="va">countries_wine_market</span><span class="op">$</span><span class="va">market_size</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="vignette-041-market-plot_files/figure-html/FAO%20wine%20market-1.png" width="672"></p>
 <p>From here, we add an <code>ID</code> column that matches the other
 use of this label in the other package vignettes. Then, we isolate
 <code>ID</code> and <code>market_size</code> for risk analyses.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">#add the ID column for joining and plotting later</span>
-<span class="va">countries_wine_market</span> <span class="op">&lt;-</span> <span class="va">countries_wine_market</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>ID <span class="op">=</span> <span class="va">Area</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">ID</span>, <span class="va">market_size</span><span class="op">)</span> </code></pre></div>
+<code class="sourceCode R"><span><span class="co">#add the ID column for joining and plotting later</span></span>
+<span><span class="va">countries_wine_market</span> <span class="op">&lt;-</span> <span class="va">countries_wine_market</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>ID <span class="op">=</span> <span class="va">Area</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">ID</span>, <span class="va">market_size</span><span class="op">)</span> </span></code></pre></div>
 </div>
-<div id="market-summary-data" class="section level2">
-<h2 class="hasAnchor">
-<a href="#market-summary-data" class="anchor"></a>Market summary data</h2>
+<div class="section level3">
+<h3 id="market-summary-data">Market summary data<a class="anchor" aria-label="anchor" href="#market-summary-data"></a>
+</h3>
 <p>To merge the new <code>market_size</code> dat with our existing
-<code>countries</code> data, we use <code>left_join()</code> to merge
+<code>countries</code> data, we use <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join()</a></code> to merge
 the <code>market</code> and <code>summary</code> data by
 <code>ID</code>. We then remove the countries from the dataset that
 already have <strong>SLF</strong>. Note: we use a modified version of
-<code><a href="https://rdrr.io/r/base/match.html">%in%</a></code> and <code><a href="https://rdrr.io/r/base/funprog.html">Negate()</a></code> to create
+<code>%in%</code> and <code><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Negate()</a></code> to create
 <code>%notin%</code> for removing countries.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">#data("countries_summary_present")</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"countries_summary_present_ensemble"</span><span class="op">)</span>
-<span class="va">countries_summary_present_ensemble</span> <span class="op">&lt;-</span> <span class="va">countries_summary_present_ensemble</span> <span class="op">%&gt;%</span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="va">ID</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Antarctica"</span>, <span class="st">"Monaco"</span>, <span class="st">"Norfolk Island"</span>, <span class="st">"Spratly Islands"</span><span class="op">)</span><span class="op">)</span>
-
-<span class="co">#remove non-focal countries</span>
-<span class="va">rems</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Akrotiri and Dhekelia"</span>
-            ,<span class="st">"?land"</span>
-            ,<span class="st">"American Samoa"</span>
-            ,<span class="st">"Bouvet Island"</span>
-            ,<span class="st">"British Indian Ocean Territory"</span>
-            ,<span class="st">"Caspian Sea"</span>
-            ,<span class="st">"Christmas Island"</span>
-            ,<span class="st">"Clipperton Island"</span>
-            ,<span class="st">"Cocos Islands"</span>
-            ,<span class="st">"Falkland Islands"</span>
-            ,<span class="st">"Faroe Islands"</span>
-            ,<span class="st">"French Southern Territories"</span>
-            ,<span class="st">"Heard Island and McDonald Islands"</span>
-            ,<span class="st">"Mayotte"</span>
-            ,<span class="st">"Northern Mariana Islands"</span>
-            ,<span class="st">"Paracel Islands"</span>
-            ,<span class="st">"Pitcairn Islands"</span>
-            ,<span class="st">"Saint Pierre and Miquelon"</span>
-            ,<span class="st">"Tokelau"</span>
-            ,<span class="st">"United States Minor Outlying Islands"</span>
-            ,<span class="st">"Wallis and Futuna"</span>
-            ,<span class="st">"United States"</span>
-            ,<span class="st">"Philippines"</span><span class="op">)</span>
-
-<span class="va">countries_summary_present_ensemble</span> <span class="op">&lt;-</span> <span class="va">countries_summary_present_ensemble</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="va">ID</span> <span class="op">%in%</span> <span class="va">rems</span><span class="op">)</span>
-
-
-<span class="co">#dim(countries_summary_future)</span>
-<span class="va">`%notin%`</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/funprog.html">Negate</a></span><span class="op">(</span><span class="va">`%in%`</span><span class="op">)</span>
-
-<span class="co"># filter(countries_summary_future, status == "native")</span>
-
-<span class="va">countries_sev_market</span> <span class="op">&lt;-</span> <span class="va">countries_summary_present_ensemble</span> <span class="op">%&gt;%</span> 
-  <span class="fu">left_join</span><span class="op">(</span><span class="va">countries_wine_market</span>, by <span class="op">=</span> <span class="st">"ID"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">ID</span> <span class="op">%notin%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"United States"</span>, 
-                      <span class="st">"China"</span>, 
-                      <span class="st">"India"</span>, 
-                      <span class="st">"Taiwan"</span>, 
-                      <span class="st">"Japan"</span>, 
-                      <span class="st">"South Korea"</span>, 
-                      <span class="st">"Vietnam"</span><span class="op">)</span><span class="op">)</span><span class="co">#%&gt;% </span>
-
-<span class="co">#########</span>
-<span class="co"># - Use this code to check to make sure that each country only has one row</span>
-<span class="co"># dim(countries_sev_market)</span>
-<span class="co"># setdiff(countries_sev_market$ID,countries_summary_future$ID)</span>
-<span class="co"># setdiff(countries_summary_future$ID,countries_sev_market$ID)</span>
-<span class="co"># table(countries_sev_market$ID)[table(countries_sev_market$ID)&gt;1]</span>
-<span class="co"># table(countries_summary_future$ID)[table(countries_summary_future$ID)&gt;1]</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co">#data("countries_summary_present")</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"countries_summary_present_ensemble"</span><span class="op">)</span></span>
+<span><span class="va">countries_summary_present_ensemble</span> <span class="op">&lt;-</span> <span class="va">countries_summary_present_ensemble</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="va">ID</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Antarctica"</span>, <span class="st">"Monaco"</span>, <span class="st">"Norfolk Island"</span>, <span class="st">"Spratly Islands"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#remove non-focal countries</span></span>
+<span><span class="va">rems</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Akrotiri and Dhekelia"</span></span>
+<span>            ,<span class="st">"?land"</span></span>
+<span>            ,<span class="st">"American Samoa"</span></span>
+<span>            ,<span class="st">"Bouvet Island"</span></span>
+<span>            ,<span class="st">"British Indian Ocean Territory"</span></span>
+<span>            ,<span class="st">"Caspian Sea"</span></span>
+<span>            ,<span class="st">"Christmas Island"</span></span>
+<span>            ,<span class="st">"Clipperton Island"</span></span>
+<span>            ,<span class="st">"Cocos Islands"</span></span>
+<span>            ,<span class="st">"Falkland Islands"</span></span>
+<span>            ,<span class="st">"Faroe Islands"</span></span>
+<span>            ,<span class="st">"French Southern Territories"</span></span>
+<span>            ,<span class="st">"Heard Island and McDonald Islands"</span></span>
+<span>            ,<span class="st">"Mayotte"</span></span>
+<span>            ,<span class="st">"Northern Mariana Islands"</span></span>
+<span>            ,<span class="st">"Paracel Islands"</span></span>
+<span>            ,<span class="st">"Pitcairn Islands"</span></span>
+<span>            ,<span class="st">"Saint Pierre and Miquelon"</span></span>
+<span>            ,<span class="st">"Tokelau"</span></span>
+<span>            ,<span class="st">"United States Minor Outlying Islands"</span></span>
+<span>            ,<span class="st">"Wallis and Futuna"</span></span>
+<span>            ,<span class="st">"United States"</span></span>
+<span>            ,<span class="st">"Philippines"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">countries_summary_present_ensemble</span> <span class="op">&lt;-</span> <span class="va">countries_summary_present_ensemble</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="va">ID</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">rems</span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="co">#dim(countries_summary_future)</span></span>
+<span><span class="va">`%notin%`</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Negate</a></span><span class="op">(</span><span class="va">`%in%`</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># filter(countries_summary_future, status == "native")</span></span>
+<span></span>
+<span><span class="va">countries_sev_market</span> <span class="op">&lt;-</span> <span class="va">countries_summary_present_ensemble</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">countries_wine_market</span>, by <span class="op">=</span> <span class="st">"ID"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">ID</span> <span class="op">%notin%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"United States"</span>, </span>
+<span>                      <span class="st">"China"</span>, </span>
+<span>                      <span class="st">"India"</span>, </span>
+<span>                      <span class="st">"Taiwan"</span>, </span>
+<span>                      <span class="st">"Japan"</span>, </span>
+<span>                      <span class="st">"South Korea"</span>, </span>
+<span>                      <span class="st">"Vietnam"</span><span class="op">)</span><span class="op">)</span><span class="co">#%&gt;% </span></span>
+<span></span>
+<span><span class="co">#########</span></span>
+<span><span class="co"># - Use this code to check to make sure that each country only has one row</span></span>
+<span><span class="co"># dim(countries_sev_market)</span></span>
+<span><span class="co"># setdiff(countries_sev_market$ID,countries_summary_future$ID)</span></span>
+<span><span class="co"># setdiff(countries_summary_future$ID,countries_sev_market$ID)</span></span>
+<span><span class="co"># table(countries_sev_market$ID)[table(countries_sev_market$ID)&gt;1]</span></span>
+<span><span class="co"># table(countries_summary_future$ID)[table(countries_summary_future$ID)&gt;1]</span></span></code></pre></div>
 </div>
 </div>
-<div id="build-and-check-model" class="section level1">
-<h1 class="hasAnchor">
-<a href="#build-and-check-model" class="anchor"></a>Build and check model</h1>
+<div class="section level2">
+<h2 id="build-and-check-model">Build and check model<a class="anchor" aria-label="anchor" href="#build-and-check-model"></a>
+</h2>
 <p>From here, we now can build (or rebuild, technically,
 <code>vignette-021-quadrant-plots</code> does this first part as well)
 the severity model (<code>sev_mod</code>). This model is a linear
@@ -323,290 +335,290 @@ conducted diagnostics as for <code>sev_mod</code>. We then evaluated the
 unscaled and scaled correlations between <code>market_size</code> and
 <code>sev</code> for countries, resulting in a risk of <span class="math inline">\(8\)</span> based on a scale of <span class="math inline">\([1,10]\)</span>.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">sev_mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">log10_avg_prod</span> <span class="op">~</span> <span class="va">log10_avg_infected_mass</span> <span class="op">+</span> <span class="va">grand_mean_max</span>, 
-               data <span class="op">=</span> <span class="va">countries_sev_market</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/stats/cor.test.html">cor.test</a></span><span class="op">(</span><span class="va">countries_sev_market</span><span class="op">$</span><span class="va">log10_avg_prod</span>, <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">sev_mod</span><span class="op">)</span>, method <span class="op">=</span> <span class="st">"spearman"</span><span class="op">)</span>
-<span class="co">#&gt; Warning in cor.test.default(countries_sev_market$log10_avg_prod,</span>
-<span class="co">#&gt; predict(sev_mod), : Cannot compute exact p-value with ties</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;  Spearman's rank correlation rho</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; data:  countries_sev_market$log10_avg_prod and predict(sev_mod)</span>
-<span class="co">#&gt; S = 605845, p-value &lt; 2.2e-16</span>
-<span class="co">#&gt; alternative hypothesis: true rho is not equal to 0</span>
-<span class="co">#&gt; sample estimates:</span>
-<span class="co">#&gt;       rho </span>
-<span class="co">#&gt; 0.6722015</span>
-
-<span class="co">## diagnostics</span>
-<span class="co"># fit is good for the multivariate correlation because there is no dispersion, but do not use this model for prediction (which I do not know why you would)</span>
-<span class="va">simulationOutput_r</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/DHARMa/man/simulateResiduals.html">simulateResiduals</a></span><span class="op">(</span>fittedModel <span class="op">=</span> <span class="va">sev_mod</span>, plot <span class="op">=</span> <span class="cn">T</span><span class="op">)</span> </code></pre></div>
+<code class="sourceCode R"><span><span class="va">sev_mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">log10_avg_prod</span> <span class="op">~</span> <span class="va">log10_avg_infected_mass</span> <span class="op">+</span> <span class="va">grand_mean_max</span>, </span>
+<span>               data <span class="op">=</span> <span class="va">countries_sev_market</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/cor.test.html" class="external-link">cor.test</a></span><span class="op">(</span><span class="va">countries_sev_market</span><span class="op">$</span><span class="va">log10_avg_prod</span>, <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">sev_mod</span><span class="op">)</span>, method <span class="op">=</span> <span class="st">"spearman"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning in cor.test.default(countries_sev_market$log10_avg_prod,</span></span>
+<span><span class="co">#&gt; predict(sev_mod), : Cannot compute exact p-value with ties</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;  Spearman's rank correlation rho</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; data:  countries_sev_market$log10_avg_prod and predict(sev_mod)</span></span>
+<span><span class="co">#&gt; S = 605845, p-value &lt; 2.2e-16</span></span>
+<span><span class="co">#&gt; alternative hypothesis: true rho is not equal to 0</span></span>
+<span><span class="co">#&gt; sample estimates:</span></span>
+<span><span class="co">#&gt;       rho </span></span>
+<span><span class="co">#&gt; 0.6722015</span></span>
+<span></span>
+<span><span class="co">## diagnostics</span></span>
+<span><span class="co"># fit is good for the multivariate correlation because there is no dispersion, but do not use this model for prediction (which I do not know why you would)</span></span>
+<span><span class="va">simulationOutput_r</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/DHARMa/man/simulateResiduals.html" class="external-link">simulateResiduals</a></span><span class="op">(</span>fittedModel <span class="op">=</span> <span class="va">sev_mod</span>, plot <span class="op">=</span> <span class="cn">T</span><span class="op">)</span> </span></code></pre></div>
 <p><img src="vignette-041-market-plot_files/figure-html/unnamed-chunk-2-1.png" width="672"></p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/DHARMa/man/testDispersion.html">testDispersion</a></span><span class="op">(</span><span class="va">simulationOutput_r</span><span class="op">)</span> </code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/DHARMa/man/testDispersion.html" class="external-link">testDispersion</a></span><span class="op">(</span><span class="va">simulationOutput_r</span><span class="op">)</span> </span></code></pre></div>
 <p><img src="vignette-041-market-plot_files/figure-html/unnamed-chunk-2-2.png" width="672"></p>
-<pre><code><a href="https://rdrr.io/r/base/summary.html">#&gt; 
-#&gt;  DHARMa nonparametric dispersion test via sd of residuals fitted vs.
-#&gt;  simulated
-#&gt; 
-#&gt; data:  simulationOutput
-#&gt; dispersion = 0.99972, p-value = 0.992
-#&gt; alternative hypothesis: two.sided
-summary(sev_mod)
-#&gt; 
-#&gt; Call:
-#&gt; lm(formula = log10_avg_prod ~ log10_avg_infected_mass + grand_mean_max, 
-#&gt;     data = countries_sev_market)
-#&gt; 
-#&gt; Residuals:
-#&gt;     Min      1Q  Median      3Q     Max 
-#&gt; -4.4760 -1.0949 -0.0788  1.1946  4.8336 
-#&gt; 
-#&gt; Coefficients:
-#&gt;                         Estimate Std. Error t value Pr(&gt;|t|)    
-#&gt; (Intercept)             -1.20443    0.26085  -4.617 6.61e-06 ***
-#&gt; log10_avg_infected_mass  0.36455    0.06576   5.544 8.44e-08 ***
-#&gt; grand_mean_max           4.44430    0.44357  10.019  &lt; 2e-16 ***
-#&gt; ---
-#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-#&gt; 
-#&gt; Residual standard error: 1.732 on 220 degrees of freedom
-#&gt; Multiple R-squared:  0.4788, Adjusted R-squared:  0.4741 
-#&gt; F-statistic: 101.1 on 2 and 220 DF,  p-value: &lt; 2.2e-16
-
-countries_sev_market &lt;- countries_sev_market %&gt;%
-  mutate(sev = scales::rescale(predict(sev_mod), to = c(1,10)))
-
-shock_mod &lt;- lm(market_size ~ sev, data = countries_sev_market)
-summary(shock_mod)
-#&gt; 
-#&gt; Call:
-#&gt; lm(formula = market_size ~ sev, data = countries_sev_market)
-#&gt; 
-#&gt; Residuals:
-#&gt;     Min      1Q  Median      3Q     Max 
-#&gt; -4.6444 -0.9585  0.2983  1.2643  4.3247 
-#&gt; 
-#&gt; Coefficients:
-#&gt;             Estimate Std. Error t value Pr(&gt;|t|)    
-#&gt; (Intercept)   1.6186     0.3377   4.793  3.5e-06 ***
-#&gt; sev           0.6534     0.0568  11.504  &lt; 2e-16 ***
-#&gt; ---
-#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-#&gt; 
-#&gt; Residual standard error: 1.739 on 174 degrees of freedom
-#&gt;   (47 observations deleted due to missingness)
-#&gt; Multiple R-squared:  0.432,  Adjusted R-squared:  0.4287 
-#&gt; F-statistic: 132.3 on 1 and 174 DF,  p-value: &lt; 2.2e-16
-
-## diagnostics
-# severity estimate model fit is good and no major issues in heteroskedasticity. But I am not certain why you want this model anyways, a correlation is better because it is easily scaled between 1-10 
-simulationOutput &lt;- simulateResiduals(fittedModel = shock_mod, plot = T) </a></code></pre>
+<pre><code><span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;  DHARMa nonparametric dispersion test via sd of residuals fitted vs.</span></span>
+<span><span class="co">#&gt;  simulated</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; data:  simulationOutput</span></span>
+<span><span class="co">#&gt; dispersion = 0.99972, p-value = 0.992</span></span>
+<span><span class="co">#&gt; alternative hypothesis: two.sided</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">sev_mod</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Call:</span></span>
+<span><span class="co">#&gt; lm(formula = log10_avg_prod ~ log10_avg_infected_mass + grand_mean_max, </span></span>
+<span><span class="co">#&gt;     data = countries_sev_market)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Residuals:</span></span>
+<span><span class="co">#&gt;     Min      1Q  Median      3Q     Max </span></span>
+<span><span class="co">#&gt; -4.4760 -1.0949 -0.0788  1.1946  4.8336 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Coefficients:</span></span>
+<span><span class="co">#&gt;                         Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span><span class="co">#&gt; (Intercept)             -1.20443    0.26085  -4.617 6.61e-06 ***</span></span>
+<span><span class="co">#&gt; log10_avg_infected_mass  0.36455    0.06576   5.544 8.44e-08 ***</span></span>
+<span><span class="co">#&gt; grand_mean_max           4.44430    0.44357  10.019  &lt; 2e-16 ***</span></span>
+<span><span class="co">#&gt; ---</span></span>
+<span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Residual standard error: 1.732 on 220 degrees of freedom</span></span>
+<span><span class="co">#&gt; Multiple R-squared:  0.4788, Adjusted R-squared:  0.4741 </span></span>
+<span><span class="co">#&gt; F-statistic: 101.1 on 2 and 220 DF,  p-value: &lt; 2.2e-16</span></span>
+<span></span>
+<span><span class="va">countries_sev_market</span> <span class="op">&lt;-</span> <span class="va">countries_sev_market</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>sev <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/rescale.html" class="external-link">rescale</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">sev_mod</span><span class="op">)</span>, to <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">10</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">shock_mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">market_size</span> <span class="op">~</span> <span class="va">sev</span>, data <span class="op">=</span> <span class="va">countries_sev_market</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">shock_mod</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Call:</span></span>
+<span><span class="co">#&gt; lm(formula = market_size ~ sev, data = countries_sev_market)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Residuals:</span></span>
+<span><span class="co">#&gt;     Min      1Q  Median      3Q     Max </span></span>
+<span><span class="co">#&gt; -3.9202 -0.7753  0.0795  0.8965  3.6390 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Coefficients:</span></span>
+<span><span class="co">#&gt;             Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span><span class="co">#&gt; (Intercept)  2.46385    0.36445    6.76 8.75e-10 ***</span></span>
+<span><span class="co">#&gt; sev          0.61487    0.05503   11.17  &lt; 2e-16 ***</span></span>
+<span><span class="co">#&gt; ---</span></span>
+<span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Residual standard error: 1.249 on 102 degrees of freedom</span></span>
+<span><span class="co">#&gt;   (119 observations deleted due to missingness)</span></span>
+<span><span class="co">#&gt; Multiple R-squared:  0.5503, Adjusted R-squared:  0.5459 </span></span>
+<span><span class="co">#&gt; F-statistic: 124.8 on 1 and 102 DF,  p-value: &lt; 2.2e-16</span></span>
+<span></span>
+<span><span class="co">## diagnostics</span></span>
+<span><span class="co"># severity estimate model fit is good and no major issues in heteroskedasticity. But I am not certain why you want this model anyways, a correlation is better because it is easily scaled between 1-10 </span></span>
+<span><span class="va">simulationOutput</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/DHARMa/man/simulateResiduals.html" class="external-link">simulateResiduals</a></span><span class="op">(</span>fittedModel <span class="op">=</span> <span class="va">shock_mod</span>, plot <span class="op">=</span> <span class="cn">T</span><span class="op">)</span> </span></code></pre>
 <p><img src="vignette-041-market-plot_files/figure-html/unnamed-chunk-2-3.png" width="672"></p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/DHARMa/man/testDispersion.html">testDispersion</a></span><span class="op">(</span><span class="va">simulationOutput</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/DHARMa/man/testDispersion.html" class="external-link">testDispersion</a></span><span class="op">(</span><span class="va">simulationOutput</span><span class="op">)</span></span></code></pre></div>
 <p><img src="vignette-041-market-plot_files/figure-html/unnamed-chunk-2-4.png" width="672"></p>
-<pre><code><a href="https://rdrr.io/r/stats/cor.test.html">#&gt; 
-#&gt;  DHARMa nonparametric dispersion test via sd of residuals fitted vs.
-#&gt;  simulated
-#&gt; 
-#&gt; data:  simulationOutput
-#&gt; dispersion = 1.0014, p-value = 0.92
-#&gt; alternative hypothesis: two.sided
-
-cor.test(countries_sev_market$market_size, countries_sev_market$sev)
-#&gt; 
-#&gt;  Pearson's product-moment correlation
-#&gt; 
-#&gt; data:  countries_sev_market$market_size and countries_sev_market$sev
-#&gt; t = 11.504, df = 174, p-value &lt; 2.2e-16
-#&gt; alternative hypothesis: true correlation is not equal to 0
-#&gt; 95 percent confidence interval:
-#&gt;  0.5642113 0.7338484
-#&gt; sample estimates:
-#&gt;       cor 
-#&gt; 0.6572763
-(shock_cor &lt;- cor(countries_sev_market$market_size, 
-                 countries_sev_market$sev,
-                 use = "complete.obs") %&gt;% 
-  scales::rescale(to = c(1,10), from = c(-1,1)) %&gt;%
-  round())
-#&gt; [1] 8</a></code></pre>
+<pre><code><span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;  DHARMa nonparametric dispersion test via sd of residuals fitted vs.</span></span>
+<span><span class="co">#&gt;  simulated</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; data:  simulationOutput</span></span>
+<span><span class="co">#&gt; dispersion = 1.0013, p-value = 0.952</span></span>
+<span><span class="co">#&gt; alternative hypothesis: two.sided</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/cor.test.html" class="external-link">cor.test</a></span><span class="op">(</span><span class="va">countries_sev_market</span><span class="op">$</span><span class="va">market_size</span>, <span class="va">countries_sev_market</span><span class="op">$</span><span class="va">sev</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;  Pearson's product-moment correlation</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; data:  countries_sev_market$market_size and countries_sev_market$sev</span></span>
+<span><span class="co">#&gt; t = 11.173, df = 102, p-value &lt; 2.2e-16</span></span>
+<span><span class="co">#&gt; alternative hypothesis: true correlation is not equal to 0</span></span>
+<span><span class="co">#&gt; 95 percent confidence interval:</span></span>
+<span><span class="co">#&gt;  0.640816 0.817623</span></span>
+<span><span class="co">#&gt; sample estimates:</span></span>
+<span><span class="co">#&gt;       cor </span></span>
+<span><span class="co">#&gt; 0.7418499</span></span>
+<span><span class="op">(</span><span class="va">shock_cor</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cor</a></span><span class="op">(</span><span class="va">countries_sev_market</span><span class="op">$</span><span class="va">market_size</span>, </span>
+<span>                 <span class="va">countries_sev_market</span><span class="op">$</span><span class="va">sev</span>,</span>
+<span>                 use <span class="op">=</span> <span class="st">"complete.obs"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/rescale.html" class="external-link">rescale</a></span><span class="op">(</span>to <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">10</span><span class="op">)</span>, from <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 9</span></span></code></pre>
 </div>
-<div id="plotting-risk-vs-market-scatter" class="section level1">
-<h1 class="hasAnchor">
-<a href="#plotting-risk-vs-market-scatter" class="anchor"></a>Plotting risk vs market scatter</h1>
+<div class="section level2">
+<h2 id="plotting-risk-vs-market-scatter">Plotting risk vs market scatter<a class="anchor" aria-label="anchor" href="#plotting-risk-vs-market-scatter"></a>
+</h2>
 <p>With the predicted <strong>risk</strong>, we were able plot the
 scaled <code>sev</code> and <code>market_size</code>, resulting in the
 published risk of <strong>SLF</strong> to shock the global wine market
 plot.</p>
-<div id="static-plot" class="section level2">
-<h2 class="hasAnchor">
-<a href="#static-plot" class="anchor"></a>Static plot</h2>
+<div class="section level3">
+<h3 id="static-plot">Static plot<a class="anchor" aria-label="anchor" href="#static-plot"></a>
+</h3>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">market_scatter</span> <span class="op">&lt;-</span> <span class="va">countries_sev_market</span> <span class="op">%&gt;%</span>
-  
-  <span class="fu">ggplot</span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="op">(</span><span class="va">sev</span><span class="op">)</span>, 
-                       y <span class="op">=</span> <span class="op">(</span><span class="va">market_size</span><span class="op">)</span>, 
-                       size <span class="op">=</span> <span class="va">avg_wine</span>, 
-                       fill <span class="op">=</span> <span class="va">wine</span><span class="op">)</span>
-         <span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">geom_abline</span><span class="op">(</span>slope <span class="op">=</span> <span class="fl">1</span>, intercept <span class="op">=</span> <span class="fl">0</span>, lty <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_abline</span><span class="op">(</span>slope <span class="op">=</span> <span class="fl">1</span>, intercept <span class="op">=</span> <span class="fl">5</span>, lty <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_abline</span><span class="op">(</span>slope <span class="op">=</span> <span class="fl">1</span>, intercept <span class="op">=</span> <span class="op">-</span><span class="fl">5</span>, lty <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span>
-
-  <span class="fu">ggtitle</span><span class="op">(</span>label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="st">'Spotted Lanternfly Paninvasion Risk ='</span>,
-                        <span class="va">shock_cor</span>,<span class="st">'of 10 (P&lt;0.001)'</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_point</span><span class="op">(</span>pch <span class="op">=</span> <span class="fl">21</span><span class="op">)</span> <span class="op">+</span> 
-     <span class="fu">scale_x_continuous</span><span class="op">(</span>
-    name <span class="op">=</span>  <span class="fu"><a href="https://rdrr.io/r/base/substitute.html">substitute</a></span><span class="op">(</span>expr <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="st">'Spotted Lanternfly ('</span>,<span class="fu"><a href="https://rdrr.io/r/grDevices/plotmath.html">italic</a></span><span class="op">(</span><span class="st">"Lycorma delicatula"</span><span class="op">)</span>,<span class="st">') Invasion Risk'</span><span class="op">)</span><span class="op">)</span>, 
-    breaks <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, 
-    limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">10</span><span class="op">)</span>
-    <span class="op">)</span> <span class="op">+</span>
-  <span class="fu">scale_y_continuous</span><span class="op">(</span><span class="st">"Wine Export Market Size, log10 USD"</span>, 
-                     breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">10</span>,<span class="fl">1</span><span class="op">)</span>, 
-                     limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">10</span><span class="op">)</span>
-                     <span class="op">)</span> <span class="op">+</span>
-  <span class="fu">scale_size_continuous</span><span class="op">(</span>
-        <span class="co">#values = c(0,),</span>
-       name <span class="op">=</span> <span class="st">"Wine Production"</span>,<span class="co"># "Wine Impact Potential",</span>
-       <span class="co"># labels = c("0 t", "1.0M t", "2.0M t", "3.0M t", "4.0M t")</span>
-        labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"0 t"</span>, <span class="st">"1E6 t"</span>, <span class="st">"2E6 t"</span>, <span class="st">"3E6 t"</span>, <span class="st">"4E6 t"</span><span class="op">)</span>
-
-      <span class="op">)</span> <span class="op">+</span>
- <span class="co"># scale_fill_discrete(guide = FALSE) +</span>
-   <span class="fu">scale_fill_manual</span><span class="op">(</span> 
-         values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"no"</span> <span class="op">=</span> <span class="st">"#ffffff"</span>, <span class="st">"yes"</span> <span class="op">=</span> <span class="st">"#C77CFF"</span><span class="op">)</span>,
-         name <span class="op">=</span> <span class="st">""</span>,<span class="co"># "Wine Impact Potential",</span>
-         labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"wine producer"</span>, <span class="st">""</span><span class="op">)</span>
-       <span class="op">)</span> <span class="op">+</span>
-      <span class="fu">theme</span><span class="op">(</span>
-        panel.grid.major <span class="op">=</span> <span class="fu">element_line</span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"#f0f0f0"</span><span class="op">)</span>,
-        panel.grid.minor <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span>,
-        <span class="co">#panel.grid.major = element_blank(),</span>
-        <span class="co">#panel.border = element_rect(colour = "black", fill=NA, size=1),</span>
-        axis.line <span class="op">=</span> <span class="fu">element_line</span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span>,
-        <span class="co">#legend.position = c(0.7, 0.25),</span>
-        <span class="co">#legend.position = "bottom",</span>
-        panel.background <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span>,
-        plot.background <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span>,
-        <span class="co">#legend.background = element_rect(colour = 'black', </span>
-        <span class="co">#                                 fill = 'white', </span>
-        <span class="co">#                                 linetype='solid'),</span>
-        axis.text <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>size <span class="op">=</span> <span class="fu">rel</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span>,
-        axis.title.x <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>hjust <span class="op">=</span> <span class="fl">.4</span><span class="op">)</span>,
-        axis.title.y <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>hjust <span class="op">=</span> <span class="fl">.35</span><span class="op">)</span>,
-        legend.title <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>face <span class="op">=</span> <span class="st">"plain"</span><span class="op">)</span>,
-        legend.key.size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">0.2</span>, <span class="st">"cm"</span><span class="op">)</span>,
-        legend.key <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span>,
-        <span class="co">#plot.margin = unit(c(hh, -5, hh, hh), units = "line"),</span>
-        <span class="co">#axis.title = element_text(size = rel(1.3))</span>
-      <span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/ggrepel/man/geom_text_repel.html">geom_text_repel</a></span><span class="op">(</span><span class="co">#data = select(countries_sev_market,</span>
-                      <span class="fu">aes</span><span class="op">(</span><span class="co">#x = x_to_plot, </span>
-                          <span class="co">#y = y_to_plot, </span>
-                          label <span class="op">=</span> <span class="va">ID</span><span class="op">)</span>,
-                      <span class="co">#label = countries_sev_market$ID,</span>
-                      min.segment.length <span class="op">=</span> <span class="fl">0</span>,
-                      <span class="co">#direction = "x",</span>
-                      <span class="co">#nudge_y = nudge.y,</span>
-                      <span class="co">#nudge_x = nudge.x</span>
-      show.legend <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="co">#+</span>
-  <span class="co">#guides(</span>
-  <span class="co">#      fill = TRUE</span>
-  <span class="co">#      ) #,</span>
-      <span class="co">#   color = guide_legend(</span>
-      <span class="co">#     order = 3,</span>
-      <span class="co">#     override.aes = list(alpha = 1)</span>
-      <span class="co">#   ),</span>
-      <span class="co">#   size = guide_legend(    # Adjust size to edit legend grape production</span>
-      <span class="co">#     order = 2,            # circles.</span>
-      <span class="co">#     override.aes = list(size = c(1,3,6), alpha = 1)</span>
-      <span class="co">#   )</span>
-      <span class="co"># ) </span>
-
-<span class="va">market_scatter</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">market_scatter</span> <span class="op">&lt;-</span> <span class="va">countries_sev_market</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="op">(</span><span class="va">sev</span><span class="op">)</span>, </span>
+<span>                       y <span class="op">=</span> <span class="op">(</span><span class="va">market_size</span><span class="op">)</span>, </span>
+<span>                       size <span class="op">=</span> <span class="va">avg_wine</span>, </span>
+<span>                       fill <span class="op">=</span> <span class="va">wine</span><span class="op">)</span></span>
+<span>         <span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html" class="external-link">geom_abline</a></span><span class="op">(</span>slope <span class="op">=</span> <span class="fl">1</span>, intercept <span class="op">=</span> <span class="fl">0</span>, lty <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html" class="external-link">geom_abline</a></span><span class="op">(</span>slope <span class="op">=</span> <span class="fl">1</span>, intercept <span class="op">=</span> <span class="fl">5</span>, lty <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html" class="external-link">geom_abline</a></span><span class="op">(</span>slope <span class="op">=</span> <span class="fl">1</span>, intercept <span class="op">=</span> <span class="op">-</span><span class="fl">5</span>, lty <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span></span>
+<span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span>label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">'Spotted Lanternfly Paninvasion Risk ='</span>,</span>
+<span>                        <span class="va">shock_cor</span>,<span class="st">'of 10 (P&lt;0.001)'</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>pch <span class="op">=</span> <span class="fl">21</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_x_continuous</a></span><span class="op">(</span></span>
+<span>    name <span class="op">=</span>  <span class="fu"><a href="https://rdrr.io/r/base/substitute.html" class="external-link">substitute</a></span><span class="op">(</span>expr <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">'Spotted Lanternfly ('</span>,<span class="fu">italic</span><span class="op">(</span><span class="st">"Lycorma delicatula"</span><span class="op">)</span>,<span class="st">') Invasion Risk'</span><span class="op">)</span><span class="op">)</span>, </span>
+<span>    breaks <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, </span>
+<span>    limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">10</span><span class="op">)</span></span>
+<span>    <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_continuous</a></span><span class="op">(</span><span class="st">"Wine Export Market Size, log10 USD"</span>, </span>
+<span>                     breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">10</span>,<span class="fl">1</span><span class="op">)</span>, </span>
+<span>                     limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">10</span><span class="op">)</span></span>
+<span>                     <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_size.html" class="external-link">scale_size_continuous</a></span><span class="op">(</span></span>
+<span>        <span class="co">#values = c(0,),</span></span>
+<span>       name <span class="op">=</span> <span class="st">"Wine Production"</span>,<span class="co"># "Wine Impact Potential",</span></span>
+<span>       <span class="co"># labels = c("0 t", "1.0M t", "2.0M t", "3.0M t", "4.0M t")</span></span>
+<span>        labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"0 t"</span>, <span class="st">"1E6 t"</span>, <span class="st">"2E6 t"</span>, <span class="st">"3E6 t"</span>, <span class="st">"4E6 t"</span><span class="op">)</span></span>
+<span></span>
+<span>      <span class="op">)</span> <span class="op">+</span></span>
+<span> <span class="co"># scale_fill_discrete(guide = FALSE) +</span></span>
+<span>   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_fill_manual</a></span><span class="op">(</span> </span>
+<span>         values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"no"</span> <span class="op">=</span> <span class="st">"#ffffff"</span>, <span class="st">"yes"</span> <span class="op">=</span> <span class="st">"#C77CFF"</span><span class="op">)</span>,</span>
+<span>         name <span class="op">=</span> <span class="st">""</span>,<span class="co"># "Wine Impact Potential",</span></span>
+<span>         labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"wine producer"</span>, <span class="st">""</span><span class="op">)</span></span>
+<span>       <span class="op">)</span> <span class="op">+</span></span>
+<span>      <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span></span>
+<span>        panel.grid.major <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_line</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"#f0f0f0"</span><span class="op">)</span>,</span>
+<span>        panel.grid.minor <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>        <span class="co">#panel.grid.major = element_blank(),</span></span>
+<span>        <span class="co">#panel.border = element_rect(colour = "black", fill=NA, size=1),</span></span>
+<span>        axis.line <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_line</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span>,</span>
+<span>        <span class="co">#legend.position = c(0.7, 0.25),</span></span>
+<span>        <span class="co">#legend.position = "bottom",</span></span>
+<span>        panel.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>        plot.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>        <span class="co">#legend.background = element_rect(colour = 'black', </span></span>
+<span>        <span class="co">#                                 fill = 'white', </span></span>
+<span>        <span class="co">#                                 linetype='solid'),</span></span>
+<span>        axis.text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">rel</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>        axis.title.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>hjust <span class="op">=</span> <span class="fl">.4</span><span class="op">)</span>,</span>
+<span>        axis.title.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>hjust <span class="op">=</span> <span class="fl">.35</span><span class="op">)</span>,</span>
+<span>        legend.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>face <span class="op">=</span> <span class="st">"plain"</span><span class="op">)</span>,</span>
+<span>        legend.key.size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="fl">0.2</span>, <span class="st">"cm"</span><span class="op">)</span>,</span>
+<span>        legend.key <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>        <span class="co">#plot.margin = unit(c(hh, -5, hh, hh), units = "line"),</span></span>
+<span>        <span class="co">#axis.title = element_text(size = rel(1.3))</span></span>
+<span>      <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/ggrepel/man/geom_text_repel.html" class="external-link">geom_text_repel</a></span><span class="op">(</span><span class="co">#data = select(countries_sev_market,</span></span>
+<span>                      <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="co">#x = x_to_plot, </span></span>
+<span>                          <span class="co">#y = y_to_plot, </span></span>
+<span>                          label <span class="op">=</span> <span class="va">ID</span><span class="op">)</span>,</span>
+<span>                      <span class="co">#label = countries_sev_market$ID,</span></span>
+<span>                      min.segment.length <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>                      <span class="co">#direction = "x",</span></span>
+<span>                      <span class="co">#nudge_y = nudge.y,</span></span>
+<span>                      <span class="co">#nudge_x = nudge.x</span></span>
+<span>      show.legend <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="co">#+</span></span>
+<span>  <span class="co">#guides(</span></span>
+<span>  <span class="co">#      fill = TRUE</span></span>
+<span>  <span class="co">#      ) #,</span></span>
+<span>      <span class="co">#   color = guide_legend(</span></span>
+<span>      <span class="co">#     order = 3,</span></span>
+<span>      <span class="co">#     override.aes = list(alpha = 1)</span></span>
+<span>      <span class="co">#   ),</span></span>
+<span>      <span class="co">#   size = guide_legend(    # Adjust size to edit legend grape production</span></span>
+<span>      <span class="co">#     order = 2,            # circles.</span></span>
+<span>      <span class="co">#     override.aes = list(size = c(1,3,6), alpha = 1)</span></span>
+<span>      <span class="co">#   )</span></span>
+<span>      <span class="co"># ) </span></span>
+<span></span>
+<span><span class="va">market_scatter</span></span></code></pre></div>
 <p><img src="vignette-041-market-plot_files/figure-html/make%20scatter-1.png" width="960"></p>
 </div>
-<div id="interactive-plot" class="section level2">
-<h2 class="hasAnchor">
-<a href="#interactive-plot" class="anchor"></a>Interactive plot</h2>
+<div class="section level3">
+<h3 id="interactive-plot">Interactive plot<a class="anchor" aria-label="anchor" href="#interactive-plot"></a>
+</h3>
 <p>We also provide an interactive version of the risk plot with
 <code>plotly</code>.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">#build ggplot</span>
-<span class="va">p1</span> <span class="op">&lt;-</span> <span class="va">countries_sev_market</span> <span class="op">%&gt;%</span>
-  <span class="fu">mutate_if</span><span class="op">(</span>.predicate <span class="op">=</span> <span class="va">is.numeric</span>, .funs <span class="op">=</span> <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">.</span>, digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-    <span class="fu">ggplot</span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">sev</span>, 
-                       y <span class="op">=</span> <span class="va">market_size</span>, 
-                       size <span class="op">=</span> <span class="va">avg_wine</span>, 
-                       fill <span class="op">=</span> <span class="va">wine</span>
-                       <span class="op">)</span>
-         <span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">geom_abline</span><span class="op">(</span>slope <span class="op">=</span> <span class="fl">1</span>, intercept <span class="op">=</span> <span class="fl">0</span>, lty <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_abline</span><span class="op">(</span>slope <span class="op">=</span> <span class="fl">1</span>, intercept <span class="op">=</span> <span class="fl">5</span>, lty <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_abline</span><span class="op">(</span>slope <span class="op">=</span> <span class="fl">1</span>, intercept <span class="op">=</span> <span class="op">-</span><span class="fl">5</span>, lty <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_point</span><span class="op">(</span>pch <span class="op">=</span> <span class="fl">21</span>, <span class="fu">aes</span><span class="op">(</span>text <span class="op">=</span> <span class="va">ID</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">scale_fill_manual</span><span class="op">(</span> 
-         values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"no"</span> <span class="op">=</span> <span class="st">"#ffffff"</span>, <span class="st">"yes"</span> <span class="op">=</span> <span class="st">"#C77CFF"</span><span class="op">)</span>,
-         name <span class="op">=</span> <span class="st">""</span>,
-         labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"wine producer"</span>, <span class="st">""</span><span class="op">)</span>
-       <span class="op">)</span> <span class="op">+</span>
-  <span class="fu">lims</span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">10</span><span class="op">)</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">theme</span><span class="op">(</span>
-        panel.grid.major <span class="op">=</span> <span class="fu">element_line</span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"#f0f0f0"</span><span class="op">)</span>,
-        panel.grid.minor <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span>,
-        axis.line <span class="op">=</span> <span class="fu">element_line</span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span>,
-        panel.background <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span>,
-        plot.background <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span>,
-        axis.text <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>size <span class="op">=</span> <span class="fu">rel</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span>,
-        axis.title.x <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>hjust <span class="op">=</span> <span class="fl">.4</span><span class="op">)</span>,
-        axis.title.y <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>hjust <span class="op">=</span> <span class="fl">.35</span><span class="op">)</span>,
-        legend.title <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>face <span class="op">=</span> <span class="st">"plain"</span><span class="op">)</span>,
-        legend.key.size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">0.2</span>, <span class="st">"cm"</span><span class="op">)</span>,
-        legend.key <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span>,
-      <span class="op">)</span>
-
-<span class="co">#execute plotly</span>
-<span class="fu"><a href="https://rdrr.io/pkg/plotly/man/ggplotly.html">ggplotly</a></span><span class="op">(</span>p <span class="op">=</span> <span class="va">p1</span>, tooltip <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"ID"</span>, <span class="st">"sev"</span>, <span class="st">"market_size"</span>, <span class="st">"wine"</span><span class="op">)</span>, dynamicTicks <span class="op">=</span> <span class="cn">T</span><span class="op">)</span> <span class="op">%&gt;%</span>
-<span class="fu"><a href="https://rdrr.io/pkg/plotly/man/layout.html">layout</a></span><span class="op">(</span>xaxis <span class="op">=</span> 
-           <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>title <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>text <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="st">'Spotted Lanternfly'</span>,<span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"(&lt;i&gt;Lycorma delicatula&lt;/i&gt;)"</span><span class="op">)</span>,<span class="st">'Invasion Risk'</span><span class="op">)</span>, font <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">11</span><span class="op">)</span><span class="op">)</span>, showspikes <span class="op">=</span> <span class="cn">T</span><span class="op">)</span>,
-         yaxis <span class="op">=</span> 
-           <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>title <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>text <span class="op">=</span> <span class="st">"Wine Export Market Size, log10 USD"</span>, font <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">11</span><span class="op">)</span><span class="op">)</span>, showspikes <span class="op">=</span> <span class="cn">T</span><span class="op">)</span>,
-         title <span class="op">=</span> 
-           <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>text <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="st">'Spotted Lanternfly Paninvasion Risk ='</span>, <span class="va">shock_cor</span>,<span class="st">'of 10 (P&lt;0.001)'</span><span class="op">)</span>,
-                font <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">12</span><span class="op">)</span>,
-                x <span class="op">=</span> <span class="fl">0.1</span>,
-                y <span class="op">=</span> <span class="fl">0.99</span><span class="op">)</span>,
-         showlegend <span class="op">=</span> <span class="cn">F</span>
-         <span class="op">)</span></code></pre></div>
-<div id="htmlwidget-61be8a76399adc0f5a4a" style="width:768px;height:768px;" class="plotly html-widget"></div>
-<script type="application/json" data-for="htmlwidget-61be8a76399adc0f5a4a">{"x":{"data":[{"x":[0.55,10.45],"y":[0.55,10.45],"text":"","type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)","dash":"dash"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0.55,10.45],"y":[5.55,15.45],"text":"","type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)","dash":"dash"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0.55,10.45],"y":[-4.45,5.45],"text":"","type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)","dash":"dash"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[7.91,8.32,8.75,6.48,8.73,8.26,7.38,5.33,9.43,8.82,9.38,7.48,9.58,9.35,6.83,8.81,4.64,5.88,4.72,3.74,6.38,9.94,7.95,9.83,8.35,7.24,3.54,6.85,10,6.32,7.07,6.69,6.92,8.34,6.58,6.04,7.63,5.52,6.03,3.84,7.86,2.85,7.13,9.13,9.13,7.98,5.34,3.96,6.25,9.09,7.82,7.21,7.85,8.29,7.88,9.06,9.18,6.08,7.72,9.35,6.16,8.52,8.71,6.26,6.09],"y":[4.82,5.87,8.93,6.74,9.25,8.26,6.73,6.6,8.2,6.51,6.85,7.67,7.78,9.27,2.51,7.15,4.41,6.25,3.42,7.3,5.03,9.99,8.07,9.07,7.91,7.94,5.21,7.56,9.8,5.17,5.63,5.27,8.23,7.19,1.84,8.23,7.46,5.92,6.02,6.05,6.75,3.26,7.25,6.97,9.04,6.81,3.96,1.94,5.99,8.95,7.36,7.23,7.28,7.16,8.87,9.5,8.12,null,6.56,7.01,1,7.61,7.06,6.58,4.75],"text":["Albania<br />sev:  7.91<br />market_size: 4.82<br />wine: yes","Algeria<br />sev:  8.32<br />market_size: 5.87<br />wine: yes","Argentina<br />sev:  8.75<br />market_size: 8.93<br />wine: yes","Armenia<br />sev:  6.48<br />market_size: 6.74<br />wine: yes","Australia<br />sev:  8.73<br />market_size: 9.25<br />wine: yes","Austria<br />sev:  8.26<br />market_size: 8.26<br />wine: yes","Azerbaijan<br />sev:  7.38<br />market_size: 6.73<br />wine: yes","Belarus<br />sev:  5.33<br />market_size: 6.60<br />wine: yes","Belgium<br />sev:  9.43<br />market_size: 8.20<br />wine: yes","Bosnia and Herzegovina<br />sev:  8.82<br />market_size: 6.51<br />wine: yes","Brazil<br />sev:  9.38<br />market_size: 6.85<br />wine: yes","Bulgaria<br />sev:  7.48<br />market_size: 7.67<br />wine: yes","Canada<br />sev:  9.58<br />market_size: 7.78<br />wine: yes","Chile<br />sev:  9.35<br />market_size: 9.27<br />wine: yes","Colombia<br />sev:  6.83<br />market_size: 2.51<br />wine: yes","Croatia<br />sev:  8.81<br />market_size: 7.15<br />wine: yes","Cuba<br />sev:  4.64<br />market_size: 4.41<br />wine: yes","Cyprus<br />sev:  5.88<br />market_size: 6.25<br />wine: yes","Egypt<br />sev:  4.72<br />market_size: 3.42<br />wine: yes","Estonia<br />sev:  3.74<br />market_size: 7.30<br />wine: yes","Ethiopia<br />sev:  6.38<br />market_size: 5.03<br />wine: yes","France<br />sev:  9.94<br />market_size: 9.99<br />wine: yes","Georgia<br />sev:  7.95<br />market_size: 8.07<br />wine: yes","Germany<br />sev:  9.83<br />market_size: 9.07<br />wine: yes","Greece<br />sev:  8.35<br />market_size: 7.91<br />wine: yes","Hungary<br />sev:  7.24<br />market_size: 7.94<br />wine: yes","Iceland<br />sev:  3.54<br />market_size: 5.21<br />wine: yes","Israel<br />sev:  6.85<br />market_size: 7.56<br />wine: yes","Italy<br />sev: 10.00<br />market_size: 9.80<br />wine: yes","Jordan<br />sev:  6.32<br />market_size: 5.17<br />wine: yes","Kazakhstan<br />sev:  7.07<br />market_size: 5.63<br />wine: yes","Kyrgyzstan<br />sev:  6.69<br />market_size: 5.27<br />wine: yes","Latvia<br />sev:  6.92<br />market_size: 8.23<br />wine: yes","Lebanon<br />sev:  8.34<br />market_size: 7.19<br />wine: yes","Libya<br />sev:  6.58<br />market_size: 1.84<br />wine: yes","Lithuania<br />sev:  6.04<br />market_size: 8.23<br />wine: yes","Luxembourg<br />sev:  7.63<br />market_size: 7.46<br />wine: yes","Madagascar<br />sev:  5.52<br />market_size: 5.92<br />wine: yes","Malta<br />sev:  6.03<br />market_size: 6.02<br />wine: yes","Mauritius<br />sev:  3.84<br />market_size: 6.05<br />wine: yes","Mexico<br />sev:  7.86<br />market_size: 6.75<br />wine: yes","Mongolia<br />sev:  2.85<br />market_size: 3.26<br />wine: yes","Montenegro<br />sev:  7.13<br />market_size: 7.25<br />wine: yes","Morocco<br />sev:  9.13<br />market_size: 6.97<br />wine: yes","New Zealand<br />sev:  9.13<br />market_size: 9.04<br />wine: yes","Norway<br />sev:  7.98<br />market_size: 6.81<br />wine: yes","Panama<br />sev:  5.34<br />market_size: 3.96<br />wine: yes","Paraguay<br />sev:  3.96<br />market_size: 1.94<br />wine: yes","Peru<br />sev:  6.25<br />market_size: 5.99<br />wine: yes","Portugal<br />sev:  9.09<br />market_size: 8.95<br />wine: yes","Romania<br />sev:  7.82<br />market_size: 7.36<br />wine: yes","Serbia<br />sev:  7.21<br />market_size: 7.23<br />wine: yes","Slovakia<br />sev:  7.85<br />market_size: 7.28<br />wine: yes","Slovenia<br />sev:  8.29<br />market_size: 7.16<br />wine: yes","South Africa<br />sev:  7.88<br />market_size: 8.87<br />wine: yes","Spain<br />sev:  9.06<br />market_size: 9.50<br />wine: yes","Switzerland<br />sev:  9.18<br />market_size: 8.12<br />wine: yes","Tajikistan<br />sev:  6.08<br />market_size:   NA<br />wine: yes","Tunisia<br />sev:  7.72<br />market_size: 6.56<br />wine: yes","Turkey<br />sev:  9.35<br />market_size: 7.01<br />wine: yes","Turkmenistan<br />sev:  6.16<br />market_size: 1.00<br />wine: yes","Ukraine<br />sev:  8.52<br />market_size: 7.61<br />wine: yes","Uruguay<br />sev:  8.71<br />market_size: 7.06<br />wine: yes","Uzbekistan<br />sev:  6.26<br />market_size: 6.58<br />wine: yes","Zimbabwe<br />sev:  6.09<br />market_size: 4.75<br />wine: yes"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(199,124,255,1)","opacity":1,"size":[5.16019927569908,5.81608854684429,13.8444085588772,4.50744919565109,13.7487688831475,7.96940452239016,4.65475658597467,5.2909702545261,4.7990334711786,4.41247139165833,8.3848574565717,6.95627387763345,6.03480629571774,13.2547610756638,4.51239132680795,5.70895256825499,4.7539084624745,4.64697241368549,4.42841769067888,4.70662515666549,4.0537609120076,22.3996848848784,6.46388997076063,11.4481646970823,8.62295213488255,8.57861212593153,3.77952755905512,4.3380926290086,22.6771653543307,3.94762282757632,5.16620695174289,4.18888716035468,4.22097689113567,4.73562086764555,3.77952755905512,4.42557398147797,4.66041413446621,4.57764958679786,4.21066938734677,4.33492964702889,5.57014839484979,3.86220459766763,4.86349684113907,5.44650475814818,8.3783275332916,3.77952755905512,3.87295967374395,4.12404687930522,6.2364959869981,10.9809316672899,9.35884598312005,6.48386612062582,5.41217088460507,5.17747670086378,13.1010330637064,21.0925861782845,6.47757167822681,3.89159107140259,5.35219078978545,5.51590558934427,5.52830816781895,6.78702252866231,6.20580653153203,5.31022596324839,4.18005453763302],"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)"}},"hoveron":"points","name":"yes","legendgroup":"yes","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[6.51,1.26,4.09,5.45,2.62,2.9,3.53,3.94,3.42,4.1,3.24,2.93,3.66,3.68,4.65,5.53,1.01,3.96,2.98,2.69,2.76,5.05,3.86,5.08,3.17,3.07,2.51,2.96,3.55,1.98,5.84,3.65,7.08,3.66,7.49,3.96,3.82,6.35,6.83,5.45,4.31,3.44,2.54,4.49,2.37,3.01,3.13,3.01,3.88,7.22,1.87,2.72,3.75,1,7.27,4.53,3.75,2.9,3.59,5.54,5.91,4.87,6.94,7.67,6.63,8.26,2.16,1.15,5.79,4.95,7.02,1.58,7.01,3.79,3.81,4.45,3.57,5.66,1.12,4.98,5.64,5.61,2.59,2.98,2.12,3.08,3.53,2.07,6.61,1.94,6.31,3.05,4.54,1.2,5.03,9.09,3.64,5.2,2.79,4.61,1.55,7.18,3.89,5.15,7.35,1.76,3.82,4.74,7.76,2.15,3.51,1.15,6.44,9.22,5.65,1,1.43,1.02,1.01,1,1.01,2.42,5.81,3.71,5.32,3.67,2.39,3.33,4.14,2.99,2.23,4.82,1.29,4.09,5.39,4.04,3.09,1.01,4.34,7.87,6.25,7.12,5.48,2.87,3.77,2.82,3.78,2.79,1.65,5.84,5.03,9.37,1.96,6.19,7.38,1.01,5.94,4.17],"y":[3.03,null,null,4.93,null,3.92,5.7,1.92,4.27,3.7,5.49,2.66,3.98,4.45,2.12,4.68,null,5.15,4.83,null,5.71,1,2.06,4.72,4.77,3.71,null,null,null,null,3.36,null,7.54,1.27,8.16,2.06,2.61,6.76,4.44,4.01,3.36,3.78,5.24,7.19,null,5.05,4.6,1.74,5.79,null,null,2.44,null,null,5.85,null,2.03,null,4.63,null,1.02,8.59,6.6,3.58,null,6.72,null,4.49,6.22,null,5.82,null,null,null,5.42,3.33,1.5,null,4.63,7.76,2.01,7.62,null,2.36,null,null,null,null,8.08,null,6.62,5.95,6.84,1.8,1.8,8.42,3.98,null,1.36,4.02,null,3.6,null,2.1,null,null,4.61,2.16,6.99,null,4.49,5.65,null,6.71,3.65,null,null,3.02,3.13,null,3.99,3.08,null,1.51,null,5.51,4.3,3.3,8.65,null,2.19,3,null,3.3,5.24,3.52,5.05,null,4.87,7.47,4.92,4.25,7.45,1.5,5.9,3.3,4.48,null,3,5.93,7.26,8.84,3.48,null,4.31,null,1.65,4.91],"text":["Afghanistan<br />sev:  6.51<br />market_size: 3.03<br />wine: no","Åland<br />sev:  1.26<br />market_size:   NA<br />wine: no","Andorra<br />sev:  4.09<br />market_size:   NA<br />wine: no","Angola<br />sev:  5.45<br />market_size: 4.93<br />wine: no","Anguilla<br />sev:  2.62<br />market_size:   NA<br />wine: no","Antigua and Barbuda<br />sev:  2.90<br />market_size: 3.92<br />wine: no","Aruba<br />sev:  3.53<br />market_size: 5.70<br />wine: no","Bahamas<br />sev:  3.94<br />market_size: 1.92<br />wine: no","Bahrain<br />sev:  3.42<br />market_size: 4.27<br />wine: no","Bangladesh<br />sev:  4.10<br />market_size: 3.70<br />wine: no","Barbados<br />sev:  3.24<br />market_size: 5.49<br />wine: no","Belize<br />sev:  2.93<br />market_size: 2.66<br />wine: no","Benin<br />sev:  3.66<br />market_size: 3.98<br />wine: no","Bermuda<br />sev:  3.68<br />market_size: 4.45<br />wine: no","Bhutan<br />sev:  4.65<br />market_size: 2.12<br />wine: no","Bolivia<br />sev:  5.53<br />market_size: 4.68<br />wine: no","Bonaire, Sint Eustatius and Saba<br />sev:  1.01<br />market_size:   NA<br />wine: no","Botswana<br />sev:  3.96<br />market_size: 5.15<br />wine: no","British Virgin Islands<br />sev:  2.98<br />market_size: 4.83<br />wine: no","Brunei<br />sev:  2.69<br />market_size:   NA<br />wine: no","Burkina Faso<br />sev:  2.76<br />market_size: 5.71<br />wine: no","Burundi<br />sev:  5.05<br />market_size: 1.00<br />wine: no","Cambodia<br />sev:  3.86<br />market_size: 2.06<br />wine: no","Cameroon<br />sev:  5.08<br />market_size: 4.72<br />wine: no","Cape Verde<br />sev:  3.17<br />market_size: 4.77<br />wine: no","Cayman Islands<br />sev:  3.07<br />market_size: 3.71<br />wine: no","Central African Republic<br />sev:  2.51<br />market_size: 0.60<br />wine: no","Chad<br />sev:  2.96<br />market_size:   NA<br />wine: no","Comoros<br />sev:  3.55<br />market_size:   NA<br />wine: no","Cook Islands<br />sev:  1.98<br />market_size:   NA<br />wine: no","Costa Rica<br />sev:  5.84<br />market_size: 3.36<br />wine: no","Curacao<br />sev:  3.65<br />market_size:   NA<br />wine: no","Czech Republic<br />sev:  7.08<br />market_size: 7.54<br />wine: no","Democratic Republic of the Congo<br />sev:  3.66<br />market_size: 1.27<br />wine: no","Denmark<br />sev:  7.49<br />market_size: 8.16<br />wine: no","Djibouti<br />sev:  3.96<br />market_size: 2.06<br />wine: no","Dominica<br />sev:  3.82<br />market_size: 2.61<br />wine: no","Dominican Republic<br />sev:  6.35<br />market_size: 6.76<br />wine: no","Ecuador<br />sev:  6.83<br />market_size: 4.44<br />wine: no","El Salvador<br />sev:  5.45<br />market_size: 4.01<br />wine: no","Equatorial Guinea<br />sev:  4.31<br />market_size: 3.36<br />wine: no","Eritrea<br />sev:  3.44<br />market_size: 3.78<br />wine: no","Fiji<br />sev:  2.54<br />market_size: 5.24<br />wine: no","Finland<br />sev:  4.49<br />market_size: 7.19<br />wine: no","French Guiana<br />sev:  2.37<br />market_size:   NA<br />wine: no","French Polynesia<br />sev:  3.01<br />market_size: 5.05<br />wine: no","Gabon<br />sev:  3.13<br />market_size: 4.60<br />wine: no","Gambia<br />sev:  3.01<br />market_size: 1.74<br />wine: no","Ghana<br />sev:  3.88<br />market_size: 5.79<br />wine: no","Gibraltar<br />sev:  7.22<br />market_size:   NA<br />wine: no","Greenland<br />sev:  1.87<br />market_size:   NA<br />wine: no","Grenada<br />sev:  2.72<br />market_size: 2.44<br />wine: no","Guadeloupe<br />sev:  3.75<br />market_size:   NA<br />wine: no","Guam<br />sev:  1.00<br />market_size: 0.87<br />wine: no","Guatemala<br />sev:  7.27<br />market_size: 5.85<br />wine: no","Guernsey<br />sev:  4.53<br />market_size:   NA<br />wine: no","Guinea<br />sev:  3.75<br />market_size: 2.03<br />wine: no","Guinea-Bissau<br />sev:  2.90<br />market_size:   NA<br />wine: no","Guyana<br />sev:  3.59<br />market_size: 4.63<br />wine: no","Haiti<br />sev:  5.54<br />market_size:   NA<br />wine: no","Honduras<br />sev:  5.91<br />market_size: 1.02<br />wine: no","Hong Kong<br />sev:  4.87<br />market_size: 8.59<br />wine: no","Indonesia<br />sev:  6.94<br />market_size: 6.60<br />wine: no","Iran<br />sev:  7.67<br />market_size: 3.58<br />wine: no","Iraq<br />sev:  6.63<br />market_size:   NA<br />wine: no","Ireland<br />sev:  8.26<br />market_size: 6.72<br />wine: no","Isle of Man<br />sev:  2.16<br />market_size:   NA<br />wine: no","Ivory Coast<br />sev:  1.15<br />market_size: 4.49<br />wine: no","Jamaica<br />sev:  5.79<br />market_size: 6.22<br />wine: no","Jersey<br />sev:  4.95<br />market_size:   NA<br />wine: no","Kenya<br />sev:  7.02<br />market_size: 5.82<br />wine: no","Kiribati<br />sev:  1.58<br />market_size:   NA<br />wine: no","Kosovo<br />sev:  7.01<br />market_size:   NA<br />wine: no","Kuwait<br />sev:  3.79<br />market_size:   NA<br />wine: no","Laos<br />sev:  3.81<br />market_size: 5.42<br />wine: no","Lesotho<br />sev:  4.45<br />market_size: 3.33<br />wine: no","Liberia<br />sev:  3.57<br />market_size: 1.50<br />wine: no","Liechtenstein<br />sev:  5.66<br />market_size:   NA<br />wine: no","Macao<br />sev:  1.12<br />market_size: 4.63<br />wine: no","Macedonia<br />sev:  4.98<br />market_size: 7.76<br />wine: no","Malawi<br />sev:  5.64<br />market_size: 2.01<br />wine: no","Malaysia<br />sev:  5.61<br />market_size: 7.62<br />wine: no","Maldives<br />sev:  2.59<br />market_size:   NA<br />wine: no","Mali<br />sev:  2.98<br />market_size: 2.36<br />wine: no","Marshall Islands<br />sev:  2.12<br />market_size:   NA<br />wine: no","Martinique<br />sev:  3.08<br />market_size:   NA<br />wine: no","Mauritania<br />sev:  3.53<br />market_size:   NA<br />wine: no","Micronesia<br />sev:  2.07<br />market_size:   NA<br />wine: no","Moldova<br />sev:  6.61<br />market_size: 8.08<br />wine: no","Montserrat<br />sev:  1.94<br />market_size:   NA<br />wine: no","Mozambique<br />sev:  6.31<br />market_size: 6.62<br />wine: no","Myanmar<br />sev:  3.05<br />market_size: 5.95<br />wine: no","Namibia<br />sev:  4.54<br />market_size: 6.84<br />wine: no","Nauru<br />sev:  1.20<br />market_size: 1.80<br />wine: no","Nepal<br />sev:  5.03<br />market_size: 1.80<br />wine: no","Netherlands<br />sev:  9.09<br />market_size: 8.42<br />wine: no","New Caledonia<br />sev:  3.64<br />market_size: 3.98<br />wine: no","Nicaragua<br />sev:  5.20<br />market_size: 0.79<br />wine: no","Niger<br />sev:  2.79<br />market_size: 1.36<br />wine: no","Nigeria<br />sev:  4.61<br />market_size: 4.02<br />wine: no","Niue<br />sev:  1.55<br />market_size:   NA<br />wine: no","North Korea<br />sev:  7.18<br />market_size: 3.60<br />wine: no","Northern Cyprus<br />sev:  3.89<br />market_size:   NA<br />wine: no","Oman<br />sev:  5.15<br />market_size: 2.10<br />wine: no","Pakistan<br />sev:  7.35<br />market_size:   NA<br />wine: no","Palau<br />sev:  1.76<br />market_size:   NA<br />wine: no","Palestina<br />sev:  3.82<br />market_size: 4.61<br />wine: no","Papua New Guinea<br />sev:  4.74<br />market_size: 2.16<br />wine: no","Poland<br />sev:  7.76<br />market_size: 6.99<br />wine: no","Puerto Rico<br />sev:  2.15<br />market_size:   NA<br />wine: no","Qatar<br />sev:  3.51<br />market_size: 4.49<br />wine: no","Republic of Congo<br />sev:  1.15<br />market_size: 5.65<br />wine: no","Reunion<br />sev:  6.44<br />market_size:   NA<br />wine: no","Russia<br />sev:  9.22<br />market_size: 6.71<br />wine: no","Rwanda<br />sev:  5.65<br />market_size: 3.65<br />wine: no","Saint Barthelemy<br />sev:  1.00<br />market_size:   NA<br />wine: no","Saint Helena<br />sev:  1.43<br />market_size:   NA<br />wine: no","Saint Kitts and Nevis<br />sev:  1.02<br />market_size: 3.02<br />wine: no","Saint Lucia<br />sev:  1.01<br />market_size: 3.13<br />wine: no","Saint Martin<br />sev:  1.00<br />market_size:   NA<br />wine: no","Saint Vincent and the Grenadines<br />sev:  1.01<br />market_size: 3.99<br />wine: no","Samoa<br />sev:  2.42<br />market_size: 3.08<br />wine: no","San Marino<br />sev:  5.81<br />market_size:   NA<br />wine: no","Sao Tome and Principe<br />sev:  3.71<br />market_size: 1.51<br />wine: no","Saudi Arabia<br />sev:  5.32<br />market_size:   NA<br />wine: no","Senegal<br />sev:  3.67<br />market_size: 5.51<br />wine: no","Seychelles<br />sev:  2.39<br />market_size: 4.30<br />wine: no","Sierra Leone<br />sev:  3.33<br />market_size: 3.30<br />wine: no","Singapore<br />sev:  4.14<br />market_size: 8.65<br />wine: no","Sint Maarten<br />sev:  2.99<br />market_size:   NA<br />wine: no","Solomon Islands<br />sev:  2.23<br />market_size: 2.19<br />wine: no","Somalia<br />sev:  4.82<br />market_size: 3.00<br />wine: no","South Georgia and the South Sandwich Islands<br />sev:  1.29<br />market_size:   NA<br />wine: no","South Sudan<br />sev:  4.09<br />market_size: 3.30<br />wine: no","Sri Lanka<br />sev:  5.39<br />market_size: 5.24<br />wine: no","Sudan<br />sev:  4.04<br />market_size: 3.52<br />wine: no","Suriname<br />sev:  3.09<br />market_size: 5.05<br />wine: no","Svalbard and Jan Mayen<br />sev:  1.01<br />market_size:   NA<br />wine: no","Swaziland<br />sev:  4.34<br />market_size: 4.87<br />wine: no","Sweden<br />sev:  7.87<br />market_size: 7.47<br />wine: no","Syria<br />sev:  6.25<br />market_size: 4.92<br />wine: no","Tanzania<br />sev:  7.12<br />market_size: 4.25<br />wine: no","Thailand<br />sev:  5.48<br />market_size: 7.45<br />wine: no","Timor-Leste<br />sev:  2.87<br />market_size: 1.50<br />wine: no","Togo<br />sev:  3.77<br />market_size: 5.90<br />wine: no","Tonga<br />sev:  2.82<br />market_size: 3.30<br />wine: no","Trinidad and Tobago<br />sev:  3.78<br />market_size: 4.48<br />wine: no","Turks and Caicos Islands<br />sev:  2.79<br />market_size:   NA<br />wine: no","Tuvalu<br />sev:  1.65<br />market_size: 3.00<br />wine: no","Uganda<br />sev:  5.84<br />market_size: 5.93<br />wine: no","United Arab Emirates<br />sev:  5.03<br />market_size: 7.26<br />wine: no","United Kingdom<br />sev:  9.37<br />market_size: 8.84<br />wine: no","Vanuatu<br />sev:  1.96<br />market_size: 3.48<br />wine: no","Vatican City<br />sev:  6.19<br />market_size:   NA<br />wine: no","Venezuela<br />sev:  7.38<br />market_size: 4.31<br />wine: no","Virgin Islands, U.S.<br />sev:  1.01<br />market_size:   NA<br />wine: no","Yemen<br />sev:  5.94<br />market_size: 1.65<br />wine: no","Zambia<br />sev:  4.17<br />market_size: 4.91<br />wine: no"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(255,255,255,1)","opacity":1,"size":3.77952755905512,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)"}},"hoveron":"points","name":"no","legendgroup":"no","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":23.3059360730594,"r":7.30593607305936,"b":40.1826484018265,"l":54.7945205479452},"font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":true,"range":[0.55,10.45],"tickmode":"auto","ticktext":["2.5","5.0","7.5","10.0"],"tickvals":[2.5,5,7.5,10],"categoryorder":"array","categoryarray":["2.5","5.0","7.5","10.0"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":14.6118721461187},"tickangle":-0,"showline":true,"linecolor":"rgba(0,0,0,1)","linewidth":0.66417600664176,"showgrid":true,"gridcolor":"rgba(240,240,240,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y","title":{"text":"Spotted Lanternfly (<i>Lycorma delicatula<\/i>) Invasion Risk","font":{"color":"rgba(0,0,0,1)","family":"","size":11}},"hoverformat":".2f","showspikes":true},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":true,"range":[0.55,10.45],"tickmode":"auto","ticktext":["2.5","5.0","7.5","10.0"],"tickvals":[2.5,5,7.5,10],"categoryorder":"array","categoryarray":["2.5","5.0","7.5","10.0"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":14.6118721461187},"tickangle":-0,"showline":true,"linecolor":"rgba(0,0,0,1)","linewidth":0.66417600664176,"showgrid":true,"gridcolor":"rgba(240,240,240,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x","title":{"text":"Wine Export Market Size, log10 USD","font":{"color":"rgba(0,0,0,1)","family":"","size":11}},"hoverformat":".2f","showspikes":true},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":false,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895},"y":0.959399606299213},"annotations":[{"text":"<br />avg_wine","x":1.02,"y":1,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"left","yanchor":"bottom","legendTitle":true}],"hovermode":"closest","barmode":"relative","title":{"text":"Spotted Lanternfly Paninvasion Risk = 8 of 10 (P<0.001)","font":{"size":12},"x":0.1,"y":0.99}},"config":{"doubleClick":"reset","showSendToCloud":false},"source":"A","attrs":{"66a054360b51":{"intercept":{},"slope":{},"type":"scatter"},"66a028211e08":{"intercept":{},"slope":{}},"66a0163ab3cd":{"intercept":{},"slope":{}},"66a067f26321":{"text":{},"x":{},"y":{},"size":{},"fill":{}}},"cur_data":"66a054360b51","visdat":{"66a054360b51":["function (y) ","x"],"66a028211e08":["function (y) ","x"],"66a0163ab3cd":["function (y) ","x"],"66a067f26321":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<code class="sourceCode R"><span><span class="co">#build ggplot</span></span>
+<span><span class="va">p1</span> <span class="op">&lt;-</span> <span class="va">countries_sev_market</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html" class="external-link">mutate_if</a></span><span class="op">(</span>.predicate <span class="op">=</span> <span class="va">is.numeric</span>, .funs <span class="op">=</span> <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">.</span>, digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">sev</span>, </span>
+<span>                       y <span class="op">=</span> <span class="va">market_size</span>, </span>
+<span>                       size <span class="op">=</span> <span class="va">avg_wine</span>, </span>
+<span>                       fill <span class="op">=</span> <span class="va">wine</span></span>
+<span>                       <span class="op">)</span></span>
+<span>         <span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html" class="external-link">geom_abline</a></span><span class="op">(</span>slope <span class="op">=</span> <span class="fl">1</span>, intercept <span class="op">=</span> <span class="fl">0</span>, lty <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html" class="external-link">geom_abline</a></span><span class="op">(</span>slope <span class="op">=</span> <span class="fl">1</span>, intercept <span class="op">=</span> <span class="fl">5</span>, lty <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html" class="external-link">geom_abline</a></span><span class="op">(</span>slope <span class="op">=</span> <span class="fl">1</span>, intercept <span class="op">=</span> <span class="op">-</span><span class="fl">5</span>, lty <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>pch <span class="op">=</span> <span class="fl">21</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>text <span class="op">=</span> <span class="va">ID</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_fill_manual</a></span><span class="op">(</span> </span>
+<span>         values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"no"</span> <span class="op">=</span> <span class="st">"#ffffff"</span>, <span class="st">"yes"</span> <span class="op">=</span> <span class="st">"#C77CFF"</span><span class="op">)</span>,</span>
+<span>         name <span class="op">=</span> <span class="st">""</span>,</span>
+<span>         labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"wine producer"</span>, <span class="st">""</span><span class="op">)</span></span>
+<span>       <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html" class="external-link">lims</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">10</span><span class="op">)</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span></span>
+<span>        panel.grid.major <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_line</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"#f0f0f0"</span><span class="op">)</span>,</span>
+<span>        panel.grid.minor <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>        axis.line <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_line</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span>,</span>
+<span>        panel.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>        plot.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>        axis.text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">rel</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>        axis.title.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>hjust <span class="op">=</span> <span class="fl">.4</span><span class="op">)</span>,</span>
+<span>        axis.title.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>hjust <span class="op">=</span> <span class="fl">.35</span><span class="op">)</span>,</span>
+<span>        legend.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>face <span class="op">=</span> <span class="st">"plain"</span><span class="op">)</span>,</span>
+<span>        legend.key.size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="fl">0.2</span>, <span class="st">"cm"</span><span class="op">)</span>,</span>
+<span>        legend.key <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>      <span class="op">)</span></span>
+<span></span>
+<span><span class="co">#execute plotly</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/plotly/man/ggplotly.html" class="external-link">ggplotly</a></span><span class="op">(</span>p <span class="op">=</span> <span class="va">p1</span>, tooltip <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ID"</span>, <span class="st">"sev"</span>, <span class="st">"market_size"</span>, <span class="st">"wine"</span><span class="op">)</span>, dynamicTicks <span class="op">=</span> <span class="cn">T</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span><span class="fu">layout</span><span class="op">(</span>xaxis <span class="op">=</span> </span>
+<span>           <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>title <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>text <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">'Spotted Lanternfly'</span>,<span class="fu"><a href="https://rdrr.io/r/base/sprintf.html" class="external-link">sprintf</a></span><span class="op">(</span><span class="st">"(&lt;i&gt;Lycorma delicatula&lt;/i&gt;)"</span><span class="op">)</span>,<span class="st">'Invasion Risk'</span><span class="op">)</span>, font <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">11</span><span class="op">)</span><span class="op">)</span>, showspikes <span class="op">=</span> <span class="cn">T</span><span class="op">)</span>,</span>
+<span>         yaxis <span class="op">=</span> </span>
+<span>           <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>title <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>text <span class="op">=</span> <span class="st">"Wine Export Market Size, log10 USD"</span>, font <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">11</span><span class="op">)</span><span class="op">)</span>, showspikes <span class="op">=</span> <span class="cn">T</span><span class="op">)</span>,</span>
+<span>         title <span class="op">=</span> </span>
+<span>           <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>text <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">'Spotted Lanternfly Paninvasion Risk ='</span>, <span class="va">shock_cor</span>,<span class="st">'of 10 (P&lt;0.001)'</span><span class="op">)</span>,</span>
+<span>                font <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">12</span><span class="op">)</span>,</span>
+<span>                x <span class="op">=</span> <span class="fl">0.1</span>,</span>
+<span>                y <span class="op">=</span> <span class="fl">0.99</span><span class="op">)</span>,</span>
+<span>         showlegend <span class="op">=</span> <span class="cn">F</span></span>
+<span>         <span class="op">)</span></span></code></pre></div>
+<div id="htmlwidget-1ab473fb724cac59cc40" style="width:768px;height:768px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1ab473fb724cac59cc40">{"x":{"data":[{"x":[0.55,10.45],"y":[0.55,10.45],"text":"","type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)","dash":"dash"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0.55,10.45],"y":[5.55,15.45],"text":"","type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)","dash":"dash"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0.55,10.45],"y":[-4.45,5.45],"text":"","type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)","dash":"dash"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[7.91,8.32,8.75,6.48,8.73,8.26,7.38,5.33,9.43,8.82,9.38,7.48,9.58,9.35,6.83,8.81,4.64,5.88,4.72,3.74,6.38,9.94,7.95,9.83,8.35,7.24,3.54,6.85,10,6.32,7.07,6.69,6.92,8.34,6.58,6.04,7.63,5.52,6.03,3.84,7.86,2.85,7.13,9.13,9.13,7.98,5.34,3.96,6.25,9.09,7.82,7.21,7.85,8.29,7.88,9.06,9.18,6.08,7.72,9.35,6.16,8.52,8.71,6.26,6.09],"y":[null,5.87,8.93,6.74,9.25,8.26,null,6.6,8.2,6.51,6.85,7.67,7.78,9.27,null,7.15,4.41,6.25,null,7.3,5.03,9.99,8.07,9.07,7.91,7.94,5.21,7.56,9.8,5.17,5.63,null,8.23,7.19,null,8.23,7.46,5.92,6.02,6.05,6.75,null,7.25,6.97,9.04,6.81,3.96,null,5.99,8.95,7.36,7.23,7.28,7.16,8.87,9.5,8.12,null,6.56,7.01,null,7.61,7.06,6.58,4.75],"text":["Albania<br />sev:  7.91<br />market_size:   NA<br />wine: yes","Algeria<br />sev:  8.32<br />market_size: 5.87<br />wine: yes","Argentina<br />sev:  8.75<br />market_size: 8.93<br />wine: yes","Armenia<br />sev:  6.48<br />market_size: 6.74<br />wine: yes","Australia<br />sev:  8.73<br />market_size: 9.25<br />wine: yes","Austria<br />sev:  8.26<br />market_size: 8.26<br />wine: yes","Azerbaijan<br />sev:  7.38<br />market_size:   NA<br />wine: yes","Belarus<br />sev:  5.33<br />market_size: 6.60<br />wine: yes","Belgium<br />sev:  9.43<br />market_size: 8.20<br />wine: yes","Bosnia and Herzegovina<br />sev:  8.82<br />market_size: 6.51<br />wine: yes","Brazil<br />sev:  9.38<br />market_size: 6.85<br />wine: yes","Bulgaria<br />sev:  7.48<br />market_size: 7.67<br />wine: yes","Canada<br />sev:  9.58<br />market_size: 7.78<br />wine: yes","Chile<br />sev:  9.35<br />market_size: 9.27<br />wine: yes","Colombia<br />sev:  6.83<br />market_size:   NA<br />wine: yes","Croatia<br />sev:  8.81<br />market_size: 7.15<br />wine: yes","Cuba<br />sev:  4.64<br />market_size: 4.41<br />wine: yes","Cyprus<br />sev:  5.88<br />market_size: 6.25<br />wine: yes","Egypt<br />sev:  4.72<br />market_size:   NA<br />wine: yes","Estonia<br />sev:  3.74<br />market_size: 7.30<br />wine: yes","Ethiopia<br />sev:  6.38<br />market_size: 5.03<br />wine: yes","France<br />sev:  9.94<br />market_size: 9.99<br />wine: yes","Georgia<br />sev:  7.95<br />market_size: 8.07<br />wine: yes","Germany<br />sev:  9.83<br />market_size: 9.07<br />wine: yes","Greece<br />sev:  8.35<br />market_size: 7.91<br />wine: yes","Hungary<br />sev:  7.24<br />market_size: 7.94<br />wine: yes","Iceland<br />sev:  3.54<br />market_size: 5.21<br />wine: yes","Israel<br />sev:  6.85<br />market_size: 7.56<br />wine: yes","Italy<br />sev: 10.00<br />market_size: 9.80<br />wine: yes","Jordan<br />sev:  6.32<br />market_size: 5.17<br />wine: yes","Kazakhstan<br />sev:  7.07<br />market_size: 5.63<br />wine: yes","Kyrgyzstan<br />sev:  6.69<br />market_size:   NA<br />wine: yes","Latvia<br />sev:  6.92<br />market_size: 8.23<br />wine: yes","Lebanon<br />sev:  8.34<br />market_size: 7.19<br />wine: yes","Libya<br />sev:  6.58<br />market_size:   NA<br />wine: yes","Lithuania<br />sev:  6.04<br />market_size: 8.23<br />wine: yes","Luxembourg<br />sev:  7.63<br />market_size: 7.46<br />wine: yes","Madagascar<br />sev:  5.52<br />market_size: 5.92<br />wine: yes","Malta<br />sev:  6.03<br />market_size: 6.02<br />wine: yes","Mauritius<br />sev:  3.84<br />market_size: 6.05<br />wine: yes","Mexico<br />sev:  7.86<br />market_size: 6.75<br />wine: yes","Mongolia<br />sev:  2.85<br />market_size:   NA<br />wine: yes","Montenegro<br />sev:  7.13<br />market_size: 7.25<br />wine: yes","Morocco<br />sev:  9.13<br />market_size: 6.97<br />wine: yes","New Zealand<br />sev:  9.13<br />market_size: 9.04<br />wine: yes","Norway<br />sev:  7.98<br />market_size: 6.81<br />wine: yes","Panama<br />sev:  5.34<br />market_size: 3.96<br />wine: yes","Paraguay<br />sev:  3.96<br />market_size:   NA<br />wine: yes","Peru<br />sev:  6.25<br />market_size: 5.99<br />wine: yes","Portugal<br />sev:  9.09<br />market_size: 8.95<br />wine: yes","Romania<br />sev:  7.82<br />market_size: 7.36<br />wine: yes","Serbia<br />sev:  7.21<br />market_size: 7.23<br />wine: yes","Slovakia<br />sev:  7.85<br />market_size: 7.28<br />wine: yes","Slovenia<br />sev:  8.29<br />market_size: 7.16<br />wine: yes","South Africa<br />sev:  7.88<br />market_size: 8.87<br />wine: yes","Spain<br />sev:  9.06<br />market_size: 9.50<br />wine: yes","Switzerland<br />sev:  9.18<br />market_size: 8.12<br />wine: yes","Tajikistan<br />sev:  6.08<br />market_size:   NA<br />wine: yes","Tunisia<br />sev:  7.72<br />market_size: 6.56<br />wine: yes","Turkey<br />sev:  9.35<br />market_size: 7.01<br />wine: yes","Turkmenistan<br />sev:  6.16<br />market_size:   NA<br />wine: yes","Ukraine<br />sev:  8.52<br />market_size: 7.61<br />wine: yes","Uruguay<br />sev:  8.71<br />market_size: 7.06<br />wine: yes","Uzbekistan<br />sev:  6.26<br />market_size: 6.58<br />wine: yes","Zimbabwe<br />sev:  6.09<br />market_size: 4.75<br />wine: yes"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(199,124,255,1)","opacity":1,"size":[5.16019927569908,5.81608854684429,13.8444085588772,4.50744919565109,13.7487688831475,7.96940452239016,4.65475658597467,5.2909702545261,4.7990334711786,4.41247139165833,8.3848574565717,6.95627387763345,6.03480629571774,13.2547610756638,4.51239132680795,5.70895256825499,4.7539084624745,4.64697241368549,4.42841769067888,4.70662515666549,4.0537609120076,22.3996848848784,6.46388997076063,11.4481646970823,8.62295213488255,8.57861212593153,3.77952755905512,4.3380926290086,22.6771653543307,3.94762282757632,5.16620695174289,4.18888716035468,4.22097689113567,4.73562086764555,3.77952755905512,4.42557398147797,4.66041413446621,4.57764958679786,4.21066938734677,4.33492964702889,5.57014839484979,3.86220459766763,4.86349684113907,5.44650475814818,8.3783275332916,3.77952755905512,3.87295967374395,4.12404687930522,6.2364959869981,10.9809316672899,9.35884598312005,6.48386612062582,5.41217088460507,5.17747670086378,13.1010330637064,21.0925861782845,6.47757167822681,3.89159107140259,5.35219078978545,5.51590558934427,5.52830816781895,6.78702252866231,6.20580653153203,5.31022596324839,4.18005453763302],"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)"}},"hoveron":"points","name":"yes","legendgroup":"yes","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[6.51,1.26,4.09,5.45,2.62,2.9,3.53,3.94,3.42,4.1,3.24,2.93,3.66,3.68,4.65,5.53,1.01,3.96,2.98,2.69,2.76,5.05,3.86,5.08,3.17,3.07,2.51,2.96,3.55,1.98,5.84,3.65,7.08,3.66,7.49,3.96,3.82,6.35,6.83,5.45,4.31,3.44,2.54,4.49,2.37,3.01,3.13,3.01,3.88,7.22,1.87,2.72,3.75,1,7.27,4.53,3.75,2.9,3.59,5.54,5.91,4.87,6.94,7.67,6.63,8.26,2.16,1.15,5.79,4.95,7.02,1.58,7.01,3.79,3.81,4.45,3.57,5.66,1.12,4.98,5.64,5.61,2.59,2.98,2.12,3.08,3.53,2.07,6.61,1.94,6.31,3.05,4.54,1.2,5.03,9.09,3.64,5.2,2.79,4.61,1.55,7.18,3.89,5.15,7.35,1.76,3.82,4.74,7.76,2.15,3.51,1.15,6.44,9.22,5.65,1,1.43,1.02,1.01,1,1.01,2.42,5.81,3.71,5.32,3.67,2.39,3.33,4.14,2.99,2.23,4.82,1.29,4.09,5.39,4.04,3.09,1.01,4.34,7.87,6.25,7.12,5.48,2.87,3.77,2.82,3.78,2.79,1.65,5.84,5.03,9.37,1.96,6.19,7.38,1.01,5.94,4.17],"y":[null,null,null,4.93,null,3.92,5.7,1.92,4.27,null,5.49,2.66,3.98,null,null,null,null,5.15,null,null,null,null,null,4.72,null,null,null,null,null,null,null,null,null,1.27,8.16,null,null,6.76,4.44,4.01,null,null,5.24,7.19,null,5.05,4.6,null,5.79,null,null,null,null,null,5.85,null,null,null,4.63,null,null,null,6.6,null,null,6.72,null,null,6.22,null,5.82,null,null,null,null,null,null,null,null,null,2.01,7.62,null,2.36,null,null,null,null,null,null,6.62,null,6.84,null,null,8.42,3.98,null,null,4.02,null,null,null,null,null,null,null,null,6.99,null,null,null,null,null,3.65,null,null,null,3.13,null,3.99,3.08,null,null,null,5.51,null,null,8.65,null,null,null,null,null,5.24,null,5.05,null,null,7.47,null,null,7.45,null,5.9,null,4.48,null,null,5.93,7.26,null,null,null,null,null,null,null],"text":["Afghanistan<br />sev:  6.51<br />market_size:   NA<br />wine: no","Åland<br />sev:  1.26<br />market_size:   NA<br />wine: no","Andorra<br />sev:  4.09<br />market_size:   NA<br />wine: no","Angola<br />sev:  5.45<br />market_size: 4.93<br />wine: no","Anguilla<br />sev:  2.62<br />market_size:   NA<br />wine: no","Antigua and Barbuda<br />sev:  2.90<br />market_size: 3.92<br />wine: no","Aruba<br />sev:  3.53<br />market_size: 5.70<br />wine: no","Bahamas<br />sev:  3.94<br />market_size: 1.92<br />wine: no","Bahrain<br />sev:  3.42<br />market_size: 4.27<br />wine: no","Bangladesh<br />sev:  4.10<br />market_size:   NA<br />wine: no","Barbados<br />sev:  3.24<br />market_size: 5.49<br />wine: no","Belize<br />sev:  2.93<br />market_size: 2.66<br />wine: no","Benin<br />sev:  3.66<br />market_size: 3.98<br />wine: no","Bermuda<br />sev:  3.68<br />market_size:   NA<br />wine: no","Bhutan<br />sev:  4.65<br />market_size:   NA<br />wine: no","Bolivia<br />sev:  5.53<br />market_size:   NA<br />wine: no","Bonaire, Sint Eustatius and Saba<br />sev:  1.01<br />market_size:   NA<br />wine: no","Botswana<br />sev:  3.96<br />market_size: 5.15<br />wine: no","British Virgin Islands<br />sev:  2.98<br />market_size:   NA<br />wine: no","Brunei<br />sev:  2.69<br />market_size:   NA<br />wine: no","Burkina Faso<br />sev:  2.76<br />market_size:   NA<br />wine: no","Burundi<br />sev:  5.05<br />market_size:   NA<br />wine: no","Cambodia<br />sev:  3.86<br />market_size:   NA<br />wine: no","Cameroon<br />sev:  5.08<br />market_size: 4.72<br />wine: no","Cape Verde<br />sev:  3.17<br />market_size:   NA<br />wine: no","Cayman Islands<br />sev:  3.07<br />market_size:   NA<br />wine: no","Central African Republic<br />sev:  2.51<br />market_size:   NA<br />wine: no","Chad<br />sev:  2.96<br />market_size:   NA<br />wine: no","Comoros<br />sev:  3.55<br />market_size:   NA<br />wine: no","Cook Islands<br />sev:  1.98<br />market_size:   NA<br />wine: no","Costa Rica<br />sev:  5.84<br />market_size:   NA<br />wine: no","Curacao<br />sev:  3.65<br />market_size:   NA<br />wine: no","Czech Republic<br />sev:  7.08<br />market_size:   NA<br />wine: no","Democratic Republic of the Congo<br />sev:  3.66<br />market_size: 1.27<br />wine: no","Denmark<br />sev:  7.49<br />market_size: 8.16<br />wine: no","Djibouti<br />sev:  3.96<br />market_size:   NA<br />wine: no","Dominica<br />sev:  3.82<br />market_size:   NA<br />wine: no","Dominican Republic<br />sev:  6.35<br />market_size: 6.76<br />wine: no","Ecuador<br />sev:  6.83<br />market_size: 4.44<br />wine: no","El Salvador<br />sev:  5.45<br />market_size: 4.01<br />wine: no","Equatorial Guinea<br />sev:  4.31<br />market_size:   NA<br />wine: no","Eritrea<br />sev:  3.44<br />market_size:   NA<br />wine: no","Fiji<br />sev:  2.54<br />market_size: 5.24<br />wine: no","Finland<br />sev:  4.49<br />market_size: 7.19<br />wine: no","French Guiana<br />sev:  2.37<br />market_size:   NA<br />wine: no","French Polynesia<br />sev:  3.01<br />market_size: 5.05<br />wine: no","Gabon<br />sev:  3.13<br />market_size: 4.60<br />wine: no","Gambia<br />sev:  3.01<br />market_size:   NA<br />wine: no","Ghana<br />sev:  3.88<br />market_size: 5.79<br />wine: no","Gibraltar<br />sev:  7.22<br />market_size:   NA<br />wine: no","Greenland<br />sev:  1.87<br />market_size:   NA<br />wine: no","Grenada<br />sev:  2.72<br />market_size:   NA<br />wine: no","Guadeloupe<br />sev:  3.75<br />market_size:   NA<br />wine: no","Guam<br />sev:  1.00<br />market_size:   NA<br />wine: no","Guatemala<br />sev:  7.27<br />market_size: 5.85<br />wine: no","Guernsey<br />sev:  4.53<br />market_size:   NA<br />wine: no","Guinea<br />sev:  3.75<br />market_size:   NA<br />wine: no","Guinea-Bissau<br />sev:  2.90<br />market_size:   NA<br />wine: no","Guyana<br />sev:  3.59<br />market_size: 4.63<br />wine: no","Haiti<br />sev:  5.54<br />market_size:   NA<br />wine: no","Honduras<br />sev:  5.91<br />market_size:   NA<br />wine: no","Hong Kong<br />sev:  4.87<br />market_size:   NA<br />wine: no","Indonesia<br />sev:  6.94<br />market_size: 6.60<br />wine: no","Iran<br />sev:  7.67<br />market_size:   NA<br />wine: no","Iraq<br />sev:  6.63<br />market_size:   NA<br />wine: no","Ireland<br />sev:  8.26<br />market_size: 6.72<br />wine: no","Isle of Man<br />sev:  2.16<br />market_size:   NA<br />wine: no","Ivory Coast<br />sev:  1.15<br />market_size:   NA<br />wine: no","Jamaica<br />sev:  5.79<br />market_size: 6.22<br />wine: no","Jersey<br />sev:  4.95<br />market_size:   NA<br />wine: no","Kenya<br />sev:  7.02<br />market_size: 5.82<br />wine: no","Kiribati<br />sev:  1.58<br />market_size:   NA<br />wine: no","Kosovo<br />sev:  7.01<br />market_size:   NA<br />wine: no","Kuwait<br />sev:  3.79<br />market_size:   NA<br />wine: no","Laos<br />sev:  3.81<br />market_size:   NA<br />wine: no","Lesotho<br />sev:  4.45<br />market_size:   NA<br />wine: no","Liberia<br />sev:  3.57<br />market_size:   NA<br />wine: no","Liechtenstein<br />sev:  5.66<br />market_size:   NA<br />wine: no","Macao<br />sev:  1.12<br />market_size:   NA<br />wine: no","Macedonia<br />sev:  4.98<br />market_size:   NA<br />wine: no","Malawi<br />sev:  5.64<br />market_size: 2.01<br />wine: no","Malaysia<br />sev:  5.61<br />market_size: 7.62<br />wine: no","Maldives<br />sev:  2.59<br />market_size:   NA<br />wine: no","Mali<br />sev:  2.98<br />market_size: 2.36<br />wine: no","Marshall Islands<br />sev:  2.12<br />market_size:   NA<br />wine: no","Martinique<br />sev:  3.08<br />market_size:   NA<br />wine: no","Mauritania<br />sev:  3.53<br />market_size:   NA<br />wine: no","Micronesia<br />sev:  2.07<br />market_size:   NA<br />wine: no","Moldova<br />sev:  6.61<br />market_size:   NA<br />wine: no","Montserrat<br />sev:  1.94<br />market_size:   NA<br />wine: no","Mozambique<br />sev:  6.31<br />market_size: 6.62<br />wine: no","Myanmar<br />sev:  3.05<br />market_size:   NA<br />wine: no","Namibia<br />sev:  4.54<br />market_size: 6.84<br />wine: no","Nauru<br />sev:  1.20<br />market_size:   NA<br />wine: no","Nepal<br />sev:  5.03<br />market_size:   NA<br />wine: no","Netherlands<br />sev:  9.09<br />market_size: 8.42<br />wine: no","New Caledonia<br />sev:  3.64<br />market_size: 3.98<br />wine: no","Nicaragua<br />sev:  5.20<br />market_size:   NA<br />wine: no","Niger<br />sev:  2.79<br />market_size:   NA<br />wine: no","Nigeria<br />sev:  4.61<br />market_size: 4.02<br />wine: no","Niue<br />sev:  1.55<br />market_size:   NA<br />wine: no","North Korea<br />sev:  7.18<br />market_size:   NA<br />wine: no","Northern Cyprus<br />sev:  3.89<br />market_size:   NA<br />wine: no","Oman<br />sev:  5.15<br />market_size:   NA<br />wine: no","Pakistan<br />sev:  7.35<br />market_size:   NA<br />wine: no","Palau<br />sev:  1.76<br />market_size:   NA<br />wine: no","Palestina<br />sev:  3.82<br />market_size:   NA<br />wine: no","Papua New Guinea<br />sev:  4.74<br />market_size:   NA<br />wine: no","Poland<br />sev:  7.76<br />market_size: 6.99<br />wine: no","Puerto Rico<br />sev:  2.15<br />market_size:   NA<br />wine: no","Qatar<br />sev:  3.51<br />market_size:   NA<br />wine: no","Republic of Congo<br />sev:  1.15<br />market_size:   NA<br />wine: no","Reunion<br />sev:  6.44<br />market_size:   NA<br />wine: no","Russia<br />sev:  9.22<br />market_size:   NA<br />wine: no","Rwanda<br />sev:  5.65<br />market_size: 3.65<br />wine: no","Saint Barthelemy<br />sev:  1.00<br />market_size:   NA<br />wine: no","Saint Helena<br />sev:  1.43<br />market_size:   NA<br />wine: no","Saint Kitts and Nevis<br />sev:  1.02<br />market_size:   NA<br />wine: no","Saint Lucia<br />sev:  1.01<br />market_size: 3.13<br />wine: no","Saint Martin<br />sev:  1.00<br />market_size:   NA<br />wine: no","Saint Vincent and the Grenadines<br />sev:  1.01<br />market_size: 3.99<br />wine: no","Samoa<br />sev:  2.42<br />market_size: 3.08<br />wine: no","San Marino<br />sev:  5.81<br />market_size:   NA<br />wine: no","Sao Tome and Principe<br />sev:  3.71<br />market_size:   NA<br />wine: no","Saudi Arabia<br />sev:  5.32<br />market_size:   NA<br />wine: no","Senegal<br />sev:  3.67<br />market_size: 5.51<br />wine: no","Seychelles<br />sev:  2.39<br />market_size:   NA<br />wine: no","Sierra Leone<br />sev:  3.33<br />market_size:   NA<br />wine: no","Singapore<br />sev:  4.14<br />market_size: 8.65<br />wine: no","Sint Maarten<br />sev:  2.99<br />market_size:   NA<br />wine: no","Solomon Islands<br />sev:  2.23<br />market_size:   NA<br />wine: no","Somalia<br />sev:  4.82<br />market_size:   NA<br />wine: no","South Georgia and the South Sandwich Islands<br />sev:  1.29<br />market_size:   NA<br />wine: no","South Sudan<br />sev:  4.09<br />market_size:   NA<br />wine: no","Sri Lanka<br />sev:  5.39<br />market_size: 5.24<br />wine: no","Sudan<br />sev:  4.04<br />market_size:   NA<br />wine: no","Suriname<br />sev:  3.09<br />market_size: 5.05<br />wine: no","Svalbard and Jan Mayen<br />sev:  1.01<br />market_size:   NA<br />wine: no","Swaziland<br />sev:  4.34<br />market_size:   NA<br />wine: no","Sweden<br />sev:  7.87<br />market_size: 7.47<br />wine: no","Syria<br />sev:  6.25<br />market_size:   NA<br />wine: no","Tanzania<br />sev:  7.12<br />market_size:   NA<br />wine: no","Thailand<br />sev:  5.48<br />market_size: 7.45<br />wine: no","Timor-Leste<br />sev:  2.87<br />market_size:   NA<br />wine: no","Togo<br />sev:  3.77<br />market_size: 5.90<br />wine: no","Tonga<br />sev:  2.82<br />market_size:   NA<br />wine: no","Trinidad and Tobago<br />sev:  3.78<br />market_size: 4.48<br />wine: no","Turks and Caicos Islands<br />sev:  2.79<br />market_size:   NA<br />wine: no","Tuvalu<br />sev:  1.65<br />market_size:   NA<br />wine: no","Uganda<br />sev:  5.84<br />market_size: 5.93<br />wine: no","United Arab Emirates<br />sev:  5.03<br />market_size: 7.26<br />wine: no","United Kingdom<br />sev:  9.37<br />market_size:   NA<br />wine: no","Vanuatu<br />sev:  1.96<br />market_size:   NA<br />wine: no","Vatican City<br />sev:  6.19<br />market_size:   NA<br />wine: no","Venezuela<br />sev:  7.38<br />market_size:   NA<br />wine: no","Virgin Islands, U.S.<br />sev:  1.01<br />market_size:   NA<br />wine: no","Yemen<br />sev:  5.94<br />market_size:   NA<br />wine: no","Zambia<br />sev:  4.17<br />market_size:   NA<br />wine: no"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(255,255,255,1)","opacity":1,"size":3.77952755905512,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)"}},"hoveron":"points","name":"no","legendgroup":"no","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":23.3059360730594,"r":7.30593607305936,"b":40.1826484018265,"l":54.7945205479452},"font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":true,"range":[0.55,10.45],"tickmode":"auto","ticktext":["2.5","5.0","7.5","10.0"],"tickvals":[2.5,5,7.5,10],"categoryorder":"array","categoryarray":["2.5","5.0","7.5","10.0"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":14.6118721461187},"tickangle":-0,"showline":true,"linecolor":"rgba(0,0,0,1)","linewidth":0.66417600664176,"showgrid":true,"gridcolor":"rgba(240,240,240,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y","title":{"text":"Spotted Lanternfly (<i>Lycorma delicatula<\/i>) Invasion Risk","font":{"color":"rgba(0,0,0,1)","family":"","size":11}},"hoverformat":".2f","showspikes":true},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":true,"range":[0.55,10.45],"tickmode":"auto","ticktext":["2.5","5.0","7.5","10.0"],"tickvals":[2.5,5,7.5,10],"categoryorder":"array","categoryarray":["2.5","5.0","7.5","10.0"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":14.6118721461187},"tickangle":-0,"showline":true,"linecolor":"rgba(0,0,0,1)","linewidth":0.66417600664176,"showgrid":true,"gridcolor":"rgba(240,240,240,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x","title":{"text":"Wine Export Market Size, log10 USD","font":{"color":"rgba(0,0,0,1)","family":"","size":11}},"hoverformat":".2f","showspikes":true},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":false,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895},"y":0.959399606299213},"annotations":[{"text":"<br />avg_wine","x":1.02,"y":1,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"left","yanchor":"bottom","legendTitle":true}],"hovermode":"closest","barmode":"relative","title":{"text":"Spotted Lanternfly Paninvasion Risk = 9 of 10 (P<0.001)","font":{"size":12},"x":0.1,"y":0.99}},"config":{"doubleClick":"reset","showSendToCloud":false},"source":"A","attrs":{"411a6701ff08":{"intercept":{},"slope":{},"type":"scatter"},"411a340e9b0d":{"intercept":{},"slope":{}},"411a2ae58d2e":{"intercept":{},"slope":{}},"411a4497dd02":{"text":{},"x":{},"y":{},"size":{},"fill":{}}},"cur_data":"411a6701ff08","visdat":{"411a6701ff08":["function (y) ","x"],"411a340e9b0d":["function (y) ","x"],"411a2ae58d2e":["function (y) ","x"],"411a4497dd02":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
-<div id="save-plot-output" class="section level1">
-<h1 class="hasAnchor">
-<a href="#save-plot-output" class="anchor"></a>Save plot output</h1>
+<div class="section level2">
+<h2 id="save-plot-output">Save plot output<a class="anchor" aria-label="anchor" href="#save-plot-output"></a>
+</h2>
 <p>Here, you can set to save the scatter plot to <code>/vignettes</code>
 as a <code>.pdf</code> file by setting the <code>if</code> from
 <code>FALSE</code> to <code>TRUE</code>, as in the other vignettes. We
 also have a version of the data saved for the Google Earth Engine App
 data cleaning vignette.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw">if</span><span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span><span class="op">{</span>
-  <span class="fu"><a href="https://rdrr.io/r/grDevices/pdf.html">pdf</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="op">)</span>,
-              <span class="st">"vignettes"</span>, 
-              <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"market_scatter_v4_1.pdf"</span><span class="op">)</span><span class="op">)</span>,
-    width <span class="op">=</span> <span class="fl">8.5</span><span class="op">*</span><span class="fl">.95</span>, height <span class="op">=</span> <span class="fl">11</span><span class="op">*</span><span class="fl">.95</span><span class="op">)</span>
-
-<span class="va">market_scatter</span>
-<span class="fu"><a href="https://rdrr.io/r/base/invisible.html">invisible</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/grDevices/dev.html">dev.off</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
-
-<span class="va">countries_sev</span> <span class="op">&lt;-</span> <span class="va">countries_sev_market</span> <span class="op">%&gt;%</span> 
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">ID</span>, <span class="va">market_size</span>, <span class="va">sev</span><span class="op">)</span>
-
-<span class="fu"><a href="https://rdrr.io/r/base/save.html">save</a></span><span class="op">(</span><span class="va">countries_sev</span>, file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"data"</span>, <span class="st">"countries_sev.rda"</span><span class="op">)</span><span class="op">)</span>
-<span class="op">}</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw">if</span><span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span><span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/grDevices/pdf.html" class="external-link">pdf</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>              <span class="st">"vignettes"</span>, </span>
+<span>              <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"market_scatter_v4_1.pdf"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    width <span class="op">=</span> <span class="fl">8.5</span><span class="op">*</span><span class="fl">.95</span>, height <span class="op">=</span> <span class="fl">11</span><span class="op">*</span><span class="fl">.95</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">market_scatter</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/invisible.html" class="external-link">invisible</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/grDevices/dev.html" class="external-link">dev.off</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">countries_sev</span> <span class="op">&lt;-</span> <span class="va">countries_sev_market</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">ID</span>, <span class="va">market_size</span>, <span class="va">sev</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/save.html" class="external-link">save</a></span><span class="op">(</span><span class="va">countries_sev</span>, file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"data"</span>, <span class="st">"countries_sev.rda"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
 </div>
   </div>
 
@@ -621,11 +633,13 @@ data cleaning vignette.</p>
 
 
       <footer><div class="copyright">
-  <p>Developed by Nicholas A. Huron, Jocelyn E. Behm, Matthew R. Helmus.</p>
+  <p></p>
+<p>Developed by Nicholas A. Huron, Jocelyn E. Behm, Matthew R. Helmus.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer>
@@ -633,6 +647,8 @@ data cleaning vignette.</p>
 
   
 
+
+  
 
   </body>
 </html>
