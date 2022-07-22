@@ -76,7 +76,7 @@ man_county_data <- read_csv(file.path(here(), "..", "..", "lycordata", "data-raw
 
 ## Merge and clean data
 
-### `tinyslf`
+### tinyslf
 
 This code finds the county that each presence point corresponds to and attaches the county shapefile data to those rows. It also removes records that do not fall in a U.S. county (likely erroneous records). We also remove an errant record for Wasatch county, UT.
 
@@ -141,7 +141,7 @@ by_county %<>%
   st_transform('+proj=longlat +datum=WGS84')
 ```
 
-### `slf_county_record_timeline.csv`
+### slf_county_record_timeline.csv
 
 Because our first record and establishment data are constantly updating from multiple sources, we have a googlesheet that is the source of `man_by_county` (saved as `slf_county_record_timeline.csv`). We again adapt code from SDB to tidy and splice these new records into the counties dataset.
 
