@@ -35,6 +35,9 @@ To understand how this paninvasion risk assessment was made:
  install_github("ieco-lab/slfrsk")
 ```
 
+Questions? Feel free to contact us (lead author: N. Huron at
+<nahuron@gmail.com> or maintainer: M. Helmus at <mrhelmus@temple.edu>).
+
 ## Citation
 
 Huron, N. A., Behm, J. E. & Helmus, M. R. 2022. Paninvasion severity
