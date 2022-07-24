@@ -40,6 +40,8 @@ To understand how this paninvasion risk assessment was made:
  install_github("ieco-lab/slfrsk")
 ```
 
+Questions? Feel free to contact us (lead author: N. Huron at [nahuron@gmail.com](mailto:nahuron@gmail.com) or maintainer: M. Helmus at [mrhelmus@temple.edu](mailto:mrhelmus@temple.edu)).
+
 ## Citation
 
 Huron, N. A., Behm, J. E. & Helmus, M. R. 2022. Paninvasion severity assessment of a U.S. grape pest to disrupt the global wine market. *Communications Biology*, 5:1--11. [https://doi.org/10.1038/s42003-022-03580-w](https://doi.org/10.1038/s42003-022-03580-w).
