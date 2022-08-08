@@ -32,31 +32,35 @@ library(tidyverse) #data tidying
 library(magrittr) #fast pipe assign
 library(lubridate) #extract years
 library(stargazer) #make easy model table for pub
+library(sf) #manipulate by_county
+library(here) #easy relative pathing
 ```
 
 ## Read in data
 
 ```{r read in data needed for functions}
 #data to load
+#by county reg and estab
+data(by_county, package = "slfrsk")
 
 #slfrsk data (trade)
-data("states_summary_present_ensemble",package = "slfrsk")
+data("states_summary_present_ensemble", package = "slfrsk")
 
 #recode the established variable as binary
 states_summary_present_ensemble <- states_summary_present_ensemble %>%
   mutate(estab = ifelse(status == "established", 1, 0)) %>%
    dplyr::select(ID:status, estab, everything())
+```
 
+```{r}
 #lycormap and lycordata data
 #separate version with regulatory incidents
 data("tinyslf", package = "lycormap")
 
 # reading manually added data (for a later step)
-man_county_data <- read_csv(file.path("/Volumes/GoogleDrive-104607290079958926089/My Drive/spotted_lanternfly_ieco_projects/code/FINAL_CODE/R package/lycordata/", "data-raw", "additional",
-                                      "slf_county_record_timeline.csv"),
+man_county_data <- read_csv(file.path(here(), "..", "..", "lycordata", "data-raw", "additional", "slf_county_record_timeline.csv"),
                             col_types = cols(.default = "c", FIPS = "d", 
                                              RT_check = "l", ST_check = "l", RS_match = "l"))
-
 ```
 
 ## Quick clean up of `lycordata`
@@ -103,6 +107,15 @@ reg_states <- man_county_data %>%
   bind_rows(tinyslf %>%
               filter(slf_present == TRUE | slf_established == TRUE) %>%
               summarize(states = unique(state)), .) %>%
+#clear it to just unique values
+  distinct(states)
+
+#by_county version
+reg_states <- by_county %>%
+  st_drop_geometry() %>%
+  as_tibble() %>%
+  filter(!is.na(FirstRecord) | !is.na(YearOfEstablishment) | !is.na(FirstRecord_man) | !is.na(YearOfEstablishment_man)) %>%
+  summarize(states = toupper(unique(STUSPS))) %>%
 #clear it to just unique values
   distinct(states)
 

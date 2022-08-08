@@ -185,7 +185,7 @@ display a map of the earth with several different data layers already
 enabled (see image below for example).</p>
 <center>
 <div class="figure">
-<img src="slfrsk_ee_home_label.png" alt=""><p class="caption">Landing page and labeled visualization tools for
+<img src="../docs/articles/slfrsk_ee_home_label.png" alt=""><p class="caption">Landing page and labeled visualization tools for
 <code>slfrsk</code> Paninvasion Severity App.</p>
 </div>
 </center>
@@ -244,7 +244,7 @@ detailed account of each layer and its source data, as well as its color
 scale and geometry.</p>
 <center>
 <div class="figure">
-<img src="slfrsk_ee_layers_panel.png" alt=""><p class="caption">Default view of Layers Panel for <code>slfrsk</code>
+<img src="../docs/articles/slfrsk_ee_layers_panel.png" alt=""><p class="caption">Default view of Layers Panel for <code>slfrsk</code>
 Paninvasion Severity App.</p>
 </div>
 </center>
@@ -305,7 +305,7 @@ layer is a shaded fill for <em>only</em> <code>countries</code> that
 Google Earth Engine (EE) Paninvasion Severity App <a href="https://ieco.users.earthengine.app/view/ieco-slf-riskmap" class="external-link uri">https://ieco.users.earthengine.app/view/ieco-slf-riskmap</a>.
 It provides a brief demonstration of how the data were treated prior to
 inclusion in the app. Output data from this vignette are saved in the
-shared GoogleDrive <code>./slfRiskMapping/data/slfRisk/</code>
+shared GoogleDrive <code>./slfRiskMapping/data/slfrsk/</code>
 directory.</p>
 <div class="section level3">
 <h3 id="setup">Setup<a class="anchor" aria-label="anchor" href="#setup"></a>
@@ -316,8 +316,6 @@ data visualized in <code>vignette-021-quadrant-plots</code>.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">slfrsk</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: package 'tidyr' was built under R version 4.0.5</span></span>
-<span><span class="co">#&gt; Warning: package 'readr' was built under R version 4.0.5</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://rgdal.r-forge.r-project.org" class="external-link">rgdal</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-forge.r-project.org/projects/rgeos/" class="external-link">rgeos</a></span><span class="op">)</span>  <span class="co">#gSimplify</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/eblondel/cleangeo" class="external-link">cleangeo</a></span><span class="op">)</span> <span class="co">#clgeo_Clean</span></span></code></pre></div>
@@ -464,10 +462,12 @@ shapefiles (<a href="https://gadm.org/download_world.html" class="external-link 
 <code>countries</code> and <code>states</code> geopolitical borders.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span>  <span class="co">#shapefile of USA: data obtained from GADM: https://gadm.org/download_world.html</span></span>
-<span><span class="va">states</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rgdal/man/readOGR.html" class="external-link">readOGR</a></span><span class="op">(</span>dsn <span class="op">=</span> <span class="st">"/Volumes/GoogleDrive-104607290079958926089/Shared drives/slfData/data/slfRisk/geo_shapefiles/gadm36_USA_shp/gadm36_USA_1.shp"</span>, verbose <span class="op">=</span> <span class="cn">F</span>, p4s <span class="op">=</span> <span class="st">'+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0'</span><span class="op">)</span></span>
+<span><span class="va">states</span> <span class="op">&lt;-</span> <span class="fu"><a href="http://rgdal.r-forge.r-project.org/reference/readOGR.html" class="external-link">readOGR</a></span><span class="op">(</span>dsn <span class="op">=</span> <span class="st">"/Volumes/GoogleDrive-104607290079958926089/Shared drives/slfData/data/slfrsk/geo_shapefiles/gadm36_USA_shp/gadm36_USA_1.shp"</span>, verbose <span class="op">=</span> <span class="cn">F</span>, p4s <span class="op">=</span> <span class="st">'+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0'</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#states &lt;- readOGR(dsn = file.path(here(), "..", "..", "..", "..", "..", "data", "slfrsk", "geo_shapefiles", "gadm36_USA_shp", "gadm36_USA_1.shp"), verbose = F, p4s = '+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0') </span></span>
 <span></span>
 <span>  <span class="co">#shapefile of world by countries</span></span>
-<span><span class="va">countries</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rgdal/man/readOGR.html" class="external-link">readOGR</a></span><span class="op">(</span><span class="st">"/Volumes/GoogleDrive-104607290079958926089/Shared drives/slfData/data/slfRisk/geo_shapefiles/gadm36_levels_shp/gadm36_0.shp"</span>, verbose <span class="op">=</span> <span class="cn">F</span>, p4s <span class="op">=</span> <span class="st">'+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0'</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">countries</span> <span class="op">&lt;-</span> <span class="fu"><a href="http://rgdal.r-forge.r-project.org/reference/readOGR.html" class="external-link">readOGR</a></span><span class="op">(</span><span class="st">"/Volumes/GoogleDrive-104607290079958926089/Shared drives/slfData/data/slfrsk/geo_shapefiles/gadm36_levels_shp/gadm36_0.shp"</span>, verbose <span class="op">=</span> <span class="cn">F</span>, p4s <span class="op">=</span> <span class="st">'+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0'</span><span class="op">)</span></span></code></pre></div>
 <p>There are a few shapefile data entries that need to be cleaned, so we
 alter the names. We also removed the U.S from <code>countries</code>, as
 in other analyses.</p>
@@ -485,7 +485,7 @@ in other analyses.</p>
 <span><span class="co">#rm USA</span></span>
 <span><span class="va">countries</span> <span class="op">&lt;-</span> <span class="va">countries</span><span class="op">[</span><span class="va">countries</span><span class="op">$</span><span class="va">NAME_0</span> <span class="op">!=</span> <span class="st">"United States"</span>,<span class="op">]</span></span></code></pre></div>
 <p>These shapefiles are rather large and unwieldly. To make the more
-manageable, we use <code>regeos::gSimplify()</code> to make them smaller
+manageable, we use <code><a href="https://rdrr.io/pkg/rgeos/man/topo-unary-gSimplify.html" class="external-link">rgeos::gSimplify()</a></code> to make them smaller
 by modifying the <code>tol</code> parameter, which is the value used in
 the Douglas-Peuker algorithm. For <code>countries</code>, we downsized
 the used file in addition to the <code>_lo</code> versions used for both
@@ -532,7 +532,7 @@ appropriately.</p>
 <span><span class="va">countries_lo</span><span class="op">@</span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">countries_lo</span><span class="op">@</span><span class="va">data</span>, <span class="va">countries_summary_present_ensemble</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"NAME_0"</span> <span class="op">=</span> <span class="st">"geopol_unit"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>We also rename the column fields to accommodate for ESRI shapefile
 column name character limits. A README file exists in the GoogleDrive
-<code>./slfData/data/slfRisk/</code> that outlines the keys for the old
+<code>./slfData/data/slfrsk/</code> that outlines the keys for the old
 names and the shorter names used here.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#states</span></span>
@@ -581,20 +581,20 @@ names and the shorter names used here.</p>
 <code>states</code>, and <code>combined</code> for regular and
 <code>_lo</code> versions) are written to the shared GoogleDrive
 directory
-<code>./slfData/data/slfRisk/geo_shapefiles/gadm36_USA_with_data/</code>for
+<code>./slfData/data/slfrsk/geo_shapefiles/gadm36_USA_with_data/</code>for
 visualization with EE.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#states</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/rgdal/man/writeOGR.html" class="external-link">writeOGR</a></span><span class="op">(</span>obj <span class="op">=</span> <span class="va">states</span>, dsn <span class="op">=</span> <span class="st">"/Volumes/GoogleDrive-104607290079958926089/Shared drives/slfData/data/slfRisk/geo_shapefiles/gadm36_USA_with_data/"</span>,  driver<span class="op">=</span><span class="st">"ESRI Shapefile"</span>, layer <span class="op">=</span> <span class="st">"states"</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span>, overwrite_layer <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/rgdal/man/writeOGR.html" class="external-link">writeOGR</a></span><span class="op">(</span>obj <span class="op">=</span> <span class="va">states_lo</span>, dsn <span class="op">=</span> <span class="st">"/Volumes/GoogleDrive-104607290079958926089/Shared drives/slfData/data/slfRisk/geo_shapefiles/gadm36_USA_with_data/"</span>,  driver<span class="op">=</span><span class="st">"ESRI Shapefile"</span>, layer <span class="op">=</span> <span class="st">"states_lores"</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span>, overwrite_layer <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="http://rgdal.r-forge.r-project.org/reference/writeOGR.html" class="external-link">writeOGR</a></span><span class="op">(</span>obj <span class="op">=</span> <span class="va">states</span>, dsn <span class="op">=</span> <span class="st">"/Volumes/GoogleDrive-104607290079958926089/Shared drives/slfData/data/slfrsk/geo_shapefiles/gadm36_USA_with_data/"</span>,  driver<span class="op">=</span><span class="st">"ESRI Shapefile"</span>, layer <span class="op">=</span> <span class="st">"states"</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span>, overwrite_layer <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="http://rgdal.r-forge.r-project.org/reference/writeOGR.html" class="external-link">writeOGR</a></span><span class="op">(</span>obj <span class="op">=</span> <span class="va">states_lo</span>, dsn <span class="op">=</span> <span class="st">"/Volumes/GoogleDrive-104607290079958926089/Shared drives/slfData/data/slfrsk/geo_shapefiles/gadm36_USA_with_data/"</span>,  driver<span class="op">=</span><span class="st">"ESRI Shapefile"</span>, layer <span class="op">=</span> <span class="st">"states_lores"</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span>, overwrite_layer <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">#countries</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/rgdal/man/writeOGR.html" class="external-link">writeOGR</a></span><span class="op">(</span>obj <span class="op">=</span> <span class="va">countries</span>, dsn <span class="op">=</span> <span class="st">"/Volumes/GoogleDrive-104607290079958926089/Shared drives/slfData/data/slfRisk/geo_shapefiles/gadm36_levels_with_data/"</span>,  driver<span class="op">=</span><span class="st">"ESRI Shapefile"</span>, layer <span class="op">=</span> <span class="st">"countries"</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span>, overwrite_layer <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/rgdal/man/writeOGR.html" class="external-link">writeOGR</a></span><span class="op">(</span>obj <span class="op">=</span> <span class="va">countries_lo</span>, dsn <span class="op">=</span> <span class="st">"/Volumes/GoogleDrive-104607290079958926089/Shared drives/slfData/data/slfRisk/geo_shapefiles/gadm36_levels_with_data/"</span>,  driver<span class="op">=</span><span class="st">"ESRI Shapefile"</span>, layer <span class="op">=</span> <span class="st">"countries_lores"</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span>, overwrite_layer <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="http://rgdal.r-forge.r-project.org/reference/writeOGR.html" class="external-link">writeOGR</a></span><span class="op">(</span>obj <span class="op">=</span> <span class="va">countries</span>, dsn <span class="op">=</span> <span class="st">"/Volumes/GoogleDrive-104607290079958926089/Shared drives/slfData/data/slfrsk/geo_shapefiles/gadm36_levels_with_data/"</span>,  driver<span class="op">=</span><span class="st">"ESRI Shapefile"</span>, layer <span class="op">=</span> <span class="st">"countries"</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span>, overwrite_layer <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="http://rgdal.r-forge.r-project.org/reference/writeOGR.html" class="external-link">writeOGR</a></span><span class="op">(</span>obj <span class="op">=</span> <span class="va">countries_lo</span>, dsn <span class="op">=</span> <span class="st">"/Volumes/GoogleDrive-104607290079958926089/Shared drives/slfData/data/slfrsk/geo_shapefiles/gadm36_levels_with_data/"</span>,  driver<span class="op">=</span><span class="st">"ESRI Shapefile"</span>, layer <span class="op">=</span> <span class="st">"countries_lores"</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span>, overwrite_layer <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">#combined</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/rgdal/man/writeOGR.html" class="external-link">writeOGR</a></span><span class="op">(</span>obj <span class="op">=</span> <span class="va">combined</span>, dsn <span class="op">=</span> <span class="st">"/Volumes/GoogleDrive-104607290079958926089/Shared drives/slfData/data/slfRisk/geo_shapefiles/combined/"</span>,  driver<span class="op">=</span><span class="st">"ESRI Shapefile"</span>, layer <span class="op">=</span> <span class="st">"combined"</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span>, overwrite_layer <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/rgdal/man/writeOGR.html" class="external-link">writeOGR</a></span><span class="op">(</span>obj <span class="op">=</span> <span class="va">combined_lo</span>, dsn <span class="op">=</span> <span class="st">"/Volumes/GoogleDrive-104607290079958926089/Shared drives/slfData/data/slfRisk/geo_shapefiles/combined/"</span>,  driver<span class="op">=</span><span class="st">"ESRI Shapefile"</span>, layer <span class="op">=</span> <span class="st">"combined_lores"</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span>, overwrite_layer <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="http://rgdal.r-forge.r-project.org/reference/writeOGR.html" class="external-link">writeOGR</a></span><span class="op">(</span>obj <span class="op">=</span> <span class="va">combined</span>, dsn <span class="op">=</span> <span class="st">"/Volumes/GoogleDrive-104607290079958926089/Shared drives/slfData/data/slfrsk/geo_shapefiles/combined/"</span>,  driver<span class="op">=</span><span class="st">"ESRI Shapefile"</span>, layer <span class="op">=</span> <span class="st">"combined"</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span>, overwrite_layer <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="http://rgdal.r-forge.r-project.org/reference/writeOGR.html" class="external-link">writeOGR</a></span><span class="op">(</span>obj <span class="op">=</span> <span class="va">combined_lo</span>, dsn <span class="op">=</span> <span class="st">"/Volumes/GoogleDrive-104607290079958926089/Shared drives/slfData/data/slfrsk/geo_shapefiles/combined/"</span>,  driver<span class="op">=</span><span class="st">"ESRI Shapefile"</span>, layer <span class="op">=</span> <span class="st">"combined_lores"</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span>, overwrite_layer <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="supplemental-check-of-shapefiles">Supplemental check of shapefiles<a class="anchor" aria-label="anchor" href="#supplemental-check-of-shapefiles"></a>
@@ -681,7 +681,7 @@ Wikipedia. 2020.
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>
