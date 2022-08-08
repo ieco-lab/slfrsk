@@ -8,7 +8,6 @@ articles:
   vignette-010-tidy-data: vignette-010-tidy-data.html
   vignette-011-suitability-models: vignette-011-suitability-models.html
   vignette-021-quadrant-plots: vignette-021-quadrant-plots.html
-  vignette-025-quadrant-plots-alt: vignette-025-quadrant-plots-alt.html
   vignette-026-quadrant-plots-alt-median: vignette-026-quadrant-plots-alt-median.html
   vignette-027-quadrant-plots-alt-mean: vignette-027-quadrant-plots-alt-mean.html
   vignette-030-potentials-maps: vignette-030-potentials-maps.html
@@ -17,5 +16,5 @@ articles:
   vignette-042-trade-presence: vignette-042-trade-presence.html
   vignette-050-ava-temp: vignette-050-ava-temp.html
   vignette-060-spread-figure: vignette-060-spread-figure.html
-last_built: 2022-08-04T17:18Z
+last_built: 2022-08-08T19:52Z
 

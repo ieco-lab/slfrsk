@@ -49,7 +49,8 @@ Imports:
     lubridate,
     stargazer,
     RStoolbox,
-    parsedate
+    parsedate,
+    leaflet
 RoxygenNote: 7.1.1
 Depends: 
     R (>= 3.50)

@@ -30,18 +30,21 @@ This vignette fits a simple logistic regression model in the form of a binary de
 #packages to load
 library(tidyverse) #data tidying
 library(magrittr) #fast pipe assign
-library(lubridate) #extract years
 library(stargazer) #make easy model table for pub
 library(sf) #manipulate by_county
 library(here) #easy relative pathing
+
+  #packages to use to extract raw data
+#library(lubridate) #extract years
+#library(tigris) #county level shapefiles
+#library(lycormap) #package to get tinyslf dataset from
+#options(tigris_use_cache = TRUE) # make sure that tigris does not keep downloading the files
 ```
 
-## Read in data
+## Read in trade data and established states
 
 ```{r read in data needed for functions}
 #data to load
-#by county reg and estab
-data(by_county, package = "slfrsk")
 
 #slfrsk data (trade)
 data("states_summary_present_ensemble", package = "slfrsk")
@@ -52,64 +55,204 @@ states_summary_present_ensemble <- states_summary_present_ensemble %>%
    dplyr::select(ID:status, estab, everything())
 ```
 
-```{r}
-#lycormap and lycordata data
-#separate version with regulatory incidents
+## Read in SLF reporting data
+
+The data used here for the spread figure are based on an upcoming suite of packages (`lycodata` and `lycormap`) produced by the iEcoLab. The records in these packages contain data that are not yet available to the public, so all questions regarding the raw data should be directed to the creator of the `lycor*` suite, Seba De Bona (SDB, ([sebastiano.debona@temple.edu](mailto:sebastiano.debona@temple.edu))) or to Matthew R. Helmus ([mrhelmus@temple.edu](mailto:mrhelmus@temple.edu)). 
+
+Notably these data are used only to get regulatory events. The `slfrsk` data already has established states, but it lacks the states that have regulatory events recorded but no established populations.
+
+Here, we will read in a `.rda` file that was created using the example code below from the raw data. These example code chunks are adapted from SDB code.
+
+```{r read in rda file for reg}
+#data call
+data(by_county, package = "slfrsk")
+```
+
+## Example code for raw data to county-level data
+
+### Read in county shapefiles
+
+We obtain the counties shapefile as a simple feature (sf) from the `tigris` package.
+
+```{r counties shapefile, message=FALSE, eval=FALSE}
+counties <- counties(cb = T, resolution = "5m")
+```
+
+Now, we read in the SLF records from the package `lycormap`. We also obtain the supplemental SLF records that contain the updated transportation data for uninvaded states, which was obtained from the raw data in the `lycodata` package. At the time of publication of `slfrsk`, additional data were saved as raw data that comes with `lycordata` (`slf_county_record_timeline.csv`).
+
+```{r read in records data for map figure, eval=FALSE}
 data("tinyslf", package = "lycormap")
 
 # reading manually added data (for a later step)
 man_county_data <- read_csv(file.path(here(), "..", "..", "lycordata", "data-raw", "additional", "slf_county_record_timeline.csv"),
                             col_types = cols(.default = "c", FIPS = "d", 
-                                             RT_check = "l", ST_check = "l", RS_match = "l"))
+                                          RT_check = "l", ST_check = "l", RS_match = "l"))
 ```
 
-## Quick clean up of `lycordata`
+### Merge and clean data
 
-We now use some other data to get states with regulatory events. These data come from the `lycordata` package. Please email SDB if unable to access the packages/data ([sebastiano.debona@temple.edu](mailto:sebastiano.debona@temple.edu)). The `slfrsk` data already has established states, but it lacks the states that have regulatory events recorded but no established populations.
+#### tinyslf
 
-```{r tidying and summarizing the regulatory states}
-#standardize the dates in the data
+This code finds the county that each presence point corresponds to and attaches the county shapefile data to those rows. It also removes records that do not fall in a U.S. county (likely erroneous records). We also remove an errant record for Wasatch county, UT.
+
+```{r tinyslf st combining and tidying, message=FALSE, eval=FALSE}
+#adapted from SDB code in lycordata
+
+#add column of temporary row ID's for later reference
+tinyslf %<>% 
+  add_column(row_ID = 1:nrow(.))
+
+tinyslf %<>%
+  # reducing data to coordinates only, and ID for future merging
+  dplyr::select(latitude, longitude, row_ID) %>%
+  # transforming into sf object
+  st_as_sf(coords = c("longitude", "latitude"),
+           crs = st_crs(counties)) %>% 
+  #intersecting state polygons with data coordinates to match them to U.S. counties
+  st_join(., counties, join = st_intersects) %>%
+  #make it a tibble now
+  as_tibble() %>% 
+  #simplify to row ID, county name and identity
+  dplyr::select(row_ID, county = NAME, GEOID) %>% 
+  #then joining this into main tinyslf data
+  left_join(tinyslf, ., by = "row_ID") %>% 
+  #remove the temporary id column
+  dplyr::select(-c(row_ID))
+
+#remove the NA values for county. which are the points that do not fall in a county
+tinyslf %<>%
+  filter(!is.na(county))
+
+#rm errant Wasatch co, UT record
+tinyslf %<>%
+  filter(!(state %in% "UT" & county %in% "Wasatch"))
+```
+
+Add the observations and establishment dates to the county outline data. Now, the earliest year of establishment or recording of an observation (dead or alive) are identified from the `tinyslf` dataset and then added accordingly to county shapefile data. Lastly, the projection is confirmed.
+
+```{r find establishment and first records, message=FALSE, eval=FALSE}
+#get the year of establishment
+by_county <- tinyslf %>% 
+  group_by(GEOID) %>% 
+  arrange(year) %>% 
+  filter(slf_established) %>% 
+  summarize(YearOfEstablishment = min(year)) %>% 
+  ungroup() %>%
+  #join to the counties shapefile
+  left_join(counties, ., by = "GEOID")
+
+# and add the first record year
+by_county <- tinyslf %>% 
+  group_by(GEOID) %>% 
+  arrange(year) %>% 
+  filter(slf_present) %>% 
+  summarize(FirstRecord = min(year)) %>% 
+  ungroup() %>% 
+  #join to shapefile that also includes year of establishment
+  left_join(by_county, ., by = "GEOID")
+
+# providing correct projections
+by_county %<>% 
+  st_transform('+proj=longlat +datum=WGS84')
+```
+
+#### slf_county_record_timeline.csv
+
+Because our first record and establishment data are constantly updating from multiple sources, we have a googlesheet that is the source of `man_by_county` (saved as `slf_county_record_timeline.csv`). We again adapt code from SDB to tidy and splice these new records into the counties dataset.
+
+```{r add manual counties data to counties data, message=FALSE, eval=FALSE}
+#we can use the FIPS code to merge to the main data
+#extract the status and the year of record/establishment
+#there are three date columns that hopefully can be collapsed into 1
+
+#standardize date format
 man_county_data %<>% 
   mutate_at(vars(starts_with("Date")), .funs = ~parsedate::parse_date(.))
 
-#get years for the manual data
+#data can have multiple dates associated to it, meaning a county can have info on when the first record was scored separately from establishment date
+#not all infestations have an establishment data set, so cases where it is absent will be set to 2020 based on when data were analyzed
+# for Date_Alive/Date_Morbound, we'll take the smallest, if both are present
 man_county_data %<>% 
   mutate(Year_Alive = year(Date_Alive),
          Year_Morbund = year(Date_Morbund),
          Year_FirstRecord = ifelse(!(is.na(Year_Alive) & is.na(Year_Morbund)),
                                    pmin(Year_Alive, Year_Morbund, na.rm = T),
                                    NA)
-  ) %>% 
+         ) %>% 
   dplyr::select(-c(Year_Alive, Year_Morbund))
 
-# we here create two variables that echo those in the by_county
+#create two variables that echo those in the by_county for years of first record and establishment
 man_county_data %<>% 
   filter(!is.na(Status)) %>% 
-  # first grabbing the date (if present) from the Date_Establish or Date_Alive/Morbound columns
-  # Then attributing 2020 to all other established records without date
-  # doing this with nested ifelse statements
+  #first grabbing the date (if present) from the Date_Establish or Date_Alive/Morbound columns or setting 2020 to established records without dates
+  #establishment
   mutate(YearOfEstablishment_man = ifelse(
+    #if infestation and has a date of establishment
     Status == "Infestation" & !is.na(Date_Establish),
     year(Date_Establish),
+    #if infestation and no date, sets to 2020
     ifelse(Status == "Infestation" & is.na(Date_Establish), 2020, NA)),
+    #first record
     FirstRecord_man = ifelse(
-      Status != "Infestation" & !is.na(Year_FirstRecord),
-      Year_FirstRecord,
-      ifelse(Status == "Infestation" & is.na(Year_FirstRecord), 2020, NA))) %>% 
+    #not infested and has a year of first record
+    Status != "Infestation" & !is.na(Year_FirstRecord),
+    Year_FirstRecord,
+    #infested and does not have a year of first record is set to 2020
+    ifelse(Status == "Infestation" & is.na(Year_FirstRecord), 2020, NA))) %>% 
   dplyr::select(-Year_FirstRecord)
+```
 
-#get the states by pulling counties with records or establishment
-reg_states <- man_county_data %>%
-  rename(state = State) %>%
-  filter(!is.na(FirstRecord_man) | !is.na(YearOfEstablishment_man)) %>%
-  summarize(states = toupper(unique(state))) %>%
-#then bind to tinyslf main data to it
-  bind_rows(tinyslf %>%
-              filter(slf_present == TRUE | slf_established == TRUE) %>%
-              summarize(states = unique(state)), .) %>%
-#clear it to just unique values
-  distinct(states)
+#### Merge the two datasets to just one county-level dataset
 
+Now that both datasets are cleaned to have years of first record and establishment, they can be combined. A combined FIPS code is added to the full county dataset first.
+
+```{r merge by_county and man_county_data, eval=FALSE}
+#create combined FIPS columns
+by_county %<>%
+  mutate(FIPS = as.numeric(paste0(STATEFP, COUNTYFP)))
+
+#merge
+by_county <- man_county_data %>% 
+  dplyr::select(FIPS, YearOfEstablishment_man, FirstRecord_man) %>% 
+  left_join(by_county, ., by = "FIPS")
+```
+
+There may be some duplicate rows, and so the first record and establishment rows are retained. This dataset contains incomplete data for 2021, so we recode these as well, since our data are for as of 2020.
+```{r pick first year rows, eval=FALSE}
+#pick earliest year (between the records mined from the data and the manually compiled records)
+by_county %<>% 
+  mutate(YearOfEstablishment = pmin(YearOfEstablishment, YearOfEstablishment_man, na.rm = T),
+         FirstRecord = pmin(FirstRecord, FirstRecord_man, na.rm = T)) %>%
+  #recode the 2021 data
+  #get cases where the first record is 2021, and set record to NA
+  mutate(FirstRecord = case_when(
+    FirstRecord == 2021 ~ NA_real_,
+    TRUE ~ FirstRecord
+  ),
+  #get cases where the first record or year of establishment is 2021 and set establish to NA
+  YearOfEstablishment = case_when(
+    FirstRecord == 2021 ~ NA_real_,
+    YearOfEstablishment == 2021 ~ NA_real_,
+    TRUE ~ YearOfEstablishment
+  )
+  )
+```
+
+### Save the cleaned version of county-level data as `.rda`
+
+`by_county` is now at a safe resolution for our use here. It is saved as `by_county.rda` for use in this plotting vignette.
+
+```{r save by_county, eval=FALSE}
+if(FALSE){
+  save(by_county, file = file.path(here(), "data", "by_county.rda"))
+}
+```
+
+
+# Get states with regulatory incidents
+
+This current version uses the `data(by_country, package = "slfrsk")`. Again, `states_summary_present_ensemble` comes with established state data.
+```{r new version with by_country}
 #by_county version
 reg_states <- by_county %>%
   st_drop_geometry() %>%
