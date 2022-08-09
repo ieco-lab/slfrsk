@@ -43,9 +43,9 @@ We then read in a shapefiles for AVAs in CA, OR, and WA. These data are obtained
 
 ```{r ava shapefiles, message=FALSE}
 #read in the shapefiles for AVAs
-ca_ava <- readOGR(dsn = "/Volumes/GoogleDrive-104607290079958926089/Shared drives/slfData/data/slfRisk/ava_shapefiles/CA_avas_shapefile", layer = "CA_avas", verbose = F)
-or_ava <- readOGR(dsn = "/Volumes/GoogleDrive-104607290079958926089/Shared drives/slfData/data/slfRisk/ava_shapefiles/OR_avas_shapefile", layer = "OR_avas", verbose = F)
-wa_ava <- readOGR(dsn = "/Volumes/GoogleDrive-104607290079958926089/Shared drives/slfData/data/slfRisk/ava_shapefiles/WA_avas_shapefile", layer = "WA_avas", verbose = F)
+ca_ava <- readOGR(dsn = file.path(here(), "..", "..", "..", "..", "..", "data", "slfrsk", "ava_shapefiles", "CA_avas_shapefile"), layer = "CA_avas", verbose = F)
+or_ava <- readOGR(dsn = file.path(here(), "..", "..", "..", "..", "..", "data", "slfrsk", "ava_shapefiles", "OR_avas_shapefile"), layer = "OR_avas", verbose = F)
+wa_ava <- readOGR(dsn = file.path(here(), "..", "..", "..", "..", "..", "data", "slfrsk", "ava_shapefiles", "WA_avas_shapefile"), layer = "WA_avas", verbose = F)
 
 #clean some weird polygons for OR shapefiles
 or_ava <- or_ava[!or_ava$ava_id %in% c("tualatin_hills", "laurelwood_district"),]
@@ -66,7 +66,7 @@ To do this, we use temperature data collected from the station-based serially co
 
 ```{r temperature data and rasterization, message=FALSE}
 #read in the grid gps points
-temp_points <- read_csv("/Volumes/GoogleDrive-104607290079958926089/Shared drives/slfData/data/slfRisk/scdna_temp/age_time_gridded_data_12888.csv") #the 0.25 degrees spatial extent data
+temp_points <- read_csv(file.path(here(), "..", "..", "..", "..", "..", "data", "slfrsk", "scdna_temp", "age_time_gridded_data_12888.csv")) #the 0.25 degrees spatial extent data
 
 #summarize data for days < 10C, < 5C, between 10 and 20C, between 14 and 20C
 cold_days <- temp_points %>%
@@ -112,7 +112,6 @@ wc_plot + (plot_spacer() / napa_plot)
 We repeat this same first visualization for the **no_chill** threshold.
 
 ```{r dbtwn plots, message=FALSE, fig.dim=c(8,6), echo=FALSE}
-
 wc_ndp_plot <- ggplot() +
   geom_raster(data = fortify(cold_days_ras[[3]]), aes(x = long, y = lat, fill = dbtwn1020)) +
   geom_polygon(data = map_data('state'), aes(x = long, y = lat, group = group), fill = NA, color = "black", lwd = 0.20) +
@@ -215,15 +214,12 @@ We also take some representative AVAs along the west coast and move them to the 
 ava_results <- ava_results %>%
   arrange(match(ava, c("puget_sound","yakima_valley","willamette_valley","rogue_valley","mendocino","russian_river_valley","napa_valley" ,"sierra_foothills" ,"santa_clara_valley","monterey","paso_robles","santa_maria_valley","sta__rita_hills","south_coast"))
 , state, ava)
-
 ```
-
 
 We now combine the map figures for both thresholds with their corresponding versions of the table. Here, we emphasize the outlined focal AVAs as discussed previously.
 
 ```{r combined table plots, message=FALSE, fig.dim=c(8,10), echo=FALSE}
 (wc_plot + (gridExtra::tableGrob(ava_results[1:14, c("ava", "state","chill_dia")]))) / (wc_ndp_plot + (gridExtra::tableGrob(ava_results[1:14, c("ava", "state","no_chill")])))
-
 ```
 
 Finally, we present the full table of AVAs for both thresholds.
