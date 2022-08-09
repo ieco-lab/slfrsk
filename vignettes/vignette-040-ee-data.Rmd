@@ -29,13 +29,14 @@ Huron, N. A., Behm, J. E. & Helmus, M. R. 2022. Paninvasion severity assessment 
 ```{r load packages for visualization, echo=FALSE, message=FALSE, warning=FALSE}
 library(dplyr)
 library(ggplot2)
+library(here)
 ```
 
 The `slrsk` Paninvasion Severity App is an interactive map that allows for highly customizable visualization. When loaded, it will display a map of the earth with several different data layers already enabled (see image below for example).
 
 <center>
 
-![Landing page and labeled visualization tools for `slfrsk` Paninvasion Severity App.](/Volumes/GoogleDrive-104607290079958926089/My Drive/spotted_lanternfly_ieco_projects/code/FINAL_CODE/R package/nah_work/slfrsk/docs/articles/slfrsk_ee_home_label.png)
+![Landing page and labeled visualization tools for `slfrsk` Paninvasion Severity App.](../docs/articles/slfrsk_ee_home_label.png)
 
 </center>
 
@@ -64,7 +65,7 @@ The layers panel contains several key measures of SLF invasion potential. Each l
 
 <center>
 
-![Default view of Layers Panel for `slfrsk` Paninvasion Severity App.](/Volumes/GoogleDrive-104607290079958926089/My Drive/spotted_lanternfly_ieco_projects/code/FINAL_CODE/R package/nah_work/slfrsk/docs/articles/slfrsk_ee_layers_panel.png)
+![Default view of Layers Panel for `slfrsk` Paninvasion Severity App.](../docs/articles/slfrsk_ee_layers_panel.png)
 
 </center>
 
@@ -174,7 +175,7 @@ scale_fill_manual(
 
 # Data preparation
 
-This vignette is a companion to the interactive `slfrsk` Google Earth Engine (EE) Paninvasion Severity App <https://ieco.users.earthengine.app/view/ieco-slf-riskmap>. It provides a brief demonstration of how the data were treated prior to inclusion in the app. Output data from this vignette are saved in the shared GoogleDrive `./slfRiskMapping/data/slfRisk/` directory. 
+This vignette is a companion to the interactive `slfrsk` Google Earth Engine (EE) Paninvasion Severity App <https://ieco.users.earthengine.app/view/ieco-slf-riskmap>. It provides a brief demonstration of how the data were treated prior to inclusion in the app. Output data from this vignette are saved in the shared GoogleDrive `./slfRiskMapping/data/slfrsk/` directory. 
 
 ## Setup
 
@@ -315,10 +316,12 @@ We use the shared GoogleDrive file that contains downloaded GADM shapefiles (<ht
 
 ```{r read in the country and state shapefiles, message=FALSE, warning=FALSE, eval=TRUE}
   #shapefile of USA: data obtained from GADM: https://gadm.org/download_world.html
-states <- readOGR(dsn = "/Volumes/GoogleDrive-104607290079958926089/Shared drives/slfData/data/slfRisk/geo_shapefiles/gadm36_USA_shp/gadm36_USA_1.shp", verbose = F, p4s = '+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0')
+states <- readOGR(dsn = "/Volumes/GoogleDrive-104607290079958926089/Shared drives/slfData/data/slfrsk/geo_shapefiles/gadm36_USA_shp/gadm36_USA_1.shp", verbose = F, p4s = '+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0')
+
+#states <- readOGR(dsn = file.path(here(), "..", "..", "..", "..", "..", "data", "slfrsk", "geo_shapefiles", "gadm36_USA_shp", "gadm36_USA_1.shp"), verbose = F, p4s = '+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0') 
 
   #shapefile of world by countries
-countries <- readOGR("/Volumes/GoogleDrive-104607290079958926089/Shared drives/slfData/data/slfRisk/geo_shapefiles/gadm36_levels_shp/gadm36_0.shp", verbose = F, p4s = '+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0')
+countries <- readOGR("/Volumes/GoogleDrive-104607290079958926089/Shared drives/slfData/data/slfrsk/geo_shapefiles/gadm36_levels_shp/gadm36_0.shp", verbose = F, p4s = '+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0')
 ```
 
 There are a few shapefile data entries that need to be cleaned, so we alter the names. We also removed the U.S from `countries`, as in other analyses.
@@ -338,7 +341,7 @@ countries@data$NAME_0[grep(pattern = "Saint Bart", x = countries@data$NAME_0, va
 countries <- countries[countries$NAME_0 != "United States",]
 ```
 
-These shapefiles are rather large and unwieldly. To make the more manageable, we use `regeos::gSimplify()` to make them smaller by modifying the `tol` parameter, which is the value used in the Douglas-Peuker algorithm. For `countries`, we downsized the used file in addition to the `_lo` versions used for both `countries` and `states`.
+These shapefiles are rather large and unwieldly. To make the more manageable, we use `rgeos::gSimplify()` to make them smaller by modifying the `tol` parameter, which is the value used in the Douglas-Peuker algorithm. For `countries`, we downsized the used file in addition to the `_lo` versions used for both `countries` and `states`.
 
 ```{r make shapefiles smaller, eval=TRUE}
 #note that tol= can be modified to make the polygons simpler, larger values make the shapefile coarser
@@ -382,7 +385,7 @@ countries_lo@data <- left_join(countries_lo@data, countries_summary_present_ense
 
 ```
 
-We also rename the column fields to accommodate for ESRI shapefile column name character limits. A README file exists in the GoogleDrive `./slfData/data/slfRisk/` that outlines the keys for the old names and the shorter names used here.
+We also rename the column fields to accommodate for ESRI shapefile column name character limits. A README file exists in the GoogleDrive `./slfData/data/slfrsk/` that outlines the keys for the old names and the shorter names used here.
 
 ```{r rename fields, eval=TRUE}
 #states
@@ -428,20 +431,20 @@ combined_lo <- rbind(states_lo, countries_lo, makeUniqueIDs = TRUE)
 
 # Save shapefiles for EE
 
-The newly merged shapefiles (`countries`, `states`, and `combined` for regular and `_lo` versions) are written to the shared GoogleDrive directory `./slfData/data/slfRisk/geo_shapefiles/gadm36_USA_with_data/`for visualization with EE.
+The newly merged shapefiles (`countries`, `states`, and `combined` for regular and `_lo` versions) are written to the shared GoogleDrive directory `./slfData/data/slfrsk/geo_shapefiles/gadm36_USA_with_data/`for visualization with EE.
 
 ```{r write out the shapefiles, warning=FALSE, message=FALSE, eval=FALSE}
 #states
-writeOGR(obj = states, dsn = "/Volumes/GoogleDrive-104607290079958926089/Shared drives/slfData/data/slfRisk/geo_shapefiles/gadm36_USA_with_data/",  driver="ESRI Shapefile", layer = "states", verbose = FALSE, overwrite_layer = TRUE)
-writeOGR(obj = states_lo, dsn = "/Volumes/GoogleDrive-104607290079958926089/Shared drives/slfData/data/slfRisk/geo_shapefiles/gadm36_USA_with_data/",  driver="ESRI Shapefile", layer = "states_lores", verbose = FALSE, overwrite_layer = TRUE)
+writeOGR(obj = states, dsn = "/Volumes/GoogleDrive-104607290079958926089/Shared drives/slfData/data/slfrsk/geo_shapefiles/gadm36_USA_with_data/",  driver="ESRI Shapefile", layer = "states", verbose = FALSE, overwrite_layer = TRUE)
+writeOGR(obj = states_lo, dsn = "/Volumes/GoogleDrive-104607290079958926089/Shared drives/slfData/data/slfrsk/geo_shapefiles/gadm36_USA_with_data/",  driver="ESRI Shapefile", layer = "states_lores", verbose = FALSE, overwrite_layer = TRUE)
 
 #countries
-writeOGR(obj = countries, dsn = "/Volumes/GoogleDrive-104607290079958926089/Shared drives/slfData/data/slfRisk/geo_shapefiles/gadm36_levels_with_data/",  driver="ESRI Shapefile", layer = "countries", verbose = FALSE, overwrite_layer = TRUE)
-writeOGR(obj = countries_lo, dsn = "/Volumes/GoogleDrive-104607290079958926089/Shared drives/slfData/data/slfRisk/geo_shapefiles/gadm36_levels_with_data/",  driver="ESRI Shapefile", layer = "countries_lores", verbose = FALSE, overwrite_layer = TRUE)
+writeOGR(obj = countries, dsn = "/Volumes/GoogleDrive-104607290079958926089/Shared drives/slfData/data/slfrsk/geo_shapefiles/gadm36_levels_with_data/",  driver="ESRI Shapefile", layer = "countries", verbose = FALSE, overwrite_layer = TRUE)
+writeOGR(obj = countries_lo, dsn = "/Volumes/GoogleDrive-104607290079958926089/Shared drives/slfData/data/slfrsk/geo_shapefiles/gadm36_levels_with_data/",  driver="ESRI Shapefile", layer = "countries_lores", verbose = FALSE, overwrite_layer = TRUE)
 
 #combined
-writeOGR(obj = combined, dsn = "/Volumes/GoogleDrive-104607290079958926089/Shared drives/slfData/data/slfRisk/geo_shapefiles/combined/",  driver="ESRI Shapefile", layer = "combined", verbose = FALSE, overwrite_layer = TRUE)
-writeOGR(obj = combined_lo, dsn = "/Volumes/GoogleDrive-104607290079958926089/Shared drives/slfData/data/slfRisk/geo_shapefiles/combined/",  driver="ESRI Shapefile", layer = "combined_lores", verbose = FALSE, overwrite_layer = TRUE)
+writeOGR(obj = combined, dsn = "/Volumes/GoogleDrive-104607290079958926089/Shared drives/slfData/data/slfrsk/geo_shapefiles/combined/",  driver="ESRI Shapefile", layer = "combined", verbose = FALSE, overwrite_layer = TRUE)
+writeOGR(obj = combined_lo, dsn = "/Volumes/GoogleDrive-104607290079958926089/Shared drives/slfData/data/slfrsk/geo_shapefiles/combined/",  driver="ESRI Shapefile", layer = "combined_lores", verbose = FALSE, overwrite_layer = TRUE)
 ```
 
 # Supplemental check of shapefiles 
