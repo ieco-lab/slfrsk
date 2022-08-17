@@ -1,2 +1,9 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^LICENSE\.md$
+^README\.Rmd$
+[.]ini$
+sandbox
+README.html
+^\.github$
+pkgdown/
